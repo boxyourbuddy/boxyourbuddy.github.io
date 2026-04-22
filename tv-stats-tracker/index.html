@@ -71,12 +71,11 @@
         margin: 0 auto; 
     }
 
-    /* Restored Grid Segments */
     .grid { 
         display: grid; 
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-        gap: 20px; 
-        margin: 60px auto; 
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+        gap: 25px; 
+        margin: 80px auto; 
         max-width: 1200px;
         padding: 0 20px;
         text-align: left; 
@@ -86,23 +85,24 @@
     .feature-img-wrap-large { width: 100%; background: #080808; border-bottom: 1px solid #222; height: 280px; display: flex; align-items: flex-start; justify-content: center; overflow: hidden; }
     .feature-img { width: 100%; height: auto; object-fit: contain; }
     .top-align { object-fit: cover; object-position: top; height: 100%; width: 100%; }
-    .feature-text { padding: 20px; }
-    .feature h3 { margin: 0 0 8px 0; font-size: 1.05rem; color: #fff; }
-    .feature p { color: var(--dim); font-size: 0.9rem; margin: 0; line-height: 1.4; }
+    .feature-text { padding: 25px; }
+    .feature h3 { margin: 0 0 10px 0; font-size: 1.1rem; color: #fff; font-weight: 700; }
+    .feature p { color: var(--dim); font-size: 0.95rem; margin: 0; line-height: 1.5; }
 
-    /* Footer Privacy Section */
     .card-footer { 
         background: var(--card); 
         border-radius: 12px; 
         border: 1px solid #222; 
         padding: 40px; 
-        margin: 60px auto; 
-        max-width: 800px;
+        margin: 80px auto; 
+        max-width: 850px;
         text-align: left;
     }
-    .card-footer h2 { color: #fff; font-size: 1.5rem; margin-top: 0; margin-bottom: 15px; }
-    .card-footer p { color: var(--dim); line-height: 1.6; margin-bottom: 15px; }
+    .card-footer h2 { color: #fff; font-size: 1.6rem; margin-top: 0; margin-bottom: 15px; font-weight: 800; }
+    .card-footer p { color: var(--dim); line-height: 1.7; margin-bottom: 15px; }
     .highlight { color: #fff; font-weight: 600; }
+    
+    .legal-footer { text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.2); font-size: 0.8rem; border-top: 1px solid #111; width: 100%; }
 </style>
 </head>
 <body>
@@ -114,8 +114,7 @@
     <p class="subtitle">Deep forensic analytics for your media history. Track movies and TV episodes locally on your Mac. No cloud, no data tracking, just your watch history visualized.</p>
     
     <div class="btn-group">
-        <a href="TV Stats.zip" class="btn-base btn-download" download>Download Free App</a>
-        
+        <a href="TV%20Stats.zip" class="btn-base btn-download" download>Download Free App</a>
         <a href="https://www.reddit.com/r/TVStats/" target="_blank" class="btn-base btn-reddit">Community</a>
         <a href="https://cash.app/$boxyourbuddy" target="_blank" class="btn-base btn-support">Support Project</a>
     </div>
@@ -125,39 +124,47 @@
 
 <div class="grid">
     <div class="feature">
-        <div class="feature-img-wrap-large"><img src="actor page.png" class="feature-img top-align"></div>
+        <div class="feature-img-wrap-large"><img src="actor%20page.png" class="feature-img top-align"></div>
         <div class="feature-text"><h3>Personal Actor Stats</h3><p>See exactly how many movies, episodes, and rewatch hours you have for every actor.</p></div>
     </div>
     <div class="feature">
-        <div class="feature-img-wrap-large"><img src="movies filtered by netflix.png" class="feature-img top-align"></div>
-        <div class="feature-text"><h3>Provider Filters</h3><p>Isolate history across services like Netflix, Hulu, or Prime Video.</p></div>
+        <div class="feature-img-wrap-large"><img src="movies%20filtered%20by%20netflix.png" class="feature-img top-align"></div>
+        <div class="feature-text"><h3>Provider Filters</h3><p>Isolate your history across services like Netflix, Hulu, or Prime Video instantly.</p></div>
     </div>
     <div class="feature">
-        <div class="feature-img-wrap"><img src="binge stats bar.png" class="feature-img"></div>
-        <div class="feature-text"><h3>Binge Analytics</h3><p>Identify your most intense viewing sessions with dedicated tracking.</p></div>
+        <div class="feature-img-wrap"><img src="binge%20stats%20bar.png" class="feature-img"></div>
+        <div class="feature-text"><h3>Binge Analytics</h3><p>Identify your most intense viewing sessions with dedicated tracking bars.</p></div>
     </div>
     <div class="feature">
-        <div class="feature-img-wrap"><img src="2d heatmap peak viewing.png" class="feature-img"></div>
+        <div class="feature-img-wrap"><img src="2d%20heatmap%20peak%20viewing.png" class="feature-img"></div>
         <div class="feature-text"><h3>Habit Heatmaps</h3><p>Find your "TV prime time" with frequency mapping across days and hours.</p></div>
     </div>
     <div class="feature">
-        <div class="feature-img-wrap-large"><img src="hbo originals.png" class="feature-img top-align"></div>
-        <div class="feature-text"><h3>Network Insights</h3><p>Filter history by original network like HBO or Netflix.</p></div>
+        <div class="feature-img-wrap-large"><img src="hbo%20originals.png" class="feature-img top-align"></div>
+        <div class="feature-text"><h3>Network Insights</h3><p>Filter history by original network like HBO, Showtime, or Netflix without a cloud subscription.</p></div>
+    </div>
+    <div class="feature">
+        <div class="feature-img-wrap-large"><img src="actor%20card%20with%20hours%20watched%20stats.png" class="feature-img top-align"></div>
+        <div class="feature-text"><h3>Cast Distribution</h3><p>Automated performer rankings show which actors dominate your screen time across your entire life.</p></div>
     </div>
     <div class="feature">
         <div class="feature-img-wrap-large"><img src="calendar.png" class="feature-img top-align"></div>
-        <div class="feature-text"><h3>Native Calendar View</h3><p>A true chronological visualizer to scroll back through years of history.</p></div>
+        <div class="feature-text"><h3>Native Calendar View</h3><p>A true chronological visualizer to scroll back through years of history on a native macOS interface.</p></div>
+    </div>
+    <div class="feature">
+        <div class="feature-img-wrap-large"><img src="continue%20watching.png" class="feature-img top-align"></div>
+        <div class="feature-text"><h3>Archive Protocol</h3><p>Sync Trakt data directly into your local queue without overwriting your manual stats.</p></div>
     </div>
 </div>
 
 <div class="card-footer">
     <h2>Privacy Protocol: Your Data is Yours</h2>
-    <p>TV Stats is built for the <span class="highlight">Silent Observer.</span> All of your movie and TV history is stored <span class="highlight">locally on your device</span> in JSON format. We do not own, manage, or have access to your personal database.</p>
+    <p>TV Stats is built for the <span class="highlight">Silent Observer.</span> All of your movie and TV history is stored <span class="highlight">locally on your device</span>. We do not own, manage, or have access to your personal database.</p>
     <p>We collect zero personal information. Because your data lives on your hardware, we cannot recover it if deleted. We recommend keeping a backup of your JSON files.</p>
 </div>
 
-<div style="text-align: center; padding: 40px; color: rgba(255,255,255,0.2); font-size: 0.8rem; border-top: 1px solid #111;">
-    Disclaimer: Provided "as-is." No ads. No pro tier.
+<div class="legal-footer">
+    Disclaimer: Provided "as-is." No Ads. No Pro Tier.
 </div>
 
 </body>
