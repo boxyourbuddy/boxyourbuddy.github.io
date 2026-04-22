@@ -3,33 +3,90 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; padding: 20px; color: #333; max-width: 1000px; margin: 0 auto; }
-        .container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 40px; }
-        .box { border: 1px solid #eee; padding: 20px; border-radius: 8px; flex: 1; min-width: 250px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .box h3 { color: #000; margin-top: 0; }
-        .box p { font-size: 0.9em; color: #666; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            line-height: 1.6; padding: 20px; background-color: #000; color: #fff; 
+            max-width: 1100px; margin: 0 auto; 
+        }
+        h1 { text-align: center; font-weight: 300; margin-top: 50px; letter-spacing: 2px; }
+        .subtitle { text-align: center; color: #888; margin-bottom: 50px; font-style: italic; }
+        
+        .main-container { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; }
+        
+        /* The 3 Main Columns */
+        .column { flex: 1; min-width: 300px; }
+        .column-title { 
+            text-align: center; border-bottom: 1px solid #333; 
+            padding-bottom: 10px; margin-bottom: 20px; color: #aaa; 
+            text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;
+        }
+
+        /* The Cards inside each column */
+        .card { 
+            background: #111; border: 1px solid #222; border-radius: 8px; 
+            padding: 20px; margin-bottom: 20px; transition: 0.3s;
+        }
+        .card:hover { border-color: #444; }
+        .card h3 { margin-top: 0; font-size: 1.1rem; color: #fff; font-weight: 500; }
+        .card p { font-size: 0.9rem; color: #bbb; margin-bottom: 0; }
+        .card-tag { 
+            display: inline-block; background: #222; color: #888; 
+            font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; margin-bottom: 10px; 
+        }
     </style>
 </head>
 <body>
 
-    <h1 style="text-align:center;">TV Stats Tracker</h1>
-    <p style="text-align:center;">Free. Ad-Free. Your data, your way.</p>
+    <h1>TV STATS TRACKER</h1>
+    <p class="subtitle">A Silent Observer Project</p>
 
-    <div class="container">
-        <div class="box">
-            <h3>Detailed History</h3>
-            <p>Track every rewatch, filter by actor filmographies, and see exactly how many hours you've spent in your favorite worlds.</p>
+    <div class="main-container">
+        
+        <div class="column">
+            <div class="column-title">Watch History</div>
+            
+            <div class="card">
+                <div class="card-tag">Core Feature</div>
+                <h3>Personalized Metrics</h3>
+                <p>Track total watched hours and rewatch time. Filtered strictly to your history—no generic industry stats.</p>
+            </div>
+
+            <div class="card">
+                <h3>Actor Filmographies</h3>
+                <p>View specific history of movies and shows you have watched with specific cast members, not just a full database list.</p>
+            </div>
         </div>
 
-        <div class="box">
-            <h3>Local & Private</h3>
-            <p>No accounts or cloud syncing required. Your data stays on your machine, just the way it should be.</p>
+        <div class="column">
+            <div class="column-title">Privacy & Security</div>
+            
+            <div class="card">
+                <div class="card-tag">Local Only</div>
+                <h3>Private Authentication</h3>
+                <p>The app features a local username and password system. You log in to your account entirely on your machine.</p>
+            </div>
+
+            <div class="card">
+                <h3>Zero Cloud Tracking</h3>
+                <p>No external servers. Your data and login credentials stay 100% on your local storage.</p>
+            </div>
         </div>
 
-        <div class="box">
-            <h3>Sleek Interface</h3>
-            <p>Designed for macOS with smooth animations and a focus on the stats that actually matter to fans.</p>
+        <div class="column">
+            <div class="column-title">Performance</div>
+            
+            <div class="card">
+                <div class="card-tag">macOS Optimized</div>
+                <h3>Data Bottleneck Solving</h3>
+                <p>Engineered to handle massive datasets—like processing 13,380+ files—without compromising app stability.</p>
+            </div>
+
+            <div class="card">
+                <h3>Smooth Animations</h3>
+                <p>A focused UI design that prioritizes data visualization and fluid transitions between your stats.</p>
+            </div>
         </div>
+
     </div>
 
 </body>
