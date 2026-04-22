@@ -11,28 +11,33 @@
         h1 { text-align: center; font-weight: 300; margin-top: 50px; letter-spacing: 2px; }
         .subtitle { text-align: center; color: #888; margin-bottom: 50px; font-style: italic; }
         
-        .main-container { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; }
-        
-        /* The 3 Main Columns */
-        .column { flex: 1; min-width: 300px; }
-        .column-title { 
-            text-align: center; border-bottom: 1px solid #333; 
-            padding-bottom: 10px; margin-bottom: 20px; color: #aaa; 
-            text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;
+        .section-title { 
+            text-align: center; border-bottom: 1px solid #222; 
+            padding-bottom: 10px; margin: 60px 0 30px; color: #aaa; 
+            text-transform: uppercase; font-size: 0.9rem; letter-spacing: 3px;
         }
 
-        /* The Cards inside each column */
-        .card { 
-            background: #111; border: 1px solid #222; border-radius: 8px; 
-            padding: 20px; margin-bottom: 20px; transition: 0.3s;
+        /* Top Feature Row */
+        .feature-grid { display: flex; flex-wrap: wrap; gap: 20px; }
+        .feature-card { background: #0a0a0a; border: 1px solid #222; padding: 25px; flex: 1; min-width: 300px; border-radius: 12px; }
+        .feature-card h3 { margin-top: 0; color: #fff; }
+
+        /* The 8-Card Technical Grid */
+        .tech-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+            gap: 15px; 
         }
-        .card:hover { border-color: #444; }
-        .card h3 { margin-top: 0; font-size: 1.1rem; color: #fff; font-weight: 500; }
-        .card p { font-size: 0.9rem; color: #bbb; margin-bottom: 0; }
-        .card-tag { 
-            display: inline-block; background: #222; color: #888; 
-            font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; margin-bottom: 10px; 
-        }
+        .tech-card { background: #111; border: 1px solid #222; padding: 15px; border-radius: 8px; text-align: center; }
+        .tech-card h4 { margin: 0 0 5px 0; color: #eee; font-size: 1rem; }
+        .tech-card p { margin: 0; color: #777; font-size: 0.85rem; }
+
+        /* Bottom Section: Privacy & Download */
+        .info-section { display: flex; flex-wrap: wrap; gap: 30px; margin-top: 40px; }
+        .info-box { flex: 1; min-width: 300px; background: #111; padding: 30px; border-radius: 12px; border-left: 4px solid #333; }
+        .info-box h3 { margin-top: 0; }
+        .info-box ul { padding-left: 20px; color: #bbb; font-size: 0.9rem; }
+        .info-box li { margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -40,54 +45,50 @@
     <h1>TV STATS TRACKER</h1>
     <p class="subtitle">A Silent Observer Project</p>
 
-    <div class="main-container">
-        
-        <div class="column">
-            <div class="column-title">Watch History</div>
-            
-            <div class="card">
-                <div class="card-tag">Core Feature</div>
-                <h3>Personalized Metrics</h3>
-                <p>Track total watched hours and rewatch time. Filtered strictly to your history—no generic industry stats.</p>
-            </div>
-
-            <div class="card">
-                <h3>Actor Filmographies</h3>
-                <p>View specific history of movies and shows you have watched with specific cast members, not just a full database list.</p>
-            </div>
+    <div class="section-title">Core Capabilities</div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>Personalized Watch History</h3>
+            <p>Focus strictly on your data. View total watched hours, rewatch statistics, and filtered actor filmographies based only on what you have seen.</p>
         </div>
-
-        <div class="column">
-            <div class="column-title">Privacy & Security</div>
-            
-            <div class="card">
-                <div class="card-tag">Local Only</div>
-                <h3>Private Authentication</h3>
-                <p>The app features a local username and password system. You log in to your account entirely on your machine.</p>
-            </div>
-
-            <div class="card">
-                <h3>Zero Cloud Tracking</h3>
-                <p>No external servers. Your data and login credentials stay 100% on your local storage.</p>
-            </div>
+        <div class="feature-card">
+            <h3>Local Authentication</h3>
+            <p>Privacy-first design featuring a local username and password system. Your login and data stay on your macOS device, never sent to a cloud.</p>
         </div>
-
-        <div class="column">
-            <div class="column-title">Performance</div>
-            
-            <div class="card">
-                <div class="card-tag">macOS Optimized</div>
-                <h3>Data Bottleneck Solving</h3>
-                <p>Engineered to handle massive datasets—like processing 13,380+ files—without compromising app stability.</p>
-            </div>
-
-            <div class="card">
-                <h3>Smooth Animations</h3>
-                <p>A focused UI design that prioritizes data visualization and fluid transitions between your stats.</p>
-            </div>
-        </div>
-
     </div>
 
-</body>
+    <div class="section-title">Technical Specifications</div>
+    <div class="tech-grid">
+        <div class="tech-card"><h4>13,380+ Files</h4><p>High-volume data processing</p></div>
+        <div class="tech-card"><h4>Swift UI</h4><p>Native macOS performance</p></div>
+        <div class="tech-card"><h4>Local Storage</h4><p>No external databases</p></div>
+        <div class="tech-card"><h4>Metadata Sync</h4><p>Streaming service integration</p></div>
+        <div class="tech-card"><h4>Actor Filters</h4><p>Contextual filmography</p></div>
+        <div class="tech-card"><h4>Rewatch Logic</h4><p>Accurate time tracking</p></div>
+        <div class="tech-card"><h4>Zero Ads</h4><p>Free and focused</p></div>
+        <div class="tech-card"><h4>Privacy First</h4><p>No user tracking</p></div>
+    </div>
+
+    <div class="section-title">Getting Started</div>
+    <div class="info-section">
+        <div class="info-box">
+            <h3>Privacy Policy</h3>
+            <ul>
+                <li><strong>No Data Collection:</strong> We do not see, store, or sell your data.</li>
+                <li><strong>Local Only:</strong> All stats are stored in your local application support folder.</li>
+                <li><strong>No Analytics:</strong> There are no hidden trackers or telemetry inside the app.</li>
+            </ul>
+        </div>
+        <div class="info-box">
+            <h3>Download & Install</h3>
+            <p>TV Stats Tracker is currently in development for macOS. Updates and release builds will be posted here directly.</p>
+            <ul>
+                <li>Current Version: v1.0-beta</li>
+                <li>System Req: macOS 12.0 or later</li>
+                <li>Architecture: Universal (Intel & Apple Silicon)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div style="height: 100px;"></div> </body>
 </html>
