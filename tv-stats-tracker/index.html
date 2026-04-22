@@ -5,16 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TV Stats for macOS | Free TV & Movie Statistics, No Ads, Private</title>
 <meta name="description" content="Deep forensic analytics for your media history. Track movies and TV episodes locally on your Mac. No cloud, no data tracking, just your watch history.">
-<div style="margin-top: 20px;">
-    <a href="/TVStats.zip" download="TVStats.zip" style="text-decoration: none;">
-        <button type="button" style="padding: 15px 30px; font-size: 18px; cursor: pointer; background-color: #007AFF; color: white; border: none; border-radius: 8px;">
-            Download TVStats for macOS
-        </button>
-    </a>
-</div>
 
 <style>
-    /* STYLES FROM BOX 1 */
     :root {
         --bg: #000000;
         --card: #111111;
@@ -80,8 +72,6 @@
         display: block; 
         margin: 0 auto; 
     }
-
-    /* STYLES FROM BOX 2 */
     .container-b2 { max-width: 1200px; margin: 0 auto; padding: 20px; text-align: center; }
     .grid { 
         display: grid; 
@@ -102,25 +92,6 @@
     .manifesto { margin: 40px auto 10px; padding: 30px 20px; border-top: 1px solid #222; max-width: 600px; text-align: center; }
     .manifesto h2 { font-size: 1.8rem; margin-bottom: 8px; font-weight: 900; }
     .manifesto p { font-size: 1rem; margin-bottom: 0; color: var(--dim); }
-    .btn-wrap { display: flex; justify-content: center; margin-top: 30px; padding-bottom: 20px; }
-    .btn-sub { 
-        background: var(--cash); 
-        color: #ffffff; 
-        padding: 20px 60px; 
-        border-radius: 50px; 
-        text-decoration: none; 
-        font-weight: 800; 
-        font-size: 1.4rem; 
-        display: inline-flex; 
-        align-items: center; 
-        justify-content: center; 
-        min-width: 320px; 
-        transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-        box-shadow: 0 10px 20px rgba(0, 214, 75, 0.2);
-    }
-    .btn-sub:hover { transform: scale(1.05); box-shadow: 0 15px 30px rgba(0, 214, 75, 0.3); opacity: 0.95; }
-
-    /* STYLES FROM BOX 3 */
     .container-b3 { 
         width: 100%;
         display: flex;
@@ -190,7 +161,7 @@
     </p>
     
     <div class="btn-group">
-        <button onclick="document.getElementById('download-anchor').scrollIntoView({behavior: 'smooth'});" class="btn-base btn-download">Download Free App</button>
+        <a href="https://boxyourbuddy.com/TVStats.zip" download="TVStats.zip" class="btn-base btn-download">Download Free App</a>
         <a href="https://www.reddit.com/r/TVStats/" target="_blank" class="btn-base btn-reddit">Community</a>
         <a href="https://cash.app/$boxyourbuddy" target="_blank" class="btn-base btn-support">Support Project</a>
     </div>
@@ -281,7 +252,7 @@
     </div>
 </div>
 
-<div id="download-anchor" class="container-b3">
+<div class="container-b3">
     <div class="grid-b3">
         <div class="card card-full">
             <h2>
