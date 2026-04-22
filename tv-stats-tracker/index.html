@@ -1,119 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TV Stats for macOS | Free TV & Movie Statistics, No Ads, Private</title>
-<style>
-    :root {
-        --bg: #000000;
-        --card: #111111;
-        --text: #ffffff;
-        --dim: #a0a0a0;
-        --accent: #00ffcc; 
-        --reddit: #ff4500;
-        --cash: #00D64B;
-    }
-    html, body { 
-        background: var(--bg); 
-        color: var(--text); 
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
-        margin: 0; 
-        padding: 0; 
-        width: 100%;
-        max-width: 100vw;
-        overflow-x: hidden; 
-        -webkit-font-smoothing: antialiased;
-    }
-    
-    .container { 
-        width: 100%;
-        max-width: 1200px; 
-        margin: 0 auto; 
-        padding: 60px 20px; 
-        text-align: center;
-        box-sizing: border-box;
-    }
-    .manifesto-tag { font-size: 0.9rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; display: block; margin-bottom: 15px; }
-    h1 { font-size: clamp(2.2rem, 7vw, 4rem); font-weight: 800; margin-bottom: 10px; letter-spacing: -1.5px; line-height: 1.1; }
-    .app-title { font-size: 1.4rem; font-weight: 600; color: var(--text); margin-bottom: 15px; letter-spacing: 1px; }
-    .subtitle { font-size: 1.2rem; color: var(--dim); margin-bottom: 35px; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6; }
-    
-    .btn-group { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 45px; flex-wrap: wrap; }
-    .btn-base { padding: 12px 26px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; transition: 0.2s; border: none; }
-    .btn-download { background: #ffffff; color: #000000; }
-    .btn-reddit { color: var(--reddit); background: transparent; border: 1px solid #333 !important; }
-    .btn-support { background: var(--cash); color: #ffffff; }
-
-    .hero-img { width: 100%; max-width: 1000px; height: auto; border-radius: 12px; border: 1px solid #333; box-shadow: 0 40px 80px rgba(0,0,0,0.9); display: block; margin: 0 auto; }
-
-    .grid { 
-        display: grid; 
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-        gap: 25px; 
-        margin: 80px auto; 
-        max-width: 1200px;
-        padding: 0 20px;
-        text-align: left; 
-    }
-    .feature { background: var(--card); border-radius: 12px; border: 1px solid #222; overflow: hidden; display: flex; flex-direction: column; }
-    .feature-img-wrap-large { width: 100%; background: #080808; border-bottom: 1px solid #222; height: 280px; display: flex; align-items: flex-start; justify-content: center; overflow: hidden; }
-    .feature-img-wrap { width: 100%; background: #080808; border-bottom: 1px solid #222; height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .feature-img { width: 100%; height: auto; object-fit: contain; }
-    .top-align { object-fit: cover; object-position: top; height: 100%; width: 100%; }
-    .feature-text { padding: 25px; }
-    .feature h3 { margin: 0 0 10px 0; font-size: 1.1rem; color: #fff; font-weight: 700; }
-    .feature p { color: var(--dim); font-size: 0.95rem; margin: 0; line-height: 1.5; }
-
-    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-    .card-footer { background: var(--card); border-radius: 12px; border: 1px solid #222; padding: 40px; text-align: left; }
-    .card-footer h2 { color: #fff; font-size: 1.5rem; margin-top: 0; margin-bottom: 15px; font-weight: 800; }
-    .card-footer p { color: var(--dim); line-height: 1.7; font-size: 0.95rem; margin-bottom: 10px; }
-    .highlight { color: #fff; font-weight: 600; }
-    
-    .legal-footer { text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.2); font-size: 0.8rem; border-top: 1px solid #111; width: 100%; }
-</style>
-</head>
-<body>
-
-<div class="container">
-    <span class="manifesto-tag">No Ads • No Paywalls • No Subscriptions</span>
-    <h1>TV and Movie Stats, <span style="color: var(--accent);">Visualized.</span></h1>
-    <div class="app-title">TV Stats for macOS</div>
-    <p class="subtitle">Deep forensic analytics for your media history. Track movies and TV episodes locally on your Mac. No cloud, no data tracking, just your watch history visualized.</p>
-    
-    <div class="btn-group">
-        <a href="https://boxyourbuddy.com/TV%20Stats.zip" class="btn-base btn-download">Download Free App</a>
-        <a href="https://www.reddit.com/r/TVStats/" target="_blank" class="btn-base btn-reddit">Community</a>
-        <a href="https://cash.app/$boxyourbuddy" target="_blank" class="btn-base btn-support">Support Project</a>
-    </div>
-    
-    <img src="https://boxyourbuddy.com/hero2.png" class="hero-img">
-</div>
-
 <div class="grid">
-    <div class="feature"><div class="feature-img-wrap-large"><img src="https://boxyourbuddy.com/actor%20page.png" class="feature-img top-align"></div><div class="feature-text"><h3>Personal Actor Stats</h3><p>See exactly how many movies, episodes, and rewatch hours you have for every actor in your local database.</p></div></div>
-    <div class="feature"><div class="feature-img-wrap-large"><img src="https://boxyourbuddy.com/movies%20filtered%20by%20netflix.png" class="feature-img top-align"></div><div class="feature-text"><h3>Provider Filters</h3><p>Isolate your history across services like Netflix, Hulu, or Prime Video instantly.</p></div></div>
-    <div class="feature"><div class="feature-img-wrap"><img src="https://boxyourbuddy.com/binge%20stats%20bar.png" class="feature-img"></div><div class="feature-text"><h3>Binge Analytics</h3><p>Identify your most intense viewing sessions with dedicated tracking bars for every series.</p></div></div>
-    <div class="feature"><div class="feature-img-wrap"><img src="https://boxyourbuddy.com/2d%20heatmap%20peak%20viewing.png" class="feature-img"></div><div class="feature-text"><h3>Habit Heatmaps</h3><p>Find your "TV prime time" with frequency mapping across days and hours.</p></div></div>
-    <div class="feature"><div class="feature-img-wrap-large"><img src="https://boxyourbuddy.com/hbo%20originals.png" class="feature-img top-align"></div><div class="feature-text"><h3>Network Insights</h3><p>Filter history by original network like HBO, Showtime, or Netflix without a cloud subscription.</p></div></div>
-    <div class="feature"><div class="feature-img-wrap-large"><img src="https://boxyourbuddy.com/actor%20card%20with%20hours%20watched%20stats.png" class="feature-img top-align"></div><div class="feature-text"><h3>Cast Distribution</h3><p>Automated performer rankings show which actors dominate your screen time across your entire life.</p></div></div>
-    <div class="feature"><div class="feature-img-wrap-large"><img src="https://boxyourbuddy.com/calendar.png" class="feature-img top-align"></div><div class="feature-text"><h3>Native Calendar View</h3><p>A true chronological visualizer to scroll back through years of history on a native macOS interface.</p></div></div>
-    <div class="feature"><div class="feature-img-wrap-large"><img src="https://boxyourbuddy.com/continue%20watching.png" class="feature-img top-align"></div><div class="feature-text"><h3>Archive Protocol</h3><p>Sync Trakt data directly into your local queue without overwriting your manual stats.</p></div></div>
+    <div class="feature">
+        <div class="feature-img-wrap-large"><img src="https://boxyourbuddy.com/actor page.png" class="feature-img top-align"></div>
+        <div class="feature-text">
+            <h3>Personal Actor Stats</h3>
+            <p>Deep-dive into your personal history with every performer. See total movies, distinct episodes, and rewatch hours to understand which actors truly dominate your screen time.</p>
+        </div>
+    </div>
+    <div class="feature">
+        <div class="feature-img-wrap-large"><img src="https://boxyourbuddy.com/movies filtered by netflix.png" class="feature-img top-align"></div>
+        <div class="feature-text">
+            <h3>Provider Filters</h3>
+            <p>Isolate your viewing habits across Netflix, Hulu, Prime Video, and more. Track where your time goes without needing to log into every individual service.</p>
+        </div>
+    </div>
+    <div class="feature">
+        <div class="feature-img-wrap"><img src="https://boxyourbuddy.com/binge stats bar.png" class="feature-img"></div>
+        <div class="feature-text">
+            <h3>Binge Analytics</h3>
+            <p>Visualize your most intense viewing sessions. Dedicated progress and frequency bars for every series show exactly how fast you're moving through a show.</p>
+        </div>
+    </div>
+    <div class="feature">
+        <div class="feature-img-wrap"><img src="https://boxyourbuddy.com/2d heatmap peak viewing.png" class="feature-img"></div>
+        <div class="feature-text">
+            <h3>Habit Heatmaps</h3>
+            <p>Discover your "TV Prime Time." A sophisticated 2D heatmap maps your frequency across hours and days to show when you're most likely to be watching.</p>
+        </div>
+    </div>
+    <div class="feature">
+        <div class="feature-img-wrap-large"><img src="https://boxyourbuddy.com/hbo originals.png" class="feature-img top-align"></div>
+        <div class="feature-text">
+            <h3>Network Insights</h3>
+            <p>Filter by the production houses and networks that define your taste, like HBO or Showtime. Deep analytics for the studios behind the stories.</p>
+        </div>
+    </div>
+    <div class="feature">
+        <div class="feature-img-wrap-large"><img src="https://boxyourbuddy.com/actor card with hours watched stats.png" class="feature-img top-align"></div>
+        <div class="feature-text">
+            <h3>Cast Distribution</h3>
+            <p>Automated performer rankings that go beyond a simple list. Detailed stats on rewatched hours and total watch time for every cast member in your history.</p>
+        </div>
+    </div>
+    <div class="feature">
+        <div class="feature-img-wrap-large"><img src="https://boxyourbuddy.com/calendar.png" class="feature-img top-align"></div>
+        <div class="feature-text">
+            <h3>Native Calendar View</h3>
+            <p>A true chronological visualizer. Scroll back through years of your life using a native macOS interface built to handle massive watch histories smoothly.</p>
+        </div>
+    </div>
+    <div class="feature">
+        <div class="feature-img-wrap-large"><img src="https://boxyourbuddy.com/continue watching.png" class="feature-img top-align"></div>
+        <div class="feature-text">
+            <h3>Archive Protocol</h3>
+            <p>Sync Trakt data directly into your local queue. Manage your "Continue Watching" list with total control, ensuring your local database stays accurate and private.</p>
+        </div>
+    </div>
 </div>
 
 <div class="footer-grid">
     <div class="card-footer">
         <h2>Privacy Protocol: Your Data is Yours</h2>
-        <p>TV Stats is built for the <span class="highlight">Silent Observer.</span> All of your movie and TV history is stored <span class="highlight">locally on your device</span> in JSON format. We do not own, manage, or have access to your personal database.</p>
+        <p>TV Stats is built for the <span class="highlight">Silent Observer.</span> Every piece of watch history—ratings, dates, and rewatch counts—is stored <span class="highlight">locally on your Mac</span> in a standard JSON format.</p>
+        <p>We believe in forensic privacy. We don't use tracking cookies, we don't have a cloud database, and we have zero access to your viewing habits. Your history is your business.</p>
     </div>
     <div class="card-footer">
         <h2>MacOS Installation Instructions</h2>
-        <p>If macOS flags the app as unverified: <span class="highlight">Right-Click</span> the app icon, select <span class="highlight">Open</span>, and then click <span class="highlight">Open</span> again in the security dialog to grant permission.</p>
+        <p>Because TV Stats is independent software, macOS may flag it as an "unverified developer." This is a security feature, not a bug.</p>
+        <p>To install: <span class="highlight">Right-Click</span> the app icon, select <span class="highlight">Open</span>, and then click <span class="highlight">Open</span> again in the security window. You only have to do this once to grant permission.</p>
     </div>
 </div>
-
-<div class="legal-footer">Disclaimer: Provided "as-is." No Ads. No Pro Tier. TV Stats is an independent project by boxyourbuddy.</div>
-
-</body>
-</html>
