@@ -9,11 +9,14 @@
         body { margin: 0; background: #000; color: #fff; overflow-x: hidden; }
         .page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
         .page-header { text-align: center; margin-bottom: 50px; width: 100%; }
+        .brand-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; }
+        .brand-logo { width: 50px; height: auto; }
         .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; font-weight: bold; }
         .brand-name .tint { color: #FFF0AD; }
-        .brand-logo { width: 50px; height: auto; display: block; margin: 0 auto 10px; }
-        .back-link { display: inline-block; margin-top: 12px; font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; }
-        .back-link:hover { color: #FFF0AD; }
+        .nav { margin-top: 16px; display: flex; gap: 20px; justify-content: center; align-items: center; }
+        .nav a { font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; }
+        .nav a:hover { color: #FFF0AD; }
+        .nav .dot { height: 5px; width: 5px; background-color: #FFF0AD; border-radius: 50%; display: inline-block; }
         .story { width: 100%; max-width: 640px; }
         .story-title { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: bold; letter-spacing: 1px; margin: 0 0 10px; }
         .story-meta { font-size: 0.75rem; letter-spacing: 3px; color: #555; text-transform: uppercase; margin-bottom: 40px; font-weight: bold; }
@@ -25,9 +28,17 @@
 <body>
     <div class="page">
         <header class="page-header">
-            <img src="../../images/box-small.png" alt="BoxYourBuddy logo" class="brand-logo">
-            <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
-            <a href="../" class="back-link">← Writing</a>
+            <div class="brand-wrap">
+                <img src="../../images/box-small.png" alt="BoxYourBuddy logo" class="brand-logo">
+                <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
+            </div>
+            <nav class="nav">
+                <a href="/">HOME</a>
+                <span class="dot"></span>
+                <a href="/writing/" style="color: #FFF0AD;">WRITING</a>
+                <span class="dot"></span>
+                <a href="/tv-stats-tracker/">APPS</a>
+            </nav>
         </header>
 
         <div class="story">
