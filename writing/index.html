@@ -13,9 +13,11 @@
         .brand-logo { width: 50px; height: auto; }
         .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; }
         .brand-name .tint { color: #FFF0AD; }
-        .back-link { display: inline-block; margin-top: 12px; font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; }
-        .back-link:hover { color: #FFF0AD; }
-        .page-title { margin-top: 30px; font-size: 0.75rem; letter-spacing: 6px; color: #888; text-transform: uppercase; }
+        .nav { margin-top: 16px; display: flex; gap: 20px; justify-content: center; align-items: center; }
+        .nav a { font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; }
+        .nav a:hover { color: #FFF0AD; }
+        .nav .dot { height: 5px; width: 5px; background-color: #FFF0AD; border-radius: 50%; display: inline-block; }
+
         .cards { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 20px; }
         .card { display: block; text-decoration: none; color: #fff; background: #0a0a0a; border: 1px solid #222; border-radius: 6px; padding: 24px; transition: border-color 0.2s; }
         .card:hover { border-color: #FFF0AD; }
@@ -31,8 +33,14 @@
                 <img src="../images/box-small.png" alt="BoxYourBuddy logo" class="brand-logo">
                 <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
             </div>
-            <a href="/" class="back-link">← Home</a>
-            <p class="page-title">Writing</p>
+            <nav class="nav">
+                <a href="/">HOME</a>
+                <span class="dot"></span>
+                <a href="/writing/" style="color: #FFF0AD;">WRITING</a>
+                <span class="dot"></span>
+                <a href="/tv-stats-tracker/">APPS</a>
+            </nav>
+
         </header>
 
         <div class="cards">
