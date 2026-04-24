@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing — BoxYourBuddy</title>
-<link rel="icon" href="/favicon.png" type="image/png">
+    <title>Apps — BoxYourBuddy</title>
+    <link rel="icon" href="/favicon.png" type="image/png">
     <style>
         * { box-sizing: border-box; font-family: Arial, sans-serif; font-weight: bold; }
         body { margin: 0; background: #000; color: #fff; overflow-x: hidden; }
         .page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
-        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-header { text-align: center; margin-bottom: 40px; width: 100%; }
         .brand-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; }
         .brand-logo { width: 50px; height: auto; }
         .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; }
@@ -18,7 +18,6 @@
         .nav a { font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; }
         .nav a:hover { color: #FFF0AD; }
         .nav .dot { height: 5px; width: 5px; background-color: #FFF0AD; border-radius: 50%; display: inline-block; }
-
         .cards { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 20px; }
         .card { display: block; text-decoration: none; color: #fff; background: #0a0a0a; border: 1px solid #222; border-radius: 6px; padding: 24px; transition: border-color 0.2s; }
         .card:hover { border-color: #FFF0AD; }
@@ -31,24 +30,23 @@
     <div class="page">
         <header class="page-header">
             <div class="brand-wrap">
-                <img src="../images/box-small.png" alt="BoxYourBuddy logo" class="brand-logo">
+                <img src="/images/box-small.png" alt="BoxYourBuddy logo" class="brand-logo">
                 <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
             </div>
             <nav class="nav">
                 <a href="/">HOME</a>
                 <span class="dot"></span>
-                <a href="/writing/" style="color: #FFF0AD;">WRITING</a>
+                <a href="/writing/">WRITING</a>
                 <span class="dot"></span>
-                <a href="/apps/">APPS</a>
+                <a href="/apps/" style="color: #FFF0AD;">APPS</a>
             </nav>
-
         </header>
 
         <div class="cards">
-            <a href="simple-solution-for-hiccups/" class="card">
-                <p class="card-title">Simple Solution for Hiccups</p>
-                <p class="card-desc">Just follow these simple instructions and your hiccups will disappear.</p>
-                <p class="card-meta">June 28, 2018</p>
+            <a href="/tv-stats-tracker/" class="card">
+                <p class="card-title">TV Stats for macOS</p>
+                <p class="card-desc">Deep forensic analytics for your media history. Track movies and TV episodes locally on your Mac. No cloud, no data tracking, no ads.</p>
+                <p class="card-meta">Free — macOS</p>
             </a>
         </div>
     </div>

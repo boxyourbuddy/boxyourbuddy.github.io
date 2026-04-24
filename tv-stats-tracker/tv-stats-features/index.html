@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Stats Features — BoxYourBuddy</title>
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <style>
+        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        body { margin: 0; background: #000; color: #fff; overflow-x: hidden; }
+        .page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px 80px; }
+        .top-bar { width: 100%; max-width: 760px; margin-bottom: 30px; }
+        .back-link { font-size: 0.75rem; letter-spacing: 3px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; }
+        .back-link:hover { color: #FFF0AD; }
+        .content { width: 100%; max-width: 760px; }
+        .hero-title h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin: 0 0 6px; font-weight: 800; letter-spacing: -0.5px; }
+        .hero-title .version { font-size: 0.75rem; letter-spacing: 4px; color: #555; text-transform: uppercase; margin-bottom: 8px; }
+        .hero-tagline { font-style: italic; color: #888; font-size: 1rem; margin: 10px 0 6px; }
+        .hero-badges { display: flex; gap: 16px; margin: 14px 0 20px; flex-wrap: wrap; }
+        .badge { font-size: 0.75rem; letter-spacing: 3px; color: #FFF0AD; text-transform: uppercase; font-weight: bold; }
+        .hero-desc { font-size: 1rem; color: #888; line-height: 1.7; margin-bottom: 40px; font-weight: normal; }
+        hr { border: 0; border-top: 1px solid #1a1a1a; margin: 36px 0; }
+        .section { margin-bottom: 36px; }
+        .section-title { font-size: 0.8rem; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: #FFF0AD; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        ul { list-style: none; padding: 0; margin: 0; }
+        ul li { font-size: 0.95rem; color: #aaa; line-height: 1.6; padding: 10px 0 10px 20px; border-bottom: 1px solid #111; position: relative; font-weight: normal; }
+        ul li:last-child { border-bottom: none; }
+        ul li::before { content: "—"; position: absolute; left: 0; color: #333; }
+        .callout { background: #0a0a0a; border: 1px solid #222; border-radius: 8px; padding: 18px 22px; margin: 24px 0; font-size: 0.95rem; color: #888; line-height: 1.7; font-weight: normal; }
+        .footer-tag { margin-top: 60px; padding-top: 30px; border-top: 1px solid #1a1a1a; }
+        .footer-tag p { font-size: 0.8rem; letter-spacing: 3px; color: #444; text-transform: uppercase; margin: 4px 0; }
+        .footer-tag .highlight { color: #FFF0AD; }
+    </style>
+</head>
+<body>
+    <div class="page">
+
+        <div class="top-bar">
+            <a href="/tv-stats-tracker/" class="back-link">← Back to TV Stats</a>
+        </div>
+
+        <div class="content">
+
+            <div class="hero-title">
+                <h2>TV Stats for macOS</h2>
+                <p class="version">by BoxYourBuddy &nbsp;·&nbsp; Version 1.0</p>
+                <p class="hero-tagline">Track What You Watch. Understand How You Watch It.</p>
+                <div class="hero-badges">
+                    <span class="badge">Free</span>
+                    <span class="badge">·</span>
+                    <span class="badge">No Ads</span>
+                    <span class="badge">·</span>
+                    <span class="badge">Your Data Stays on Your Mac</span>
+                </div>
+            </div>
+
+            <p class="hero-desc">TV Stats is a native macOS app that gives you control over your viewing history, and gives you personal stats for your movie and tv show habit. All stored locally on your Mac. No subscription. No ads. Just a powerful tool built for people who love what they watch.</p>
+
+            <hr>
+
+            <div class="section">
+                <p class="section-title"><span>🔒</span> Your Data. Your Mac.</p>
+                <ul>
+                    <li>100% native macOS means no cloud, no servers, no data exchange</li>
+                    <li>All data saved to ~/Application Support so it never leaves your Mac</li>
+                    <li>Manual export option so your watch history is always backed up</li>
+                    <li>Option to back up your data to Google Drive just in case you throw your laptop in a pool</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="section">
+                <p class="section-title"><span>🔍</span> Advanced Search &amp; Filters</p>
+                <ul>
+                    <li>Find original programming by service</li>
+                    <li>Filter movies and TV shows with powerful, precise search tools</li>
+                    <li>Search by streaming services like HBO, Netflix, Hulu, Apple TV+, and more</li>
+                    <li>Filter by networks like CBS, Fox, and NBC or streaming service to see only their catalog</li>
+                    <li>Binge stat lets you see how many episodes you binged within a 24-hour window</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="section">
+                <p class="section-title"><span>🎭</span> Actor Personal History</p>
+                <ul>
+                    <li>See every actor's impact on your watch history</li>
+                    <li>Total movies and episodes watched per actor, including rewatch hours</li>
+                    <li>Sort an actor's filmography to filter only movies, only TV shows or everything</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="section">
+                <p class="section-title"><span>📊</span> Advanced Statistics</p>
+                <ul>
+                    <li>All stats are sortable by movies, TV episodes, or both</li>
+                    <li>All stats can be filtered by week, month, year, or all time</li>
+                    <li>Need that year in review? Just filter by custom date and ditch the subscriptions</li>
+                    <li>Top rated episodes for any time period you select</li>
+                    <li>Top rated movies for any time period you select</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="section">
+                <p class="section-title">Activity &amp; Viewing Patterns</p>
+                <ul>
+                    <li>Activity bar graph showing your last 40 days</li>
+                    <li>Click any day on that bar graph to jump to that date in your history</li>
+                    <li>Hover over any bar to show how many hours you watched that day</li>
+                    <li>Peak viewing hour tells you which hour of the day you watch the most</li>
+                    <li>2D heatmap of your watch habits broken down by day and hour</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="section">
+                <p class="section-title">Content Breakdowns</p>
+                <ul>
+                    <li>Movies watched by studio</li>
+                    <li>Episodes watched by network</li>
+                    <li>Top genres across your history</li>
+                    <li>Viewing by streaming service to see your time split across Netflix, Apple TV+, and more</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="section">
+                <p class="section-title">Top Actors</p>
+                <ul>
+                    <li>Your top 30 actors for any search period you choose</li>
+                    <li>Movie search: see your top actors and how many films you watched them in</li>
+                    <li>Episode search: see top actors and how many episodes featured them</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="section">
+                <p class="section-title"><span>🎨</span> Personalization &amp; Display</p>
+                <ul>
+                    <li>Zoom any page to your preferred size and each page remembers your zoom level when returning</li>
+                    <li>Smart window sizing means the app remembers exactly where you left it on screen when re-opening</li>
+                    <li>Use keyboard arrow keys to navigate back and forward between pages</li>
+                    <li>Dark mode and light mode</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="section">
+                <p class="section-title"><span>🔄</span> Trakt Integration</p>
+                <ul>
+                    <li>Import your full watch history from Trakt</li>
+                    <li>Ongoing Trakt sync to keep your history current</li>
+                </ul>
+                <div class="callout">Already a Trakt user? TV Stats gives you everything Trakt's paid subscription offers plus more advanced stats completely free, with no ads.</div>
+            </div>
+
+            <hr>
+
+            <div class="section">
+                <p class="section-title">Built-in Data Protection</p>
+                <ul>
+                    <li>The app checks file sizes before every save so your data can never be wiped by a glitch</li>
+                    <li>The app won't write a save file if it looks empty or corrupted</li>
+                    <li>On quit, the app stays open up to 5 seconds to ensure the last save finishes writing to disk</li>
+                    <li>The app won't fully shut down until it confirms the last save was successful</li>
+                    <li>Stores 10,000+ watch history items using a special memory system that avoids browser storage limits</li>
+                    <li>Uses a Weak Proxy system so the app never hogs RAM or leaks memory over time</li>
+                    <li>App settings stay in sync across all views automatically</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="section">
+                <p class="section-title"><span>📺</span> Tracking &amp; History</p>
+                <ul>
+                    <li>Mark shows and movies as watched to build a personal viewing history</li>
+                    <li>Your history is searchable and filterable by date, go back as far as you like</li>
+                    <li>History tab lets you sort by movies, TV episodes, or everything combined, even by custom date</li>
+                    <li>Activity is recorded every time you click or change something and nothing gets lost</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="section">
+                <p class="section-title"><span>📋</span> Watchlist</p>
+                <ul>
+                    <li>Build a large watchlist of movies and shows you plan to watch</li>
+                    <li>When you mark something as watched, it removes itself from your watchlist automatically</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="section">
+                <p class="section-title"><span>▶️</span> Continue Watching</p>
+                <ul>
+                    <li>Never lose your place because TV Stats always knows the next episode to watch</li>
+                    <li>Your in progress shows are organized and ready to go</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="section">
+                <p class="section-title"><span>📅</span> Calendar</p>
+                <ul>
+                    <li>See upcoming shows for the next 30 days at a glance</li>
+                    <li>Plan your viewing around what's coming</li>
+                </ul>
+            </div>
+
+            <div class="footer-tag">
+                <p>TV Stats v1.0 &nbsp;·&nbsp; <span class="highlight">Free</span> &nbsp;·&nbsp; No Ads &nbsp;·&nbsp; macOS</p>
+                <p>More stats than Trakt. No subscription needed.</p>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
