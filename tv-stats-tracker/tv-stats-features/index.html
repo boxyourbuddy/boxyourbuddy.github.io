@@ -18,7 +18,7 @@
         .hero-tagline { font-style: italic; color: #888; font-size: 1rem; margin: 10px 0 6px; }
         .hero-badges { display: flex; gap: 16px; margin: 14px 0 20px; flex-wrap: wrap; }
         .badge { font-size: 0.75rem; letter-spacing: 3px; color: #FFF0AD; text-transform: uppercase; font-weight: bold; }
-        .hero-desc { font-size: 1rem; color: #888; line-height: 1.7; margin-bottom: 40px; font-weight: normal; }
+        .hero-desc { font-size: 1rem; color: #888; line-height: 1.7; margin-bottom: 20px; font-weight: normal; }
         hr { border: 0; border-top: 1px solid #1a1a1a; margin: 36px 0; }
         .section { margin-bottom: 36px; }
         .section-title { font-size: 0.8rem; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: #FFF0AD; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
@@ -43,7 +43,7 @@
 
             <div class="hero-title">
                 <h2>TV Stats for macOS</h2>
-                <p class="version">by BoxYourBuddy &nbsp;·&nbsp; Version 1.0</p>
+                <p class="version">by BoxYourBuddy &nbsp;·&nbsp; Version 0.9</p>
                 <p class="hero-tagline">Track What You Watch. Understand How You Watch It.</p>
                 <div class="hero-badges">
                     <span class="badge">Free</span>
@@ -56,22 +56,24 @@
 
             <p class="hero-desc">TV Stats is a native macOS app that gives you control over your viewing history, and gives you personal stats for your movie and tv show habit. All stored locally on your Mac. No subscription. No ads. Just a powerful tool built for people who love what they watch.</p>
 
+            <p class="hero-desc">Sick of seeing ads in your tv and movie tracker or having to pay to get more features. Make the switch. Begin to build a TV Stats watch history by dragging your .json or .csv files from other apps like Trakt into the import files dropbox in the data settings.</p>
+
             <hr>
 
             <div class="section">
-                <p class="section-title"><span>🔒</span> Your Data. Your Mac.</p>
+                <p class="section-title">Your Data. Your Mac.</p>
                 <ul>
                     <li>100% native macOS means no cloud, no servers, no data exchange</li>
                     <li>All data saved to ~/Application Support so it never leaves your Mac</li>
-                    <li>Manual export option so your watch history is always backed up</li>
-                    <li>Option to back up your data to Google Drive just in case you throw your laptop in a pool</li>
+                    <li>Manual export option to download .json file of your watch history so it can always be backed up</li>
+                    <li>Option to back up your data to Google Drive by logging into your Google Account with an in app popup. No need to leave the app. Do this just in case you throw your laptop in a pool or spill coffee into the keyboard.</li>
                 </ul>
             </div>
 
             <hr>
 
             <div class="section">
-                <p class="section-title"><span>🔍</span> Advanced Search &amp; Filters</p>
+                <p class="section-title">Advanced Search &amp; Filters</p>
                 <ul>
                     <li>Find original programming by service</li>
                     <li>Filter movies and TV shows with powerful, precise search tools</li>
@@ -84,7 +86,7 @@
             <hr>
 
             <div class="section">
-                <p class="section-title"><span>🎭</span> Actor Personal History</p>
+                <p class="section-title">Actor Personal History</p>
                 <ul>
                     <li>See every actor's impact on your watch history</li>
                     <li>Total movies and episodes watched per actor, including rewatch hours</li>
@@ -95,8 +97,10 @@
             <hr>
 
             <div class="section">
-                <p class="section-title"><span>📊</span> Advanced Statistics</p>
+                <p class="section-title">Advanced Statistics</p>
                 <ul>
+                    <li>Ability to re-watch episodes and movies</li>
+                    <li>Re-watched episodes and movies now create a re-watched stat and filter throughout the app</li>
                     <li>All stats are sortable by movies, TV episodes, or both</li>
                     <li>All stats can be filtered by week, month, year, or all time</li>
                     <li>Need that year in review? Just filter by custom date and ditch the subscriptions</li>
@@ -144,10 +148,11 @@
             <hr>
 
             <div class="section">
-                <p class="section-title"><span>🎨</span> Personalization &amp; Display</p>
+                <p class="section-title">Personalization &amp; Display</p>
                 <ul>
+                    <li>Create multiple users for households with more than one watcher. Different watch histories for each user. No overlap or sharing.</li>
                     <li>Zoom any page to your preferred size and each page remembers your zoom level when returning</li>
-                    <li>Smart window sizing means the app remembers exactly where you left it on screen when re-opening</li>
+                    <li>Smart window sizing means the app remembers exactly where you left it on screen when re-opening app</li>
                     <li>Use keyboard arrow keys to navigate back and forward between pages</li>
                     <li>Dark mode and light mode</li>
                 </ul>
@@ -156,10 +161,11 @@
             <hr>
 
             <div class="section">
-                <p class="section-title"><span>🔄</span> Trakt Integration</p>
+                <p class="section-title">Trakt Integration</p>
                 <ul>
-                    <li>Import your full watch history from Trakt</li>
-                    <li>Ongoing Trakt sync to keep your history current</li>
+                    <li>Import your full watch history from Trakt by file or with Trakt Sync</li>
+                    <li>Marking a movie watched on Trakt also instantly marks the movie watched on TV Stats</li>
+                    <li>Marking a movie watched on TV Stats instantly marks the movie watched on Trakt</li>
                 </ul>
                 <div class="callout">Already a Trakt user? TV Stats gives you everything Trakt's paid subscription offers plus more advanced stats completely free, with no ads.</div>
             </div>
@@ -181,12 +187,18 @@
 
             <hr>
 
+            <div class="callout">And here is what you get with most other free TV and Movie trackers, also included and better</div>
+
             <div class="section">
-                <p class="section-title"><span>📺</span> Tracking &amp; History</p>
+                <p class="section-title">Tracking &amp; History</p>
                 <ul>
                     <li>Mark shows and movies as watched to build a personal viewing history</li>
+                    <li>When hitting checkmark to mark watched, option pops up to mark as watched now, on the air date, or another date where you can choose the day and time</li>
+                    <li>Marking a tv show watched on tv show tab or main title page marks the show as 100% watched on air date for each episode</li>
                     <li>Your history is searchable and filterable by date, go back as far as you like</li>
-                    <li>History tab lets you sort by movies, TV episodes, or everything combined, even by custom date</li>
+                    <li>Rewatched tab on history shows just the tv episodes or movies you rewatched</li>
+                    <li>History tab lets you sort by movies, TV episodes, or everything combined</li>
+                    <li>Bring This Date to the Top tab lets you choose the first date in the history list. Go back to July 31st 2016 to see what you were watching that month.</li>
                     <li>Activity is recorded every time you click or change something and nothing gets lost</li>
                 </ul>
             </div>
@@ -194,7 +206,7 @@
             <hr>
 
             <div class="section">
-                <p class="section-title"><span>📋</span> Watchlist</p>
+                <p class="section-title">Watchlist</p>
                 <ul>
                     <li>Build a large watchlist of movies and shows you plan to watch</li>
                     <li>When you mark something as watched, it removes itself from your watchlist automatically</li>
@@ -204,25 +216,38 @@
             <hr>
 
             <div class="section">
-                <p class="section-title"><span>▶️</span> Continue Watching</p>
+                <p class="section-title">Continue Watching</p>
                 <ul>
-                    <li>Never lose your place because TV Stats always knows the next episode to watch</li>
-                    <li>Your in progress shows are organized and ready to go</li>
+                    <li>Never lose your place because TV Stats always knows the next episode for all the shows you have started</li>
+                    <li>When a new season starts after waiting three years, it will show up in your continue watching section with a search bar in case there are too many shows you watch, like me.</li>
+                    <li>Your in progress shows are organized and ready to go in the order you watch them. Watch the pilot for the show M.A.S.H. and episode two shows up in this section first. Then watch the Breaking Bad pilot and episode two will show up first with M.A.S.H. episode two now next in the list.</li>
                 </ul>
             </div>
 
             <hr>
 
             <div class="section">
-                <p class="section-title"><span>📅</span> Calendar</p>
+                <p class="section-title">Calendar</p>
                 <ul>
                     <li>See upcoming shows for the next 30 days at a glance</li>
                     <li>Plan your viewing around what's coming</li>
                 </ul>
             </div>
 
+            <hr>
+
+            <div class="section">
+                <p class="section-title">Search</p>
+                <ul>
+                    <li>Search by Movie, TV Show or Person</li>
+                    <li>Movie Title Page shows a trailer to preview the movie, ratings, genre, description of movie, release date, runtime, director, writer, studio, country and language, where to watch it, and full cast</li>
+                    <li>TV Show Title Page shows the same as the Movie Show Title Page with the addition of each season of the show. Click on a season to take you to a list of the episodes for that season.</li>
+                    <li>TV Show Episode Page shows the episode you are looking at, ratings, a place to mark watched or watched again, description of episode, air date, runtime, director, writer and cast</li>
+                </ul>
+            </div>
+
             <div class="footer-tag">
-                <p>TV Stats v1.0 &nbsp;·&nbsp; <span class="highlight">Free</span> &nbsp;·&nbsp; No Ads &nbsp;·&nbsp; macOS</p>
+                <p>TV Stats v0.9 &nbsp;·&nbsp; <span class="highlight">Free</span> &nbsp;·&nbsp; No Ads &nbsp;·&nbsp; macOS</p>
                 <p>More stats than Trakt. No subscription needed.</p>
             </div>
 
