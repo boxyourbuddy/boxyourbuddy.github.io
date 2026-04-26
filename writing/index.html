@@ -27,8 +27,10 @@
         .nav .dot { height: 5px; width: 5px; background-color: #FFF0AD; border-radius: 50%; display: inline-block; }
 
         .cards { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 20px; }
-        .card { display: block; text-decoration: none; color: #fff; background: #0a0a0a; border: 1px solid #222; border-radius: 6px; padding: 24px; transition: border-color 0.2s; }
+        .card { display: block; text-decoration: none; color: #fff; background: #0a0a0a; border: 1px solid #222; border-radius: 6px; overflow: hidden; transition: border-color 0.2s; }
         .card:hover { border-color: #FFF0AD; }
+        .card-img { width: 100%; height: 200px; object-fit: cover; display: block; }
+        .card-body { padding: 20px 24px 24px; }
         .card-title { font-size: 1.2rem; letter-spacing: 1px; margin: 0 0 10px; }
         .card-desc { font-size: 0.85rem; color: #888; font-weight: normal; line-height: 1.6; margin: 0 0 16px; }
         .card-meta { font-size: 0.7rem; letter-spacing: 3px; color: #555; text-transform: uppercase; }
@@ -53,20 +55,14 @@
 
         <div class="cards">
             <a href="simple-solution-for-hiccups/" class="card">
-                <p class="card-title">Simple Solution for Hiccups</p>
-                <p class="card-desc">Just follow these simple instructions and your hiccups will disappear.</p>
-                <p class="card-meta">June 28, 2018</p>
+                <img src="../images/cookies.png" alt="Simple Solution for Hiccups" class="card-img">
+                <div class="card-body">
+                    <p class="card-title">Simple Solution for Hiccups</p>
+                    <p class="card-desc">Just follow these simple instructions and your hiccups will disappear.</p>
+                    <p class="card-meta">June 28, 2018</p>
+                </div>
             </a>
         </div>
-
-        
-        <div class="cards">
-            <a href="jelly-bean-plant-mutation/" class="card">
-                <p class="card-title">Jelly Bean Plant Mutation?</p>
-                <p class="card-desc">I am not sure what is going on with this succulent. I have thoughts.</p>
-                <p class="card-meta">April 2, 2017</p>
-            </a>
-        
     </div>
 </body>
 </html>
