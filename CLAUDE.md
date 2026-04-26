@@ -54,5 +54,10 @@ When I give you an exported Medium HTML file, do the following automatically:
    - First sentence of the story as description
    - Date formatted as Month DD, YYYY
    - Link pointing to the new folder
+   - Always include this image line in every card:
+     ```html
+     <img src="../images/xxxx.png" alt="[story title]" class="card-img">
+     ```
+     Leave the filename as `xxxx.png` — the user will rename it to match the actual image.
 5. Do not change any other files.
 6. Report back what you created and where.
