@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Writing — BoxYourBuddy</title>
-<link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="icon" href="/favicon.png" type="image/png">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -26,14 +26,59 @@
         .nav a:hover { color: #FFF0AD; }
         .nav .dot { height: 5px; width: 5px; background-color: #FFF0AD; border-radius: 50%; display: inline-block; }
 
-        .cards { width: 100%; max-width: 680px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .card { display: block; text-decoration: none; color: #fff; background: #0a0a0a; border: 1px solid #222; border-radius: 6px; overflow: hidden; transition: border-color 0.2s; }
+        /* Updated Cards Container */
+        .cards { 
+            width: 100%; 
+            max-width: 680px; 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 20px; 
+            align-items: stretch; 
+        }
+
+        /* Updated Card for Uniform Height */
+        .card { 
+            display: flex; 
+            flex-direction: column; 
+            text-decoration: none; 
+            color: #fff; 
+            background: #0a0a0a; 
+            border: 1px solid #222; 
+            border-radius: 6px; 
+            overflow: hidden; 
+            transition: border-color 0.2s; 
+            height: 100%; 
+        }
+
         .card:hover { border-color: #FFF0AD; }
         .card-img { width: 100%; height: 200px; object-fit: cover; display: block; }
-        .card-body { padding: 20px 24px 24px; }
+
+        /* Flex Body to push Meta to bottom */
+        .card-body { 
+            padding: 20px 24px 24px; 
+            display: flex; 
+            flex-direction: column; 
+            flex-grow: 1; 
+        }
+
         .card-title { font-size: 1.2rem; letter-spacing: 1px; margin: 0 0 10px; }
-        .card-desc { font-size: 0.85rem; color: #888; font-weight: normal; line-height: 1.6; margin: 0 0 16px; }
+        
+        /* flex-grow here ensures the description expands to fill space */
+        .card-desc { 
+            font-size: 0.85rem; 
+            color: #888; 
+            font-weight: normal; 
+            line-height: 1.6; 
+            margin: 0 0 16px; 
+            flex-grow: 1; 
+        }
+
         .card-meta { font-size: 0.7rem; letter-spacing: 3px; color: #555; text-transform: uppercase; }
+
+        /* Responsive tweak for mobile */
+        @media (max-width: 600px) {
+            .cards { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -50,12 +95,11 @@
                 <span class="dot"></span>
                 <a href="/apps/">APPS</a>
             </nav>
-
         </header>
 
         <div class="cards">
             <a href="play-with-your-food-if-it-makes-you-happy/" class="card">
-                <img src="../images/oatmeal-face.jpg" alt="Play with Your Food="card-img">
+                <img src="../images/oatmeal-face.jpg" alt="Play with Your Food" class="card-img">
                 <div class="card-body">
                     <p class="card-title">Play With Your Food if it Makes You Happy</p>
                     <p class="card-desc">There were times when I did not have enough money to buy the foods that I really wanted to eat.</p>
