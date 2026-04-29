@@ -262,6 +262,7 @@
     const MoviesPage=({goTo,watchlist,setWatchlist,watched,setWatched,showTotals,hidden,setHidden,showToast})=>{
       const _c=_moviesPageCache;
       const scrollRef=useRef(null);
+      const inputRef=useRef(null);
       const _restoring=useRef(!!(_c.browseItems?.length||_c.overlayItems?.length));
       // ── Browse state ──────────────────────────────────────────────────────
       const [section,setSection]=useState(_c.section||"trending");
@@ -434,6 +435,7 @@
             }
           }catch{setOverlayItems([]);}
           setOverlayLoading(false);
+          inputRef.current?.blur();
         },350);
         return()=>clearTimeout(t);
       },[query,sortBy,provider]);
@@ -571,7 +573,7 @@
                 <span style={{fontSize:12,fontWeight:600,color:C.amber,flexShrink:0}}>{provider.name}</span>
                 <div style={{flex:1,position:"relative",marginLeft:4}}>
                   <div style={{position:"absolute",left:9,top:"50%",transform:"translateY(-50%)",pointerEvents:"none"}}><SearchIcon size={12} color={hasQuery?C.text:C.muted}/></div>
-                  <input value={query} onChange={e=>setQuery(e.target.value)} placeholder={`Search within ${provider.name}…`} style={{width:"100%",background:"rgba(0,0,0,0.3)",border:hasQuery?`1px solid ${C.amber}40`:C.border,borderRadius:6,color:C.text,padding:"5px 10px 5px 29px",fontSize:12,outline:"none",transition:"border 0.15s"}}/>
+                  <input ref={inputRef} value={query} onChange={e=>setQuery(e.target.value)} placeholder={`Search within ${provider.name}…`} style={{width:"100%",background:"rgba(0,0,0,0.3)",border:hasQuery?`1px solid ${C.amber}40`:C.border,borderRadius:6,color:C.text,padding:"5px 10px 5px 29px",fontSize:12,outline:"none",transition:"border 0.15s"}}/>
                 </div>
                 {hasQuery&&<button onClick={()=>setQuery("")} style={{background:"none",border:"none",color:C.muted,cursor:"pointer",padding:"0 2px",fontSize:18,lineHeight:1,flexShrink:0}} title="Clear search">×</button>}
                 <button onClick={()=>{setProvider(null);setQuery("");if(scrollRef.current){window.__tvScrollToTop?window.__tvScrollToTop(scrollRef.current):(scrollRef.current.scrollTop=0);_c.scrollTop=0;}}} style={{display:"flex",alignItems:"center",gap:4,background:"none",border:"none",color:C.muted,fontSize:11,cursor:"pointer",padding:"0 4px",flexShrink:0}}><XIcon size={10}/>Clear</button>
@@ -581,7 +583,7 @@
             {!provider&&<div onClick={e=>e.stopPropagation()} style={{display:"flex",gap:8,marginBottom:14}}>
               <div style={{flex:1,position:"relative"}}>
                 <div style={{position:"absolute",left:12,top:"50%",transform:"translateY(-50%)",pointerEvents:"none"}}><SearchIcon size={14} color={hasQuery?C.text:C.muted}/></div>
-                <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search all movies…" style={{width:"100%",background:C.elevated,border:hasQuery?`1px solid ${C.blue}40`:C.border,borderRadius:8,color:C.text,padding:"9px 12px 9px 38px",fontSize:13,outline:"none",transition:"border 0.15s"}}/>
+                <input ref={inputRef} value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search all movies…" style={{width:"100%",background:C.elevated,border:hasQuery?`1px solid ${C.blue}40`:C.border,borderRadius:8,color:C.text,padding:"9px 12px 9px 38px",fontSize:13,outline:"none",transition:"border 0.15s"}}/>
               </div>
               {(hasQuery||hasFilters)&&<button onClick={()=>{setQuery("");setFilters({});}} style={{background:C.elevated,border:C.border,borderRadius:8,padding:"0 14px",color:C.muted,fontSize:12,cursor:"pointer"}}>Clear all</button>}
             </div>}
@@ -633,6 +635,7 @@
     const TVShowsPage=({goTo,watchlist,setWatchlist,watched,setWatched,showTotals,hidden,setHidden,showToast})=>{
       const _c=_tvPageCache;
       const scrollRef=useRef(null);
+      const inputRef=useRef(null);
       const _restoring=useRef(!!(_c.browseItems?.length||_c.overlayItems?.length));
       // ── Browse state ──────────────────────────────────────────────────────
       const [section,setSection]=useState(_c.section||"trending");
@@ -823,6 +826,7 @@
             }
           }catch{setOverlayItems([]);}
           setOverlayLoading(false);
+          inputRef.current?.blur();
         },350);
         return()=>clearTimeout(t);
       },[query,sortBy,provider]);
@@ -963,7 +967,7 @@
                 <span style={{fontSize:12,fontWeight:600,color:C.amber,flexShrink:0}}>{provider.name}</span>
                 <div style={{flex:1,position:"relative",marginLeft:4}}>
                   <div style={{position:"absolute",left:9,top:"50%",transform:"translateY(-50%)",pointerEvents:"none"}}><SearchIcon size={12} color={hasQuery?C.text:C.muted}/></div>
-                  <input value={query} onChange={e=>setQuery(e.target.value)} placeholder={`Search within ${provider.name}…`} style={{width:"100%",background:"rgba(0,0,0,0.3)",border:hasQuery?`1px solid ${C.amber}40`:C.border,borderRadius:6,color:C.text,padding:"5px 10px 5px 29px",fontSize:12,outline:"none",transition:"border 0.15s"}}/>
+                  <input ref={inputRef} value={query} onChange={e=>setQuery(e.target.value)} placeholder={`Search within ${provider.name}…`} style={{width:"100%",background:"rgba(0,0,0,0.3)",border:hasQuery?`1px solid ${C.amber}40`:C.border,borderRadius:6,color:C.text,padding:"5px 10px 5px 29px",fontSize:12,outline:"none",transition:"border 0.15s"}}/>
                 </div>
                 {hasQuery&&<button onClick={()=>setQuery("")} style={{background:"none",border:"none",color:C.muted,cursor:"pointer",padding:"0 2px",fontSize:18,lineHeight:1,flexShrink:0}} title="Clear search">×</button>}
                 <button onClick={()=>{setProvider(null);setQuery("");if(scrollRef.current){window.__tvScrollToTop?window.__tvScrollToTop(scrollRef.current):(scrollRef.current.scrollTop=0);_c.scrollTop=0;}}} style={{display:"flex",alignItems:"center",gap:4,background:"none",border:"none",color:C.muted,fontSize:11,cursor:"pointer",padding:"0 4px",flexShrink:0}}><XIcon size={10}/>Clear</button>
@@ -972,7 +976,7 @@
             {!provider&&<div onClick={e=>e.stopPropagation()} style={{display:"flex",gap:8,marginBottom:14}}>
               <div style={{flex:1,position:"relative"}}>
                 <div style={{position:"absolute",left:12,top:"50%",transform:"translateY(-50%)",pointerEvents:"none"}}><SearchIcon size={14} color={hasQuery?C.text:C.muted}/></div>
-                <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search all TV shows…" style={{width:"100%",background:C.elevated,border:hasQuery?`1px solid ${C.blue}40`:C.border,borderRadius:8,color:C.text,padding:"9px 12px 9px 38px",fontSize:13,outline:"none",transition:"border 0.15s"}}/>
+                <input ref={inputRef} value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search all TV shows…" style={{width:"100%",background:C.elevated,border:hasQuery?`1px solid ${C.blue}40`:C.border,borderRadius:8,color:C.text,padding:"9px 12px 9px 38px",fontSize:13,outline:"none",transition:"border 0.15s"}}/>
               </div>
               {(hasQuery||hasFilters)&&<button onClick={()=>{setQuery("");setFilters({});}} style={{background:C.elevated,border:C.border,borderRadius:8,padding:"0 14px",color:C.muted,fontSize:12,cursor:"pointer"}}>Clear all</button>}
             </div>}
@@ -1327,16 +1331,16 @@
       const markAllEpisodes=async()=>{setTvConfirm(false);try{const showData=await api(`/tv/${id}`);const seasons=(showData.seasons||[]).filter(s=>s.season_number>0);const seasonDetails=await Promise.all(seasons.map(s=>api(`/tv/${id}/season/${s.season_number}`)));setWatched(p=>{const n=new Map(p);seasonDetails.forEach(sd=>{const sn=sd.season_number;(sd.episodes||[]).forEach(ep=>{if(!ep.air_date)return;const k=`ep-${id}-${sn}-${ep.episode_number}`;const[y,mo,d]=ep.air_date.split("-").map(Number);const date=new Date(y,mo-1,d,12,0).toISOString();const ex=n.get(k);const dates=ex?.dates?[...ex.dates,date]:ex?.date?[ex.date,date]:[date];n.set(k,{item:{media_type:"episode",showId:id,showName:title,showPoster:item.poster_path,showBackdrop:item.backdrop_path,season_number:sn,episode_number:ep.episode_number,name:ep.name||""},date,dates});});});return n;});setWatchlist(p=>{const n=new Map(p);n.delete(id);return n;});}catch(err){console.error("Failed to mark all episodes",err);}};
       const handleClick=()=>{if(type==="tv"&&onTvClick){onTvClick();return;}if(goTo){if(type==="movie")goTo("movie-detail",item);else if(type==="tv")goTo("tv-detail",item);}};
       return(<>
-        <div onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)} onClick={handleClick}
+        <div onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)} onMouseDown={handleClick}
           style={{background:C.surface,borderRadius:8,overflow:"hidden",border:hover?`0.5px solid ${C.hover}`:C.border,transform:hover?"translateY(-3px)":"none",boxShadow:hover?`0 8px 24px ${C.shadow}`:"none",transition:"transform 0.18s ease,box-shadow 0.18s ease,border-color 0.18s ease",cursor:"pointer"}}>
           <div style={{position:"relative",paddingTop:"75%",background:C.elevated,overflow:"hidden"}}>
             {imageUrl?<img src={imageUrl} alt={title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"center top"}} loading="lazy"/>:<div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:28,opacity:0.2}}>🎬</div>}
             <div style={{position:"absolute",bottom:0,left:0,right:0,height:"55%",background:"linear-gradient(to top,rgba(13,13,13,0.95),transparent)",pointerEvents:"none"}}/>
             <div style={{position:"absolute",top:7,right:7,display:"flex",gap:5,opacity:hover?1:0.5,transition:"opacity 0.15s"}}>
-              <button onClick={toggleWL} style={{width:28,height:28,display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(10,10,10,0.82)",border:`0.5px solid ${inWL?C.amber+"60":"rgba(255,255,255,0.08)"}`,borderRadius:6,boxShadow:inWL?`0 0 10px ${C.amber}50`:"none",transition:"all 0.15s",cursor:"pointer"}}><EyeIcon size={13} color={inWL?C.amber:"#909090"}/></button>
-              <button onClick={clickCheck} style={{width:28,height:28,display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(10,10,10,0.82)",border:`0.5px solid ${inW?C.green+"60":"rgba(255,255,255,0.08)"}`,borderRadius:6,boxShadow:inW?`0 0 10px ${C.green}50`:"none",transition:"all 0.15s",cursor:"pointer"}}><CheckIcon size={13} color={inW?C.green:"#909090"}/></button>
+              <button onMouseDown={e=>e.stopPropagation()} onClick={toggleWL} style={{width:28,height:28,display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(10,10,10,0.82)",border:`0.5px solid ${inWL?C.amber+"60":"rgba(255,255,255,0.08)"}`,borderRadius:6,boxShadow:inWL?`0 0 10px ${C.amber}50`:"none",transition:"all 0.15s",cursor:"pointer"}}><EyeIcon size={13} color={inWL?C.amber:"#909090"}/></button>
+              <button onMouseDown={e=>e.stopPropagation()} onClick={clickCheck} style={{width:28,height:28,display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(10,10,10,0.82)",border:`0.5px solid ${inW?C.green+"60":"rgba(255,255,255,0.08)"}`,borderRadius:6,boxShadow:inW?`0 0 10px ${C.green}50`:"none",transition:"all 0.15s",cursor:"pointer"}}><CheckIcon size={13} color={inW?C.green:"#909090"}/></button>
             </div>
-            {setHidden&&<button onClick={e=>{e.stopPropagation();setHideConfirm(true);}} title="Hide from search" style={{position:"absolute",bottom:7,right:7,width:26,height:26,display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(10,10,10,0.82)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:6,cursor:"pointer",opacity:hover?0.85:0,transition:"opacity 0.15s"}}>
+            {setHidden&&<button onMouseDown={e=>e.stopPropagation()} onClick={e=>{e.stopPropagation();setHideConfirm(true);}} title="Hide from search" style={{position:"absolute",bottom:7,right:7,width:26,height:26,display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(10,10,10,0.82)",border:"0.5px solid rgba(255,255,255,0.08)",borderRadius:6,cursor:"pointer",opacity:hover?0.85:0,transition:"opacity 0.15s"}}>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#909090" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
             </button>}
 
@@ -1369,7 +1373,7 @@
       const known=(item.known_for||[]).map(k=>k.title||k.name).slice(0,2).join(", ");
       const imgSrc=item.profile_path?img(item.profile_path,landscape?"h632":"w185"):null;
       return(
-        <div onClick={()=>goTo&&goTo("person-detail",item)} onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)} style={{background:C.surface,borderRadius:8,overflow:"hidden",border:hover?`0.5px solid ${C.hover}`:C.border,transform:hover?"translateY(-3px)":"none",boxShadow:hover?`0 8px 24px ${C.shadow}`:"none",transition:"transform 0.18s ease,box-shadow 0.18s ease,border-color 0.18s ease",cursor:"pointer"}}>
+        <div onMouseDown={()=>goTo&&goTo("person-detail",item)} onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)} style={{background:C.surface,borderRadius:8,overflow:"hidden",border:hover?`0.5px solid ${C.hover}`:C.border,transform:hover?"translateY(-3px)":"none",boxShadow:hover?`0 8px 24px ${C.shadow}`:"none",transition:"transform 0.18s ease,box-shadow 0.18s ease,border-color 0.18s ease",cursor:"pointer"}}>
           <div style={{position:"relative",paddingTop:landscape?"75%":"150%",background:C.elevated,overflow:"hidden"}}>
             {imgSrc?<img src={imgSrc} alt={name} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:landscape?"contain":"cover",objectPosition:landscape?"center top":"center top"}} loading="lazy"/>:<div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:48,opacity:0.2}}>👤</div>}
             <div style={{position:"absolute",bottom:0,left:0,right:0,height:"40%",background:"linear-gradient(to top,rgba(13,13,13,0.9),transparent)",pointerEvents:"none"}}/>
@@ -2076,6 +2080,8 @@ const showsInProgressFromWatched=(watched)=>{
     // ── Continue Watching Page ───────────────────────────────────────────────
     const ContinueWatchingPage=({goTo,watched,setWatched})=>{
       const [search,setSearch]=useState("");
+      const inputRef=useRef(null);
+      useEffect(()=>{if(!search)return;const t=setTimeout(()=>inputRef.current?.blur(),350);return()=>clearTimeout(t);},[search]);
       const allItems=useMemo(()=>{
         const showMap=new Map();
         [...(watched||new Map()).entries()].forEach(([,{item,date}])=>{
@@ -2094,7 +2100,7 @@ const showsInProgressFromWatched=(watched)=>{
           <Breadcrumb items={[{label:"Home",onClick:()=>goTo("home")},{label:"Continue Watching"}]}/>
           <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:22}}>
             <h2 style={{fontFamily:"'DM Serif Display',serif",fontSize:22,fontWeight:400,color:C.text,flex:1,letterSpacing:"-0.01em"}}>Continue Watching</h2>
-            <div style={{position:"relative",width:240}}><div style={{position:"absolute",left:10,top:"50%",transform:"translateY(-50%)",pointerEvents:"none"}}><SearchIcon size={13} color={C.muted}/></div><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search…" style={{width:"100%",background:C.elevated,border:C.border,borderRadius:8,color:C.text,padding:"8px 12px 8px 32px",fontSize:12,outline:"none"}}/></div>
+            <div style={{position:"relative",width:240}}><div style={{position:"absolute",left:10,top:"50%",transform:"translateY(-50%)",pointerEvents:"none"}}><SearchIcon size={13} color={C.muted}/></div><input ref={inputRef} value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search…" style={{width:"100%",background:C.elevated,border:C.border,borderRadius:8,color:C.text,padding:"8px 12px 8px 32px",fontSize:12,outline:"none"}}/></div>
           </div>
           {filtered.length===0
             ?(<div style={{textAlign:"center",padding:"80px 0",color:C.muted}}><div style={{fontSize:32,marginBottom:12}}>📺</div><div style={{fontSize:14}}>{search?`Nothing matches "${search}"`:"No shows in progress yet"}</div></div>)
@@ -2550,6 +2556,8 @@ const showsInProgressFromWatched=(watched)=>{
       const [search,setSearch]=useState(_c.search||"");
       useEffect(()=>{Object.assign(_c,{filter,search});},[filter,search]);
       const scrollRef=useRef(null);
+      const inputRef=useRef(null);
+      useEffect(()=>{if(!search)return;const t=setTimeout(()=>inputRef.current?.blur(),350);return()=>clearTimeout(t);},[search]);
       useEffect(()=>{if(scrollRef.current&&_c.scrollTop)scrollRef.current.scrollTop=_c.scrollTop;},[]);
       const items=[...watchlist.values()];
       const filtered=items.filter(item=>{
@@ -2560,7 +2568,7 @@ const showsInProgressFromWatched=(watched)=>{
       });
       return(<div ref={scrollRef} onScroll={()=>{if(scrollRef.current)_c.scrollTop=scrollRef.current.scrollTop;}} style={{flex:1,overflow:"auto",padding:"24px 32px",willChange:"transform",animation:"fadeIn 0.18s ease"}}>
         <div style={{display:"flex",gap:12,alignItems:"center",marginBottom:16,flexWrap:"wrap"}}>
-          <div style={{position:"relative",flex:1,minWidth:200}}><div style={{position:"absolute",left:10,top:"50%",transform:"translateY(-50%)",pointerEvents:"none"}}><SearchIcon size={13} color={C.muted}/></div><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Filter watchlist…" style={{width:"100%",background:C.elevated,border:C.border,borderRadius:8,color:C.text,padding:"8px 12px 8px 32px",fontSize:12,outline:"none"}}/></div>
+          <div style={{position:"relative",flex:1,minWidth:200}}><div style={{position:"absolute",left:10,top:"50%",transform:"translateY(-50%)",pointerEvents:"none"}}><SearchIcon size={13} color={C.muted}/></div><input ref={inputRef} value={search} onChange={e=>setSearch(e.target.value)} placeholder="Filter watchlist…" style={{width:"100%",background:C.elevated,border:C.border,borderRadius:8,color:C.text,padding:"8px 12px 8px 32px",fontSize:12,outline:"none"}}/></div>
           <div style={{display:"flex",gap:6}}>{[["all","All"],["movies","Movies"],["tv","TV"]].map(([v,l])=><FilterPill key={v} label={l} active={filter===v} onClick={()=>setFilter(v)} color={C.amber}/>)}</div>
         </div>
         <div style={{fontSize:11,color:C.muted,marginBottom:16}}>{filtered.length} item{filtered.length!==1?"s":""}</div>
@@ -2586,6 +2594,8 @@ const showsInProgressFromWatched=(watched)=>{
       useEffect(()=>{Object.assign(_c,{filter,showRewatched,search,jumpDate,visibleDays,bringDate});},[filter,showRewatched,search,jumpDate,visibleDays,bringDate]);
       const sentinelRef=useRef(null);
       const scrollRef=useRef(null);
+      const inputRef=useRef(null);
+      useEffect(()=>{if(!search)return;const t=setTimeout(()=>inputRef.current?.blur(),350);return()=>clearTimeout(t);},[search]);
       useEffect(()=>{if(scrollRef.current&&_c.scrollTop)scrollRef.current.scrollTop=_c.scrollTop;},[]);
 
       // All items sorted newest-first — expand multi-date entries so each watch appears separately
@@ -2708,7 +2718,7 @@ const showsInProgressFromWatched=(watched)=>{
           {/* Search bar */}
           <div style={{position:"relative",flex:1,minWidth:160,maxWidth:320}}>
             <svg style={{position:"absolute",left:9,top:"50%",transform:"translateY(-50%)",pointerEvents:"none"}} width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={C.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search history…" style={{width:"100%",background:C.elevated,border:search?`1px solid ${C.amber}40`:C.border,borderRadius:8,color:C.text,padding:"6px 10px 6px 30px",fontSize:12,outline:"none",transition:"border 0.15s"}}/>
+            <input ref={inputRef} value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search history…" style={{width:"100%",background:C.elevated,border:search?`1px solid ${C.amber}40`:C.border,borderRadius:8,color:C.text,padding:"6px 10px 6px 30px",fontSize:12,outline:"none",transition:"border 0.15s"}}/>
             {search&&<button onClick={()=>setSearch("")} style={{position:"absolute",right:8,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",color:C.muted,cursor:"pointer",fontSize:14,lineHeight:1}}>×</button>}
           </div>
           {jumpDate&&<div style={{display:"flex",alignItems:"center",gap:6,background:"#1e2a1e",border:`1px solid ${C.green}44`,borderRadius:99,padding:"4px 10px 4px 12px",fontSize:12,color:C.green,flexShrink:0}}>
@@ -3774,7 +3784,7 @@ const showsInProgressFromWatched=(watched)=>{
 
           {credits.length===0&&!loading&&<div style={{color:C.muted,fontSize:13}}>No filmography available</div>}
         </div>
-      </div>);
+      <ScrollToTopBtn scrollRef={scrollRef}/></div>);
     };
 
     // Bio text with expand/collapse
