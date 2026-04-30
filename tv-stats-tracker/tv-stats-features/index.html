@@ -37,10 +37,33 @@
         .footer-tag { margin-top: 60px; padding-top: 30px; border-top: 1px solid #1a1a1a; }
         .footer-tag p { font-size: 0.8rem; letter-spacing: 3px; color: #444; text-transform: uppercase; margin: 4px 0; }
         .footer-tag .highlight { color: #FFF0AD; }
+        .page-header { text-align: center; margin-bottom: 16px; width: 100%; }
+        .brand-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; }
+        .brand-logo { width: 50px; height: auto; }
+        .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; font-weight: bold; }
+        .brand-name .tint { color: #FFF0AD; }
+        .site-nav { margin-top: 16px; display: flex; gap: 20px; justify-content: center; align-items: center; }
+        .site-nav a { font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; }
+        .site-nav a:hover { color: #FFF0AD; }
+        .site-nav .dot { height: 5px; width: 5px; background-color: #FFF0AD; border-radius: 50%; display: inline-block; }
     </style>
 </head>
 <body>
     <div class="page">
+
+        <header class="page-header">
+            <div class="brand-wrap">
+                <img src="/images/box-small.png" alt="BoxYourBuddy logo" class="brand-logo">
+                <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
+            </div>
+            <nav class="site-nav">
+                <a href="/">HOME</a>
+                <span class="dot"></span>
+                <a href="/writing/">WRITING</a>
+                <span class="dot"></span>
+                <a href="/apps/" style="color: #FFF0AD;">APPS</a>
+            </nav>
+        </header>
 
         <div class="top-bar">
             <a href="/tv-stats-tracker/" class="back-link">← Back to TV Stats</a>
