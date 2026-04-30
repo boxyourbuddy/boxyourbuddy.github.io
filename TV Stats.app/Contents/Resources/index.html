@@ -1273,6 +1273,7 @@
     // match on stored media_type (with a small legacy heuristic when it is missing).
     const getWatchedEntry=(watched,id)=>watched.get(id)??watched.get(String(id))??null;
     const epWatchedCountFor=(watched,id)=>{const sid=String(id);return[...watched.keys()].filter(k=>typeof k==="string"&&new RegExp(`^ep-${sid}-\\d+-\\d+$`).test(k)).length;};
+    const fmtMins=m=>{if(m<60)return`${Math.round(m)}m`;const h=m/60;if(h<48)return`${h.toFixed(1)}h`;return`${(m/60/24).toFixed(1)}d`;};
     const storedMediaLooksMovie=st=>{if(!st?.item)return false;const i=st.item,m=i.media_type;if(m==="movie")return true;if(m==="tv"||m==="episode")return false;return Boolean(i.title&&!i.name);};
     const storedMediaLooksTv=st=>{if(!st?.item)return false;const i=st.item,m=i.media_type;if(m==="tv")return true;if(m==="movie"||m==="episode")return false;return Boolean(i.name&&!i.title);};
 
@@ -2284,6 +2285,7 @@ const showsInProgressFromWatched=(watched)=>{
       const id=item.id;
       const watchedRow=getWatchedEntry(watched,id);
       const epWatchedCount=useMemo(()=>epWatchedCountFor(watched,id),[watched,id]);
+      const epRewatchCount=useMemo(()=>{const sid=String(id);return[...watched.entries()].filter(([k])=>typeof k==="string"&&new RegExp(`^ep-${sid}-\\d+-\\d+$`).test(k)).reduce((sum,[,v])=>sum+Math.max(0,(v.dates?.length||(v.date?1:0))-1),0);},[watched,id]);
       const lastWatchedEp=useMemo(()=>{let best=null;[...watched.entries()].forEach(([,{item:wi}])=>{if(wi?.media_type!=="episode"||wi.showId!==id)return;const sn=wi.season_number||1,ep=wi.episode_number||1;if(!best||sn>best.season||(sn===best.season&&ep>best.episode))best={showId:id,showName:item.name,showPoster:item.poster_path,showBackdrop:item.backdrop_path,season:sn,episode:ep};});return best;},[watched,id]);
       const inWL=watchlist.has(id),inW=storedMediaLooksTv(watchedRow)||epWatchedCount>0;
       const toggleWL=()=>setWatchlist(p=>{const n=new Map(p);n.has(id)?n.delete(id):n.set(id,item);return n;});
@@ -2309,6 +2311,10 @@ const showsInProgressFromWatched=(watched)=>{
       const statusColor=detail.status==="Returning Series"?C.green:C.muted;
       const seasons=(detail.seasons||[]).filter(s=>s.season_number>0);
       const totalEps=detail.number_of_episodes||0;
+      const epRuntime=detail.episode_run_time?.[0]||45;
+      const watchedMins=epWatchedCount*epRuntime;
+      const rewatchMins=epRewatchCount*epRuntime;
+      const totalMins=watchedMins+rewatchMins;
       const creator=(detail.created_by||[]).map(c=>c.name).join(", ")||"—";
       return(<div ref={scrollRef} onScroll={()=>{if(scrollRef.current)_tvScrollCache.set(id,scrollRef.current.scrollTop);}} style={{flex:1,overflow:"auto",willChange:"transform",animation:"fadeIn 0.18s ease"}}>
         {/* Hero — matches MovieDetailPage style */}
@@ -2346,10 +2352,22 @@ const showsInProgressFromWatched=(watched)=>{
                   ))}
                 </div>}
                 {!inW&&seasons.length>0&&<div style={{marginTop:12}}><button onClick={()=>goTo("episode-detail",{show:detail,season:{season_number:1,name:"Season 1"},episode:{episode_number:1,name:"",season_number:1}})} style={{display:"flex",alignItems:"center",gap:6,padding:"8px 16px",borderRadius:8,background:`${C.green}18`,border:`1px solid ${C.green}50`,color:C.green,fontSize:12,fontWeight:500,cursor:"pointer",transition:"all 0.15s"}} onMouseEnter={e=>{e.currentTarget.style.background=`${C.green}28`;e.currentTarget.style.borderColor=`${C.green}80`;}} onMouseLeave={e=>{e.currentTarget.style.background=`${C.green}18`;e.currentTarget.style.borderColor=`${C.green}50`;}}><PlayIcon size={11} color={C.green}/>Get Started with Season 1 Episode 1</button></div>}
-                {(epWatchedCount>0||lastWatchedEp)&&(
-                  <div style={{display:"flex",flexDirection:"column",alignItems:"flex-start",gap:8,marginTop:12}}>
-                    {epWatchedCount>0&&<div style={{display:"flex",alignItems:"center",gap:5,background:`${C.green}22`,border:`1px solid ${C.green}60`,borderRadius:6,padding:"4px 10px",boxShadow:`0 0 10px ${C.green}20`}}><CheckIcon size={10} color={C.green}/><span style={{fontSize:11,fontWeight:700,color:C.green,letterSpacing:"0.06em"}}>{totalEps>0?`${epWatchedCount} OF ${totalEps} EPISODES WATCHED`:`${epWatchedCount} EPISODES WATCHED`}</span></div>}
-                    {lastWatchedEp&&<div style={{width:170}}><ContinueCard item={lastWatchedEp} goTo={goTo} watched={watched} setWatched={setWatched} compact={true}/></div>}
+                {(epWatchedCount>0||epRewatchCount>0||lastWatchedEp)&&(
+                  <div style={{display:"flex",flexDirection:"column",alignItems:"flex-start",gap:6,marginTop:12}}>
+                    <div style={{display:"flex",alignItems:"flex-start",gap:10,flexWrap:"wrap"}}>
+                      {epWatchedCount>0&&<div style={{display:"flex",flexDirection:"column",gap:4}}>
+                        <div style={{display:"flex",alignItems:"center",gap:5,background:`${C.green}22`,border:`1px solid ${C.green}60`,borderRadius:6,padding:"4px 10px",boxShadow:`0 0 10px ${C.green}20`}}><CheckIcon size={10} color={C.green}/><span style={{fontSize:11,fontWeight:700,color:C.green,letterSpacing:"0.06em"}}>{totalEps>0?`${epWatchedCount} OF ${totalEps} EPISODES WATCHED`:`${epWatchedCount} EPISODES WATCHED`}</span></div>
+                        <div style={{display:"flex",alignItems:"center",gap:5,background:`${C.green}12`,border:`1px solid ${C.green}40`,borderRadius:6,padding:"3px 10px"}}><span style={{fontSize:10,fontWeight:600,color:C.green,letterSpacing:"0.05em",opacity:0.85}}>{fmtMins(watchedMins)} WATCHED</span></div>
+                      </div>}
+                      {epRewatchCount>0&&<div style={{display:"flex",flexDirection:"column",gap:4}}>
+                        <div style={{display:"flex",alignItems:"center",gap:5,background:`${C.amber}22`,border:`1px solid ${C.amber}60`,borderRadius:6,padding:"4px 10px",boxShadow:`0 0 10px ${C.amber}20`}}><span style={{fontSize:11,fontWeight:700,color:C.amber,letterSpacing:"0.06em"}}>{epRewatchCount} EPISODES REWATCHED</span></div>
+                        <div style={{display:"flex",alignItems:"center",gap:5,background:`${C.amber}12`,border:`1px solid ${C.amber}40`,borderRadius:6,padding:"3px 10px"}}><span style={{fontSize:10,fontWeight:600,color:C.amber,letterSpacing:"0.05em",opacity:0.85}}>{fmtMins(rewatchMins)} REWATCHED</span></div>
+                      </div>}
+                      {epWatchedCount>0&&epRewatchCount>0&&<div style={{display:"flex",flexDirection:"column",gap:4,justifyContent:"center"}}>
+                        <div style={{display:"flex",alignItems:"center",gap:5,background:`${C.blue}22`,border:`1px solid ${C.blue}60`,borderRadius:6,padding:"4px 10px",boxShadow:`0 0 10px ${C.blue}20`}}><span style={{fontSize:11,fontWeight:700,color:C.blue,letterSpacing:"0.06em"}}>TOTAL {fmtMins(totalMins)}</span></div>
+                      </div>}
+                    </div>
+                    {lastWatchedEp&&<div style={{width:170,marginTop:2}}><ContinueCard item={lastWatchedEp} goTo={goTo} watched={watched} setWatched={setWatched} compact={true}/></div>}
                   </div>
                 )}
               </div>
