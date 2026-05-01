@@ -17,6 +17,7 @@ Pure HTML5 + CSS3 (no frameworks, no JavaScript bundlers). Each page is a self-c
 **Site structure:**
 - `/index.html` — landing page with animated SVG text and rotating hero eye image
 - `/apps/index.html` — macOS app showcase
+- `/art/index.html` — art gallery page
 - `/tv-stats-tracker/index.html` — TV Stats product page (main app marketing page)
 - `/tv-stats-tracker/tv-stats-features/index.html` — extended features page
 - `/writing/index.html` — blog listing
@@ -26,6 +27,19 @@ Pure HTML5 + CSS3 (no frameworks, no JavaScript bundlers). Each page is a self-c
 - Background: `#000000`, cards: `#111111`, text: `#ffffff`, accent: `#FFF0AD`
 - Typography: `-apple-system, BlinkMacSystemFont, Arial` stack; fluid sizing via `clamp()`
 - Google Analytics via gtag (`GA-7NDGQGQM5G`) is present on marketing pages
+
+**Nav — required on every page.** All pages (new and existing) must include this nav with all four links. The active page link gets `style="color: #FFF0AD;"`. Exception: the home page (`/index.html`) uses its own `identity-line` style but "ARTIST" must still link to `/art/`.
+```html
+<nav class="nav">
+    <a href="/">HOME</a>
+    <span class="dot"></span>
+    <a href="/writing/">WRITING</a>
+    <span class="dot"></span>
+    <a href="/art/">ART</a>
+    <span class="dot"></span>
+    <a href="/apps/">APPS</a>
+</nav>
+```
 
 **TV Stats product pages** use JSON-LD schema markup for SEO and follow a privacy-first messaging angle: no ads, no subscriptions, no cloud, local-only data storage.
 
