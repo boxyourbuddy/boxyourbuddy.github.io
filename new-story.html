@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Story — BoxYourBuddy</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        * { box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { margin: 0; background: #111; color: #fff; padding: 48px 20px 80px; }
+        .container { max-width: 720px; margin: 0 auto; }
+
+        .tool-header { margin-bottom: 40px; }
+        .tool-header h1 { font-size: 1rem; letter-spacing: 4px; text-transform: uppercase; color: #FFF0AD; margin: 0 0 6px; }
+        .tool-header p { font-size: 0.8rem; color: #555; margin: 0; letter-spacing: 1px; }
+
+        .field { margin-bottom: 28px; }
+        label {
+            display: block;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+            background: #000;
+            border: 1px solid #2a2a2a;
+            color: #fff;
+            padding: 12px 14px;
+            font-size: 1rem;
+            border-radius: 4px;
+            outline: none;
+            font-family: Arial, sans-serif;
+        }
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        textarea:focus { border-color: #FFF0AD; }
+
+        textarea { resize: vertical; }
+
+        /* Image upload area */
+        .upload-area {
+            border: 1px dashed #333;
+            border-radius: 4px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            background: #000;
+            transition: border-color 0.2s;
+        }
+        .upload-area:hover { border-color: #FFF0AD; }
+        .upload-area p { margin: 0; font-size: 0.8rem; color: #555; letter-spacing: 1px; }
+        .upload-area input { display: none; }
+
+        .photo-preview {
+            margin-top: 12px;
+            display: none;
+        }
+        .photo-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 4px;
+            display: block;
+        }
+        .photo-preview .remove-photo {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: #555;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-weight: bold;
+        }
+        .photo-preview .remove-photo:hover { color: #ff6b6b; }
+
+        /* Editor toolbar */
+        .toolbar {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 0;
+            background: #000;
+            border: 1px solid #2a2a2a;
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            padding: 8px 10px;
+            flex-wrap: wrap;
+        }
+        .toolbar button {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #aaa;
+            padding: 5px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-family: Arial, sans-serif;
+            transition: border-color 0.15s, color 0.15s;
+        }
+        .toolbar button:hover { border-color: #FFF0AD; color: #FFF0AD; }
+        .toolbar .sep { width: 1px; background: #2a2a2a; margin: 0 4px; }
+
+        /* Story editor */
+        .editor {
+            min-height: 400px;
+            background: #000;
+            border: 1px solid #2a2a2a;
+            border-radius: 0 0 4px 4px;
+            padding: 20px;
+            color: #ccc;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            outline: none;
+            font-weight: normal;
+        }
+        .editor:focus { border-color: #FFF0AD; }
+        .editor p { margin: 0 0 18px; }
+        .editor figure {
+            margin: 24px 0;
+            padding: 0;
+        }
+        .editor figure img {
+            max-width: 100%;
+            border-radius: 4px;
+            display: block;
+        }
+        .editor figure .caption-input {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: #555;
+            text-align: center;
+            outline: none;
+            width: 100%;
+            font-style: italic;
+            background: transparent;
+            border: none;
+            border-bottom: 1px dashed #2a2a2a;
+            color: #555;
+            padding: 4px 0;
+            font-family: Arial, sans-serif;
+        }
+        .editor figure .caption-input:focus { border-bottom-color: #FFF0AD; }
+        .editor figure .remove-img-btn {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: #333;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            width: 100%;
+        }
+        .editor figure .remove-img-btn:hover { color: #ff6b6b; }
+
+        /* Save button */
+        .actions { margin-top: 32px; display: flex; align-items: center; gap: 20px; }
+        .save-btn {
+            background: #FFF0AD;
+            color: #000;
+            border: none;
+            padding: 14px 36px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            transition: background 0.15s;
+        }
+        .save-btn:hover { background: #fff; }
+        .save-btn:disabled { background: #444; color: #222; cursor: not-allowed; }
+
+        .status { font-size: 0.75rem; color: #555; letter-spacing: 1px; }
+
+        /* Hidden file input for story images */
+        #storyImageInput { display: none; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="tool-header">
+        <h1>New Story</h1>
+        <p>Fills the correct folders &amp; files. Requires internet to load (JSZip CDN).</p>
+    </div>
+
+    <!-- Title -->
+    <div class="field">
+        <label>Title</label>
+        <input type="text" id="title" placeholder="Story title...">
+    </div>
+
+    <!-- Date -->
+    <div class="field">
+        <label>Date</label>
+        <input type="date" id="date">
+    </div>
+
+    <!-- Card description -->
+    <div class="field">
+        <label>Card Description — short line shown on the writing page</label>
+        <textarea id="description" rows="2" placeholder="One or two sentences shown on the writing page card..."></textarea>
+    </div>
+
+    <!-- Card photo -->
+    <div class="field">
+        <label>Card Photo — shown on writing page</label>
+        <div class="upload-area" id="cardUploadArea" onclick="document.getElementById('cardPhotoInput').click()">
+            <p>Click to choose photo</p>
+            <input type="file" id="cardPhotoInput" accept="image/*">
+        </div>
+        <div class="photo-preview" id="cardPhotoPreview">
+            <img id="cardPhotoImg" src="" alt="">
+            <button class="remove-photo" onclick="removeCardPhoto()">✕ Remove</button>
+        </div>
+    </div>
+
+    <!-- Story body -->
+    <div class="field">
+        <label>Story Body</label>
+        <div class="toolbar">
+            <button onclick="insertStoryImage()" title="Insert a photo into the story">+ Photo</button>
+            <div class="sep"></div>
+            <button onclick="fmt('bold')" title="Bold"><b>B</b></button>
+            <button onclick="fmt('italic')" title="Italic"><i>I</i></button>
+        </div>
+        <div id="editor" class="editor" contenteditable="true" spellcheck="true">
+            <p>Write your story here...</p>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="save-btn" id="saveBtn" onclick="generate()">Save &amp; Download ZIP</button>
+        <span class="status" id="status"></span>
+    </div>
+
+</div>
+
+<!-- Hidden file input for story body images -->
+<input type="file" id="storyImageInput" accept="image/*">
+
+<script>
+    // ─── State ───────────────────────────────────────────────────────────────
+    let cardPhotoFile = null;
+    let storyImageFiles = {}; // figureId -> File
+
+    // ─── Card photo ──────────────────────────────────────────────────────────
+    document.getElementById('cardPhotoInput').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        cardPhotoFile = file;
+        const reader = new FileReader();
+        reader.onload = function (ev) {
+            document.getElementById('cardPhotoImg').src = ev.target.result;
+            document.getElementById('cardPhotoPreview').style.display = 'block';
+            document.getElementById('cardUploadArea').style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    });
+
+    function removeCardPhoto() {
+        cardPhotoFile = null;
+        document.getElementById('cardPhotoInput').value = '';
+        document.getElementById('cardPhotoPreview').style.display = 'none';
+        document.getElementById('cardUploadArea').style.display = 'block';
+    }
+
+    // ─── Editor helpers ───────────────────────────────────────────────────────
+    function fmt(cmd) {
+        document.getElementById('editor').focus();
+        document.execCommand(cmd);
+    }
+
+    // Clear placeholder text on first focus
+    document.getElementById('editor').addEventListener('focus', function () {
+        if (this.innerHTML.trim() === '<p>Write your story here...</p>') {
+            this.innerHTML = '<p><br></p>';
+            const range = document.createRange();
+            const p = this.querySelector('p');
+            range.setStart(p, 0);
+            range.collapse(true);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        }
+    }, { once: true });
+
+    // ─── Insert story image ───────────────────────────────────────────────────
+    function insertStoryImage() {
+        const input = document.getElementById('storyImageInput');
+        input.onchange = function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const id = 'fig-' + Date.now();
+
+            const reader = new FileReader();
+            reader.onload = function (ev) {
+                const editor = document.getElementById('editor');
+                editor.focus();
+
+                // Build figure element
+                const figure = document.createElement('figure');
+                figure.dataset.figId = id;
+
+                const img = document.createElement('img');
+                img.src = ev.target.result;
+                img.alt = '';
+
+                const captionInput = document.createElement('input');
+                captionInput.type = 'text';
+                captionInput.className = 'caption-input';
+                captionInput.placeholder = 'Caption (optional)';
+                captionInput.contentEditable = 'false';
+
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-img-btn';
+                removeBtn.textContent = '✕ Remove photo';
+                removeBtn.contentEditable = 'false';
+                removeBtn.onclick = function () {
+                    delete storyImageFiles[id];
+                    const afterP = document.createElement('p');
+                    afterP.innerHTML = '<br>';
+                    figure.replaceWith(afterP);
+                };
+
+                figure.appendChild(img);
+                figure.appendChild(captionInput);
+                figure.appendChild(removeBtn);
+
+                // Insert at cursor or append
+                const sel = window.getSelection();
+                if (sel && sel.rangeCount > 0 && editor.contains(sel.anchorNode)) {
+                    const range = sel.getRangeAt(0);
+                    let node = range.startContainer;
+                    while (node.parentNode !== editor) {
+                        node = node.parentNode;
+                        if (!node || node === editor) break;
+                    }
+                    if (node && node.parentNode === editor) {
+                        editor.insertBefore(figure, node.nextSibling);
+                    } else {
+                        editor.appendChild(figure);
+                    }
+                } else {
+                    editor.appendChild(figure);
+                }
+
+                // Add paragraph after figure for continued typing
+                const afterP = document.createElement('p');
+                afterP.innerHTML = '<br>';
+                figure.insertAdjacentElement('afterend', afterP);
+
+                // Place cursor in next paragraph
+                const range = document.createRange();
+                range.setStart(afterP, 0);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                storyImageFiles[id] = file;
+            };
+            reader.readAsDataURL(file);
+            input.value = '';
+        };
+        input.click();
+    }
+
+    // ─── Utilities ────────────────────────────────────────────────────────────
+    function slugify(text) {
+        return text.toLowerCase()
+            .replace(/[^a-z0-9\s-]/g, '')
+            .trim()
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-');
+    }
+
+    function formatDate(str) {
+        const [y, m, d] = str.split('-').map(Number);
+        const months = ['January','February','March','April','May','June',
+                        'July','August','September','October','November','December'];
+        return `${months[m - 1]} ${d}, ${y}`;
+    }
+
+    function readAsDataUrl(file) {
+        return new Promise(res => {
+            const r = new FileReader();
+            r.onload = e => res(e.target.result);
+            r.readAsDataURL(file);
+        });
+    }
+
+    function dataUrlToBase64(dataUrl) {
+        return dataUrl.split(',')[1];
+    }
+
+    function extFromFile(file) {
+        return file.name.split('.').pop().toLowerCase();
+    }
+
+    // ─── Parse editor into story HTML ─────────────────────────────────────────
+    function parseEditor() {
+        const editor = document.getElementById('editor');
+        const clone = editor.cloneNode(true);
+        const imageEntries = [];
+        let imgCount = 1;
+
+        clone.querySelectorAll('figure[data-fig-id]').forEach(fig => {
+            const figId = fig.dataset.figId;
+            const file = storyImageFiles[figId];
+            const captionEl = fig.querySelector('.caption-input');
+            const caption = captionEl ? captionEl.value.trim() : '';
+
+            let filename = '';
+            if (file) {
+                filename = `image-${imgCount++}.${extFromFile(file)}`;
+                imageEntries.push({ figId, filename, file });
+            }
+
+            const newFig = document.createElement('figure');
+            const imgEl = document.createElement('img');
+            imgEl.src = `./${filename}`;
+            imgEl.alt = caption;
+            newFig.appendChild(imgEl);
+
+            if (caption) {
+                const fc = document.createElement('figcaption');
+                fc.textContent = caption;
+                newFig.appendChild(fc);
+            }
+
+            fig.replaceWith(newFig);
+        });
+
+        clone.querySelectorAll('button, input').forEach(el => el.remove());
+
+        let html = '';
+        for (const child of clone.childNodes) {
+            if (child.nodeType === Node.TEXT_NODE) {
+                const t = child.textContent.trim();
+                if (t) html += `<p>${escHtml(t)}</p>\n`;
+                continue;
+            }
+            if (child.nodeName === 'FIGURE') {
+                html += child.outerHTML + '\n';
+                continue;
+            }
+            const inner = child.innerHTML.trim();
+            if (!inner || inner === '<br>') continue;
+            if (child.querySelector('figure')) {
+                child.querySelectorAll('figure').forEach(f => {
+                    html += f.outerHTML + '\n';
+                });
+            } else {
+                html += `<p>${inner}</p>\n`;
+            }
+        }
+
+        return { html: html.trim(), imageEntries };
+    }
+
+    function escHtml(str) {
+        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    // ─── HTML templates ───────────────────────────────────────────────────────
+    function storyPageHtml(title, date, bodyHtml) {
+        return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${escHtml(title)} — BoxYourBuddy</title>
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"><\/script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7NDGQGQM5G');
+    <\/script>
+    <style>
+        * { box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { margin: 0; background: #000; color: #fff; overflow-x: hidden; }
+        .page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
+        .page-header { text-align: center; margin-bottom: 50px; width: 100%; }
+        .brand-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; }
+        .brand-logo { width: 50px; height: auto; }
+        .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; font-weight: bold; }
+        .brand-name .tint { color: #FFF0AD; }
+        .nav { margin-top: 16px; display: flex; gap: 20px; justify-content: center; align-items: center; }
+        .nav a { font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; }
+        .nav a:hover { color: #FFF0AD; }
+        .nav .dot { height: 5px; width: 5px; background-color: #FFF0AD; border-radius: 50%; display: inline-block; }
+        .story { width: 100%; max-width: 640px; }
+        .back-link { display: inline-block; font-size: 0.75rem; letter-spacing: 3px; color: #555; text-decoration: none; text-transform: uppercase; font-weight: bold; margin-bottom: 30px; }
+        .back-link:hover { color: #FFF0AD; }
+        .story-title { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: bold; letter-spacing: 1px; margin: 0 0 10px; }
+        .story-meta { font-size: 0.75rem; letter-spacing: 3px; color: #555; text-transform: uppercase; margin-bottom: 40px; font-weight: bold; }
+        .story p { font-size: 1.05rem; line-height: 1.8; color: #ccc; margin-bottom: 24px; font-weight: normal; }
+        .story em { color: #fff; font-style: italic; }
+        .story figure { margin: 0 0 24px; }
+        .story figure img { width: 100%; height: auto; display: block; border-radius: 4px; }
+        .story figcaption { font-size: 0.8rem; color: #555; margin-top: 8px; text-align: center; font-weight: normal; }
+        hr { border: 0; border-top: 1px solid #222; margin: 40px 0; }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="page-header">
+            <div class="brand-wrap">
+                <img src="../../images/box-small.png" alt="BoxYourBuddy logo" class="brand-logo">
+                <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
+            </div>
+            <nav class="nav">
+                <a href="/">HOME</a>
+                <span class="dot"></span>
+                <a href="/writing/" style="color: #FFF0AD;">WRITING</a>
+                <span class="dot"></span>
+                <a href="/art/">ART</a>
+                <span class="dot"></span>
+                <a href="/apps/">APPS</a>
+            </nav>
+        </header>
+
+        <div class="story">
+            <a href="/writing/" class="back-link">← Writing</a>
+            <h2 class="story-title">${escHtml(title)}</h2>
+            <p class="story-meta">${escHtml(date)} &nbsp;·&nbsp; Dan Stout</p>
+            <hr>
+
+            ${bodyHtml}
+        </div>
+    </div>
+</body>
+</html>`;
+    }
+
+    function cardSnippetHtml(title, description, date, slug, cardFilename) {
+        return `<!-- Paste this at the TOP of the .cards div in writing/index.html -->
+<a href="${slug}/" class="card">
+    <img src="${slug}/${cardFilename}" alt="${escHtml(title)}" class="card-img">
+    <div class="card-body">
+        <p class="card-title">${escHtml(title)}</p>
+        <p class="card-desc">${escHtml(description)}</p>
+        <p class="card-meta">${escHtml(date)}</p>
+    </div>
+</a>`;
+    }
+
+    // ─── Generate ZIP ─────────────────────────────────────────────────────────
+    async function generate() {
+        const title = document.getElementById('title').value.trim();
+        const dateStr = document.getElementById('date').value;
+        const description = document.getElementById('description').value.trim();
+        const btn = document.getElementById('saveBtn');
+        const status = document.getElementById('status');
+
+        if (!title) { alert('Please enter a title.'); return; }
+        if (!dateStr) { alert('Please choose a date.'); return; }
+
+        btn.disabled = true;
+        status.textContent = 'Building...';
+
+        try {
+            const slug = slugify(title);
+            const date = formatDate(dateStr);
+            const zip = new JSZip();
+            const folder = zip.folder(slug);
+
+            // Card photo
+            let cardFilename = 'card.jpg';
+            if (cardPhotoFile) {
+                const ext = extFromFile(cardPhotoFile);
+                cardFilename = `card.${ext}`;
+                const dataUrl = await readAsDataUrl(cardPhotoFile);
+                folder.file(cardFilename, dataUrlToBase64(dataUrl), { base64: true });
+            }
+
+            // Story body & inline images
+            const { html: bodyHtml, imageEntries } = parseEditor();
+            for (const entry of imageEntries) {
+                const dataUrl = await readAsDataUrl(entry.file);
+                folder.file(entry.filename, dataUrlToBase64(dataUrl), { base64: true });
+            }
+
+            // Story page
+            folder.file('index.html', storyPageHtml(title, date, bodyHtml));
+
+            // Card snippet
+            zip.file('PASTE-INTO-WRITING-INDEX.html', cardSnippetHtml(title, description, date, slug, cardFilename));
+
+            // Download
+            const blob = await zip.generateAsync({ type: 'blob' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${slug}.zip`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            status.textContent = `✓ ${slug}.zip downloaded`;
+        } catch (err) {
+            console.error(err);
+            status.textContent = 'Error — check the console.';
+        } finally {
+            btn.disabled = false;
+        }
+    }
+</script>
+</body>
+</html>
