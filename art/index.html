@@ -65,19 +65,8 @@
         .nav a:hover { color: #FFF0AD; }
         .nav .dot { height: 5px; width: 5px; background-color: #FFF0AD; border-radius: 50%; display: inline-block; }
 
-        .gallery { width: 100%; max-width: 720px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-
-        .art-card { background: #0a0a0a; border: 1px solid #222; border-radius: 6px; overflow: hidden; transition: border-color 0.2s; }
-        .art-card:hover { border-color: #FFF0AD; }
-        .art-card img { width: 100%; height: 300px; object-fit: cover; display: block; }
-        .art-card-body { padding: 16px 20px 20px; }
-        .art-card-title { font-size: 1rem; letter-spacing: 1px; margin: 0 0 6px; }
-        .art-card-meta { font-size: 0.7rem; letter-spacing: 3px; color: #555; text-transform: uppercase; font-weight: normal; }
-
-        @media (max-width: 600px) {
-            .gallery { grid-template-columns: 1fr; }
-            .art-card img { height: 260px; }
-        }
+        .gallery { width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 40px; }
+        .gallery img { width: 100%; height: auto; display: block; }
     </style>
 </head>
 <body>
@@ -99,14 +88,8 @@
         </header>
 
         <div class="gallery">
-            <div class="art-card">
-                <img src="im-out-of-control-sketch.jpg" alt="I'm Out of Control — sketch by Dan Stout aka BoxYourBuddy">
-                <div class="art-card-body">
-                    <p class="art-card-title">I'm Out of Control</p>
-                    <p class="art-card-meta">Sketch — Dan Stout</p>
-                </div>
-            </div>
-            <!-- Add more art cards here following the pattern above -->
+            <img src="im-out-of-control-sketch.jpg" alt="I'm Out of Control — sketch by Dan Stout aka BoxYourBuddy">
+            <!-- Add more images here -->
         </div>
     </div>
 </body>
