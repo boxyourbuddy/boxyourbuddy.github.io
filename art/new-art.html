@@ -346,6 +346,34 @@
         });
     }
 
+    // Resize to max 720px wide, output as JPEG base64
+    function resizeAndEncode(file) {
+        return new Promise((res, rej) => {
+            const reader = new FileReader();
+            reader.onerror = rej;
+            reader.onload = ev => {
+                const img = new Image();
+                img.onerror = rej;
+                img.onload = () => {
+                    const MAX = 720;
+                    let w = img.width;
+                    let h = img.height;
+                    if (w > MAX) {
+                        h = Math.round(h * MAX / w);
+                        w = MAX;
+                    }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = w;
+                    canvas.height = h;
+                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                    res(canvas.toDataURL('image/jpeg', 0.88).split(',')[1]);
+                };
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
     function slugifyFilename(name) {
         const ext = name.split('.').pop().toLowerCase();
         const base = name.slice(0, name.lastIndexOf('.'))
@@ -515,9 +543,11 @@
             const uploaded = [];
 
             for (const item of selectedFiles) {
-                const filename = slugifyFilename(item.file.name);
+                // Always output as .jpg after canvas resize
+                const slug = slugifyFilename(item.file.name).replace(/\.[^.]+$/, '');
+                const filename = `${slug}.jpg`;
                 const destPath = `art/${filename}`;
-                logLine(`Uploading ${filename}…`);
+                logLine(`Resizing & uploading ${filename}…`);
 
                 let existingSha = null;
                 try {
@@ -526,7 +556,7 @@
                     logLine(`  already exists — overwriting`, 'info');
                 } catch (e) { /* new file */ }
 
-                const base64 = await readFileAsBase64(item.file);
+                const base64 = await resizeAndEncode(item.file);
                 await ghPut(token, destPath, base64, `Add art: ${filename}`, existingSha);
                 logLine(`  ✓ uploaded`, 'ok');
                 uploaded.push({ filename, alt: filename.replace(/[-_]/g, ' ').replace(/\.[^.]+$/, '') });
