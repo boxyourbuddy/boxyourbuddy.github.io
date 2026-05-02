@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Art — BoxYourBuddy</title>
+    <style>
+        * { box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { margin: 0; background: #111; color: #fff; padding: 48px 20px 80px; }
+        .container { max-width: 600px; margin: 0 auto; }
+
+        .tool-header { margin-bottom: 40px; }
+        .tool-header h1 { font-size: 1rem; letter-spacing: 4px; text-transform: uppercase; color: #FFF0AD; margin: 0 0 6px; }
+        .tool-header p { font-size: 0.8rem; color: #555; margin: 0; letter-spacing: 1px; }
+
+        .field { margin-bottom: 28px; }
+        label {
+            display: block;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .hint { font-size: 0.7rem; color: #444; margin-top: 6px; letter-spacing: 0.5px; font-weight: normal; }
+
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            background: #000;
+            border: 1px solid #2a2a2a;
+            color: #fff;
+            padding: 12px 14px;
+            font-size: 1rem;
+            border-radius: 4px;
+            outline: none;
+            font-family: Arial, sans-serif;
+        }
+        input[type="password"]:focus,
+        input[type="text"]:focus { border-color: #FFF0AD; }
+
+        /* Upload area */
+        .upload-area {
+            border: 1px dashed #333;
+            border-radius: 4px;
+            padding: 32px 24px;
+            text-align: center;
+            cursor: pointer;
+            background: #000;
+            transition: border-color 0.2s;
+        }
+        .upload-area:hover { border-color: #FFF0AD; }
+        .upload-area p { margin: 0 0 4px; font-size: 0.85rem; color: #666; letter-spacing: 1px; }
+        .upload-area span { font-size: 0.7rem; color: #333; letter-spacing: 1px; }
+
+        /* Preview grid */
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .preview-item { position: relative; }
+        .preview-item img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 4px;
+            display: block;
+        }
+        .preview-item .remove {
+            position: absolute;
+            top: 4px; right: 4px;
+            background: rgba(0,0,0,0.7);
+            border: none;
+            color: #fff;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .preview-item .remove:hover { background: #ff4444; }
+        .preview-item .fname {
+            font-size: 0.6rem;
+            color: #444;
+            margin-top: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            letter-spacing: 0.5px;
+        }
+
+        /* Add button */
+        .add-btn {
+            background: #FFF0AD;
+            color: #000;
+            border: none;
+            padding: 14px 36px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            transition: background 0.15s;
+        }
+        .add-btn:hover { background: #fff; }
+        .add-btn:disabled { background: #333; color: #555; cursor: not-allowed; }
+
+        /* Log */
+        .log {
+            margin-top: 24px;
+            background: #000;
+            border: 1px solid #1a1a1a;
+            border-radius: 4px;
+            padding: 16px;
+            display: none;
+        }
+        .log-line {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: normal;
+        }
+        .log-line:last-child { margin-bottom: 0; }
+        .log-line.ok { color: #7fff7f; }
+        .log-line.err { color: #ff6b6b; }
+        .log-line.info { color: #888; }
+        .log-line.done { color: #FFF0AD; font-weight: bold; }
+
+        .divider { border: 0; border-top: 1px solid #1a1a1a; margin: 32px 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="tool-header">
+        <h1>Add Art</h1>
+        <p>Uploads photos directly to the repo. You still push the commit in GitHub Desktop.</p>
+    </div>
+
+    <!-- GitHub token -->
+    <div class="field">
+        <label>GitHub Personal Access Token</label>
+        <input type="password" id="token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+        <p class="hint">Saved locally in your browser. Needs <strong>Contents: Read &amp; Write</strong> permission. <a href="https://github.com/settings/tokens/new?scopes=repo&description=BoxYourBuddy+art+uploader" target="_blank" style="color:#FFF0AD;">Generate one here ↗</a></p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Photo picker -->
+    <div class="field">
+        <label>Photos — pick one or more</label>
+        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+            <p>Click to choose photos</p>
+            <span>JPG, PNG, GIF, WEBP</span>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" multiple style="display:none">
+        <div class="preview-grid" id="previewGrid"></div>
+    </div>
+
+    <button class="add-btn" id="addBtn" onclick="run()">Add to Art Page</button>
+
+    <div class="log" id="log"></div>
+
+</div>
+
+<script>
+    // ─── Token persistence ────────────────────────────────────────────────────
+    const tokenInput = document.getElementById('token');
+    const SAVED_TOKEN = localStorage.getItem('byb_gh_token') || '';
+    tokenInput.value = SAVED_TOKEN;
+    tokenInput.addEventListener('change', () => {
+        localStorage.setItem('byb_gh_token', tokenInput.value.trim());
+    });
+
+    // ─── File handling ────────────────────────────────────────────────────────
+    let selectedFiles = []; // {file, objectUrl}
+
+    document.getElementById('fileInput').addEventListener('change', function (e) {
+        for (const file of e.target.files) {
+            selectedFiles.push({ file, objectUrl: URL.createObjectURL(file) });
+        }
+        renderPreviews();
+        this.value = '';
+    });
+
+    function renderPreviews() {
+        const grid = document.getElementById('previewGrid');
+        grid.innerHTML = '';
+        selectedFiles.forEach((item, i) => {
+            const div = document.createElement('div');
+            div.className = 'preview-item';
+            div.innerHTML = `
+                <img src="${item.objectUrl}" alt="">
+                <button class="remove" onclick="removeFile(${i})">✕</button>
+                <div class="fname">${item.file.name}</div>
+            `;
+            grid.appendChild(div);
+        });
+    }
+
+    function removeFile(i) {
+        URL.revokeObjectURL(selectedFiles[i].objectUrl);
+        selectedFiles.splice(i, 1);
+        renderPreviews();
+    }
+
+    // ─── Utilities ────────────────────────────────────────────────────────────
+    const REPO = 'boxyourbuddy/boxyourbuddy.github.io';
+    const BRANCH = 'main';
+    const API = 'https://api.github.com';
+
+    function slugifyFilename(name) {
+        const ext = name.split('.').pop().toLowerCase();
+        const base = name.slice(0, name.lastIndexOf('.'))
+            .toLowerCase()
+            .replace(/[^a-z0-9\s-]/g, '')
+            .trim()
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-');
+        return `${base}.${ext}`;
+    }
+
+    function readFileAsBase64(file) {
+        return new Promise((res, rej) => {
+            const r = new FileReader();
+            r.onload = e => res(e.target.result.split(',')[1]);
+            r.onerror = rej;
+            r.readAsDataURL(file);
+        });
+    }
+
+    function b64Decode(str) {
+        // handles base64 with newlines from GitHub API
+        return decodeURIComponent(
+            atob(str.replace(/\n/g, '')).split('').map(c =>
+                '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+            ).join('')
+        );
+    }
+
+    function b64Encode(str) {
+        return btoa(
+            encodeURIComponent(str).replace(/%([0-9A-F]{2})/gi, (_, p1) =>
+                String.fromCharCode(parseInt(p1, 16))
+            )
+        );
+    }
+
+    async function ghGet(token, path) {
+        const res = await fetch(`${API}/repos/${REPO}/contents/${path}?ref=${BRANCH}`, {
+            headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json' }
+        });
+        if (!res.ok) throw new Error(`GET ${path} → ${res.status}`);
+        return res.json();
+    }
+
+    async function ghPut(token, path, content64, message, sha) {
+        const body = { message, content: content64, branch: BRANCH };
+        if (sha) body.sha = sha;
+        const res = await fetch(`${API}/repos/${REPO}/contents/${path}`, {
+            method: 'PUT',
+            headers: {
+                Authorization: `token ${token}`,
+                Accept: 'application/vnd.github+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+        if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(`PUT ${path} → ${res.status}: ${err.message || ''}`);
+        }
+        return res.json();
+    }
+
+    // ─── Logging ──────────────────────────────────────────────────────────────
+    const logEl = document.getElementById('log');
+
+    function logLine(msg, type = 'info') {
+        logEl.style.display = 'block';
+        const div = document.createElement('div');
+        div.className = `log-line ${type}`;
+        div.textContent = msg;
+        logEl.appendChild(div);
+        logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    // ─── Main upload flow ─────────────────────────────────────────────────────
+    async function run() {
+        const token = tokenInput.value.trim();
+        if (!token) { alert('Please enter your GitHub token.'); return; }
+        if (selectedFiles.length === 0) { alert('Please choose at least one photo.'); return; }
+
+        // Save token
+        localStorage.setItem('byb_gh_token', token);
+
+        const btn = document.getElementById('addBtn');
+        btn.disabled = true;
+        logEl.innerHTML = '';
+        logEl.style.display = 'block';
+
+        try {
+            // 1. Upload each image
+            const uploaded = []; // {filename, alt}
+            for (const item of selectedFiles) {
+                const filename = slugifyFilename(item.file.name);
+                const destPath = `art/${filename}`;
+                logLine(`Uploading ${filename}…`);
+
+                // Check if already exists
+                let existingSha = null;
+                try {
+                    const existing = await ghGet(token, destPath);
+                    existingSha = existing.sha;
+                    logLine(`  ${filename} already exists — overwriting`, 'info');
+                } catch (e) { /* new file, fine */ }
+
+                const base64 = await readFileAsBase64(item.file);
+                await ghPut(token, destPath, base64, `Add art: ${filename}`, existingSha);
+                logLine(`  ✓ uploaded`, 'ok');
+                uploaded.push({ filename, alt: filename.replace(/[-_]/g, ' ').replace(/\.[^.]+$/, '') });
+            }
+
+            // 2. Fetch current art/index.html
+            logLine('Fetching art/index.html…');
+            const indexFile = await ghGet(token, 'art/index.html');
+            let html = b64Decode(indexFile.content);
+            const sha = indexFile.sha;
+
+            // 3. Build new slide tags and insert before <!-- SLIDES -->
+            const newSlides = uploaded.map(u =>
+                `            <div class="slide"><img src="${u.filename}" alt="${u.alt}"></div>`
+            ).join('\n');
+
+            if (!html.includes('<!-- SLIDES -->')) {
+                throw new Error('Could not find <!-- SLIDES --> marker in art/index.html');
+            }
+
+            html = html.replace('<!-- SLIDES -->', `${newSlides}\n            <!-- SLIDES -->`);
+
+            // 4. Push updated index.html
+            logLine('Updating art/index.html…');
+            await ghPut(token, 'art/index.html', b64Encode(html),
+                `Add ${uploaded.length} photo${uploaded.length > 1 ? 's' : ''} to art page`, sha);
+
+            logLine(`✓ Done — ${uploaded.length} photo${uploaded.length > 1 ? 's' : ''} added. Push in GitHub Desktop to go live.`, 'done');
+
+            // Clear queue
+            selectedFiles.forEach(f => URL.revokeObjectURL(f.objectUrl));
+            selectedFiles = [];
+            renderPreviews();
+
+        } catch (err) {
+            logLine(`Error: ${err.message}`, 'err');
+            console.error(err);
+        } finally {
+            btn.disabled = false;
+        }
+    }
+</script>
+</body>
+</html>

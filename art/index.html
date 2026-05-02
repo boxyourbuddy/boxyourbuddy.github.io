@@ -65,8 +65,11 @@
         .nav a:hover { color: #FFF0AD; }
         .nav .dot { height: 5px; width: 5px; background-color: #FFF0AD; border-radius: 50%; display: inline-block; }
 
-        .gallery { width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 40px; }
-        .gallery img { width: 100%; height: auto; display: block; }
+        .slideshow { width: 100%; max-width: 720px; cursor: default; }
+        .slide { display: none; }
+        .slide.active { display: block; animation: fadeIn 0.6s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .slide img { width: 100%; height: auto; display: block; }
     </style>
 </head>
 <body>
@@ -87,10 +90,38 @@
             </nav>
         </header>
 
-        <div class="gallery">
-            <img src="im-out-of-control-sketch.jpg" alt="I'm Out of Control — sketch by Dan Stout aka BoxYourBuddy">
-            <!-- Add more images here -->
+        <div class="slideshow" id="slideshow">
+            <div class="slide active"><img src="im-out-of-control-sketch.jpg" alt="I'm Out of Control — sketch by Dan Stout aka BoxYourBuddy"></div>
+            <!-- SLIDES -->
         </div>
     </div>
+
+    <script>
+        (function () {
+            var slides = Array.from(document.querySelectorAll('.slide'));
+            if (slides.length < 2) return;
+            var current = 0;
+            var timer = null;
+
+            function showSlide(n) {
+                slides[current].classList.remove('active');
+                current = (n + slides.length) % slides.length;
+                slides[current].classList.add('active');
+            }
+
+            function next() { showSlide(current + 1); }
+
+            function startTimer() {
+                clearInterval(timer);
+                timer = setInterval(next, 5000);
+            }
+
+            var ss = document.getElementById('slideshow');
+            ss.addEventListener('mouseenter', function () { clearInterval(timer); });
+            ss.addEventListener('mouseleave', startTimer);
+
+            startTimer();
+        })();
+    </script>
 </body>
 </html>
