@@ -43,7 +43,6 @@
         input[type="password"]:focus,
         input[type="date"]:focus,
         textarea:focus { border-color: #FFF0AD; }
-
         textarea { resize: vertical; }
 
         .divider { border: 0; border-top: 1px solid #1a1a1a; margin: 32px 0; }
@@ -65,153 +64,87 @@
 
         .photo-preview { margin-top: 12px; display: none; }
         .card-preview-frame {
-            width: 100%;
-            height: 200px;
-            background: #000;
-            border: 1px solid #2a2a2a;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            width: 100%; height: 200px; background: #000;
+            border: 1px solid #2a2a2a; border-radius: 4px;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
         }
         .card-preview-frame img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
         .photo-preview .remove-photo {
-            display: inline-block;
-            margin-top: 8px;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            color: #555;
-            text-transform: uppercase;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-weight: bold;
+            display: inline-block; margin-top: 8px; font-size: 0.65rem; letter-spacing: 2px;
+            color: #555; text-transform: uppercase; cursor: pointer; background: none; border: none; font-weight: bold;
         }
         .photo-preview .remove-photo:hover { color: #ff6b6b; }
 
         /* Editor toolbar */
         .toolbar {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 0;
-            background: #000;
-            border: 1px solid #2a2a2a;
-            border-bottom: none;
-            border-radius: 4px 4px 0 0;
-            padding: 8px 10px;
-            flex-wrap: wrap;
+            display: flex; gap: 6px; background: #000;
+            border: 1px solid #2a2a2a; border-bottom: none;
+            border-radius: 4px 4px 0 0; padding: 8px 10px; flex-wrap: wrap;
         }
         .toolbar button {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            color: #aaa;
-            padding: 5px 12px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-            font-family: Arial, sans-serif;
-            transition: border-color 0.15s, color 0.15s;
+            background: #1a1a1a; border: 1px solid #333; color: #aaa;
+            padding: 5px 12px; border-radius: 3px; cursor: pointer;
+            font-size: 0.75rem; font-weight: bold; letter-spacing: 1px;
+            font-family: Arial, sans-serif; transition: border-color 0.15s, color 0.15s;
         }
         .toolbar button:hover { border-color: #FFF0AD; color: #FFF0AD; }
         .toolbar .sep { width: 1px; background: #2a2a2a; margin: 0 4px; }
 
         /* Story editor */
         .editor {
-            min-height: 400px;
-            background: #000;
-            border: 1px solid #2a2a2a;
-            border-radius: 0 0 4px 4px;
-            padding: 20px;
-            color: #ccc;
-            font-size: 1.05rem;
-            line-height: 1.8;
-            outline: none;
-            font-weight: normal;
+            min-height: 400px; background: #000; border: 1px solid #2a2a2a;
+            border-radius: 0 0 4px 4px; padding: 20px; color: #ccc;
+            font-size: 1.05rem; line-height: 1.8; outline: none; font-weight: normal;
         }
         .editor:focus { border-color: #FFF0AD; }
         .editor p { margin: 0 0 18px; }
         .editor figure { margin: 24px 0; padding: 0; }
         .editor figure img { max-width: 100%; border-radius: 4px; display: block; }
         .editor figure .caption-input {
-            margin-top: 8px;
-            font-size: 0.8rem;
-            text-align: center;
-            outline: none;
-            width: 100%;
-            font-style: italic;
-            background: transparent;
-            border: none;
-            border-bottom: 1px dashed #2a2a2a;
-            color: #555;
-            padding: 4px 0;
-            font-family: Arial, sans-serif;
+            margin-top: 8px; font-size: 0.8rem; text-align: center; outline: none;
+            width: 100%; font-style: italic; background: transparent; border: none;
+            border-bottom: 1px dashed #2a2a2a; color: #555; padding: 4px 0; font-family: Arial, sans-serif;
         }
         .editor figure .caption-input:focus { border-bottom-color: #FFF0AD; }
         .editor figure .remove-img-btn {
-            display: block;
-            margin-top: 6px;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            color: #333;
-            text-transform: uppercase;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-weight: bold;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            width: 100%;
+            display: block; margin-top: 6px; font-size: 0.65rem; letter-spacing: 2px;
+            color: #333; text-transform: uppercase; cursor: pointer; background: none; border: none;
+            font-weight: bold; font-family: Arial, sans-serif; text-align: center; width: 100%;
         }
         .editor figure .remove-img-btn:hover { color: #ff6b6b; }
 
         /* Buttons */
         .actions { margin-top: 32px; display: flex; align-items: center; gap: 20px; }
         .save-btn {
-            background: #FFF0AD;
-            color: #000;
-            border: none;
-            padding: 14px 36px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            border-radius: 4px;
-            cursor: pointer;
-            font-family: Arial, sans-serif;
-            transition: background 0.15s;
+            background: #FFF0AD; color: #000; border: none; padding: 14px 36px;
+            font-size: 0.75rem; font-weight: bold; letter-spacing: 3px; text-transform: uppercase;
+            border-radius: 4px; cursor: pointer; font-family: Arial, sans-serif; transition: background 0.15s;
         }
         .save-btn:hover { background: #fff; }
         .save-btn:disabled { background: #333; color: #555; cursor: not-allowed; }
 
         .load-btn {
-            background: none;
-            border: 1px solid #2a2a2a;
-            color: #888;
-            padding: 8px 18px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border-radius: 4px;
-            cursor: pointer;
-            font-family: Arial, sans-serif;
-            transition: border-color 0.15s, color 0.15s;
-            margin-bottom: 16px;
+            background: none; border: 1px solid #2a2a2a; color: #888;
+            padding: 8px 18px; font-size: 0.7rem; font-weight: bold; letter-spacing: 2px;
+            text-transform: uppercase; border-radius: 4px; cursor: pointer; font-family: Arial, sans-serif;
+            transition: border-color 0.15s, color 0.15s; margin-bottom: 16px;
         }
         .load-btn:hover { border-color: #FFF0AD; color: #FFF0AD; }
         .load-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+        /* Edit card button in sort list */
+        .edit-card-btn {
+            background: none; border: 1px solid #2a2a2a; color: #555;
+            padding: 4px 10px; font-size: 0.65rem; font-weight: bold; letter-spacing: 1px;
+            text-transform: uppercase; border-radius: 3px; cursor: pointer;
+            font-family: Arial, sans-serif; flex-shrink: 0; transition: border-color 0.15s, color 0.15s;
+        }
+        .edit-card-btn:hover { border-color: #FFF0AD; color: #FFF0AD; }
+
         /* Log */
         .log {
-            margin-top: 24px;
-            background: #000;
-            border: 1px solid #1a1a1a;
-            border-radius: 4px;
-            padding: 16px;
-            display: none;
+            margin-top: 24px; background: #000; border: 1px solid #1a1a1a;
+            border-radius: 4px; padding: 16px; display: none;
         }
         .log-line { font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 8px; font-weight: normal; }
         .log-line:last-child { margin-bottom: 0; }
@@ -222,27 +155,15 @@
 
         /* Section label */
         .section-label {
-            font-size: 0.65rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #666;
-            margin: 0 0 16px;
-            font-weight: bold;
+            font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+            color: #666; margin: 0 0 16px; font-weight: bold;
         }
 
         /* Sortable card list */
-        .sort-list { list-style: none; padding: 0; margin: 0; }
         .sort-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 12px;
-            background: #000;
-            border: 1px solid #1a1a1a;
-            border-radius: 4px;
-            margin-bottom: 6px;
-            cursor: grab;
-            user-select: none;
+            display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+            background: #000; border: 1px solid #1a1a1a; border-radius: 4px;
+            margin-bottom: 6px; cursor: grab; user-select: none;
             transition: border-color 0.15s, opacity 0.15s;
         }
         .sort-item:active { cursor: grabbing; }
@@ -250,13 +171,8 @@
         .sort-item.dragging { opacity: 0.35; }
         .sort-handle { color: #333; font-size: 1.1rem; flex-shrink: 0; line-height: 1; }
         .sort-thumb {
-            width: 72px;
-            height: 44px;
-            object-fit: contain;
-            background: #111;
-            border-radius: 3px;
-            flex-shrink: 0;
-            display: block;
+            width: 72px; height: 44px; object-fit: contain; background: #111;
+            border-radius: 3px; flex-shrink: 0; display: block;
         }
         .sort-info { flex: 1; min-width: 0; }
         .sort-title { font-size: 0.85rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -270,8 +186,9 @@
 <div class="container">
 
     <div class="tool-header">
-        <h1>New Story</h1>
-        <p>Publishes directly to GitHub Pages.</p>
+        <h1 id="formTitle">New Story</h1>
+        <p id="formSubtitle">Publishes directly to GitHub Pages.</p>
+        <button id="newStoryBtn" class="load-btn" onclick="resetToNew()" style="display:none;margin-top:10px;margin-bottom:0;">← New Story</button>
     </div>
 
     <!-- Token -->
@@ -360,9 +277,7 @@
     // ─── Token ────────────────────────────────────────────────────────────────
     const tokenInput = document.getElementById('token');
     tokenInput.value = localStorage.getItem('byb_gh_token') || '';
-    tokenInput.addEventListener('change', () => {
-        localStorage.setItem('byb_gh_token', tokenInput.value.trim());
-    });
+    tokenInput.addEventListener('change', () => localStorage.setItem('byb_gh_token', tokenInput.value.trim()));
     function getToken() {
         const t = tokenInput.value.trim();
         localStorage.setItem('byb_gh_token', t);
@@ -405,7 +320,6 @@
             ).join('')
         );
     }
-
     function b64Encode(str) {
         return btoa(
             encodeURIComponent(str).replace(/%([0-9A-F]{2})/gi, (_, p1) =>
@@ -413,7 +327,6 @@
             )
         );
     }
-
     function readFileAsBase64(file) {
         return new Promise((res, rej) => {
             const r = new FileReader();
@@ -437,12 +350,44 @@
             }
         };
     }
-    const pubLog   = makeLog(document.getElementById('publishLog'));
-    const ordLog   = makeLog(document.getElementById('orderLog'));
+    const pubLog = makeLog(document.getElementById('publishLog'));
+    const ordLog = makeLog(document.getElementById('orderLog'));
 
     // ─── State ───────────────────────────────────────────────────────────────
-    let cardPhotoFile = null;
-    let storyImageFiles = {};
+    let cardPhotoFile        = null;   // File if user picked a new photo
+    let storyImageFiles      = {};     // figId → File (new uploads only)
+    let existingImagePaths   = {};     // figId → 'image-1.jpg' (existing, no re-upload)
+    let existingCardPhotoSrc = null;   // img src as stored in writing/index.html
+    let editMode             = false;
+    let editSlug             = null;
+
+    // ─── Form mode ────────────────────────────────────────────────────────────
+    function setFormMode(mode) {
+        const isEdit = mode === 'edit';
+        document.getElementById('formTitle').textContent    = isEdit ? `Editing: ${editSlug}` : 'New Story';
+        document.getElementById('formSubtitle').textContent = isEdit ? 'Changes will go live immediately.' : 'Publishes directly to GitHub Pages.';
+        document.getElementById('saveBtn').textContent      = isEdit ? 'Save Changes' : 'Publish Story';
+        document.getElementById('newStoryBtn').style.display = isEdit ? 'inline-block' : 'none';
+    }
+
+    function resetToNew() {
+        editMode = false;
+        editSlug = null;
+        cardPhotoFile = null;
+        storyImageFiles = {};
+        existingImagePaths = {};
+        existingCardPhotoSrc = null;
+
+        document.getElementById('title').value = '';
+        document.getElementById('date').value = '';
+        document.getElementById('description').value = '';
+        document.getElementById('editor').innerHTML = '<p>Write your story here...</p>';
+        attachPlaceholderClear();
+        removeCardPhoto();
+        pubLog.clear();
+        setFormMode('new');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     // ─── Resize helper ────────────────────────────────────────────────────────
     function resizeIfNeeded(file, maxWidth) {
@@ -490,9 +435,63 @@
 
     function removeCardPhoto() {
         cardPhotoFile = null;
+        existingCardPhotoSrc = null;
         document.getElementById('cardPhotoInput').value = '';
         document.getElementById('cardPhotoPreview').style.display = 'none';
         document.getElementById('cardUploadArea').style.display = 'block';
+    }
+
+    // ─── Editor placeholder ───────────────────────────────────────────────────
+    function attachPlaceholderClear() {
+        const editor = document.getElementById('editor');
+        function handler() {
+            if (editor.innerHTML.trim() === '<p>Write your story here...</p>') {
+                editor.innerHTML = '<p><br></p>';
+                const range = document.createRange();
+                const p = editor.querySelector('p');
+                range.setStart(p, 0);
+                range.collapse(true);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+            }
+            editor.removeEventListener('focus', handler);
+        }
+        editor.addEventListener('focus', handler);
+    }
+    attachPlaceholderClear();
+
+    // ─── Figure element builder ───────────────────────────────────────────────
+    function buildFigureElement(id, imgSrc, captionText) {
+        const figure = document.createElement('figure');
+        figure.dataset.figId = id;
+
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = captionText;
+
+        const captionInput = document.createElement('input');
+        captionInput.type = 'text';
+        captionInput.className = 'caption-input';
+        captionInput.placeholder = 'Caption (optional)';
+        captionInput.value = captionText;
+        captionInput.contentEditable = 'false';
+
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'remove-img-btn';
+        removeBtn.textContent = '✕ Remove photo';
+        removeBtn.contentEditable = 'false';
+        removeBtn.onclick = function () {
+            delete storyImageFiles[id];
+            delete existingImagePaths[id];
+            const p = document.createElement('p');
+            p.innerHTML = '<br>';
+            figure.replaceWith(p);
+        };
+
+        figure.appendChild(img);
+        figure.appendChild(captionInput);
+        figure.appendChild(removeBtn);
+        return figure;
     }
 
     // ─── Editor helpers ───────────────────────────────────────────────────────
@@ -500,18 +499,6 @@
         document.getElementById('editor').focus();
         document.execCommand(cmd);
     }
-
-    document.getElementById('editor').addEventListener('focus', function () {
-        if (this.innerHTML.trim() === '<p>Write your story here...</p>') {
-            this.innerHTML = '<p><br></p>';
-            const range = document.createRange();
-            const p = this.querySelector('p');
-            range.setStart(p, 0);
-            range.collapse(true);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-        }
-    }, { once: true });
 
     // ─── Insert story image ───────────────────────────────────────────────────
     function insertStoryImage() {
@@ -525,33 +512,7 @@
             const editor = document.getElementById('editor');
             editor.focus();
 
-            const figure = document.createElement('figure');
-            figure.dataset.figId = id;
-
-            const img = document.createElement('img');
-            img.src = URL.createObjectURL(resized);
-            img.alt = '';
-
-            const captionInput = document.createElement('input');
-            captionInput.type = 'text';
-            captionInput.className = 'caption-input';
-            captionInput.placeholder = 'Caption (optional)';
-            captionInput.contentEditable = 'false';
-
-            const removeBtn = document.createElement('button');
-            removeBtn.className = 'remove-img-btn';
-            removeBtn.textContent = '✕ Remove photo';
-            removeBtn.contentEditable = 'false';
-            removeBtn.onclick = function () {
-                delete storyImageFiles[id];
-                const p = document.createElement('p');
-                p.innerHTML = '<br>';
-                figure.replaceWith(p);
-            };
-
-            figure.appendChild(img);
-            figure.appendChild(captionInput);
-            figure.appendChild(removeBtn);
+            const figure = buildFigureElement(id, URL.createObjectURL(resized), '');
 
             const sel = window.getSelection();
             if (sel && sel.rangeCount > 0 && editor.contains(sel.anchorNode)) {
@@ -589,10 +550,8 @@
     // ─── Utilities ────────────────────────────────────────────────────────────
     function slugify(text) {
         return text.toLowerCase()
-            .replace(/[^a-z0-9\s-]/g, '')
-            .trim()
-            .replace(/\s+/g, '-')
-            .replace(/-+/g, '-');
+            .replace(/[^a-z0-9\s-]/g, '').trim()
+            .replace(/\s+/g, '-').replace(/-+/g, '-');
     }
 
     function formatDate(str) {
@@ -602,9 +561,16 @@
         return `${months[m - 1]} ${d}, ${y}`;
     }
 
-    function extFromFile(file) {
-        return file.name.split('.').pop().toLowerCase();
+    function parseDateToInput(str) {
+        // "May 2, 2026" → "2026-05-02"
+        const months = {January:1,February:2,March:3,April:4,May:5,June:6,
+                        July:7,August:8,September:9,October:10,November:11,December:12};
+        const m = str.trim().match(/^(\w+)\s+(\d+),\s*(\d{4})/);
+        if (!m || !months[m[1]]) return '';
+        return `${m[3]}-${String(months[m[1]]).padStart(2,'0')}-${String(parseInt(m[2])).padStart(2,'0')}`;
     }
+
+    function extFromFile(file) { return file.name.split('.').pop().toLowerCase(); }
 
     function escHtml(str) {
         return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -625,8 +591,14 @@
 
             let filename = '';
             if (file) {
-                filename = `image-${imgCount++}.${extFromFile(file)}`;
+                // New file: timestamp name prevents collisions in edit mode
+                filename = editMode
+                    ? `image-${Date.now()}-${imgCount++}.${extFromFile(file)}`
+                    : `image-${imgCount++}.${extFromFile(file)}`;
                 imageEntries.push({ figId, filename, file });
+            } else if (existingImagePaths[figId]) {
+                filename = existingImagePaths[figId];
+                imgCount++;
             }
 
             const newFig = document.createElement('figure');
@@ -634,13 +606,11 @@
             imgEl.src = `./${filename}`;
             imgEl.alt = caption;
             newFig.appendChild(imgEl);
-
             if (caption) {
                 const fc = document.createElement('figcaption');
                 fc.textContent = caption;
                 newFig.appendChild(fc);
             }
-
             fig.replaceWith(newFig);
         });
 
@@ -739,15 +709,115 @@
 </html>`;
     }
 
-    // ─── Publish ──────────────────────────────────────────────────────────────
+    // ─── Load story for editing ───────────────────────────────────────────────
+    async function loadStoryForEdit(slug, cardDesc, cardImgSrc) {
+        const token = getToken();
+        if (!token) { alert('Please enter your GitHub token first.'); return; }
+
+        editMode = true;
+        editSlug = slug;
+        storyImageFiles = {};
+        existingImagePaths = {};
+        cardPhotoFile = null;
+        existingCardPhotoSrc = cardImgSrc;
+
+        setFormMode('edit');
+        pubLog.clear();
+        pubLog.line(`Loading "${slug}"…`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        try {
+            const storyFile = await ghGet(token, `writing/${slug}/index.html`);
+            const storyHtml = b64Decode(storyFile.content);
+            const doc = new DOMParser().parseFromString(storyHtml, 'text/html');
+
+            // Title
+            document.getElementById('title').value =
+                doc.querySelector('.story-title')?.textContent.trim() || '';
+
+            // Date — parse "May 2, 2026 · Dan Stout"
+            const metaRaw = doc.querySelector('.story-meta')?.textContent || '';
+            const datePart = metaRaw.split('·')[0].replace(/ /g, ' ').trim();
+            document.getElementById('date').value = parseDateToInput(datePart);
+
+            // Card description
+            document.getElementById('description').value = cardDesc;
+
+            // Card photo preview from raw GitHub URL
+            if (cardImgSrc) {
+                document.getElementById('cardPhotoImg').src = cardImgToRawUrl(cardImgSrc) + '?t=' + Date.now();
+                document.getElementById('cardPhotoPreview').style.display = 'block';
+                document.getElementById('cardUploadArea').style.display = 'none';
+            }
+
+            // Reconstruct editor from story body
+            const storyEl = doc.querySelector('.story');
+            ['a.back-link', 'h2.story-title', 'p.story-meta', 'hr'].forEach(sel => {
+                storyEl.querySelector(sel)?.remove();
+            });
+
+            const editor = document.getElementById('editor');
+            editor.innerHTML = '';
+
+            for (const node of Array.from(storyEl.childNodes)) {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    const t = node.textContent.trim();
+                    if (t) {
+                        const p = document.createElement('p');
+                        p.textContent = t;
+                        editor.appendChild(p);
+                    }
+                    continue;
+                }
+                if (node.nodeType !== Node.ELEMENT_NODE) continue;
+
+                if (node.nodeName === 'FIGURE') {
+                    const imgEl = node.querySelector('img');
+                    const caption = node.querySelector('figcaption')?.textContent.trim() || '';
+                    const filename = (imgEl?.getAttribute('src') || '').replace(/^\.\//, '');
+                    const id = 'fig-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
+                    existingImagePaths[id] = filename;
+                    const figure = buildFigureElement(
+                        id,
+                        `${RAW}/writing/${slug}/${filename}?t=${Date.now()}`,
+                        caption
+                    );
+                    editor.appendChild(figure);
+                    const p = document.createElement('p');
+                    p.innerHTML = '<br>';
+                    editor.appendChild(p);
+                } else {
+                    editor.appendChild(node.cloneNode(true));
+                }
+            }
+
+            if (!editor.children.length) {
+                const p = document.createElement('p');
+                p.innerHTML = '<br>';
+                editor.appendChild(p);
+            }
+
+            pubLog.line('✓ Loaded. Make changes then click Save Changes.', 'done');
+
+        } catch (err) {
+            pubLog.line(`Error loading story: ${err.message}`, 'err');
+            console.error(err);
+            editMode = false;
+            editSlug = null;
+            setFormMode('new');
+        }
+    }
+
+    // ─── Publish (new) or Save (edit) ─────────────────────────────────────────
     async function publish() {
+        if (editMode) { await saveEdit(); return; }
+
         const token = getToken();
         if (!token) { alert('Please enter your GitHub token first.'); return; }
 
         const title = document.getElementById('title').value.trim();
         const dateStr = document.getElementById('date').value;
         const description = document.getElementById('description').value.trim();
-
         if (!title) { alert('Please enter a title.'); return; }
         if (!dateStr) { alert('Please choose a date.'); return; }
 
@@ -760,11 +830,10 @@
             const date = formatDate(dateStr);
             const { html: bodyHtml, imageEntries } = parseEditor();
 
-            // 1. Upload card photo
+            // 1. Card photo
             let cardFilename = '';
             if (cardPhotoFile) {
-                const ext = extFromFile(cardPhotoFile);
-                cardFilename = `card.${ext}`;
+                cardFilename = `card.${extFromFile(cardPhotoFile)}`;
                 const path = `writing/${slug}/${cardFilename}`;
                 pubLog.line(`Uploading ${cardFilename}…`);
                 const base64 = await readFileAsBase64(cardPhotoFile);
@@ -774,7 +843,7 @@
                 pubLog.line('  ✓ uploaded', 'ok');
             }
 
-            // 2. Upload story body images
+            // 2. Story body images
             for (const entry of imageEntries) {
                 const path = `writing/${slug}/${entry.filename}`;
                 pubLog.line(`Uploading ${entry.filename}…`);
@@ -785,7 +854,7 @@
                 pubLog.line('  ✓ uploaded', 'ok');
             }
 
-            // 3. Upload story index.html
+            // 3. Story index.html
             const storyPath = `writing/${slug}/index.html`;
             pubLog.line(`Uploading writing/${slug}/index.html…`);
             let storySha = null;
@@ -798,10 +867,7 @@
             pubLog.line('Fetching writing/index.html…');
             const indexFile = await ghGet(token, 'writing/index.html');
             let indexHtml = b64Decode(indexFile.content);
-
-            if (!indexHtml.includes('<!-- CARDS -->')) {
-                throw new Error('Could not find <!-- CARDS --> marker in writing/index.html');
-            }
+            if (!indexHtml.includes('<!-- CARDS -->')) throw new Error('Could not find <!-- CARDS --> marker');
 
             const cardBlock = `<a href="${slug}/" class="card">
                 <img src="${slug}/${cardFilename}" alt="${escHtml(title)}" class="card-img">
@@ -811,7 +877,6 @@
                     <p class="card-meta">${escHtml(date)}</p>
                 </div>
             </a>`;
-
             indexHtml = indexHtml.replace('<!-- CARDS -->', `<!-- CARDS -->\n            ${cardBlock}`);
 
             pubLog.line('Updating writing/index.html…');
@@ -820,8 +885,106 @@
             pubLog.line('  ✓ updated', 'ok');
             pubLog.line(`✓ Done — "${title}" is live at boxyourbuddy.com/writing/${slug}/`, 'done');
 
-            // Refresh card order list to show the new card
             loadCards();
+
+        } catch (err) {
+            pubLog.line(`Error: ${err.message}`, 'err');
+            console.error(err);
+        } finally {
+            document.getElementById('saveBtn').disabled = false;
+        }
+    }
+
+    // ─── Save edit ────────────────────────────────────────────────────────────
+    async function saveEdit() {
+        const token = getToken();
+        const title = document.getElementById('title').value.trim();
+        const dateStr = document.getElementById('date').value;
+        const description = document.getElementById('description').value.trim();
+        if (!title) { alert('Please enter a title.'); return; }
+        if (!dateStr) { alert('Please choose a date.'); return; }
+
+        const btn = document.getElementById('saveBtn');
+        btn.disabled = true;
+        pubLog.clear();
+
+        try {
+            const date = formatDate(dateStr);
+            const { html: bodyHtml, imageEntries } = parseEditor();
+
+            // 1. New card photo (if replaced)
+            let cardImgSrcForIndex = existingCardPhotoSrc || '';
+            if (cardPhotoFile) {
+                const cardFilename = `card.${extFromFile(cardPhotoFile)}`;
+                const path = `writing/${editSlug}/${cardFilename}`;
+                pubLog.line('Uploading new card photo…');
+                const base64 = await readFileAsBase64(cardPhotoFile);
+                let sha = null;
+                try { sha = (await ghGet(token, path)).sha; } catch (e) {}
+                await ghPut(token, path, base64, `Update card photo: ${editSlug}`, sha);
+                pubLog.line('  ✓ uploaded', 'ok');
+                cardImgSrcForIndex = `${editSlug}/${cardFilename}`;
+            }
+
+            // 2. New story body images
+            for (const entry of imageEntries) {
+                const path = `writing/${editSlug}/${entry.filename}`;
+                pubLog.line(`Uploading ${entry.filename}…`);
+                const base64 = await readFileAsBase64(entry.file);
+                let sha = null;
+                try { sha = (await ghGet(token, path)).sha; } catch (e) {}
+                await ghPut(token, path, base64, `Update story image: ${editSlug}/${entry.filename}`, sha);
+                pubLog.line('  ✓ uploaded', 'ok');
+            }
+
+            // 3. Overwrite story index.html
+            const storyPath = `writing/${editSlug}/index.html`;
+            pubLog.line(`Saving writing/${editSlug}/index.html…`);
+            const storySha = (await ghGet(token, storyPath)).sha;
+            await ghPut(token, storyPath, b64Encode(storyPageHtml(title, date, bodyHtml)),
+                `Edit story: ${title}`, storySha);
+            pubLog.line('  ✓ saved', 'ok');
+
+            // 4. Update card in writing/index.html via full cards rewrite
+            const newCardHtml = `<a href="${editSlug}/" class="card">
+                <img src="${cardImgSrcForIndex}" alt="${escHtml(title)}" class="card-img">
+                <div class="card-body">
+                    <p class="card-title">${escHtml(title)}</p>
+                    <p class="card-desc">${escHtml(description)}</p>
+                    <p class="card-meta">${escHtml(date)}</p>
+                </div>
+            </a>`;
+
+            const cardIdx = cardData.findIndex(c => {
+                const doc = new DOMParser().parseFromString(`<div>${c.outerHTML}</div>`, 'text/html');
+                return doc.querySelector('a')?.getAttribute('href') === `${editSlug}/`;
+            });
+            if (cardIdx >= 0) {
+                cardData[cardIdx] = {
+                    outerHTML: newCardHtml,
+                    title,
+                    date,
+                    imgRawUrl: cardImgToRawUrl(cardImgSrcForIndex)
+                };
+            }
+
+            pubLog.line('Updating writing/index.html…');
+            const indexFile = await ghGet(token, 'writing/index.html');
+            let indexHtml = b64Decode(indexFile.content);
+            if (!indexHtml.includes('<!-- CARDS -->')) throw new Error('Could not find <!-- CARDS --> marker');
+
+            const reordered = cardData.map(c => '            ' + c.outerHTML.trim()).join('\n');
+            indexHtml = indexHtml.replace(
+                /(<!-- CARDS -->)[\s\S]*?(\n        <\/div>\n    <\/div>)/,
+                `$1\n${reordered}$2`
+            );
+            await ghPut(token, 'writing/index.html', b64Encode(indexHtml),
+                `Update writing card: ${title}`, indexFile.sha);
+            pubLog.line('  ✓ updated', 'ok');
+            pubLog.line(`✓ Done — "${title}" updated at boxyourbuddy.com/writing/${editSlug}/`, 'done');
+
+            existingCardPhotoSrc = cardImgSrcForIndex;
+            renderCardList();
 
         } catch (err) {
             pubLog.line(`Error: ${err.message}`, 'err');
@@ -832,23 +995,18 @@
     }
 
     // ─── Card order manager ───────────────────────────────────────────────────
-    let cardData = []; // { outerHTML, title, date, imgRawUrl }
+    let cardData = [];
     let dragSrcIdx = null;
 
     function cardImgToRawUrl(src) {
         if (!src) return '';
         if (src.startsWith('http')) {
-            // Convert github.com blob URLs to raw
             return src
                 .replace('https://github.com/', 'https://raw.githubusercontent.com/')
                 .replace('/blob/', '/')
                 .replace(/[?#].*$/, '');
         }
-        if (src.startsWith('../')) {
-            // ../images/foo.jpg → root-relative
-            return `${RAW}/${src.slice(3)}`;
-        }
-        // slug/card.jpg — relative to writing/
+        if (src.startsWith('../')) return `${RAW}/${src.slice(3)}`;
         return `${RAW}/writing/${src}`;
     }
 
@@ -863,15 +1021,16 @@
         try {
             const indexFile = await ghGet(token, 'writing/index.html');
             const html = b64Decode(indexFile.content);
-
             const doc = new DOMParser().parseFromString(html, 'text/html');
-            const cards = Array.from(doc.querySelectorAll('.cards a.card'));
 
-            cardData = cards.map(a => ({
-                outerHTML: a.outerHTML,
-                title: a.querySelector('.card-title')?.textContent.trim() || a.getAttribute('href'),
-                date:  a.querySelector('.card-meta')?.textContent.trim()  || '',
-                imgRawUrl: cardImgToRawUrl(a.querySelector('img')?.getAttribute('src') || ''),
+            cardData = Array.from(doc.querySelectorAll('.cards a.card')).map(a => ({
+                outerHTML:  a.outerHTML,
+                title:      a.querySelector('.card-title')?.textContent.trim() || a.getAttribute('href'),
+                date:       a.querySelector('.card-meta')?.textContent.trim()  || '',
+                imgRawUrl:  cardImgToRawUrl(a.querySelector('img')?.getAttribute('src') || ''),
+                cardDesc:   a.querySelector('.card-desc')?.textContent.trim()  || '',
+                cardImgSrc: a.querySelector('img')?.getAttribute('src') || '',
+                slug:       (a.getAttribute('href') || '').replace(/\/$/, ''),
             }));
 
             renderCardList();
@@ -904,12 +1063,20 @@
             item.dataset.idx = i;
             item.innerHTML = `
                 <span class="sort-handle">&#9776;</span>
-                <img class="sort-thumb" src="${card.imgRawUrl}" alt=""
-                     onerror="this.style.visibility='hidden'">
+                <img class="sort-thumb" src="${card.imgRawUrl}" alt="" onerror="this.style.visibility='hidden'">
                 <div class="sort-info">
                     <div class="sort-title">${escHtml(card.title)}</div>
                     <div class="sort-meta">${escHtml(card.date)}</div>
                 </div>`;
+
+            const editBtn = document.createElement('button');
+            editBtn.className = 'edit-card-btn';
+            editBtn.textContent = 'Edit';
+            editBtn.onclick = (e) => {
+                e.stopPropagation();
+                loadStoryForEdit(card.slug, card.cardDesc, card.cardImgSrc);
+            };
+            item.appendChild(editBtn);
 
             item.addEventListener('dragstart', function (e) {
                 dragSrcIdx = parseInt(this.dataset.idx);
@@ -917,9 +1084,7 @@
                 setTimeout(() => this.classList.add('dragging'), 0);
             });
             item.addEventListener('dragend', function () {
-                document.querySelectorAll('.sort-item').forEach(el => {
-                    el.classList.remove('dragging', 'drag-over');
-                });
+                document.querySelectorAll('.sort-item').forEach(el => el.classList.remove('dragging', 'drag-over'));
             });
             item.addEventListener('dragover', function (e) {
                 e.preventDefault();
@@ -954,10 +1119,7 @@
             ordLog.line('Fetching writing/index.html…');
             const indexFile = await ghGet(token, 'writing/index.html');
             let html = b64Decode(indexFile.content);
-
-            if (!html.includes('<!-- CARDS -->')) {
-                throw new Error('Could not find <!-- CARDS --> marker in writing/index.html');
-            }
+            if (!html.includes('<!-- CARDS -->')) throw new Error('Could not find <!-- CARDS --> marker');
 
             const reordered = cardData.map(c => '            ' + c.outerHTML.trim()).join('\n');
             html = html.replace(
@@ -966,8 +1128,7 @@
             );
 
             ordLog.line('Saving new order…');
-            await ghPut(token, 'writing/index.html', b64Encode(html),
-                'Reorder writing cards', indexFile.sha);
+            await ghPut(token, 'writing/index.html', b64Encode(html), 'Reorder writing cards', indexFile.sha);
             ordLog.line('✓ Card order saved — live on GitHub.', 'done');
 
         } catch (err) {
@@ -978,7 +1139,7 @@
         }
     }
 
-    // Auto-load cards if token is already saved
+    // Auto-load cards if token already saved
     if (tokenInput.value) loadCards();
 </script>
 </body>
