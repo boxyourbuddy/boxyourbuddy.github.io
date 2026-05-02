@@ -54,18 +54,30 @@
             background: #000;
             transition: border-color 0.2s;
         }
-        .upload-area:hover { border-color: #FFF0AD; }
-        .upload-area p { margin: 0; font-size: 0.8rem; color: #555; letter-spacing: 1px; }
+        .upload-area:hover, .upload-area.drag-over { border-color: #FFF0AD; }
+        .upload-area.drag-over p { color: #FFF0AD; }
+        .upload-area p { margin: 0; font-size: 0.8rem; color: #555; letter-spacing: 1px; transition: color 0.2s; }
         .upload-area input { display: none; }
 
         .photo-preview {
             margin-top: 12px;
             display: none;
         }
-        .photo-preview img {
-            max-width: 100%;
-            max-height: 200px;
+        .card-preview-frame {
+            width: 100%;
+            height: 200px;
+            background: #000;
+            border: 1px solid #2a2a2a;
             border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .card-preview-frame img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
             display: block;
         }
         .photo-preview .remove-photo {
@@ -226,7 +238,9 @@
             <input type="file" id="cardPhotoInput" accept="image/*">
         </div>
         <div class="photo-preview" id="cardPhotoPreview">
-            <img id="cardPhotoImg" src="" alt="">
+            <div class="card-preview-frame">
+                <img id="cardPhotoImg" src="" alt="">
+            </div>
             <button class="remove-photo" onclick="removeCardPhoto()">✕ Remove</button>
         </div>
     </div>
@@ -260,18 +274,55 @@
     let cardPhotoFile = null;
     let storyImageFiles = {}; // figureId -> File
 
+    // ─── Resize helper ────────────────────────────────────────────────────────
+    function resizeIfNeeded(file, maxWidth) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            const url = URL.createObjectURL(file);
+            img.onload = function () {
+                URL.revokeObjectURL(url);
+                if (img.width <= maxWidth) { resolve(file); return; }
+                const scale = maxWidth / img.width;
+                const canvas = document.createElement('canvas');
+                canvas.width = maxWidth;
+                canvas.height = Math.round(img.height * scale);
+                canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+                canvas.toBlob((blob) => {
+                    resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' }));
+                }, 'image/jpeg', 0.92);
+            };
+            img.src = url;
+        });
+    }
+
     // ─── Card photo ──────────────────────────────────────────────────────────
+    async function processCardPhoto(file) {
+        const resized = await resizeIfNeeded(file, 750);
+        cardPhotoFile = resized;
+        const url = URL.createObjectURL(resized);
+        document.getElementById('cardPhotoImg').src = url;
+        document.getElementById('cardPhotoPreview').style.display = 'block';
+        document.getElementById('cardUploadArea').style.display = 'none';
+    }
+
     document.getElementById('cardPhotoInput').addEventListener('change', function (e) {
         const file = e.target.files[0];
-        if (!file) return;
-        cardPhotoFile = file;
-        const reader = new FileReader();
-        reader.onload = function (ev) {
-            document.getElementById('cardPhotoImg').src = ev.target.result;
-            document.getElementById('cardPhotoPreview').style.display = 'block';
-            document.getElementById('cardUploadArea').style.display = 'none';
-        };
-        reader.readAsDataURL(file);
+        if (file) processCardPhoto(file);
+    });
+
+    const cardUploadArea = document.getElementById('cardUploadArea');
+    cardUploadArea.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        this.classList.add('drag-over');
+    });
+    cardUploadArea.addEventListener('dragleave', function () {
+        this.classList.remove('drag-over');
+    });
+    cardUploadArea.addEventListener('drop', function (e) {
+        e.preventDefault();
+        this.classList.remove('drag-over');
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) processCardPhoto(file);
     });
 
     function removeCardPhoto() {
@@ -303,78 +354,73 @@
     // ─── Insert story image ───────────────────────────────────────────────────
     function insertStoryImage() {
         const input = document.getElementById('storyImageInput');
-        input.onchange = function (e) {
+        input.onchange = async function (e) {
             const file = e.target.files[0];
             if (!file) return;
             const id = 'fig-' + Date.now();
 
-            const reader = new FileReader();
-            reader.onload = function (ev) {
-                const editor = document.getElementById('editor');
-                editor.focus();
+            const resized = await resizeIfNeeded(file, 750);
+            const previewUrl = URL.createObjectURL(resized);
 
-                // Build figure element
-                const figure = document.createElement('figure');
-                figure.dataset.figId = id;
+            const editor = document.getElementById('editor');
+            editor.focus();
 
-                const img = document.createElement('img');
-                img.src = ev.target.result;
-                img.alt = '';
+            const figure = document.createElement('figure');
+            figure.dataset.figId = id;
 
-                const captionInput = document.createElement('input');
-                captionInput.type = 'text';
-                captionInput.className = 'caption-input';
-                captionInput.placeholder = 'Caption (optional)';
-                captionInput.contentEditable = 'false';
+            const img = document.createElement('img');
+            img.src = previewUrl;
+            img.alt = '';
 
-                const removeBtn = document.createElement('button');
-                removeBtn.className = 'remove-img-btn';
-                removeBtn.textContent = '✕ Remove photo';
-                removeBtn.contentEditable = 'false';
-                removeBtn.onclick = function () {
-                    delete storyImageFiles[id];
-                    const afterP = document.createElement('p');
-                    afterP.innerHTML = '<br>';
-                    figure.replaceWith(afterP);
-                };
+            const captionInput = document.createElement('input');
+            captionInput.type = 'text';
+            captionInput.className = 'caption-input';
+            captionInput.placeholder = 'Caption (optional)';
+            captionInput.contentEditable = 'false';
 
-                figure.appendChild(img);
-                figure.appendChild(captionInput);
-                figure.appendChild(removeBtn);
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-img-btn';
+            removeBtn.textContent = '✕ Remove photo';
+            removeBtn.contentEditable = 'false';
+            removeBtn.onclick = function () {
+                delete storyImageFiles[id];
+                const afterP = document.createElement('p');
+                afterP.innerHTML = '<br>';
+                figure.replaceWith(afterP);
+            };
 
-                // Insert at cursor or append
-                const sel = window.getSelection();
-                if (sel && sel.rangeCount > 0 && editor.contains(sel.anchorNode)) {
-                    const range = sel.getRangeAt(0);
-                    let node = range.startContainer;
-                    while (node.parentNode !== editor) {
-                        node = node.parentNode;
-                        if (!node || node === editor) break;
-                    }
-                    if (node && node.parentNode === editor) {
-                        editor.insertBefore(figure, node.nextSibling);
-                    } else {
-                        editor.appendChild(figure);
-                    }
+            figure.appendChild(img);
+            figure.appendChild(captionInput);
+            figure.appendChild(removeBtn);
+
+            const sel = window.getSelection();
+            if (sel && sel.rangeCount > 0 && editor.contains(sel.anchorNode)) {
+                const range = sel.getRangeAt(0);
+                let node = range.startContainer;
+                while (node.parentNode !== editor) {
+                    node = node.parentNode;
+                    if (!node || node === editor) break;
+                }
+                if (node && node.parentNode === editor) {
+                    editor.insertBefore(figure, node.nextSibling);
                 } else {
                     editor.appendChild(figure);
                 }
+            } else {
+                editor.appendChild(figure);
+            }
 
-                // Add paragraph after figure for continued typing
-                const afterP = document.createElement('p');
-                afterP.innerHTML = '<br>';
-                figure.insertAdjacentElement('afterend', afterP);
+            const afterP = document.createElement('p');
+            afterP.innerHTML = '<br>';
+            figure.insertAdjacentElement('afterend', afterP);
 
-                // Place cursor in next paragraph
-                const range = document.createRange();
-                range.setStart(afterP, 0);
-                range.collapse(true);
-                sel.removeAllRanges();
-                sel.addRange(range);
+            const range = document.createRange();
+            range.setStart(afterP, 0);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
 
-                storyImageFiles[id] = file;
-            };
-            reader.readAsDataURL(file);
+            storyImageFiles[id] = resized;
             input.value = '';
         };
         input.click();
