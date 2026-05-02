@@ -63,10 +63,7 @@
         .upload-area p { margin: 0; font-size: 0.8rem; color: #555; letter-spacing: 1px; transition: color 0.2s; }
         .upload-area input { display: none; }
 
-        .photo-preview {
-            margin-top: 12px;
-            display: none;
-        }
+        .photo-preview { margin-top: 12px; display: none; }
         .card-preview-frame {
             width: 100%;
             height: 200px;
@@ -78,12 +75,7 @@
             justify-content: center;
             overflow: hidden;
         }
-        .card-preview-frame img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            display: block;
-        }
+        .card-preview-frame img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
         .photo-preview .remove-photo {
             display: inline-block;
             margin-top: 8px;
@@ -175,7 +167,7 @@
         }
         .editor figure .remove-img-btn:hover { color: #ff6b6b; }
 
-        /* Publish button */
+        /* Buttons */
         .actions { margin-top: 32px; display: flex; align-items: center; gap: 20px; }
         .save-btn {
             background: #FFF0AD;
@@ -194,6 +186,24 @@
         .save-btn:hover { background: #fff; }
         .save-btn:disabled { background: #333; color: #555; cursor: not-allowed; }
 
+        .load-btn {
+            background: none;
+            border: 1px solid #2a2a2a;
+            color: #888;
+            padding: 8px 18px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            transition: border-color 0.15s, color 0.15s;
+            margin-bottom: 16px;
+        }
+        .load-btn:hover { border-color: #FFF0AD; color: #FFF0AD; }
+        .load-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
         /* Log */
         .log {
             margin-top: 24px;
@@ -210,7 +220,49 @@
         .log-line.info { color: #888; }
         .log-line.done { color: #FFF0AD; font-weight: bold; }
 
-        /* Hidden file input for story images */
+        /* Section label */
+        .section-label {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #666;
+            margin: 0 0 16px;
+            font-weight: bold;
+        }
+
+        /* Sortable card list */
+        .sort-list { list-style: none; padding: 0; margin: 0; }
+        .sort-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            background: #000;
+            border: 1px solid #1a1a1a;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            cursor: grab;
+            user-select: none;
+            transition: border-color 0.15s, opacity 0.15s;
+        }
+        .sort-item:active { cursor: grabbing; }
+        .sort-item.drag-over { border-color: #FFF0AD; }
+        .sort-item.dragging { opacity: 0.35; }
+        .sort-handle { color: #333; font-size: 1.1rem; flex-shrink: 0; line-height: 1; }
+        .sort-thumb {
+            width: 72px;
+            height: 44px;
+            object-fit: contain;
+            background: #111;
+            border-radius: 3px;
+            flex-shrink: 0;
+            display: block;
+        }
+        .sort-info { flex: 1; min-width: 0; }
+        .sort-title { font-size: 0.85rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sort-meta { font-size: 0.65rem; color: #555; letter-spacing: 2px; text-transform: uppercase; margin-top: 3px; }
+        .sort-placeholder { font-size: 0.8rem; color: #444; font-weight: normal; letter-spacing: 0.5px; }
+
         #storyImageInput { display: none; }
     </style>
 </head>
@@ -281,12 +333,21 @@
     <div class="actions">
         <button class="save-btn" id="saveBtn" onclick="publish()">Publish Story</button>
     </div>
+    <div class="log" id="publishLog"></div>
 
-    <div class="log" id="log"></div>
+    <hr class="divider">
+
+    <!-- Card order manager -->
+    <p class="section-label">Card Order</p>
+    <button class="load-btn" id="loadCardsBtn" onclick="loadCards()">Load Cards</button>
+    <div id="cardListEl"><p class="sort-placeholder">Click above to load current cards.</p></div>
+    <div class="actions" id="saveOrderActions" style="display:none;">
+        <button class="save-btn" id="saveOrderBtn" onclick="saveCardOrder()">Save Order</button>
+    </div>
+    <div class="log" id="orderLog"></div>
 
 </div>
 
-<!-- Hidden file input for story body images -->
 <input type="file" id="storyImageInput" accept="image/*">
 
 <script>
@@ -294,6 +355,7 @@
     const REPO   = 'boxyourbuddy/boxyourbuddy.github.io';
     const BRANCH = 'main';
     const API    = 'https://api.github.com';
+    const RAW    = `https://raw.githubusercontent.com/${REPO}/${BRANCH}`;
 
     // ─── Token ────────────────────────────────────────────────────────────────
     const tokenInput = document.getElementById('token');
@@ -361,21 +423,26 @@
         });
     }
 
-    // ─── Log ──────────────────────────────────────────────────────────────────
-    const logEl = document.getElementById('log');
-    function logClear() { logEl.innerHTML = ''; logEl.style.display = 'none'; }
-    function logLine(msg, type = 'info') {
-        logEl.style.display = 'block';
-        const div = document.createElement('div');
-        div.className = `log-line ${type}`;
-        div.textContent = msg;
-        logEl.appendChild(div);
-        logEl.scrollTop = logEl.scrollHeight;
+    // ─── Logs ─────────────────────────────────────────────────────────────────
+    function makeLog(el) {
+        return {
+            clear() { el.innerHTML = ''; el.style.display = 'none'; },
+            line(msg, type = 'info') {
+                el.style.display = 'block';
+                const div = document.createElement('div');
+                div.className = `log-line ${type}`;
+                div.textContent = msg;
+                el.appendChild(div);
+                el.scrollTop = el.scrollHeight;
+            }
+        };
     }
+    const pubLog   = makeLog(document.getElementById('publishLog'));
+    const ordLog   = makeLog(document.getElementById('orderLog'));
 
     // ─── State ───────────────────────────────────────────────────────────────
     let cardPhotoFile = null;
-    let storyImageFiles = {}; // figureId -> File
+    let storyImageFiles = {};
 
     // ─── Resize helper ────────────────────────────────────────────────────────
     function resizeIfNeeded(file, maxWidth) {
@@ -402,25 +469,18 @@
     async function processCardPhoto(file) {
         const resized = await resizeIfNeeded(file, 750);
         cardPhotoFile = resized;
-        const url = URL.createObjectURL(resized);
-        document.getElementById('cardPhotoImg').src = url;
+        document.getElementById('cardPhotoImg').src = URL.createObjectURL(resized);
         document.getElementById('cardPhotoPreview').style.display = 'block';
         document.getElementById('cardUploadArea').style.display = 'none';
     }
 
     document.getElementById('cardPhotoInput').addEventListener('change', function (e) {
-        const file = e.target.files[0];
-        if (file) processCardPhoto(file);
+        if (e.target.files[0]) processCardPhoto(e.target.files[0]);
     });
 
     const cardUploadArea = document.getElementById('cardUploadArea');
-    cardUploadArea.addEventListener('dragover', function (e) {
-        e.preventDefault();
-        this.classList.add('drag-over');
-    });
-    cardUploadArea.addEventListener('dragleave', function () {
-        this.classList.remove('drag-over');
-    });
+    cardUploadArea.addEventListener('dragover', function (e) { e.preventDefault(); this.classList.add('drag-over'); });
+    cardUploadArea.addEventListener('dragleave', function () { this.classList.remove('drag-over'); });
     cardUploadArea.addEventListener('drop', function (e) {
         e.preventDefault();
         this.classList.remove('drag-over');
@@ -462,8 +522,6 @@
             const id = 'fig-' + Date.now();
 
             const resized = await resizeIfNeeded(file, 750);
-            const previewUrl = URL.createObjectURL(resized);
-
             const editor = document.getElementById('editor');
             editor.focus();
 
@@ -471,7 +529,7 @@
             figure.dataset.figId = id;
 
             const img = document.createElement('img');
-            img.src = previewUrl;
+            img.src = URL.createObjectURL(resized);
             img.alt = '';
 
             const captionInput = document.createElement('input');
@@ -486,9 +544,9 @@
             removeBtn.contentEditable = 'false';
             removeBtn.onclick = function () {
                 delete storyImageFiles[id];
-                const afterP = document.createElement('p');
-                afterP.innerHTML = '<br>';
-                figure.replaceWith(afterP);
+                const p = document.createElement('p');
+                p.innerHTML = '<br>';
+                figure.replaceWith(p);
             };
 
             figure.appendChild(img);
@@ -595,16 +653,11 @@
                 if (t) html += `<p>${escHtml(t)}</p>\n`;
                 continue;
             }
-            if (child.nodeName === 'FIGURE') {
-                html += child.outerHTML + '\n';
-                continue;
-            }
+            if (child.nodeName === 'FIGURE') { html += child.outerHTML + '\n'; continue; }
             const inner = child.innerHTML.trim();
             if (!inner || inner === '<br>') continue;
             if (child.querySelector('figure')) {
-                child.querySelectorAll('figure').forEach(f => {
-                    html += f.outerHTML + '\n';
-                });
+                child.querySelectorAll('figure').forEach(f => { html += f.outerHTML + '\n'; });
             } else {
                 html += `<p>${inner}</p>\n`;
             }
@@ -700,13 +753,11 @@
 
         const btn = document.getElementById('saveBtn');
         btn.disabled = true;
-        logClear();
+        pubLog.clear();
 
         try {
             const slug = slugify(title);
             const date = formatDate(dateStr);
-
-            // Parse editor first so we have imageEntries
             const { html: bodyHtml, imageEntries } = parseEditor();
 
             // 1. Upload card photo
@@ -715,36 +766,36 @@
                 const ext = extFromFile(cardPhotoFile);
                 cardFilename = `card.${ext}`;
                 const path = `writing/${slug}/${cardFilename}`;
-                logLine(`Uploading ${cardFilename}…`);
+                pubLog.line(`Uploading ${cardFilename}…`);
                 const base64 = await readFileAsBase64(cardPhotoFile);
                 let sha = null;
                 try { sha = (await ghGet(token, path)).sha; } catch (e) {}
                 await ghPut(token, path, base64, `Add story card photo: ${slug}`, sha);
-                logLine('  ✓ uploaded', 'ok');
+                pubLog.line('  ✓ uploaded', 'ok');
             }
 
             // 2. Upload story body images
             for (const entry of imageEntries) {
                 const path = `writing/${slug}/${entry.filename}`;
-                logLine(`Uploading ${entry.filename}…`);
+                pubLog.line(`Uploading ${entry.filename}…`);
                 const base64 = await readFileAsBase64(entry.file);
                 let sha = null;
                 try { sha = (await ghGet(token, path)).sha; } catch (e) {}
                 await ghPut(token, path, base64, `Add story image: ${slug}/${entry.filename}`, sha);
-                logLine('  ✓ uploaded', 'ok');
+                pubLog.line('  ✓ uploaded', 'ok');
             }
 
             // 3. Upload story index.html
             const storyPath = `writing/${slug}/index.html`;
-            logLine(`Uploading writing/${slug}/index.html…`);
+            pubLog.line(`Uploading writing/${slug}/index.html…`);
             let storySha = null;
             try { storySha = (await ghGet(token, storyPath)).sha; } catch (e) {}
             await ghPut(token, storyPath, b64Encode(storyPageHtml(title, date, bodyHtml)),
                 `Add story: ${title}`, storySha);
-            logLine('  ✓ uploaded', 'ok');
+            pubLog.line('  ✓ uploaded', 'ok');
 
             // 4. Prepend card to writing/index.html
-            logLine('Fetching writing/index.html…');
+            pubLog.line('Fetching writing/index.html…');
             const indexFile = await ghGet(token, 'writing/index.html');
             let indexHtml = b64Decode(indexFile.content);
 
@@ -763,20 +814,172 @@
 
             indexHtml = indexHtml.replace('<!-- CARDS -->', `<!-- CARDS -->\n            ${cardBlock}`);
 
-            logLine('Updating writing/index.html…');
+            pubLog.line('Updating writing/index.html…');
             await ghPut(token, 'writing/index.html', b64Encode(indexHtml),
                 `Add writing card: ${title}`, indexFile.sha);
-            logLine('  ✓ updated', 'ok');
+            pubLog.line('  ✓ updated', 'ok');
+            pubLog.line(`✓ Done — "${title}" is live at boxyourbuddy.com/writing/${slug}/`, 'done');
 
-            logLine(`✓ Done — "${title}" is live at boxyourbuddy.com/writing/${slug}/`, 'done');
+            // Refresh card order list to show the new card
+            loadCards();
 
         } catch (err) {
-            logLine(`Error: ${err.message}`, 'err');
+            pubLog.line(`Error: ${err.message}`, 'err');
             console.error(err);
         } finally {
             btn.disabled = false;
         }
     }
+
+    // ─── Card order manager ───────────────────────────────────────────────────
+    let cardData = []; // { outerHTML, title, date, imgRawUrl }
+    let dragSrcIdx = null;
+
+    function cardImgToRawUrl(src) {
+        if (!src) return '';
+        if (src.startsWith('http')) {
+            // Convert github.com blob URLs to raw
+            return src
+                .replace('https://github.com/', 'https://raw.githubusercontent.com/')
+                .replace('/blob/', '/')
+                .replace(/[?#].*$/, '');
+        }
+        if (src.startsWith('../')) {
+            // ../images/foo.jpg → root-relative
+            return `${RAW}/${src.slice(3)}`;
+        }
+        // slug/card.jpg — relative to writing/
+        return `${RAW}/writing/${src}`;
+    }
+
+    async function loadCards() {
+        const token = getToken();
+        if (!token) { alert('Please enter your GitHub token first.'); return; }
+
+        const btn = document.getElementById('loadCardsBtn');
+        btn.disabled = true;
+        btn.textContent = 'Loading…';
+
+        try {
+            const indexFile = await ghGet(token, 'writing/index.html');
+            const html = b64Decode(indexFile.content);
+
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const cards = Array.from(doc.querySelectorAll('.cards a.card'));
+
+            cardData = cards.map(a => ({
+                outerHTML: a.outerHTML,
+                title: a.querySelector('.card-title')?.textContent.trim() || a.getAttribute('href'),
+                date:  a.querySelector('.card-meta')?.textContent.trim()  || '',
+                imgRawUrl: cardImgToRawUrl(a.querySelector('img')?.getAttribute('src') || ''),
+            }));
+
+            renderCardList();
+        } catch (err) {
+            document.getElementById('cardListEl').innerHTML =
+                `<p class="sort-placeholder" style="color:#ff6b6b;">Error: ${err.message}</p>`;
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Refresh';
+        }
+    }
+
+    function renderCardList() {
+        const el = document.getElementById('cardListEl');
+        const saveRow = document.getElementById('saveOrderActions');
+
+        if (cardData.length === 0) {
+            el.innerHTML = '<p class="sort-placeholder">No cards found.</p>';
+            saveRow.style.display = 'none';
+            return;
+        }
+
+        el.innerHTML = '';
+        saveRow.style.display = 'flex';
+
+        cardData.forEach((card, i) => {
+            const item = document.createElement('div');
+            item.className = 'sort-item';
+            item.draggable = true;
+            item.dataset.idx = i;
+            item.innerHTML = `
+                <span class="sort-handle">&#9776;</span>
+                <img class="sort-thumb" src="${card.imgRawUrl}" alt=""
+                     onerror="this.style.visibility='hidden'">
+                <div class="sort-info">
+                    <div class="sort-title">${escHtml(card.title)}</div>
+                    <div class="sort-meta">${escHtml(card.date)}</div>
+                </div>`;
+
+            item.addEventListener('dragstart', function (e) {
+                dragSrcIdx = parseInt(this.dataset.idx);
+                e.dataTransfer.effectAllowed = 'move';
+                setTimeout(() => this.classList.add('dragging'), 0);
+            });
+            item.addEventListener('dragend', function () {
+                document.querySelectorAll('.sort-item').forEach(el => {
+                    el.classList.remove('dragging', 'drag-over');
+                });
+            });
+            item.addEventListener('dragover', function (e) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                document.querySelectorAll('.sort-item').forEach(el => el.classList.remove('drag-over'));
+                this.classList.add('drag-over');
+            });
+            item.addEventListener('drop', function (e) {
+                e.preventDefault();
+                const targetIdx = parseInt(this.dataset.idx);
+                if (dragSrcIdx !== null && dragSrcIdx !== targetIdx) {
+                    const [moved] = cardData.splice(dragSrcIdx, 1);
+                    cardData.splice(targetIdx, 0, moved);
+                    renderCardList();
+                }
+            });
+
+            el.appendChild(item);
+        });
+    }
+
+    async function saveCardOrder() {
+        const token = getToken();
+        if (!token) { alert('Please enter your GitHub token first.'); return; }
+        if (cardData.length === 0) { alert('Load cards first.'); return; }
+
+        const btn = document.getElementById('saveOrderBtn');
+        btn.disabled = true;
+        ordLog.clear();
+
+        try {
+            ordLog.line('Fetching writing/index.html…');
+            const indexFile = await ghGet(token, 'writing/index.html');
+            let html = b64Decode(indexFile.content);
+
+            if (!html.includes('<!-- CARDS -->')) {
+                throw new Error('Could not find <!-- CARDS --> marker in writing/index.html');
+            }
+
+            const reordered = cardData.map(c => '            ' + c.outerHTML.trim()).join('\n');
+            html = html.replace(
+                /(<!-- CARDS -->)[\s\S]*?(\n        <\/div>\n    <\/div>)/,
+                `$1\n${reordered}$2`
+            );
+
+            ordLog.line('Saving new order…');
+            await ghPut(token, 'writing/index.html', b64Encode(html),
+                'Reorder writing cards', indexFile.sha);
+            ordLog.line('✓ Card order saved — live on GitHub.', 'done');
+
+        } catch (err) {
+            ordLog.line(`Error: ${err.message}`, 'err');
+            console.error(err);
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    // Auto-load cards if token is already saved
+    if (tokenInput.value) loadCards();
 </script>
 </body>
 </html>
