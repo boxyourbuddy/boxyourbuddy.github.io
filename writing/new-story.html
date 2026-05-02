@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Story — BoxYourBuddy</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
         * { box-sizing: border-box; font-family: Arial, sans-serif; }
         body { margin: 0; background: #111; color: #fff; padding: 48px 20px 80px; }
@@ -24,8 +23,10 @@
             margin-bottom: 8px;
             font-weight: bold;
         }
+        .hint { font-size: 0.7rem; color: #444; margin-top: 6px; letter-spacing: 0.5px; font-weight: normal; }
 
         input[type="text"],
+        input[type="password"],
         input[type="date"],
         textarea {
             width: 100%;
@@ -39,10 +40,13 @@
             font-family: Arial, sans-serif;
         }
         input[type="text"]:focus,
+        input[type="password"]:focus,
         input[type="date"]:focus,
         textarea:focus { border-color: #FFF0AD; }
 
         textarea { resize: vertical; }
+
+        .divider { border: 0; border-top: 1px solid #1a1a1a; margin: 32px 0; }
 
         /* Image upload area */
         .upload-area {
@@ -137,19 +141,11 @@
         }
         .editor:focus { border-color: #FFF0AD; }
         .editor p { margin: 0 0 18px; }
-        .editor figure {
-            margin: 24px 0;
-            padding: 0;
-        }
-        .editor figure img {
-            max-width: 100%;
-            border-radius: 4px;
-            display: block;
-        }
+        .editor figure { margin: 24px 0; padding: 0; }
+        .editor figure img { max-width: 100%; border-radius: 4px; display: block; }
         .editor figure .caption-input {
             margin-top: 8px;
             font-size: 0.8rem;
-            color: #555;
             text-align: center;
             outline: none;
             width: 100%;
@@ -179,7 +175,7 @@
         }
         .editor figure .remove-img-btn:hover { color: #ff6b6b; }
 
-        /* Save button */
+        /* Publish button */
         .actions { margin-top: 32px; display: flex; align-items: center; gap: 20px; }
         .save-btn {
             background: #FFF0AD;
@@ -196,9 +192,23 @@
             transition: background 0.15s;
         }
         .save-btn:hover { background: #fff; }
-        .save-btn:disabled { background: #444; color: #222; cursor: not-allowed; }
+        .save-btn:disabled { background: #333; color: #555; cursor: not-allowed; }
 
-        .status { font-size: 0.75rem; color: #555; letter-spacing: 1px; }
+        /* Log */
+        .log {
+            margin-top: 24px;
+            background: #000;
+            border: 1px solid #1a1a1a;
+            border-radius: 4px;
+            padding: 16px;
+            display: none;
+        }
+        .log-line { font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 8px; font-weight: normal; }
+        .log-line:last-child { margin-bottom: 0; }
+        .log-line.ok   { color: #7fff7f; }
+        .log-line.err  { color: #ff6b6b; }
+        .log-line.info { color: #888; }
+        .log-line.done { color: #FFF0AD; font-weight: bold; }
 
         /* Hidden file input for story images */
         #storyImageInput { display: none; }
@@ -209,8 +219,17 @@
 
     <div class="tool-header">
         <h1>New Story</h1>
-        <p>Fills the correct folders &amp; files. Requires internet to load (JSZip CDN).</p>
+        <p>Publishes directly to GitHub Pages.</p>
     </div>
+
+    <!-- Token -->
+    <div class="field">
+        <label>GitHub Personal Access Token</label>
+        <input type="password" id="token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+        <p class="hint">Saved in your browser. Needs <strong>repo</strong> scope. <a href="https://github.com/settings/tokens/new?scopes=repo&description=BoxYourBuddy+story+publisher" target="_blank" style="color:#FFF0AD;">Generate one here ↗</a></p>
+    </div>
+
+    <hr class="divider">
 
     <!-- Title -->
     <div class="field">
@@ -234,7 +253,7 @@
     <div class="field">
         <label>Card Photo — shown on writing page</label>
         <div class="upload-area" id="cardUploadArea" onclick="document.getElementById('cardPhotoInput').click()">
-            <p>Click to choose photo</p>
+            <p>Click or drag photo here</p>
             <input type="file" id="cardPhotoInput" accept="image/*">
         </div>
         <div class="photo-preview" id="cardPhotoPreview">
@@ -260,9 +279,10 @@
     </div>
 
     <div class="actions">
-        <button class="save-btn" id="saveBtn" onclick="generate()">Save &amp; Download ZIP</button>
-        <span class="status" id="status"></span>
+        <button class="save-btn" id="saveBtn" onclick="publish()">Publish Story</button>
     </div>
+
+    <div class="log" id="log"></div>
 
 </div>
 
@@ -270,6 +290,89 @@
 <input type="file" id="storyImageInput" accept="image/*">
 
 <script>
+    // ─── Constants ────────────────────────────────────────────────────────────
+    const REPO   = 'boxyourbuddy/boxyourbuddy.github.io';
+    const BRANCH = 'main';
+    const API    = 'https://api.github.com';
+
+    // ─── Token ────────────────────────────────────────────────────────────────
+    const tokenInput = document.getElementById('token');
+    tokenInput.value = localStorage.getItem('byb_gh_token') || '';
+    tokenInput.addEventListener('change', () => {
+        localStorage.setItem('byb_gh_token', tokenInput.value.trim());
+    });
+    function getToken() {
+        const t = tokenInput.value.trim();
+        localStorage.setItem('byb_gh_token', t);
+        return t;
+    }
+
+    // ─── GitHub API helpers ───────────────────────────────────────────────────
+    async function ghGet(token, path) {
+        const res = await fetch(`${API}/repos/${REPO}/contents/${path}?ref=${BRANCH}`, {
+            headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json' }
+        });
+        if (!res.ok) throw new Error(`GET ${path} → ${res.status}`);
+        return res.json();
+    }
+
+    async function ghPut(token, path, content64, message, sha) {
+        const body = { message, content: content64, branch: BRANCH };
+        if (sha) body.sha = sha;
+        const res = await fetch(`${API}/repos/${REPO}/contents/${path}`, {
+            method: 'PUT',
+            headers: {
+                Authorization: `token ${token}`,
+                Accept: 'application/vnd.github+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+        if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(`PUT ${path} → ${res.status}: ${err.message || ''}`);
+        }
+        return res.json();
+    }
+
+    // ─── Encoding helpers ─────────────────────────────────────────────────────
+    function b64Decode(str) {
+        return decodeURIComponent(
+            atob(str.replace(/\n/g, '')).split('').map(c =>
+                '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+            ).join('')
+        );
+    }
+
+    function b64Encode(str) {
+        return btoa(
+            encodeURIComponent(str).replace(/%([0-9A-F]{2})/gi, (_, p1) =>
+                String.fromCharCode(parseInt(p1, 16))
+            )
+        );
+    }
+
+    function readFileAsBase64(file) {
+        return new Promise((res, rej) => {
+            const r = new FileReader();
+            r.onload = e => res(e.target.result.split(',')[1]);
+            r.onerror = rej;
+            r.readAsDataURL(file);
+        });
+    }
+
+    // ─── Log ──────────────────────────────────────────────────────────────────
+    const logEl = document.getElementById('log');
+    function logClear() { logEl.innerHTML = ''; logEl.style.display = 'none'; }
+    function logLine(msg, type = 'info') {
+        logEl.style.display = 'block';
+        const div = document.createElement('div');
+        div.className = `log-line ${type}`;
+        div.textContent = msg;
+        logEl.appendChild(div);
+        logEl.scrollTop = logEl.scrollHeight;
+    }
+
     // ─── State ───────────────────────────────────────────────────────────────
     let cardPhotoFile = null;
     let storyImageFiles = {}; // figureId -> File
@@ -338,7 +441,6 @@
         document.execCommand(cmd);
     }
 
-    // Clear placeholder text on first focus
     document.getElementById('editor').addEventListener('focus', function () {
         if (this.innerHTML.trim() === '<p>Write your story here...</p>') {
             this.innerHTML = '<p><br></p>';
@@ -442,20 +544,12 @@
         return `${months[m - 1]} ${d}, ${y}`;
     }
 
-    function readAsDataUrl(file) {
-        return new Promise(res => {
-            const r = new FileReader();
-            r.onload = e => res(e.target.result);
-            r.readAsDataURL(file);
-        });
-    }
-
-    function dataUrlToBase64(dataUrl) {
-        return dataUrl.split(',')[1];
-    }
-
     function extFromFile(file) {
         return file.name.split('.').pop().toLowerCase();
+    }
+
+    function escHtml(str) {
+        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
     // ─── Parse editor into story HTML ─────────────────────────────────────────
@@ -519,11 +613,7 @@
         return { html: html.trim(), imageEntries };
     }
 
-    function escHtml(str) {
-        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
-
-    // ─── HTML templates ───────────────────────────────────────────────────────
+    // ─── Story page template ──────────────────────────────────────────────────
     function storyPageHtml(title, date, bodyHtml) {
         return `<!DOCTYPE html>
 <html lang="en">
@@ -596,75 +686,93 @@
 </html>`;
     }
 
-    function cardSnippetHtml(title, description, date, slug, cardFilename) {
-        return `<!-- Paste this at the TOP of the .cards div in writing/index.html -->
-<a href="${slug}/" class="card">
-    <img src="${slug}/${cardFilename}" alt="${escHtml(title)}" class="card-img">
-    <div class="card-body">
-        <p class="card-title">${escHtml(title)}</p>
-        <p class="card-desc">${escHtml(description)}</p>
-        <p class="card-meta">${escHtml(date)}</p>
-    </div>
-</a>`;
-    }
+    // ─── Publish ──────────────────────────────────────────────────────────────
+    async function publish() {
+        const token = getToken();
+        if (!token) { alert('Please enter your GitHub token first.'); return; }
 
-    // ─── Generate ZIP ─────────────────────────────────────────────────────────
-    async function generate() {
         const title = document.getElementById('title').value.trim();
         const dateStr = document.getElementById('date').value;
         const description = document.getElementById('description').value.trim();
-        const btn = document.getElementById('saveBtn');
-        const status = document.getElementById('status');
 
         if (!title) { alert('Please enter a title.'); return; }
         if (!dateStr) { alert('Please choose a date.'); return; }
 
+        const btn = document.getElementById('saveBtn');
         btn.disabled = true;
-        status.textContent = 'Building...';
+        logClear();
 
         try {
             const slug = slugify(title);
             const date = formatDate(dateStr);
-            const zip = new JSZip();
-            const folder = zip.folder(slug);
 
-            // Card photo
-            let cardFilename = 'card.jpg';
+            // Parse editor first so we have imageEntries
+            const { html: bodyHtml, imageEntries } = parseEditor();
+
+            // 1. Upload card photo
+            let cardFilename = '';
             if (cardPhotoFile) {
                 const ext = extFromFile(cardPhotoFile);
                 cardFilename = `card.${ext}`;
-                const dataUrl = await readAsDataUrl(cardPhotoFile);
-                folder.file(cardFilename, dataUrlToBase64(dataUrl), { base64: true });
+                const path = `writing/${slug}/${cardFilename}`;
+                logLine(`Uploading ${cardFilename}…`);
+                const base64 = await readFileAsBase64(cardPhotoFile);
+                let sha = null;
+                try { sha = (await ghGet(token, path)).sha; } catch (e) {}
+                await ghPut(token, path, base64, `Add story card photo: ${slug}`, sha);
+                logLine('  ✓ uploaded', 'ok');
             }
 
-            // Story body & inline images
-            const { html: bodyHtml, imageEntries } = parseEditor();
+            // 2. Upload story body images
             for (const entry of imageEntries) {
-                const dataUrl = await readAsDataUrl(entry.file);
-                folder.file(entry.filename, dataUrlToBase64(dataUrl), { base64: true });
+                const path = `writing/${slug}/${entry.filename}`;
+                logLine(`Uploading ${entry.filename}…`);
+                const base64 = await readFileAsBase64(entry.file);
+                let sha = null;
+                try { sha = (await ghGet(token, path)).sha; } catch (e) {}
+                await ghPut(token, path, base64, `Add story image: ${slug}/${entry.filename}`, sha);
+                logLine('  ✓ uploaded', 'ok');
             }
 
-            // Story page
-            folder.file('index.html', storyPageHtml(title, date, bodyHtml));
+            // 3. Upload story index.html
+            const storyPath = `writing/${slug}/index.html`;
+            logLine(`Uploading writing/${slug}/index.html…`);
+            let storySha = null;
+            try { storySha = (await ghGet(token, storyPath)).sha; } catch (e) {}
+            await ghPut(token, storyPath, b64Encode(storyPageHtml(title, date, bodyHtml)),
+                `Add story: ${title}`, storySha);
+            logLine('  ✓ uploaded', 'ok');
 
-            // Card snippet
-            zip.file('PASTE-INTO-WRITING-INDEX.html', cardSnippetHtml(title, description, date, slug, cardFilename));
+            // 4. Prepend card to writing/index.html
+            logLine('Fetching writing/index.html…');
+            const indexFile = await ghGet(token, 'writing/index.html');
+            let indexHtml = b64Decode(indexFile.content);
 
-            // Download
-            const blob = await zip.generateAsync({ type: 'blob' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${slug}.zip`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            if (!indexHtml.includes('<!-- CARDS -->')) {
+                throw new Error('Could not find <!-- CARDS --> marker in writing/index.html');
+            }
 
-            status.textContent = `✓ ${slug}.zip downloaded`;
+            const cardBlock = `<a href="${slug}/" class="card">
+                <img src="${slug}/${cardFilename}" alt="${escHtml(title)}" class="card-img">
+                <div class="card-body">
+                    <p class="card-title">${escHtml(title)}</p>
+                    <p class="card-desc">${escHtml(description)}</p>
+                    <p class="card-meta">${escHtml(date)}</p>
+                </div>
+            </a>`;
+
+            indexHtml = indexHtml.replace('<!-- CARDS -->', `<!-- CARDS -->\n            ${cardBlock}`);
+
+            logLine('Updating writing/index.html…');
+            await ghPut(token, 'writing/index.html', b64Encode(indexHtml),
+                `Add writing card: ${title}`, indexFile.sha);
+            logLine('  ✓ updated', 'ok');
+
+            logLine(`✓ Done — "${title}" is live at boxyourbuddy.com/writing/${slug}/`, 'done');
+
         } catch (err) {
+            logLine(`Error: ${err.message}`, 'err');
             console.error(err);
-            status.textContent = 'Error — check the console.';
         } finally {
             btn.disabled = false;
         }
