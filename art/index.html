@@ -101,6 +101,16 @@
         (function () {
             var slides = Array.from(document.querySelectorAll('.slide'));
             if (slides.length < 2) return;
+
+            // Shuffle
+            for (var i = slides.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var tmp = slides[i]; slides[i] = slides[j]; slides[j] = tmp;
+            }
+            var ss = document.getElementById('slideshow');
+            slides.forEach(function (s) { s.classList.remove('active'); ss.appendChild(s); });
+            slides[0].classList.add('active');
+
             var current = 0;
             var timer = null;
 
@@ -117,7 +127,6 @@
                 timer = setInterval(next, 5000);
             }
 
-            var ss = document.getElementById('slideshow');
             ss.addEventListener('mouseenter', function () { clearInterval(timer); });
             ss.addEventListener('mouseleave', startTimer);
 
