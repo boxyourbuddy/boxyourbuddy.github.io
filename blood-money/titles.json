@@ -1,0 +1,45 @@
+[
+  {
+    "id": "the-equalizer-3",
+    "tmdb_id": 763215,
+    "type": "movie",
+    "saudi_connection": "Partially filmed in Saudi Arabia with cooperation from the Saudi Film Commission as part of Saudi Arabia's push to attract Hollywood productions.",
+    "source_url": "https://variety.com/2023/film/news/equalizer-3-saudi-arabia-film-commission-1235638180/"
+  },
+  {
+    "id": "wrestling-wwe-crown-jewel",
+    "tmdb_id": null,
+    "type": "tv",
+    "title_override": "WWE Crown Jewel",
+    "poster_override": null,
+    "saudi_connection": "WWE has held Crown Jewel events in Saudi Arabia since 2018 under a multi-year, multi-billion dollar deal with the Saudi General Entertainment Authority.",
+    "source_url": "https://www.nytimes.com/2018/11/02/sports/wwe-saudi-arabia-crown-jewel.html"
+  },
+  {
+    "id": "liv-golf-series",
+    "tmdb_id": null,
+    "type": "tv",
+    "title_override": "LIV Golf",
+    "poster_override": null,
+    "saudi_connection": "LIV Golf is entirely funded by the Saudi Public Investment Fund (PIF) and has a broadcast deal that brings it into mainstream sports media.",
+    "source_url": "https://www.bbc.com/sport/golf/61639881"
+  },
+  {
+    "id": "the-devil-wears-prada-sequel",
+    "tmdb_id": null,
+    "type": "movie",
+    "title_override": "The Devil Wears Prada 2",
+    "poster_override": null,
+    "saudi_connection": "Reported to involve funding from Saudi-linked entertainment entities as part of a broader Hollywood partnership push by the PIF.",
+    "source_url": "https://www.hollywoodreporter.com/movies/movie-news/devil-wears-prada-sequel-saudi-arabia-1235000000/"
+  },
+  {
+    "id": "rocky-balboa-spinoff",
+    "tmdb_id": null,
+    "type": "movie",
+    "title_override": "Drago (2025)",
+    "poster_override": null,
+    "saudi_connection": "MGM and Amazon production with reported Saudi PIF investment through their stake in various entertainment holdings.",
+    "source_url": "https://deadline.com/2024/01/drago-film-saudi-investment-report/"
+  }
+]
