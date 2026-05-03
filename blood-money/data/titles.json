@@ -54,5 +54,155 @@
     "type": "tv",
     "saudi_connection": "Saudi Arabia's Public Investment Fund (PIF) holds a 6% stake in Toei Company, the Japanese studio behind Dragon Ball, One Piece, Sailor Moon, and other globally distributed franchises. PIF has steadily increased this stake since 2022 as part of its entertainment industry acquisition strategy.",
     "source_url": "https://variety.com/2023/tv/news/saudi-arabia-fund-toei-stake-1235543762/"
+  },
+  {
+    "id": "liv-golf-charl-schwartzel",
+    "title": "Charl Schwartzel",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2022",
+    "photo_url": null,
+    "saudi_connection": "Won the inaugural LIV Golf event at Centurion Club in June 2022, collecting $4.75 million. LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF) as a centerpiece of the kingdom's sportswashing strategy.",
+    "source_url": "https://www.bbc.com/sport/golf/61650041"
+  },
+  {
+    "id": "liv-golf-phil-mickelson",
+    "title": "Phil Mickelson",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2022",
+    "photo_url": null,
+    "saudi_connection": "One of the most prominent American recruits to LIV Golf, joining in June 2022 despite his own public acknowledgment that Saudi Arabia is a 'scary' regime with a 'horrible human rights record.' LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF).",
+    "source_url": "https://www.bbc.com/sport/golf/61676395"
+  },
+  {
+    "id": "liv-golf-dustin-johnson",
+    "title": "Dustin Johnson",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2022",
+    "photo_url": null,
+    "saudi_connection": "Resigned from the PGA Tour and joined LIV Golf as a founding member and team captain in June 2022. LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF), which reportedly paid Johnson a nine-figure guarantee to defect.",
+    "source_url": "https://en.wikipedia.org/wiki/LIV_Golf"
+  },
+  {
+    "id": "liv-golf-brooks-koepka",
+    "title": "Brooks Koepka",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2022",
+    "photo_url": null,
+    "saudi_connection": "Joined LIV Golf in July 2022, resigning his PGA Tour membership. LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF). Koepka later won the 2023 PGA Championship while a LIV player, becoming the first LIV golfer to win a major while on the circuit.",
+    "source_url": "https://en.wikipedia.org/wiki/LIV_Golf"
+  },
+  {
+    "id": "liv-golf-bryson-dechambeau",
+    "title": "Bryson DeChambeau",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2022",
+    "photo_url": null,
+    "saudi_connection": "Joined LIV Golf in June 2022, forfeiting his PGA Tour card. LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF). DeChambeau went on to win the 2024 U.S. Open while competing primarily on the Saudi-backed circuit.",
+    "source_url": "https://en.wikipedia.org/wiki/LIV_Golf"
+  },
+  {
+    "id": "liv-golf-patrick-reed",
+    "title": "Patrick Reed",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2022",
+    "photo_url": null,
+    "saudi_connection": "Joined LIV Golf in June 2022, accepting Saudi PIF money to leave the PGA Tour. LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF). Reed was among the first wave of American players to sign with the Saudi-backed circuit.",
+    "source_url": "https://en.wikipedia.org/wiki/LIV_Golf"
+  },
+  {
+    "id": "liv-golf-sergio-garcia",
+    "title": "Sergio Garcia",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2022",
+    "photo_url": null,
+    "saudi_connection": "Joined LIV Golf in June 2022 and was subsequently excluded from the 2023 Ryder Cup for Europe as a result. LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF). Garcia was a founding player of the Saudi-backed tour.",
+    "source_url": "https://en.wikipedia.org/wiki/LIV_Golf"
+  },
+  {
+    "id": "liv-golf-lee-westwood",
+    "title": "Lee Westwood",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2022",
+    "photo_url": null,
+    "saudi_connection": "Joined LIV Golf in June 2022, one of several prominent European Ryder Cup stalwarts to accept Saudi funding. LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF). Westwood subsequently retired from competitive golf in 2023.",
+    "source_url": "https://www.bbc.com/sport/golf/61718483"
+  },
+  {
+    "id": "liv-golf-ian-poulter",
+    "title": "Ian Poulter",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2022",
+    "photo_url": null,
+    "saudi_connection": "Joined LIV Golf in June 2022, forfeiting his PGA Tour membership. LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF). Poulter, known as a Ryder Cup icon, was among the European players who drew the most criticism for joining the Saudi circuit.",
+    "source_url": "https://www.bbc.com/sport/golf/61718483"
+  },
+  {
+    "id": "liv-golf-henrik-stenson",
+    "title": "Henrik Stenson",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2022",
+    "photo_url": null,
+    "saudi_connection": "Joined LIV Golf in July 2022 and was immediately stripped of his European Ryder Cup captaincy as a consequence. LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF). Stenson chose Saudi money over one of the most prestigious roles in European golf.",
+    "source_url": "https://www.bbc.com/sport/golf/62389777"
+  },
+  {
+    "id": "liv-golf-graeme-mcdowell",
+    "title": "Graeme McDowell",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2022",
+    "photo_url": null,
+    "saudi_connection": "Joined LIV Golf at its inaugural event in June 2022. LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF). McDowell was one of the first European players to publicly align with the Saudi-backed circuit.",
+    "source_url": "https://en.wikipedia.org/wiki/LIV_Golf"
+  },
+  {
+    "id": "liv-golf-louis-oosthuizen",
+    "title": "Louis Oosthuizen",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2022",
+    "photo_url": null,
+    "saudi_connection": "Joined LIV Golf as a founding player in 2022. LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF). The 2010 Open Champion was one of several South African players who joined the circuit in its inaugural season.",
+    "source_url": "https://en.wikipedia.org/wiki/LIV_Golf"
+  },
+  {
+    "id": "liv-golf-talor-gooch",
+    "title": "Talor Gooch",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2022",
+    "photo_url": null,
+    "saudi_connection": "Joined LIV Golf in 2022, sacrificing his PGA Tour card for Saudi funding. LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF). Gooch became one of the most consistent performers on the Saudi-backed tour.",
+    "source_url": "https://en.wikipedia.org/wiki/LIV_Golf"
+  },
+  {
+    "id": "liv-golf-harold-varner-iii",
+    "title": "Harold Varner III",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2022",
+    "photo_url": null,
+    "saudi_connection": "Joined LIV Golf in 2022. LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF). Varner was among the American players who accepted Saudi money and resigned from the PGA Tour in the circuit's inaugural season.",
+    "source_url": "https://en.wikipedia.org/wiki/LIV_Golf"
+  },
+  {
+    "id": "liv-golf-bubba-watson",
+    "title": "Bubba Watson",
+    "tmdb_id": null,
+    "type": "sport",
+    "year": "2023",
+    "photo_url": null,
+    "saudi_connection": "Joined LIV Golf for the 2023 season after the circuit's first year. LIV Golf is funded entirely by Saudi Arabia's Public Investment Fund (PIF). Watson, a two-time Masters champion, subsequently retired from professional golf later that year.",
+    "source_url": "https://en.wikipedia.org/wiki/LIV_Golf"
   }
 ]
