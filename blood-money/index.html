@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Money — Saudi-Backed Film &amp; TV</title>
+  <meta name="description" content="A transparency index of movies and TV shows with documented Saudi Arabian financial backing.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1 class="site-title"><span>Blood</span> Money</h1>
+    <p class="site-subtitle">Movies and TV shows backed by Saudi Arabia</p>
+    <span class="site-count" id="count">Loading…</span>
+  </header>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 6.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-.691 3.516a4.5 4.5 0 1 1 .707-.707l2.838 2.837a.5.5 0 0 1-.708.708L9.31 10.016Z" fill="currentColor"/>
+      </svg>
+      <input
+        type="search"
+        id="search"
+        placeholder="Search titles or connections…"
+        autocomplete="off"
+        spellcheck="false"
+      >
+    </div>
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="movie">Films</button>
+      <button class="filter-btn" data-filter="tv">TV</button>
+    </div>
+  </div>
+
+  <main>
+    <div id="loading">Loading titles…</div>
+    <div id="error-msg"></div>
+    <div id="grid"></div>
+    <div id="empty">
+      <p>No titles match your search.</p>
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal"></div>
+  </div>
+
+  <footer>
+    <p>
+      This is a community-maintained list. Every entry has a documented source.<br>
+      Know of a title that belongs here?
+      <a href="https://github.com/boxyourbuddy/boxyourbuddy.github.io" target="_blank" rel="noopener noreferrer">Open a pull request on GitHub.</a>
+    </p>
+    <p style="margin-top: 0.75rem; font-size: 0.75rem; color: #555;">
+      Film metadata from <a href="https://www.themoviedb.org" target="_blank" rel="noopener noreferrer">TMDB</a>.
+      This product uses the TMDB API but is not endorsed or certified by TMDB.
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

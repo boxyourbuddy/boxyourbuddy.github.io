@@ -1,0 +1,58 @@
+[
+  {
+    "id": "desert-warrior-2025",
+    "title": "Desert Warrior",
+    "tmdb_id": 898704,
+    "type": "movie",
+    "saudi_connection": "Produced by MBC Studios — majority owned by Saudi Arabia's Public Investment Fund (PIF), which completed a 54% acquisition of MBC Group in 2025 — and filmed entirely at NEOM, the $500 billion Saudi megacity funded by PIF. At $150 million, it is the largest production ever shot in Saudi Arabia.",
+    "source_url": "https://deadline.com/2021/11/anthony-mackie-aiysha-hart-desert-warrior-7th-century-epic-first-in-neom-saudi-arabia-1234874247/"
+  },
+  {
+    "id": "jeanne-du-barry-2023",
+    "title": "Jeanne du Barry",
+    "tmdb_id": 921452,
+    "type": "movie",
+    "saudi_connection": "Co-financed by the Red Sea Film Foundation, a Saudi government-backed cultural entity. It became the first Saudi-funded film to open the Cannes Film Festival, marking the foundation's first international co-production outside the Arab world.",
+    "source_url": "https://variety.com/2023/film/global/saudi-arabia-red-sea-film-festival-fund-maiwenn-johnny-depp-period-drama-jean-du-barry-1235487106/"
+  },
+  {
+    "id": "night-courier-2023",
+    "title": "Night Courier (Mandoob)",
+    "tmdb_id": 1157577,
+    "type": "movie",
+    "saudi_connection": "Funded in part by the Red Sea Film Fund, the Saudi state-sponsored film financing arm. The film premiered at TIFF 2023 and became the highest-grossing opening weekend for any Saudi domestic production in Saudi theatrical history.",
+    "source_url": "https://variety.com/2023/film/directors/mandoob-saudi-arabia-zurich-film-festival-1235748449/"
+  },
+  {
+    "id": "rise-of-the-witches",
+    "title": "Rise of the Witches",
+    "tmdb_id": 231717,
+    "type": "tv",
+    "saudi_connection": "Produced by MBC Studios, the production arm of MBC Group, in which Saudi Arabia's Public Investment Fund (PIF) holds a controlling 54% stake. Billed as Saudi Arabia's most expensive scripted TV series, it was shot at NEOM.",
+    "source_url": "https://variety.com/2022/global/news/mbc-studios-production-saudi-rise-of-the-witches-1235230882/"
+  },
+  {
+    "id": "wwe-crown-jewel",
+    "title": "WWE Crown Jewel",
+    "tmdb_id": null,
+    "type": "tv",
+    "saudi_connection": "Broadcast annually in Riyadh under a multi-year deal with Saudi Arabia's General Entertainment Authority, worth approximately $50–55 million per event. WWE has held these premium live events in Saudi Arabia since 2018 as a centerpiece of the kingdom's Vision 2030 sports and entertainment strategy.",
+    "source_url": "https://www.nytimes.com/2018/11/02/sports/wwe-saudi-arabia-crown-jewel.html"
+  },
+  {
+    "id": "four-daughters-2023",
+    "title": "Four Daughters",
+    "tmdb_id": 1069193,
+    "type": "movie",
+    "saudi_connection": "Supported by the Red Sea Film Fund, the Saudi government-backed film financing initiative. The documentary, which blends fiction and reality to explore a Tunisian family's radicalization, was Oscar-nominated for Best Documentary Feature and won the L'Oeil d'Or at Cannes 2023.",
+    "source_url": "https://deadline.com/2023/01/saudi-arabia-red-sea-fund-backs-new-film-haifaa-al-mansour-abderrahmane-sissako-annemarie-jacir-cherien-dabis-full-list-1235226140/"
+  },
+  {
+    "id": "pif-toei-animation",
+    "title": "Toei Animation Productions",
+    "tmdb_id": null,
+    "type": "tv",
+    "saudi_connection": "Saudi Arabia's Public Investment Fund (PIF) holds a 6% stake in Toei Company, the Japanese studio behind Dragon Ball, One Piece, Sailor Moon, and other globally distributed franchises. PIF has steadily increased this stake since 2022 as part of its entertainment industry acquisition strategy.",
+    "source_url": "https://variety.com/2023/tv/news/saudi-arabia-fund-toei-stake-1235543762/"
+  }
+]
