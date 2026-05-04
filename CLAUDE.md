@@ -29,14 +29,20 @@ Pure HTML5 + CSS3 (no frameworks, no JavaScript bundlers). Each page is a self-c
 - Google Analytics via gtag (`GA-7NDGQGQM5G`) is present on marketing pages
 
 **Nav — required on every page.** All pages (new and existing) must include this nav with all four links. The active page link gets `style="color: #FFF0AD;"`. Exception: the home page (`/index.html`) uses its own `identity-line` style but "ARTIST" must still link to `/art/`.
+
+The bullet separators between nav links are always `favicon.png` at 15×15px — never plain dots. The `.dot` CSS must be:
+```css
+.nav .dot { height: 15px; width: 15px; display: inline-block; vertical-align: middle; }
+```
+
 ```html
 <nav class="nav">
     <a href="/">HOME</a>
-    <span class="dot"></span>
+    <img src="/favicon.png" class="dot" alt="">
     <a href="/writing/">WRITING</a>
-    <span class="dot"></span>
+    <img src="/favicon.png" class="dot" alt="">
     <a href="/art/">ART</a>
-    <span class="dot"></span>
+    <img src="/favicon.png" class="dot" alt="">
     <a href="/apps/">APPS</a>
 </nav>
 ```
