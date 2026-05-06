@@ -259,7 +259,7 @@
 
     // ── Movies Page ──────────────────────────────────────────────────────────
     const _moviesPageCache={};
-    const MoviesPage=({goTo,watchlist,setWatchlist,watched,setWatched,showTotals,hidden,setHidden,showToast})=>{
+    const MoviesPage=({goTo,watchlist,setWatchlist,watched,setWatched,showTotals,hidden,setHidden,showToast,hideWatchedMovies})=>{
       const _c=_moviesPageCache;
       const scrollRef=useRef(null);
       const inputRef=useRef(null);
@@ -528,7 +528,7 @@
         return(b.popularity||0)-(a.popularity||0);
       });
 
-      const displayItems=(isOverlay?overlayItems:browseItems).filter(i=>!hidden?.has(String(i.id)));
+      const displayItems=(isOverlay?overlayItems:browseItems).filter(i=>!hidden?.has(String(i.id))).filter(i=>!hideWatchedMovies||!storedMediaLooksMovie(getWatchedEntry(watched,i.id)));
       const displayLoading=isOverlay?overlayLoading:browseLoading;
       const displayLoadingMore=isOverlay?overlayLoadingMore:browseLoadingMore;
       const displayHasMore=isOverlay?overlayHasMore:browseHasMore;
@@ -632,7 +632,7 @@
 
     // ── TV Shows Page ────────────────────────────────────────────────────────
     const _tvPageCache={};
-    const TVShowsPage=({goTo,watchlist,setWatchlist,watched,setWatched,showTotals,hidden,setHidden,showToast})=>{
+    const TVShowsPage=({goTo,watchlist,setWatchlist,watched,setWatched,showTotals,hidden,setHidden,showToast,hideWatchedTV})=>{
       const _c=_tvPageCache;
       const scrollRef=useRef(null);
       const inputRef=useRef(null);
@@ -922,7 +922,7 @@
         return(b.popularity||0)-(a.popularity||0);
       });
 
-      const displayItems=(isOverlay?overlayItems:browseItems).filter(i=>!hidden?.has(String(i.id)));
+      const displayItems=(isOverlay?overlayItems:browseItems).filter(i=>!hidden?.has(String(i.id))).filter(i=>{if(!hideWatchedTV)return true;const total=showTotals?.get(String(i.id))||i.number_of_episodes||0;if(total===0)return true;return epWatchedCountFor(watched,i.id)<total;});
       const displayLoading=isOverlay?overlayLoading:browseLoading;
       const displayLoadingMore=isOverlay?overlayLoadingMore:browseLoadingMore;
       const displayHasMore=isOverlay?overlayHasMore:browseHasMore;
@@ -1764,16 +1764,19 @@ const showsInProgressFromWatched=(watched)=>{
         loaderRef.current={runWeek,showList,todayStart,gen};
         if(!doFetch){setLoading(false);return()=>{cancelled=true;};}
         (async()=>{
-          const w0=await runWeek(0);
-          if(cancelled||gen!==loadGenRef.current)return;
-          const merged=mergeEps([],w0);
-          setEpisodes(()=>merged);
-          weeksFetchedRef.current[0]=true;
-          setWeeksFetched(f=>{const n=[...f];n[0]=true;return n;});
-          setLoading(false);
-          _calendarCache.episodes=merged;
-          _calendarCache.weeksFetched=[true,false,false,false];
-          _calendarCache.showIdsKey=_curShowIdsKey;
+          try{
+            const w0=await runWeek(0);
+            if(cancelled||gen!==loadGenRef.current)return;
+            const merged=mergeEps([],w0);
+            setEpisodes(()=>merged);
+            weeksFetchedRef.current[0]=true;
+            setWeeksFetched(f=>{const n=[...f];n[0]=true;return n;});
+            _calendarCache.episodes=merged;
+            _calendarCache.weeksFetched=[true,false,false,false];
+            _calendarCache.showIdsKey=_curShowIdsKey;
+          }finally{
+            if(!cancelled)setLoading(false);
+          }
         })();
         return()=>{cancelled=true;};
       },[watched]);
@@ -2118,7 +2121,7 @@ const showsInProgressFromWatched=(watched)=>{
           {(cast||[]).slice(0,15).map(p=>(
             <div key={p.id} onClick={()=>goTo&&goTo("person-detail",p)} style={{textAlign:"center",width:72,flexShrink:0,cursor:"pointer"}}>
               <div style={{width:64,height:64,borderRadius:"50%",overflow:"hidden",margin:"0 auto 6px",background:C.elevated,border:C.border,transition:"box-shadow 0.15s"}} onMouseEnter={e=>e.currentTarget.style.boxShadow=`0 0 0 2px ${C.purple}`} onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
-                {p.profile_path?<img src={img(p.profile_path,"w185")} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover"}}/>:<div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,opacity:0.3}}>👤</div>}
+                {p.profile_path?<><img src={img(p.profile_path,"w185")} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover"}} onError={e=>{e.target.style.display="none";e.target.nextSibling.style.display="flex";}}/><div style={{width:"100%",height:"100%",display:"none",alignItems:"center",justifyContent:"center",fontSize:20,opacity:0.3}}>👤</div></>:<div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,opacity:0.3}}>👤</div>}
               </div>
               <div style={{fontSize:10,fontWeight:500,color:C.text,lineHeight:1.3,marginBottom:2,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{p.name}</div>
               <div style={{fontSize:9,color:C.muted,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{p.character}</div>
@@ -2178,13 +2181,15 @@ const showsInProgressFromWatched=(watched)=>{
       useEffect(()=>{(async()=>{setLoading(true);setCollection(null);try{let d=mcGet("movie",id);if(!d){d=await api(`/movie/${id}`,{"append_to_response":"credits,watch/providers,videos,release_dates"});if(d)mcSet("movie",id,d);}setDetail(d);if(d.belongs_to_collection?.id){try{const col=await api(`/collection/${d.belongs_to_collection.id}`);setCollection(col);}catch{}}}catch{}setLoading(false);})();},[id]);
       const [actorHrsMap,setActorHrsMap]=useState(new Map());
       useEffect(()=>{const castList=(detail?.credits?.cast||[]).slice(0,15);if(!castList.length)return;let active=true;Promise.all(castList.map(p=>computePersonHours(p.id,watched))).then(hrs=>{if(!active)return;const m=new Map();castList.forEach((p,i)=>{if(hrs[i]>0)m.set(p.id,hrs[i]);});setActorHrsMap(m);});return()=>{active=false;};},[detail]);
+      const [characterOverrides,setCharacterOverrides]=useState(new Map());
+      useEffect(()=>{const castList=(detail?.credits?.cast||[]).slice(0,40);const missing=castList.filter(p=>!p.character);if(!missing.length)return;let active=true;Promise.all(missing.map(p=>api(`/person/${p.id}/movie_credits`).catch(()=>null))).then(results=>{if(!active)return;const m=new Map();results.forEach((r,i)=>{const credit=(r?.cast||[]).find(c=>c.id===id);if(credit?.character)m.set(missing[i].id,credit.character);});if(m.size>0)setCharacterOverrides(m);});return()=>{active=false;};},[detail]);
       const scrollRef=useRef(null);
       useEffect(()=>{if(!loading&&scrollRef.current){const s=_movieScrollCache.get(id);if(s)scrollRef.current.scrollTop=s;}},[loading]);
       if(loading)return(<div style={{flex:1,display:"flex",alignItems:"center",justifyContent:"center",color:C.muted}}>Loading…</div>);
       if(!detail)return null;
       const backdrop=detail.backdrop_path?img(detail.backdrop_path,"original"):null;
       const poster=detail.poster_path?img(detail.poster_path,"w342"):null;
-      const cast=detail.credits?.cast||[];
+      const cast=(detail.credits?.cast||[]).map(c=>({...c,character:c.character||characterOverrides.get(c.id)||""}));
       const crew=detail.credits?.crew||[];
       const director=crew.filter(c=>c.job==="Director").map(c=>c.name).join(", ")||"—";
       const writer=crew.filter(c=>c.department==="Writing").slice(0,2).map(c=>c.name).join(", ")||"—";
@@ -2255,12 +2260,11 @@ const showsInProgressFromWatched=(watched)=>{
             {cast.length>0&&(<div style={{marginBottom:28}}>
               <div style={{fontSize:11,fontWeight:700,color:C.muted,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:12}}>Cast</div>
               <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(88px,1fr))",gap:12}}>
-                {cast.slice(0,40).map(p=>{const h=actorHrsMap.get(p.id)||0;return(
+                {[...cast].slice(0,40).sort((a,b)=>(b.profile_path?1:0)-(a.profile_path?1:0)).map(p=>{const h=actorHrsMap.get(p.id)||0;return(
                   <div key={p.id} onClick={()=>goTo("person-detail",p)} style={{textAlign:"center",cursor:"pointer"}}>
-                    <div style={{width:"100%",paddingTop:"150%",position:"relative",borderRadius:6,overflow:"hidden",background:C.elevated,border:C.border,marginBottom:5,transition:"box-shadow 0.15s"}} onMouseEnter={e=>e.currentTarget.style.boxShadow=`0 0 0 2px ${C.purple}`} onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
-                      {p.profile_path
-                        ?<img src={img(p.profile_path,"w185")} alt={p.name} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"top"}}/>
-                        :<div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:26,opacity:0.2}}>👤</div>}
+                    <div style={{width:"100%",paddingTop:"150%",position:"relative",borderRadius:6,overflow:"hidden",background:p.profile_path?C.elevated:C.bg,border:p.profile_path?C.border:"0.5px solid transparent",marginBottom:5,transition:"box-shadow 0.15s"}} onMouseEnter={e=>e.currentTarget.style.boxShadow=`0 0 0 2px ${C.purple}`} onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
+                      {p.profile_path&&<><img src={img(p.profile_path,"w185")} alt={p.name} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"top"}} onError={e=>{e.target.style.display="none";}}/>
+                      </>}
                       {h>0&&<div style={{position:"absolute",bottom:0,left:0,right:0,padding:"5px 4px 6px",textAlign:"center",pointerEvents:"none",background:"linear-gradient(to top,rgba(0,0,0,0.82),rgba(0,0,0,0.5) 60%,transparent)"}}><span style={{fontSize:9,fontWeight:700,color:C.green,letterSpacing:"0.03em",textShadow:"0 1px 4px rgba(0,0,0,0.8)"}}>{h>=1?`${h.toFixed(1)}h`:`${Math.round(h*60)}m`} watched</span></div>}
                     </div>
                     <div style={{fontSize:10,fontWeight:500,color:C.text,lineHeight:1.3,marginBottom:2}}>{p.name}</div>
@@ -2298,13 +2302,15 @@ const showsInProgressFromWatched=(watched)=>{
       useEffect(()=>{(async()=>{setLoading(true);try{let d=mcGet("tv",id);if(!d){d=await api(`/tv/${id}`,{"append_to_response":"credits,watch/providers,videos,aggregate_credits"});if(d)mcSet("tv",id,d);}setDetail(d);if(d.number_of_episodes)registerShowTotal?.(id,d.number_of_episodes);}catch{}setLoading(false);})();},[id]);
       const [actorHrsMap,setActorHrsMap]=useState(new Map());
       useEffect(()=>{const castList=((detail?.aggregate_credits||detail?.credits)?.cast||[]).slice(0,20);if(!castList.length)return;let active=true;Promise.all(castList.map(p=>computePersonHours(p.id,watched))).then(hrs=>{if(!active)return;const m=new Map();castList.forEach((p,i)=>{if(hrs[i]>0)m.set(p.id,hrs[i]);});setActorHrsMap(m);});return()=>{active=false;};},[detail]);
+      const [characterOverrides,setCharacterOverrides]=useState(new Map());
+      useEffect(()=>{const castList=((detail?.aggregate_credits||detail?.credits)?.cast||[]).slice(0,20);const missing=castList.filter(p=>!((p.roles||[]).map(r=>r.character).join(" / ")||p.character));if(!missing.length)return;let active=true;Promise.all(missing.map(p=>api(`/person/${p.id}/tv_credits`).catch(()=>null))).then(results=>{if(!active)return;const m=new Map();results.forEach((r,i)=>{const credit=(r?.cast||[]).find(c=>c.id===id);if(credit?.character)m.set(missing[i].id,credit.character);});if(m.size>0)setCharacterOverrides(m);});return()=>{active=false;};},[detail]);
       const scrollRef=useRef(null);
       useEffect(()=>{if(!loading&&scrollRef.current){const s=_tvScrollCache.get(id);if(s)scrollRef.current.scrollTop=s;}},[loading]);
       if(loading)return(<div style={{flex:1,display:"flex",alignItems:"center",justifyContent:"center",color:C.muted}}>Loading…</div>);
       if(!detail)return null;
       const backdrop=detail.backdrop_path?img(detail.backdrop_path,"original"):null;
       const poster=detail.poster_path?img(detail.poster_path,"w342"):null;
-      const mainCast=((detail.aggregate_credits||detail.credits)?.cast||[]).slice(0,20).map(c=>({...c,character:(c.roles||[]).map(r=>r.character).join(" / ")||c.character}));
+      const mainCast=((detail.aggregate_credits||detail.credits)?.cast||[]).slice(0,20).map(c=>({...c,character:(c.roles||[]).map(r=>r.character).join(" / ")||c.character||characterOverrides.get(c.id)||""}));
       const trailerKey=detail.videos?.results?.find(v=>v.type==="Trailer"&&v.site==="YouTube")?.key;
       const rating=detail.vote_average>0?detail.vote_average:null;
       const year=detail.first_air_date?.slice(0,4)||"";
@@ -2414,12 +2420,10 @@ const showsInProgressFromWatched=(watched)=>{
             {mainCast.length>0&&(<div style={{marginBottom:28}}>
               <div style={{fontSize:11,fontWeight:700,color:C.muted,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:12}}>Main Cast</div>
               <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(88px,1fr))",gap:12}}>
-                {mainCast.map(p=>{const h=actorHrsMap.get(p.id)||0;return(
+                {[...mainCast].sort((a,b)=>(b.profile_path?1:0)-(a.profile_path?1:0)).map(p=>{const h=actorHrsMap.get(p.id)||0;return(
                   <div key={p.id} onClick={()=>goTo("person-detail",p)} style={{textAlign:"center",cursor:"pointer"}}>
-                    <div style={{width:"100%",paddingTop:"150%",position:"relative",borderRadius:6,overflow:"hidden",background:C.elevated,border:C.border,marginBottom:5,transition:"box-shadow 0.15s"}} onMouseEnter={e=>e.currentTarget.style.boxShadow=`0 0 0 2px ${C.purple}`} onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
-                      {p.profile_path
-                        ?<img src={img(p.profile_path,"w185")} alt={p.name} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"top"}}/>
-                        :<div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:26,opacity:0.2}}>👤</div>}
+                    <div style={{width:"100%",paddingTop:"150%",position:"relative",borderRadius:6,overflow:"hidden",background:p.profile_path?C.elevated:C.bg,border:p.profile_path?C.border:"0.5px solid transparent",marginBottom:5,transition:"box-shadow 0.15s"}} onMouseEnter={e=>e.currentTarget.style.boxShadow=`0 0 0 2px ${C.purple}`} onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
+                      {p.profile_path&&<img src={img(p.profile_path,"w185")} alt={p.name} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"top"}} onError={e=>e.target.style.display="none"}/>}
                       {h>0&&<div style={{position:"absolute",bottom:0,left:0,right:0,padding:"5px 4px 6px",textAlign:"center",pointerEvents:"none",background:"linear-gradient(to top,rgba(0,0,0,0.82),rgba(0,0,0,0.5) 60%,transparent)"}}><span style={{fontSize:9,fontWeight:700,color:C.green,letterSpacing:"0.03em",textShadow:"0 1px 4px rgba(0,0,0,0.8)"}}>{h>=1?`${h.toFixed(1)}h`:`${Math.round(h*60)}m`} watched</span></div>}
                     </div>
                     <div style={{fontSize:10,fontWeight:500,color:C.text,lineHeight:1.3,marginBottom:2}}>{p.name}</div>
@@ -2486,6 +2490,8 @@ const showsInProgressFromWatched=(watched)=>{
       useEffect(()=>{if(episode.episode_number>1){setPrevEp({season_number:season.season_number,episode_number:episode.episode_number-1});return;}if(season.season_number<=1){setPrevEp(null);return;}(async()=>{setPrevEp(null);try{const s=await api(`/tv/${show.id}/season/${season.season_number-1}`);const eps=s?.episodes;if(eps&&eps.length>0)setPrevEp({season_number:season.season_number-1,episode_number:eps[eps.length-1].episode_number});}catch{}})();},[show.id,season.season_number,episode.episode_number]);
       const [actorHrsMap,setActorHrsMap]=useState(new Map());
       useEffect(()=>{const castList=(detail?.credits?.cast||[]).slice(0,15);if(!castList.length)return;let active=true;Promise.all(castList.map(p=>computePersonHours(p.id,watched))).then(hrs=>{if(!active)return;const m=new Map();castList.forEach((p,i)=>{if(hrs[i]>0)m.set(p.id,hrs[i]);});setActorHrsMap(m);});return()=>{active=false;};},[detail]);
+      const [characterOverrides,setCharacterOverrides]=useState(new Map());
+      useEffect(()=>{const castList=(detail?.credits?.cast||[]);const missing=castList.filter(p=>!p.character);if(!missing.length)return;let active=true;Promise.all(missing.map(p=>api(`/person/${p.id}/tv_credits`).catch(()=>null))).then(results=>{if(!active)return;const m=new Map();results.forEach((r,i)=>{const credit=(r?.cast||[]).find(c=>c.id===show.id);if(credit?.character)m.set(missing[i].id,credit.character);});if(m.size>0)setCharacterOverrides(m);});return()=>{active=false;};},[detail]);
       const epKey=`ep-${show.id}-${season.season_number}-${episode.episode_number}`;
       const isW=watched.has(epKey);
       const [popup,setPopup]=useState(false);
@@ -2498,7 +2504,7 @@ const showsInProgressFromWatched=(watched)=>{
       const crew=detail?.credits?.crew||[];
       const directors=crew.filter(c=>c.job==="Director").map(c=>c.name);
       const writers=crew.filter(c=>c.department==="Writing"||c.job==="Teleplay"||c.job==="Story").map(c=>c.name);
-      const cast=detail?.credits?.cast||[];
+      const cast=(detail?.credits?.cast||[]).map(c=>({...c,character:c.character||characterOverrides.get(c.id)||""}));
       const trailerKey=detail?.videos?.results?.find(v=>v.type==="Trailer"&&v.site==="YouTube")?.key;
       if(loading)return(<div style={{flex:1,display:"flex",alignItems:"center",justifyContent:"center",color:C.muted}}>Loading…</div>);
       return(<div style={{flex:1,overflow:"auto",padding:"24px 32px",willChange:"transform",animation:"fadeIn 0.18s ease"}}>
@@ -2548,12 +2554,10 @@ const showsInProgressFromWatched=(watched)=>{
         {cast.length>0&&(<div style={{marginBottom:28}}>
           <div style={{fontSize:11,fontWeight:700,color:C.muted,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:12}}>Episode Cast</div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(88px,1fr))",gap:12}}>
-            {cast.map(p=>{const h=actorHrsMap.get(p.id)||0;return(
+            {[...cast].sort((a,b)=>(b.profile_path?1:0)-(a.profile_path?1:0)).map(p=>{const h=actorHrsMap.get(p.id)||0;return(
               <div key={p.id} onClick={()=>goTo("person-detail",p)} style={{textAlign:"center",cursor:"pointer"}}>
-                <div style={{width:"100%",paddingTop:"150%",position:"relative",borderRadius:6,overflow:"hidden",background:C.elevated,border:C.border,marginBottom:5,transition:"box-shadow 0.15s"}} onMouseEnter={e=>e.currentTarget.style.boxShadow=`0 0 0 2px ${C.purple}`} onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
-                  {p.profile_path
-                    ?<img src={img(p.profile_path,"w185")} alt={p.name} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"top"}}/>
-                    :<div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:26,opacity:0.2}}>👤</div>}
+                <div style={{width:"100%",paddingTop:"150%",position:"relative",borderRadius:6,overflow:"hidden",background:p.profile_path?C.elevated:C.bg,border:p.profile_path?C.border:"0.5px solid transparent",marginBottom:5,transition:"box-shadow 0.15s"}} onMouseEnter={e=>e.currentTarget.style.boxShadow=`0 0 0 2px ${C.purple}`} onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
+                  {p.profile_path&&<img src={img(p.profile_path,"w185")} alt={p.name} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"top"}} onError={e=>e.target.style.display="none"}/>}
                   {h>0&&<div style={{position:"absolute",bottom:0,left:0,right:0,padding:"5px 4px 6px",textAlign:"center",pointerEvents:"none",background:"linear-gradient(to top,rgba(0,0,0,0.82),rgba(0,0,0,0.5) 60%,transparent)"}}><span style={{fontSize:9,fontWeight:700,color:C.green,letterSpacing:"0.03em",textShadow:"0 1px 4px rgba(0,0,0,0.8)"}}>{h>=1?`${h.toFixed(1)}h`:`${Math.round(h*60)}m`} watched</span></div>}
                 </div>
                 <div style={{fontSize:10,fontWeight:500,color:C.text,lineHeight:1.3,marginBottom:2}}>{p.name}</div>
@@ -3896,7 +3900,7 @@ const showsInProgressFromWatched=(watched)=>{
 
     // ── Settings Page ─────────────────────────────────────────────────────────
     const ALL_TZ=typeof Intl.supportedValuesOf==="function"?Intl.supportedValuesOf("timeZone"):["America/New_York","America/Chicago","America/Denver","America/Los_Angeles","America/Phoenix","America/Anchorage","Pacific/Honolulu","Europe/London","Europe/Paris","Europe/Berlin","Europe/Rome","Europe/Madrid","Europe/Amsterdam","Europe/Stockholm","Europe/Helsinki","Europe/Athens","Europe/Moscow","Asia/Dubai","Asia/Kolkata","Asia/Dhaka","Asia/Bangkok","Asia/Singapore","Asia/Tokyo","Asia/Seoul","Asia/Shanghai","Australia/Perth","Australia/Adelaide","Australia/Sydney","Pacific/Auckland"];
-    const SettingsPage=({user,setUser,onData,theme,setTheme,goTo,hidden})=>{
+    const SettingsPage=({user,setUser,onData,theme,setTheme,goTo,hidden,hideWatchedMovies,setHideWatchedMovies,hideWatchedTV,setHideWatchedTV})=>{
       const saved=localStorage.getItem("tvstats_timezone")||Intl.DateTimeFormat().resolvedOptions().timeZone;
       const [tz,setTz]=useState(saved);
       const [query,setQuery]=useState("");
@@ -3909,7 +3913,8 @@ const showsInProgressFromWatched=(watched)=>{
       const [confirmVal,setConfirmVal]=useState("");
       const [recoveryEmailVal,setRecoveryEmailVal]=useState(user?.recoveryEmail||"");
       const [colorVal,setColorVal]=useState(user?.color||PROFILE_COLORS[0]);
-      const [acctMsg,setAcctMsg]=useState(null); // {ok:bool, text:string}
+      const [acctMsg,setAcctMsg]=useState(null);
+      const [showAdvanced,setShowAdvanced]=useState(false);
       const [allUsers,setAllUsers]=useState(()=>JSON.parse(localStorage.getItem("tvstats_users")||"[]"));
       const [showAddProfile,setShowAddProfile]=useState(false);
       const [confirmDelete,setConfirmDelete]=useState(null); // email to delete
@@ -4070,22 +4075,6 @@ const showsInProgressFromWatched=(watched)=>{
                 <div style={{fontSize:11,fontWeight:600,color:C.muted,marginBottom:5,letterSpacing:"0.06em",textTransform:"uppercase"}}>Username</div>
                 <input value={nameVal} onChange={e=>setNameVal(e.target.value)} style={{width:"100%",background:C.elevated,border:`0.5px solid ${C.inputBorder}`,borderRadius:8,color:C.text,padding:"8px 12px",fontSize:13,outline:"none",fontFamily:"inherit"}}/>
               </div>
-              <div style={{height:"0.5px",background:C.hover}}/>
-              <div>
-                <div style={{fontSize:11,fontWeight:600,color:C.muted,marginBottom:5,letterSpacing:"0.06em",textTransform:"uppercase"}}>New Password</div>
-                <input type="password" value={passVal} onChange={e=>setPassVal(e.target.value)} placeholder="Leave blank to keep current" style={{width:"100%",background:C.elevated,border:`0.5px solid ${C.inputBorder}`,borderRadius:8,color:C.text,padding:"8px 12px",fontSize:13,outline:"none",fontFamily:"inherit"}}/>
-              </div>
-              <div>
-                <div style={{fontSize:11,fontWeight:600,color:C.muted,marginBottom:5,letterSpacing:"0.06em",textTransform:"uppercase"}}>Confirm Password</div>
-                <input type="password" value={confirmVal} onChange={e=>setConfirmVal(e.target.value)} placeholder="Repeat new password" style={{width:"100%",background:C.elevated,border:`0.5px solid ${C.inputBorder}`,borderRadius:8,color:C.text,padding:"8px 12px",fontSize:13,outline:"none",fontFamily:"inherit"}}/>
-              </div>
-              <div style={{height:"0.5px",background:C.hover}}/>
-              <div>
-                <div style={{fontSize:11,fontWeight:600,color:C.muted,marginBottom:5,letterSpacing:"0.06em",textTransform:"uppercase"}}>Recovery Email</div>
-                <div style={{fontSize:11.5,color:C.muted,marginBottom:8}}>Used to recover your username and password if you forget them.</div>
-                <input type="email" value={recoveryEmailVal} onChange={e=>setRecoveryEmailVal(e.target.value)} placeholder="recovery@example.com" style={{width:"100%",background:C.elevated,border:`0.5px solid ${C.inputBorder}`,borderRadius:8,color:C.text,padding:"8px 12px",fontSize:13,outline:"none",fontFamily:"inherit"}}/>
-              </div>
-              <div style={{height:"0.5px",background:C.hover}}/>
               <div>
                 <div style={{fontSize:11,fontWeight:600,color:C.muted,marginBottom:8,letterSpacing:"0.06em",textTransform:"uppercase"}}>Profile Color</div>
                 <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
@@ -4094,6 +4083,27 @@ const showsInProgressFromWatched=(watched)=>{
                   ))}
                 </div>
               </div>
+              <div style={{height:"0.5px",background:C.hover}}/>
+              <div onClick={()=>setShowAdvanced(v=>!v)} style={{display:"flex",alignItems:"center",justifyContent:"space-between",cursor:"pointer",userSelect:"none"}}>
+                <span style={{fontSize:12,color:C.muted}}>Password &amp; Recovery Email</span>
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{flexShrink:0,transform:showAdvanced?"rotate(180deg)":"none",transition:"transform 0.15s"}}><path d="M2 3.5l3 3 3-3" stroke={C.muted} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </div>
+              {showAdvanced&&(<>
+                <div>
+                  <div style={{fontSize:11,fontWeight:600,color:C.muted,marginBottom:5,letterSpacing:"0.06em",textTransform:"uppercase"}}>New Password</div>
+                  <input type="password" value={passVal} onChange={e=>setPassVal(e.target.value)} placeholder="Leave blank to keep current" style={{width:"100%",background:C.elevated,border:`0.5px solid ${C.inputBorder}`,borderRadius:8,color:C.text,padding:"8px 12px",fontSize:13,outline:"none",fontFamily:"inherit"}}/>
+                </div>
+                <div>
+                  <div style={{fontSize:11,fontWeight:600,color:C.muted,marginBottom:5,letterSpacing:"0.06em",textTransform:"uppercase"}}>Confirm Password</div>
+                  <input type="password" value={confirmVal} onChange={e=>setConfirmVal(e.target.value)} placeholder="Repeat new password" style={{width:"100%",background:C.elevated,border:`0.5px solid ${C.inputBorder}`,borderRadius:8,color:C.text,padding:"8px 12px",fontSize:13,outline:"none",fontFamily:"inherit"}}/>
+                </div>
+                <div style={{height:"0.5px",background:C.hover}}/>
+                <div>
+                  <div style={{fontSize:11,fontWeight:600,color:C.muted,marginBottom:5,letterSpacing:"0.06em",textTransform:"uppercase"}}>Recovery Email</div>
+                  <div style={{fontSize:11.5,color:C.muted,marginBottom:8}}>Used to recover your username and password if you forget them.</div>
+                  <input type="email" value={recoveryEmailVal} onChange={e=>setRecoveryEmailVal(e.target.value)} placeholder="recovery@example.com" style={{width:"100%",background:C.elevated,border:`0.5px solid ${C.inputBorder}`,borderRadius:8,color:C.text,padding:"8px 12px",fontSize:13,outline:"none",fontFamily:"inherit"}}/>
+                </div>
+              </>)}
               <div style={{display:"flex",alignItems:"center",gap:12,marginTop:2}}>
                 <button onClick={saveAccount} style={{background:C.amber,border:"none",borderRadius:8,padding:"8px 20px",color:"#000",fontSize:13,fontWeight:600,cursor:"pointer"}}>Save Changes</button>
                 {acctMsg&&<span style={{fontSize:12,color:acctMsg.ok?"#6db96d":"#e06c6c"}}>{acctMsg.text}</span>}
@@ -4163,6 +4173,31 @@ const showsInProgressFromWatched=(watched)=>{
             </div>
           </div>
 
+          {/* Hide Watched section */}
+          <div style={{background:C.surface,border:C.border,borderRadius:12,overflow:"hidden",maxWidth:560,marginTop:12}}>
+            <div style={{padding:"7px 14px",borderBottom:C.border}}>
+              <span style={{fontSize:10,fontWeight:700,letterSpacing:"0.12em",color:C.muted,textTransform:"uppercase"}}>Hide Watched</span>
+            </div>
+            <div style={{padding:"12px 14px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:16,borderBottom:C.border}}>
+              <div style={{fontSize:13,color:C.text}}>Would you like to hide Movies you have already watched?</div>
+              <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
+                <span style={{fontSize:12,color:hideWatchedMovies?C.text:C.muted,fontWeight:hideWatchedMovies?600:400}}>{hideWatchedMovies?"Yes":"No"}</span>
+                <button onClick={()=>{const v=!hideWatchedMovies;setHideWatchedMovies(v);localStorage.setItem("tvstats_hide_watched_movies",v?"1":"0");}} style={{position:"relative",width:44,height:24,borderRadius:99,border:"none",background:hideWatchedMovies?"#444":"#d0d0d0",cursor:"pointer",transition:"background 0.2s",padding:0}}>
+                  <div style={{position:"absolute",top:3,left:hideWatchedMovies?23:3,width:18,height:18,borderRadius:99,background:hideWatchedMovies?C.amber:"#ffffff",transition:"left 0.2s",boxShadow:"0 1px 3px rgba(0,0,0,0.3)"}}/>
+                </button>
+              </div>
+            </div>
+            <div style={{padding:"12px 14px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:16}}>
+              <div style={{fontSize:13,color:C.text}}>Would you like to hide TV Shows that are 100% watched?</div>
+              <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
+                <span style={{fontSize:12,color:hideWatchedTV?C.text:C.muted,fontWeight:hideWatchedTV?600:400}}>{hideWatchedTV?"Yes":"No"}</span>
+                <button onClick={()=>{const v=!hideWatchedTV;setHideWatchedTV(v);localStorage.setItem("tvstats_hide_watched_tv",v?"1":"0");}} style={{position:"relative",width:44,height:24,borderRadius:99,border:"none",background:hideWatchedTV?"#444":"#d0d0d0",cursor:"pointer",transition:"background 0.2s",padding:0}}>
+                  <div style={{position:"absolute",top:3,left:hideWatchedTV?23:3,width:18,height:18,borderRadius:99,background:hideWatchedTV?C.amber:"#ffffff",transition:"left 0.2s",boxShadow:"0 1px 3px rgba(0,0,0,0.3)"}}/>
+                </button>
+              </div>
+            </div>
+          </div>
+
           {/* Hidden Movies & Shows section */}
           <div style={{background:C.surface,border:C.border,borderRadius:12,overflow:"hidden",maxWidth:560,marginTop:12,marginBottom:40}}>
             <div style={{padding:"7px 14px",borderBottom:C.border}}>
@@ -4183,10 +4218,10 @@ const showsInProgressFromWatched=(watched)=>{
 
     const Header=({user,logout,onData,onSettings})=>{
       const [open,setOpen]=useState(false);
-      const menuRef=useRef(null);
+      const nameRef=useRef(null);
       useEffect(()=>{
         if(!open)return;
-        const h=(e)=>{if(menuRef.current&&!menuRef.current.contains(e.target))setOpen(false);};
+        const h=(e)=>{if(nameRef.current&&!nameRef.current.contains(e.target))setOpen(false);};
         document.addEventListener("mousedown",h);return()=>document.removeEventListener("mousedown",h);
       },[open]);
       return(<div style={{display:"flex",alignItems:"center",padding:"0 24px",height:62,flexShrink:0,borderBottom:C.border,background:C.surface,position:"relative",WebkitAppRegion:"drag"}}>
@@ -4195,18 +4230,18 @@ const showsInProgressFromWatched=(watched)=>{
           <div style={{fontFamily:"'DM Serif Display',serif",fontSize:25,color:C.amber,letterSpacing:"-0.01em",WebkitAppRegion:"drag"}}>TV Stats</div>
         </div>
 
-        <div style={{flex:1,display:"flex",justifyContent:"flex-end",alignItems:"center",gap:10,WebkitAppRegion:"no-drag"}}>
-          {user&&<div ref={menuRef} style={{position:"relative",WebkitAppRegion:"no-drag"}}>
-            <button onClick={()=>setOpen(o=>!o)} style={{background:"none",border:`0.5px solid ${C.hover}`,borderRadius:6,padding:"6px 12px",color:open?C.text:C.muted,fontSize:12.5,cursor:"pointer",transition:"color 0.12s",display:"flex",alignItems:"center",gap:5}} onMouseEnter={e=>e.currentTarget.style.color=C.text} onMouseLeave={e=>{if(!open)e.currentTarget.style.color=C.muted;}}>
-              {user.name}
-              <svg width="9" height="9" viewBox="0 0 10 10" fill="none" style={{transform:open?"rotate(180deg)":"none",transition:"transform 0.15s"}}><path d="M2 3.5l3 3 3-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        <div style={{flex:1,display:"flex",justifyContent:"flex-end",alignItems:"center",gap:8,WebkitAppRegion:"no-drag"}}>
+          {user&&<>
+            <div ref={nameRef} style={{position:"relative",WebkitAppRegion:"no-drag"}}>
+              <span onClick={()=>setOpen(o=>!o)} style={{fontSize:16,fontWeight:600,color:user.color||C.amber,cursor:"pointer",letterSpacing:"0.01em"}}>{user.name}</span>
+              {open&&<div style={{position:"absolute",top:"calc(100% + 8px)",right:0,background:C.elevated,border:C.border,borderRadius:8,overflow:"hidden",minWidth:120,zIndex:200,boxShadow:`0 8px 24px ${C.shadow}`}}>
+                <div onClick={()=>{setOpen(false);logout();}} style={{padding:"9px 14px",fontSize:12,color:"#e06c6c",cursor:"pointer",transition:"background 0.1s"}} onMouseEnter={e=>e.currentTarget.style.background=C.hover} onMouseLeave={e=>e.currentTarget.style.background="none"}>Sign out</div>
+              </div>}
+            </div>
+            <button onClick={onSettings} title="Settings" style={{background:"none",border:"none",color:C.muted,cursor:"pointer",padding:4,display:"flex",alignItems:"center",borderRadius:6,transition:"color 0.13s",WebkitAppRegion:"no-drag"}} onMouseEnter={e=>e.currentTarget.style.color=C.text} onMouseLeave={e=>e.currentTarget.style.color=C.muted}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             </button>
-            {open&&<div style={{position:"absolute",top:"calc(100% + 6px)",right:0,background:C.elevated,border:C.border,borderRadius:8,overflow:"hidden",minWidth:140,zIndex:200,boxShadow:`0 8px 24px ${C.shadow}`}}>
-              <div onClick={()=>{setOpen(false);onSettings();}} style={{padding:"9px 14px",fontSize:12,color:C.text,cursor:"pointer",transition:"background 0.1s"}} onMouseEnter={e=>e.currentTarget.style.background=C.hover} onMouseLeave={e=>e.currentTarget.style.background="none"}>Settings</div>
-              <div style={{height:"0.5px",background:C.hover}}/>
-              <div onClick={()=>{setOpen(false);logout();}} style={{padding:"9px 14px",fontSize:12,color:"#e06c6c",cursor:"pointer",transition:"background 0.1s"}} onMouseEnter={e=>e.currentTarget.style.background=C.hover} onMouseLeave={e=>e.currentTarget.style.background="none"}>Sign out</div>
-            </div>}
-          </div>}
+          </>}
         </div>
       </div>);
     };
@@ -5119,6 +5154,8 @@ const showsInProgressFromWatched=(watched)=>{
       const [user,setUser]=useState(()=>{try{return JSON.parse(localStorage.getItem("tvstats_user")||"null");}catch{return null;}});
       const [showDataModal,setShowDataModal]=useState(false);
       const [theme, setTheme] = useState(() => localStorage.getItem('tvstats_theme') || 'dark');
+      const [hideWatchedMovies,setHideWatchedMovies]=useState(()=>localStorage.getItem("tvstats_hide_watched_movies")==="1");
+      const [hideWatchedTV,setHideWatchedTV]=useState(()=>localStorage.getItem("tvstats_hide_watched_tv")==="1");
       Object.assign(C, theme === 'dark' ? DARK_C : LIGHT_C);
       useEffect(() => {
         document.body.style.background = C.bg;
@@ -5484,8 +5521,8 @@ const showsInProgressFromWatched=(watched)=>{
           case"tv-detail":return<TVDetailPage item={data} {...shared}/>;
           case"episode-list":return<EpisodeListPage data={data} {...shared}/>;
           case"episode-detail":return<EpisodeDetailPage data={data} {...shared}/>;
-          case"movies-page":return<MoviesPage key={pageKey} {...shared}/>;
-          case"tv-page":return<TVShowsPage key={pageKey} {...shared}/>;
+          case"movies-page":return<MoviesPage key={pageKey} {...shared} hideWatchedMovies={hideWatchedMovies}/>;
+          case"tv-page":return<TVShowsPage key={pageKey} {...shared} hideWatchedTV={hideWatchedTV}/>;
           case"people":return<PeoplePage key={pageKey} goTo={goTo} watched={watched}/>;
           case"person-detail":return<PersonDetailErrorBoundary><PersonDetailPage person={data} goTo={goTo} watchlist={watchlist} setWatchlist={setWatchlist} watched={watched} setWatched={setWatched} showTotals={showTotals} hidden={hidden} setHidden={setHidden} showToast={showToast}/></PersonDetailErrorBoundary>;
           case"watchlist":return<WatchlistPage {...shared}/>;
@@ -5493,7 +5530,7 @@ const showsInProgressFromWatched=(watched)=>{
           case"continue-watching":return<ContinueWatchingPage goTo={goTo} watched={watched} setWatched={setWatched}/>;
           case"stats":return<StatsPage watched={watched} watchlist={watchlist} goTo={goTo}/>;
           case"hidden":return<HiddenPage hidden={hidden} setHidden={setHidden}/>;
-          case"settings":return<SettingsPage user={user} setUser={setUser} onData={()=>setShowDataModal(true)} theme={theme} setTheme={setTheme} goTo={goTo} hidden={hidden}/>;
+          case"settings":return<SettingsPage user={user} setUser={setUser} onData={()=>setShowDataModal(true)} theme={theme} setTheme={setTheme} goTo={goTo} hidden={hidden} hideWatchedMovies={hideWatchedMovies} setHideWatchedMovies={setHideWatchedMovies} hideWatchedTV={hideWatchedTV} setHideWatchedTV={setHideWatchedTV}/>;
           default:return null;
         }
       };
