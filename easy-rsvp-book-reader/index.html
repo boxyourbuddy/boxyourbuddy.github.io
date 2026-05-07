@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy RSVP Book Reader — Free macOS Speed Reading App</title>
+    <meta name="description" content="Easy RSVP Book Reader is a free, native macOS speed reading app that flashes one word at a time using RSVP and ORP alignment. Drop in your EPUB files, read faster, no account required.">
+    <meta name="author" content="Dan Stout">
+    <meta name="keywords" content="RSVP speed reading, macOS speed reader, EPUB reader, Optimal Recognition Point, ORP, free speed reading app, Easy RSVP Book Reader">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://boxyourbuddy.com/easy-rsvp-book-reader/">
+    <meta property="og:title" content="Easy RSVP Book Reader — Free macOS Speed Reading App">
+    <meta property="og:description" content="Free native macOS app. Drop in your EPUBs and read faster with RSVP and ORP alignment. Private, offline, no account required.">
+    <meta property="og:site_name" content="BoxYourBuddy">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Easy RSVP Book Reader — Free macOS Speed Reading App">
+    <meta name="twitter:description" content="Free native macOS app. Drop in your EPUBs and read faster with RSVP and ORP alignment. Private, offline, no account required.">
+
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Easy RSVP Book Reader",
+      "operatingSystem": "macOS",
+      "applicationCategory": "UtilitiesApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Easy RSVP Book Reader is a free, native macOS speed reading app that flashes one word at a time, using Rapid Serial Visual Presentation (RSVP) with ORP, Optimal Recognition Point, alignment. Drop your EPUB files directly into the app for a smooth reading experience that remembers your progress. Private, offline, no account required.",
+      "author": {
+        "@type": "Person",
+        "name": "Dan Stout",
+        "alternateName": "BoxYourBuddy",
+        "url": "https://boxyourbuddy.com"
+      },
+      "url": "https://boxyourbuddy.com/easy-rsvp-book-reader/"
+    }
+    </script>
+
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7NDGQGQM5G');
+    </script>
+    <style>
+        * { box-sizing: border-box; font-family: Arial, sans-serif; font-weight: bold; }
+        body { margin: 0; background: #000; color: #fff; overflow-x: hidden; }
+        .page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
+        .page-header { text-align: center; margin-bottom: 40px; width: 100%; }
+        .brand-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; }
+        .brand-logo { width: 50px; height: auto; }
+        .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; }
+        .brand-name .tint { color: #FFF0AD; }
+        .nav { margin-top: 16px; display: flex; gap: 20px; justify-content: center; align-items: center; }
+        .nav a { font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; }
+        .nav a:hover { color: #FFF0AD; }
+        .nav .dot { height: 15px; width: 15px; display: inline-block; vertical-align: middle; }
+
+        .content { width: 100%; max-width: 720px; }
+
+        .hero { text-align: center; margin-bottom: 60px; }
+        .hero h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); letter-spacing: 1px; margin: 0 0 20px; text-transform: uppercase; }
+        .hero h2 .tint { color: #FFF0AD; }
+        .hero p { font-size: 1.05rem; color: #ccc; line-height: 1.8; font-weight: normal; margin: 0; }
+        .hero p strong { color: #fff; font-weight: bold; }
+
+        .divider { border: none; border-top: 1px solid #222; margin: 0 0 60px; }
+
+        .section { margin-bottom: 60px; }
+        .section h3 { font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; color: #FFF0AD; margin: 0 0 16px; }
+        .section p { font-size: 1.05rem; color: #ccc; line-height: 1.8; font-weight: normal; margin: 0 0 16px; }
+        .section p:last-child { margin-bottom: 0; }
+        .section p strong { color: #fff; font-weight: bold; }
+
+        .features { margin-bottom: 60px; }
+        .features h3 { font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; color: #FFF0AD; margin: 0 0 32px; }
+        .feature { margin-bottom: 32px; }
+        .feature:last-child { margin-bottom: 0; }
+        .feature h4 { font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: #fff; margin: 0 0 10px; }
+        .feature p { font-size: 1.05rem; color: #ccc; line-height: 1.8; font-weight: normal; margin: 0; }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="page-header">
+            <div class="brand-wrap">
+                <img src="/images/box-small.png" alt="BoxYourBuddy logo" class="brand-logo">
+                <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
+            </div>
+            <nav class="nav">
+                <a href="/">HOME</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/writing/">WRITING</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/art/">ART</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/apps/">APPS</a>
+            </nav>
+        </header>
+
+        <main class="content">
+
+            <section class="hero">
+                <h2>Easy <span class="tint">RSVP</span> Book Reader</h2>
+                <p><strong>Easy RSVP Book Reader</strong> is a free, native macOS speed reading app that flashes one word at a time, using a technique called <strong>Rapid Serial Visual Presentation (RSVP)</strong> with <strong>ORP, Optimal Recognition Point,</strong> alignment. Drop your EPUB files directly into the app for a smooth book reading experience that remembers your progress. <strong>Private, offline, no account required.</strong></p>
+            </section>
+
+            <hr class="divider">
+
+            <section class="section">
+                <h3>How RSVP Speed Reading Works</h3>
+                <p>RSVP speed reading works by eliminating the back-and-forth eye movement that slows traditional reading down. Words appear one at a time in a fixed position, so your brain can process text faster with less effort.</p>
+                <p>Easy RSVP Book Reader also uses <strong>ORP, Optimal Recognition Point</strong>, which anchors each word at the exact character your eye naturally lands on first. The result is a reading experience that feels effortless and allows you to read at a speed you never thought you would.</p>
+            </section>
+
+            <hr class="divider">
+
+            <section class="features">
+                <h3>Features</h3>
+
+                <div class="feature">
+                    <h4>Distraction-Free by Design</h4>
+                    <p>The interface disappears while you read. No toolbars, no sidebars, nothing competing for your attention. Just the words of the book in front of you.</p>
+                </div>
+
+                <div class="feature">
+                    <h4>Load Your Books</h4>
+                    <p>Drop an EPUB, PDF, or plain text file directly into the app. It will be saved to your library automatically. Start reading and your progress is remembered for each book so you always pick up exactly where you left off.</p>
+                </div>
+
+                <div class="feature">
+                    <h4>Reading Speed</h4>
+                    <p>Read at any speed from 60 to 600 words per minute (WPM). Use the left and right arrow keys to adjust WPM by 10. Press shift and the right or left arrow keys to fine tune by 1 WPM.</p>
+                </div>
+
+                <div class="feature">
+                    <h4>Smart Pauses</h4>
+                    <p>The app slows down naturally at commas, sentences, paragraph breaks, and chapter headings. Reading never feels robotic.</p>
+                </div>
+
+                <div class="feature">
+                    <h4>Controls</h4>
+                    <p>The spacebar plays, pauses, and restarts reading. W and S jump forward or back a chapter in the book. A jumps back 25 words and D forward 25 words. The progress bar appears on hover and can be dragged to any point in the book.</p>
+                </div>
+
+                <div class="feature">
+                    <h4>Customization</h4>
+                    <p>Choose your background color, text color, ORP highlight color, font, and font size. All settings are saved between sessions.</p>
+                </div>
+
+                <div class="feature">
+                    <h4>Private and Offline</h4>
+                    <p>Your books never leave your Mac. No account, no internet connection, no tracking. Free forever.</p>
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+</body>
+</html>
