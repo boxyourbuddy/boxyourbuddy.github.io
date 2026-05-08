@@ -21,12 +21,15 @@
         .page-header { text-align: center; margin-bottom: 40px; }
         .brand-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; }
         .brand-logo { width: 50px; height: auto; }
-        .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; }
+        .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; color: #fff; }
         .brand-name .tint { color: #FFF0AD; }
-        .subheader { font-size: clamp(1.1rem, 3vw, 1.6rem); color: #FFF0AD; margin: 10px 0 0; letter-spacing: 1px; font-weight: bold; }
+        .subheader { font-size: clamp(1.4rem, 4vw, 2rem); margin: 12px 0 0; letter-spacing: 1px; font-weight: bold; }
+        .g1 { color: #4DFF91; }
+        .g2 { color: #00C851; }
+        .g3 { color: #B8FF5A; }
 
-        h1 { font-size: clamp(1.6rem, 5vw, 2.4rem); color: #FFF0AD; margin: 0 0 0.5rem; }
-        h2 { font-size: clamp(1.1rem, 3vw, 1.5rem); color: #FFF0AD; margin: 0 0 0.75rem; }
+        h1 { font-size: clamp(1.6rem, 5vw, 2.4rem); color: #4DFF91; margin: 0 0 0.5rem; }
+        h2 { font-size: clamp(1.1rem, 3vw, 1.5rem); color: #4DFF91; margin: 0 0 0.75rem; }
         p { font-weight: normal; font-size: 1.05rem; line-height: 1.8; color: #ccc; margin: 0 0 1rem; }
         hr { border: none; border-top: 1px solid #333; margin: 2.5rem 0; }
 
@@ -38,13 +41,13 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .slide img { width: 100%; height: auto; max-height: 520px; object-fit: contain; display: block; }
         .slide-controls { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 12px; }
-        .slide-btn { background: #222; color: #FFF0AD; border: 1px solid #444; padding: 8px 24px; font-size: 1rem; cursor: pointer; font-family: Arial, sans-serif; font-weight: bold; }
-        .slide-btn:hover { background: #FFF0AD; color: #000; }
+        .slide-btn { background: #222; color: #4DFF91; border: 1px solid #444; padding: 8px 24px; font-size: 1rem; cursor: pointer; font-family: Arial, sans-serif; font-weight: bold; }
+        .slide-btn:hover { background: #4DFF91; color: #000; }
         .slide-count { color: #888; font-size: 0.85rem; min-width: 60px; text-align: center; }
 
         /* Tables */
         table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-        th { color: #FFF0AD; text-align: left; padding: 10px 14px; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #333; }
+        th { color: #00C851; text-align: left; padding: 10px 14px; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #333; }
         td { color: #ccc; font-weight: normal; padding: 10px 14px; border-bottom: 1px solid #1a1a1a; font-size: 0.95rem; }
         tr:last-child td { color: #fff; font-weight: bold; border-bottom: none; }
 
@@ -55,22 +58,22 @@
         .calc-row input { width: 80px; padding: 8px; background: #222; color: #fff; border: 1px solid #444; font-size: 1rem; font-family: Arial, sans-serif; font-weight: bold; text-align: center; }
         .calc-results { border-top: 1px solid #333; margin-top: 16px; padding-top: 14px; }
         .calc-result-row { display: flex; justify-content: space-between; padding: 5px 0; color: #ccc; font-weight: normal; font-size: 0.95rem; }
-        .calc-result-row.total { color: #FFF0AD; font-size: 1.1rem; font-weight: bold; border-top: 1px solid #444; margin-top: 8px; padding-top: 12px; }
+        .calc-result-row.total { color: #B8FF5A; font-size: 1.1rem; font-weight: bold; border-top: 1px solid #444; margin-top: 8px; padding-top: 12px; }
         .calc-disclaimer { color: #666; font-size: 0.8rem; margin-top: 14px; margin-bottom: 0; font-weight: normal; }
 
         /* Steps */
         .steps { list-style: none; padding: 0; margin: 1rem 0; counter-reset: step; }
         .steps li { color: #ccc; font-weight: normal; font-size: 1rem; line-height: 1.7; padding: 7px 0 7px 32px; position: relative; counter-increment: step; }
-        .steps li::before { content: counter(step); position: absolute; left: 0; color: #FFF0AD; font-weight: bold; }
+        .steps li::before { content: counter(step); position: absolute; left: 0; color: #00C851; font-weight: bold; }
 
         /* Payment buttons */
         .pay-section { text-align: center; margin: 2rem 0; }
         .pay-section p { color: #fff; font-size: 1.1rem; font-weight: bold; }
         .pay-btn { display: inline-block; padding: 16px 40px; font-size: 1.1rem; font-family: Arial, sans-serif; font-weight: bold; text-decoration: none; margin: 8px; cursor: pointer; }
-        .pay-btn.primary { background: #FFF0AD; color: #000; }
-        .pay-btn.primary:hover { background: #fff; }
-        .pay-btn.secondary { background: #222; color: #FFF0AD; border: 2px solid #FFF0AD; }
-        .pay-btn.secondary:hover { background: #FFF0AD; color: #000; }
+        .pay-btn.primary { background: #4DFF91; color: #000; }
+        .pay-btn.primary:hover { background: #B8FF5A; }
+        .pay-btn.secondary { background: #222; color: #00C851; border: 2px solid #00C851; }
+        .pay-btn.secondary:hover { background: #00C851; color: #000; }
 
         footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #222; color: #555; font-size: 0.8rem; font-weight: normal; text-align: center; }
     </style>
@@ -83,7 +86,7 @@
                 <img src="/images/box-small.png" alt="BoxYourBuddy logo" class="brand-logo">
                 <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
             </div>
-            <p class="subheader">Makes You Money</p>
+            <p class="subheader"><span class="g1">Makes</span> <span class="g2">You</span> <span class="g3">Money</span></p>
         </header>
 
         <p>Hi, I'm Dan Stout, aka BoxYourBuddy. I'll be straight with you. Times are tough right now for a lot of people, myself included. I'm an artist, not a salesman, so selling my own work has never come easy to me. But I figured out something that might help both of us.</p>
