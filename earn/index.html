@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoxYourBuddy Makes You Money</title>
+    <meta name="description" content="Buy 20 original digital art pieces for $15 and earn commissions sharing the same bundle.">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7NDGQGQM5G');
+    </script>
+    <style>
+        * { box-sizing: border-box; font-family: Arial, sans-serif; font-weight: bold; }
+        body { margin: 0; background: #000; color: #fff; overflow-x: hidden; }
+        .page { max-width: 720px; margin: 0 auto; padding: 60px 20px 40px; }
+
+        h1 { font-size: clamp(1.6rem, 5vw, 2.4rem); color: #FFF0AD; margin: 0 0 0.5rem; }
+        h2 { font-size: clamp(1.1rem, 3vw, 1.5rem); color: #FFF0AD; margin: 0 0 0.75rem; }
+        p { font-weight: normal; font-size: 1.05rem; line-height: 1.8; color: #ccc; margin: 0 0 1rem; }
+        hr { border: none; border-top: 1px solid #333; margin: 2.5rem 0; }
+
+        /* Slideshow */
+        .slideshow-wrap { margin: 1.5rem 0; }
+        .slideshow { width: 100%; }
+        .slide { display: none; }
+        .slide.active { display: block; animation: fadeIn 0.6s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .slide img { width: 100%; height: auto; max-height: 520px; object-fit: contain; display: block; }
+        .slide-controls { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 12px; }
+        .slide-btn { background: #222; color: #FFF0AD; border: 1px solid #444; padding: 8px 24px; font-size: 1rem; cursor: pointer; font-family: Arial, sans-serif; font-weight: bold; }
+        .slide-btn:hover { background: #FFF0AD; color: #000; }
+        .slide-count { color: #888; font-size: 0.85rem; min-width: 60px; text-align: center; }
+
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th { color: #FFF0AD; text-align: left; padding: 10px 14px; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #333; }
+        td { color: #ccc; font-weight: normal; padding: 10px 14px; border-bottom: 1px solid #1a1a1a; font-size: 0.95rem; }
+        tr:last-child td { color: #fff; font-weight: bold; border-bottom: none; }
+
+        /* Calculator */
+        .calculator { background: #111; padding: 24px; margin: 1.5rem 0; }
+        .calc-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 14px; }
+        .calc-row label { color: #ccc; font-weight: normal; font-size: 0.95rem; flex: 1 1 220px; }
+        .calc-row input { width: 80px; padding: 8px; background: #222; color: #fff; border: 1px solid #444; font-size: 1rem; font-family: Arial, sans-serif; font-weight: bold; text-align: center; }
+        .calc-results { border-top: 1px solid #333; margin-top: 16px; padding-top: 14px; }
+        .calc-result-row { display: flex; justify-content: space-between; padding: 5px 0; color: #ccc; font-weight: normal; font-size: 0.95rem; }
+        .calc-result-row.total { color: #FFF0AD; font-size: 1.1rem; font-weight: bold; border-top: 1px solid #444; margin-top: 8px; padding-top: 12px; }
+        .calc-disclaimer { color: #666; font-size: 0.8rem; margin-top: 14px; margin-bottom: 0; font-weight: normal; }
+
+        /* Steps */
+        .steps { list-style: none; padding: 0; margin: 1rem 0; counter-reset: step; }
+        .steps li { color: #ccc; font-weight: normal; font-size: 1rem; line-height: 1.7; padding: 7px 0 7px 32px; position: relative; counter-increment: step; }
+        .steps li::before { content: counter(step); position: absolute; left: 0; color: #FFF0AD; font-weight: bold; }
+
+        /* Payment buttons */
+        .pay-section { text-align: center; margin: 2rem 0; }
+        .pay-section p { color: #fff; font-size: 1.1rem; font-weight: bold; }
+        .pay-btn { display: inline-block; padding: 16px 40px; font-size: 1.1rem; font-family: Arial, sans-serif; font-weight: bold; text-decoration: none; margin: 8px; cursor: pointer; }
+        .pay-btn.primary { background: #FFF0AD; color: #000; }
+        .pay-btn.primary:hover { background: #fff; }
+        .pay-btn.secondary { background: #222; color: #FFF0AD; border: 2px solid #FFF0AD; }
+        .pay-btn.secondary:hover { background: #FFF0AD; color: #000; }
+
+        footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #222; color: #555; font-size: 0.8rem; font-weight: normal; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="page">
+
+        <h1>BoxYourBuddy Makes You Money</h1>
+
+        <p>Hi, I'm Dan Stout, aka BoxYourBuddy. I'll be straight with you. Times are tough right now for a lot of people, myself included. I'm an artist, not a salesman, so selling my own work has never come easy to me. But I figured out something that might help both of us.</p>
+        <p>I made a bundle of 20 original digital art pieces. Real photos I transformed in GIMP — not AI, not stock images. I sell that bundle for $15. And if you buy it, you can sell it too and earn commissions on every sale you make. I keep a small cut because I made the art. You keep the most because you did the selling. That's the deal.</p>
+        <p>Is this network marketing? Yes. Am I going to promise you a yacht? No. If you put in a little effort you might make an extra $50 or so a month. Maybe more. Maybe less. I'm not going to lie to you about it.</p>
+
+        <hr>
+
+        <h2>The Art Bundle</h2>
+        <p>20 original digital art pieces. Made by running real photos through GIMP — great as desktop wallpaper, phone backgrounds, or just something nice to look at. Here's a sample:</p>
+
+        <div class="slideshow-wrap">
+            <div class="slideshow" id="slideshow">
+                <div class="slide active"><img src="art-01.jpg" alt="Original digital art by Dan Stout"></div>
+                <div class="slide"><img src="art-02.jpg" alt="Original digital art by Dan Stout"></div>
+                <div class="slide"><img src="art-03.jpg" alt="Original digital art by Dan Stout"></div>
+                <div class="slide"><img src="art-04.jpg" alt="Original digital art by Dan Stout"></div>
+                <div class="slide"><img src="art-05.jpg" alt="Original digital art by Dan Stout"></div>
+                <div class="slide"><img src="art-06.jpg" alt="Original digital art by Dan Stout"></div>
+                <div class="slide"><img src="art-07.jpg" alt="Original digital art by Dan Stout"></div>
+                <div class="slide"><img src="art-08.jpg" alt="Original digital art by Dan Stout"></div>
+                <div class="slide"><img src="art-09.jpg" alt="Original digital art by Dan Stout"></div>
+                <div class="slide"><img src="art-10.jpg" alt="Original digital art by Dan Stout"></div>
+                <!-- ADD MORE SLIDES HERE -->
+            </div>
+            <div class="slide-controls">
+                <button class="slide-btn" id="prev-btn">← Prev</button>
+                <span class="slide-count" id="slide-count"></span>
+                <button class="slide-btn" id="next-btn">Next →</button>
+            </div>
+        </div>
+
+        <p>You get all 20 pieces as a ZIP file delivered by me personally after you pay. Personal use license included — use them however you like for yourself.</p>
+
+        <hr>
+
+        <h2>How the Money Works</h2>
+        <p>Every time someone buys through your link, $15 gets split like this:</p>
+
+        <table>
+            <tr><th>Who</th><th>Gets</th><th>Why</th></tr>
+            <tr><td>Stripe fee</td><td>~$1.00</td><td>Payment processing, deducted automatically</td></tr>
+            <tr><td>Dan (creator)</td><td>$2.00</td><td>I made the art — I get this on every sale, everywhere in the network</td></tr>
+            <tr><td>You (the seller)</td><td>$7.00</td><td>You made the sale — you earn the most</td></tr>
+            <tr><td>Person who brought you in</td><td>$3.00</td><td>Level 2</td></tr>
+            <tr><td>Person above them</td><td>$2.00</td><td>Level 3 — the chain stops here</td></tr>
+            <tr><td>Total</td><td>$15.00</td><td></td></tr>
+        </table>
+
+        <p>If any level in that chain doesn't exist yet, that money comes back to me instead of going unclaimed. No levels above 3 get paid. You can recruit as many people as you want — no cap on that. I'm Member 1 in this network, which means I earn commissions too. I'm telling you that upfront.</p>
+
+        <hr>
+
+        <h2>Estimate What You Could Make</h2>
+        <p>Enter your own numbers and see what the math looks like. Not a promise — just the math.</p>
+
+        <div class="calculator">
+            <div class="calc-row">
+                <label>How many people do you plan to recruit?</label>
+                <input type="number" id="calc-recruits" value="3" min="0" max="999">
+            </div>
+            <div class="calc-row">
+                <label>How many people does each of them recruit?</label>
+                <input type="number" id="calc-their-recruits" value="3" min="0" max="999">
+            </div>
+            <div class="calc-row">
+                <label>How many sales per month does each person make?</label>
+                <input type="number" id="calc-sales" value="1" min="0" max="999">
+            </div>
+            <div class="calc-results">
+                <div class="calc-result-row"><span>Your own sales (Level 1 — $7 each)</span><span id="result-l1"></span></div>
+                <div class="calc-result-row"><span>From your recruits (Level 2 — $3 each)</span><span id="result-l2"></span></div>
+                <div class="calc-result-row"><span>From their recruits (Level 3 — $2 each)</span><span id="result-l3"></span></div>
+                <div class="calc-result-row total"><span>Estimated monthly total</span><span id="result-total"></span></div>
+            </div>
+            <p class="calc-disclaimer">These are estimates based on the numbers you entered, not a guarantee of income. Results will vary.</p>
+        </div>
+
+        <hr>
+
+        <h2>What You Could Realistically Make</h2>
+        <p>Here's what the numbers look like if everyone sells one bundle a month. No dream scenarios, just the math.</p>
+
+        <table>
+            <tr><th>Scenario</th><th>Monthly Estimate</th></tr>
+            <tr><td>Just you, no network</td><td>$7</td></tr>
+            <tr><td>You recruit 3, they each sell 1</td><td>$16</td></tr>
+            <tr><td>Those 3 each recruit 3 (9 at Level 3)</td><td>$34</td></tr>
+            <tr><td>You recruit 5, each recruits 5</td><td>$72</td></tr>
+        </table>
+
+        <p>Most people won't build a big network. That's fine. Even an extra $7 covers a coffee or two. If you actually share your link with people who might want it, the numbers go up.</p>
+
+        <hr>
+
+        <h2>What Happens After You Pay</h2>
+
+        <ol class="steps">
+            <li>I get a notification that you paid.</li>
+            <li>I manually send you all 20 art files as a ZIP.</li>
+            <li>I send you your personal page link — boxyourbuddy.com/earn/yourname — that's your selling link.</li>
+            <li>I send you a link to your own Google Sheet where you can see your sales, earnings, and recruits.</li>
+            <li>I include a plain-English explanation of how it all works and how to share your link.</li>
+            <li>You start sharing. When someone buys through your link, I pay you out manually via Stripe or CashApp.</li>
+        </ol>
+
+        <p>No app to download. No automation. Just a real person managing this and paying people what they're owed.</p>
+
+        <hr>
+
+        <div class="pay-section">
+            <p>$15 gets you the art bundle and your own selling page.</p>
+            <a href="STRIPE_LINK_HERE" class="pay-btn primary">Pay $15 with Card (Stripe)</a>
+            <br>
+            <a href="CASHAPP_LINK_HERE" class="pay-btn secondary">Pay with CashApp</a>
+        </div>
+
+        <footer>
+            This site uses Google Analytics to count page visits. No personal data is sold or shared.
+        </footer>
+
+    </div>
+
+    <script>
+        (function () {
+            // Slideshow
+            var slides = Array.from(document.querySelectorAll('.slide'));
+            if (slides.length < 2) return;
+
+            for (var i = slides.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var tmp = slides[i]; slides[i] = slides[j]; slides[j] = tmp;
+            }
+            var ss = document.getElementById('slideshow');
+            slides.forEach(function (s) { s.classList.remove('active'); ss.appendChild(s); });
+            slides[0].classList.add('active');
+
+            var current = 0;
+            var timer = null;
+            var countEl = document.getElementById('slide-count');
+
+            function updateCount() {
+                countEl.textContent = (current + 1) + ' / ' + slides.length;
+            }
+
+            function showSlide(n) {
+                slides[current].classList.remove('active');
+                current = (n + slides.length) % slides.length;
+                slides[current].classList.add('active');
+                updateCount();
+            }
+
+            function startTimer() {
+                clearInterval(timer);
+                timer = setInterval(function () { showSlide(current + 1); }, 5000);
+            }
+
+            document.getElementById('prev-btn').addEventListener('click', function () {
+                showSlide(current - 1);
+                startTimer();
+            });
+            document.getElementById('next-btn').addEventListener('click', function () {
+                showSlide(current + 1);
+                startTimer();
+            });
+
+            ss.addEventListener('mouseenter', function () { clearInterval(timer); });
+            ss.addEventListener('mouseleave', startTimer);
+
+            updateCount();
+            startTimer();
+        })();
+
+        (function () {
+            // Calculator
+            function calc() {
+                var recruits = parseInt(document.getElementById('calc-recruits').value) || 0;
+                var theirRecruits = parseInt(document.getElementById('calc-their-recruits').value) || 0;
+                var sales = parseInt(document.getElementById('calc-sales').value) || 0;
+
+                var l1 = sales * 7;
+                var l2 = recruits * sales * 3;
+                var l3 = recruits * theirRecruits * sales * 2;
+                var total = l1 + l2 + l3;
+
+                document.getElementById('result-l1').textContent = '$' + l1;
+                document.getElementById('result-l2').textContent = '$' + l2;
+                document.getElementById('result-l3').textContent = '$' + l3;
+                document.getElementById('result-total').textContent = '$' + total;
+            }
+
+            ['calc-recruits', 'calc-their-recruits', 'calc-sales'].forEach(function (id) {
+                document.getElementById(id).addEventListener('input', calc);
+            });
+
+            calc();
+        })();
+    </script>
+</body>
+</html>
