@@ -148,21 +148,21 @@
 
         <div class="calculator">
             <div class="calc-row">
-                <label>How many people do you plan to recruit?</label>
-                <input type="number" id="calc-recruits" value="3" min="0" max="999">
+                <label>Level 1 sales — yours ($7 each)</label>
+                <input type="number" id="calc-l1" value="1" min="0" max="999">
             </div>
             <div class="calc-row">
-                <label>How many people does each of them recruit?</label>
-                <input type="number" id="calc-their-recruits" value="3" min="0" max="999">
+                <label>Level 2 sales — your recruits ($3 each)</label>
+                <input type="number" id="calc-l2" value="1" min="0" max="999">
             </div>
             <div class="calc-row">
-                <label>How many sales per month does each person make?</label>
-                <input type="number" id="calc-sales" value="1" min="0" max="999">
+                <label>Level 3 sales — their recruits ($2 each)</label>
+                <input type="number" id="calc-l3" value="0" min="0" max="999">
             </div>
             <div class="calc-results">
-                <div class="calc-result-row"><span>Your own sales (Level 1 - $7 each)</span><span id="result-l1"></span></div>
-                <div class="calc-result-row"><span>From your recruits (Level 2 - $3 each)</span><span id="result-l2"></span></div>
-                <div class="calc-result-row"><span>From their recruits (Level 3 - $2 each)</span><span id="result-l3"></span></div>
+                <div class="calc-result-row"><span>Level 1 ($7 each)</span><span id="result-l1"></span></div>
+                <div class="calc-result-row"><span>Level 2 ($3 each)</span><span id="result-l2"></span></div>
+                <div class="calc-result-row"><span>Level 3 ($2 each)</span><span id="result-l3"></span></div>
                 <div class="calc-result-row total"><span>Estimated total</span><span id="result-total"></span></div>
             </div>
             <p class="calc-disclaimer">These are estimates based on the numbers you entered, not a guarantee of income. Results will vary.</p>
@@ -255,13 +255,9 @@
         (function () {
             // Calculator
             function calc() {
-                var recruits = parseInt(document.getElementById('calc-recruits').value) || 0;
-                var theirRecruits = parseInt(document.getElementById('calc-their-recruits').value) || 0;
-                var sales = parseInt(document.getElementById('calc-sales').value) || 0;
-
-                var l1 = sales * 7;
-                var l2 = recruits * sales * 3;
-                var l3 = recruits * theirRecruits * sales * 2;
+                var l1 = (parseInt(document.getElementById('calc-l1').value) || 0) * 7;
+                var l2 = (parseInt(document.getElementById('calc-l2').value) || 0) * 3;
+                var l3 = (parseInt(document.getElementById('calc-l3').value) || 0) * 2;
                 var total = l1 + l2 + l3;
 
                 document.getElementById('result-l1').textContent = '$' + l1;
@@ -270,7 +266,7 @@
                 document.getElementById('result-total').textContent = '$' + total;
             }
 
-            ['calc-recruits', 'calc-their-recruits', 'calc-sales'].forEach(function (id) {
+            ['calc-l1', 'calc-l2', 'calc-l3'].forEach(function (id) {
                 document.getElementById(id).addEventListener('input', calc);
             });
 
