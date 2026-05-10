@@ -44,8 +44,12 @@ The bullet separators between nav links are always `favicon.png` at 15×15px —
     <a href="/art/">ART</a>
     <img src="/favicon.png" class="dot" alt="">
     <a href="/apps/">APPS</a>
+    <img src="/favicon.png" class="dot" alt="">
+    <a href="/earn/">EARN</a>
 </nav>
 ```
+
+**Exception:** The `/earn/` page and all member pages under `/earn/xxxx/` do NOT use the site nav — they are standalone pages with their own header.
 
 **TV Stats product pages** use JSON-LD schema markup for SEO and follow a privacy-first messaging angle: no ads, no subscriptions, no cloud, local-only data storage.
 
