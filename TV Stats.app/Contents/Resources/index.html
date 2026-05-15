@@ -1561,9 +1561,9 @@
         dcGetBatch([dk],86400000).then(cached=>{
           if(cancelled)return;
           if(dk in cached){const r=cached[dk]||false;_resolvedNextCache.set(cacheKey,r);setNextInfo(r);return;}
-          checkEp(season,episode+1).then(found=>{
+          checkEp(season,episode+1).catch(()=>false).then(found=>{
             if(found||cancelled)return;
-            return checkEp(season+1,1).then(found2=>{if(!found2&&!cancelled){_resolvedNextCache.set(cacheKey,false);setNextInfo(false);dcSetBatch({[dk]:false});}});
+            return checkEp(season+1,1).catch(()=>false).then(found2=>{if(!found2&&!cancelled){_resolvedNextCache.set(cacheKey,false);setNextInfo(false);dcSetBatch({[dk]:false});}});
           }).catch(()=>{if(!cancelled)setNextInfo(false);});
         });
         return()=>{cancelled=true;};
@@ -1943,12 +1943,12 @@ const showsInProgressFromWatched=(watched)=>{
                 return null;
               };
               const[sameSeason,nextSeason]=await Promise.all([
-                checkEp(show.season,show.episode+1).catch(()=>null),
-                checkEp(show.season+1,1).catch(()=>null)
+                checkEp(show.season,show.episode+1).catch(()=>'err'),
+                checkEp(show.season+1,1).catch(()=>'err')
               ]);
-              const next=sameSeason||nextSeason||false;
-              _resolvedNextCache.set(`${show.showId}:${show.season}:${show.episode}`,next);
-              dcSetBatch({[dk]:next});
+              const next=sameSeason&&sameSeason!=='err'?sameSeason:nextSeason&&nextSeason!=='err'?nextSeason:null;
+              const bothFailed=sameSeason==='err'&&nextSeason==='err';
+              if(!bothFailed){const val=next||false;_resolvedNextCache.set(`${show.showId}:${show.season}:${show.episode}`,val);dcSetBatch({[dk]:val});}
               return next?{...show,resolvedNext:next}:null;
             }catch{return null;}
           })());
