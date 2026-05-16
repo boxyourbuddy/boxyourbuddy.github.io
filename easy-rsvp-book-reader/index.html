@@ -195,13 +195,12 @@
 
             <div class="bottom-card">
                 <h2>macOS Installation (macOS 13 Ventura or later)</h2>
-                <p>Since Easy RSVP Book Reader is downloaded directly, macOS may flag it as being from an unidentified developer. This is a standard security gate you can bypass in seconds:</p>
-                <ul>
-                    <li>Locate the app in your Downloads folder.</li>
-                    <li>Right-click (or Control-click) the icon and select Open.</li>
-                    <li>When the dialog appears, click Open again. You only need to do this once.</li>
-                    <li>If "Open" doesn't appear, go to System Settings > Privacy & Security and click Open Anyway.</li>
-                </ul>
+                <p>Recent versions of macOS have strict Gatekeeper security that blocks apps downloaded outside the App Store. Easy RSVP Book Reader is not App Store distributed, so you'll need one extra step to get it running and it only takes a few seconds.</p>
+            <ul>
+                <li>Open the downloaded <strong>Easy-RSVP-Book-Reader.dmg</strong> and drag <strong>EasyReader.app</strong> into your Applications folder.</li>
+                <li>Open <strong>Terminal</strong> (search "Terminal" in Spotlight) and run this command, then press Enter:<br><code>xattr -cr "/Applications/EasyReader.app"</code></li>
+            </ul>
+            <p>That command removes the quarantine flag macOS adds to downloaded apps. After running it, Easy RSVP Book Reader will open normally every time.</p>
             </div>
 
             <div class="footer-note">
