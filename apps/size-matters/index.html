@@ -72,10 +72,10 @@
         .hero-split { display: flex; gap: 36px; align-items: center; margin-bottom: 0; }
         .hero-photo { width: 390px; max-width: 100%; aspect-ratio: 390 / 600; border-radius: 12px; display: block; flex-shrink: 0; object-fit: cover; }
         .hero-text { flex: 1; min-width: 0; }
-        .hero-title-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
-        .hero-text h2 { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin: 0; }
-        .hero-text h2 .tint { color: #FFF0AD; }
-        .hero-text .tag { font-size: 0.9rem; color: #FFF0AD; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; margin: 0; }
+        .hero-title-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: 36px; }
+        .hero-title-row h2 { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin: 0; }
+        .hero-title-row h2 .tint { color: #FFF0AD; }
+        .hero-title-row .tag { font-size: 0.9rem; color: #FFF0AD; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; margin: 0; }
         .hero-text p { font-size: 1rem; color: #a0a0a0; line-height: 1.6; font-weight: normal; margin: 0 0 14px; }
         .hero-text p:last-child { margin-bottom: 0; }
 
@@ -141,13 +141,14 @@
 
         <main class="content">
 
+            <div class="hero-title-row">
+                <h2>Size <span class="tint">Matters</span></h2>
+                <span class="tag">Free • Private</span>
+            </div>
+
             <section class="hero-split">
                 <img src="size-matters-hero.png" alt="Size Matters app window" class="hero-photo">
                 <div class="hero-text">
-                    <div class="hero-title-row">
-                        <h2>Size <span class="tint">Matters</span></h2>
-                        <span class="tag">Free • Private</span>
-                    </div>
                     <p>Size Matters is a tiny native macOS app that resizes a batch of photos in seconds. You drag your photos into the window and it makes smaller copies at the exact pixel size you choose. Your original photos are never touched or moved.</p>
                     <p>It is built for the exact problem of "I have huge photos and I need web-friendly versions." I was tired of opening each photo in an editor just to resize it. So I made a tool that lets you drop many photos into one window and they all come out resized. It keeps the aspect ratio automatically so nothing gets stretched. It remembers your folder, size, and settings next time you open it.</p>
                     <div class="btn-group">
