@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Size Matters — Free macOS Batch Photo Resizer</title>
+    <meta name="description" content="Size Matters is a tiny, free macOS app that batch-resizes photos. Drag your photos onto the window and it makes resized copies at the exact pixel size you choose. Originals are never touched. No account required.">
+    <meta name="author" content="Dan Stout">
+    <meta name="keywords" content="batch photo resizer, macOS image resize, bulk resize photos, resize by width or height, free Mac photo resizer, Size Matters">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://boxyourbuddy.com/apps/size-matters/">
+    <meta property="og:title" content="Size Matters — Free macOS Batch Photo Resizer">
+    <meta property="og:description" content="Free native macOS app. Drag a pile of photos onto the window and get resized copies at the exact pixel size you choose. Originals untouched, works offline, no account.">
+    <meta property="og:site_name" content="BoxYourBuddy">
+    <meta property="og:image" content="https://boxyourbuddy.com/apps/size-matters/size-matters-hero.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Size Matters — Free macOS Batch Photo Resizer">
+    <meta name="twitter:description" content="Free native macOS app. Drag a pile of photos onto the window and get resized copies at the exact pixel size you choose. Originals untouched, works offline, no account.">
+    <meta name="twitter:image" content="https://boxyourbuddy.com/apps/size-matters/size-matters-hero.png">
+
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Size Matters",
+      "operatingSystem": "macOS 11",
+      "applicationCategory": "MultimediaApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Size Matters is a tiny, free native macOS app for batch-resizing photos. Drag any photos onto the window and it makes resized copies at the exact pixel size you choose, by width or height, with the aspect ratio kept automatically. Your originals are never changed or moved. It remembers your save folder and settings, never overwrites files, and works fully offline with no account.",
+      "author": {
+        "@type": "Person",
+        "name": "Dan Stout",
+        "alternateName": "BoxYourBuddy",
+        "url": "https://boxyourbuddy.com"
+      },
+      "url": "https://boxyourbuddy.com/apps/size-matters/"
+    }
+    </script>
+
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7NDGQGQM5G');
+    </script>
+    <style>
+        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif; }
+        body { margin: 0; background: #000; color: #fff; overflow-x: hidden; font-weight: normal; -webkit-font-smoothing: antialiased; }
+        .page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
+        .page-header { text-align: center; margin-bottom: 40px; width: 100%; }
+        .brand-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; }
+        .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; }
+        .brand-name .tint { color: #FFF0AD; }
+        .nav { margin-top: 16px; display: flex; gap: 20px; justify-content: center; align-items: center; }
+        .nav a { font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; }
+        .nav a:hover { color: #FFF0AD; }
+        .nav .dot { height: 15px; width: 15px; display: inline-block; vertical-align: middle; }
+
+        .content { width: 100%; max-width: 860px; }
+
+        .hero-split { display: flex; gap: 36px; align-items: center; margin-bottom: 0; }
+        .hero-photo { width: 390px; max-width: 100%; aspect-ratio: 390 / 600; border-radius: 12px; display: block; flex-shrink: 0; object-fit: cover; }
+        .hero-text { flex: 1; min-width: 0; }
+        .hero-text h2 { font-size: clamp(1.4rem, 4vw, 2.4rem); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin: 0 0 12px; }
+        .hero-text h2 .tint { color: #FFF0AD; }
+        .hero-text .tag { font-size: 0.9rem; color: #FFF0AD; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; display: block; margin-bottom: 16px; }
+        .hero-text p { font-size: 1rem; color: #a0a0a0; line-height: 1.6; font-weight: normal; margin: 0 0 14px; }
+        .hero-text p:last-child { margin-bottom: 0; }
+
+        .divider { border: none; border-top: 1px solid #222; margin: 28px 0; }
+
+        .section { margin-bottom: 28px; }
+        .section h3 { font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; color: #FFF0AD; margin: 0 0 10px; }
+        .section p { font-size: 0.875rem; color: #ccc; line-height: 1.5; font-weight: normal; margin: 0 0 10px; }
+        .section p:last-child { margin-bottom: 0; }
+        .section ol { padding-left: 18px; margin: 0; }
+        .section li { font-size: 0.875rem; color: #ccc; line-height: 1.5; margin-bottom: 8px; }
+        .section li:last-child { margin-bottom: 0; }
+        .section strong { color: #fff; font-weight: bold; }
+
+        .features { margin-bottom: 28px; }
+        .features h3 { font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; color: #FFF0AD; margin: 0 0 16px; }
+        .feature { margin-bottom: 16px; }
+        .feature:last-child { margin-bottom: 0; }
+        .feature h4 { font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: #fff; margin: 0 0 10px; }
+        .feature p { font-size: 0.875rem; color: #ccc; line-height: 1.5; font-weight: normal; margin: 0; }
+
+        .btn-group { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 24px; flex-wrap: wrap; }
+        .btn-base { padding: 5px 12px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.8rem; display: inline-flex; flex-direction: column; align-items: center; transition: 0.2s; cursor: pointer; border: none; font-family: inherit; line-height: 1.3; }
+        .btn-sub { font-size: 0.65rem; font-weight: 400; opacity: 0.7; margin-top: 1px; }
+        .btn-download { background: #ffffff; color: #000000; }
+        .btn-download:hover { transform: scale(1.05); background: #f0f0f0; }
+        .btn-support { background: #00D64B; color: #ffffff; }
+        .btn-support:hover { transform: scale(1.05); opacity: 0.9; }
+
+        .bottom-card { background: #111; border-radius: 12px; border: 1px solid #222; padding: 20px; margin-top: 40px; }
+        .bottom-card h2 { font-size: 1rem; color: #fff; margin: 0 0 8px; font-weight: 800; border-bottom: 1px solid #222; padding-bottom: 8px; }
+        .bottom-card p { color: #a0a0a0; font-size: 0.8rem; margin: 0 0 8px; line-height: 1.5; font-weight: normal; }
+        .bottom-card ul { padding-left: 16px; margin: 0; }
+        .bottom-card li { color: #a0a0a0; font-size: 0.8rem; margin-bottom: 10px; line-height: 1.5; font-weight: normal; }
+        .bottom-card code { background: #000; border: 1px solid #333; border-radius: 4px; padding: 2px 6px; font-family: "SF Mono", Menlo, monospace; color: #FFF0AD; }
+        .footer-note { font-size: 0.8rem; color: rgba(255,255,255,0.2); margin-top: 40px; text-align: center; border-top: 1px solid #111; padding-top: 20px; }
+
+        @media (max-width: 680px) {
+            .hero-split { flex-direction: column; gap: 24px; }
+            .hero-photo { width: 100%; max-width: 390px; margin: 0 auto; }
+            .hero-text { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="page-header">
+            <div class="brand-wrap">
+                <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
+            </div>
+            <nav class="nav">
+                <a href="/">HOME</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/writing/">WRITING</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/art/">ART</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/apps/" style="color: #FFF0AD;">APPS</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/earn/">EARN</a>
+            </nav>
+        </header>
+
+        <main class="content">
+
+            <section class="hero-split">
+                <img src="size-matters-hero.png" alt="Size Matters app window" class="hero-photo">
+                <div class="hero-text">
+                    <h2>Size <span class="tint">Matters</span></h2>
+                    <span class="tag">Free • Private • Works Offline</span>
+                    <p>Size Matters is a tiny, free Mac app that resizes a batch of photos in seconds. You drag your photos onto the window, and it makes smaller copies at the exact pixel size you choose. Your original photos are never touched or moved.</p>
+                    <p>It is built for the exact problem of "I have huge photos and I need web-friendly versions." Instead of opening each one in an editor, you drop a whole pile at once and they all come out resized. It keeps the aspect ratio automatically, so nothing gets stretched, and it remembers your folder, size, and settings next time you open it.</p>
+                    <div class="btn-group">
+                        <a href="Size%20Matters.dmg" download="Size Matters.dmg" class="btn-base btn-download" onclick="gtag('event', 'download', { 'event_category': 'app', 'event_label': 'SizeMatters' });">Download Free App<span class="btn-sub">happens instantly!</span></a>
+                        <a href="https://cash.app/$boxyourbuddy" target="_blank" class="btn-base btn-support">Support Project<span class="btn-sub">when it helps you</span></a>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <section class="section">
+                <h3>How It Works</h3>
+                <ol>
+                    <li>Open the app.</li>
+                    <li>Click <strong>"Change..."</strong> to pick the folder where the resized copies should be saved.</li>
+                    <li>Type the size you want (for example 1080) and choose <strong>Width</strong> or <strong>Height</strong>.</li>
+                    <li>Drag any photos onto the window. Done. Resized copies appear in your folder.</li>
+                    <li>Click <strong>"Open"</strong> to jump straight to that folder in Finder.</li>
+                </ol>
+            </section>
+
+            <hr class="divider">
+
+            <section class="features">
+                <h3>Features</h3>
+
+                <div class="feature">
+                    <h4>Drag and Drop Anywhere</h4>
+                    <p>Drop photos anywhere onto the window to resize them. No menus to dig through, no files to open one at a time.</p>
+                </div>
+
+                <div class="feature">
+                    <h4>Batch Resize</h4>
+                    <p>Resize as many photos at once as you want. Drop a whole pile and they all come out the right size.</p>
+                </div>
+
+                <div class="feature">
+                    <h4>Width or Height</h4>
+                    <p>Resize by width or by height. The aspect ratio is kept automatically, so nothing ever gets stretched.</p>
+                </div>
+
+                <div class="feature">
+                    <h4>Originals Stay Safe</h4>
+                    <p>Your originals are never changed or moved. The app only ever makes copies, so there is nothing to undo.</p>
+                </div>
+
+                <div class="feature">
+                    <h4>You Choose the Save Folder</h4>
+                    <p>Pick exactly where resized photos are saved. The app remembers your folder, size, and settings between launches.</p>
+                </div>
+
+                <div class="feature">
+                    <h4>Never Overwrites</h4>
+                    <p>Duplicate names become "photo (1).jpg" instead of replacing an existing file. You never lose work.</p>
+                </div>
+
+                <div class="feature">
+                    <h4>Private and Offline</h4>
+                    <p>Works fully offline. No account, no sign-up, no tracking. Free forever.</p>
+                </div>
+
+                <div class="feature">
+                    <h4>Supported Formats</h4>
+                    <p>Works with JPG, PNG, TIFF, and BMP files.</p>
+                </div>
+            </section>
+
+            <div class="bottom-card">
+                <h2>macOS Installation (macOS 11 Big Sur or later)</h2>
+                <p>Recent versions of macOS have strict Gatekeeper security that blocks apps downloaded outside the App Store. Size Matters is not App Store distributed, so you'll need one extra step to get it running and it only takes a few seconds.</p>
+                <ul>
+                    <li>Open the downloaded <strong>Size Matters.dmg</strong> and drag <strong>Size Matters.app</strong> into your Applications folder.</li>
+                    <li>Open <strong>Terminal</strong> (search "Terminal" in Spotlight) and run this command, then press Enter:<br><code>xattr -cr "/Applications/Size Matters.app"</code></li>
+                </ul>
+                <p>That command removes the quarantine flag macOS adds to downloaded apps. After running it, Size Matters will open normally every time. Universal app for Apple Silicon and Intel, about 2.7 MB.</p>
+            </div>
+
+            <div class="footer-note">
+                Disclaimer: This app is provided "as-is." By using Size Matters, you agree the developer is not liable for any data loss.
+            </div>
+
+        </main>
+
+    </div>
+</body>
+</html>
