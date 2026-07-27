@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earth Solo — Full Change Report</title>
+<style>
+  :root{
+    --bg:#F4F0E8; --surface:#FFFFFF; --surface-2:#FBF7EF;
+    --text:#221D17; --text-muted:#6B6155; --border:#E3DACB;
+    --accent:#B14A26; --accent-soft:#F1DDD1;
+    --live:#3F7D4C; --live-soft:#DCEBDD;
+    --open:#B07A1E; --open-soft:#F1E4C7;
+    --planned:#3E6690; --planned-soft:#DCE7F0;
+    --font-body: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#17140F; --surface:#1F1B15; --surface-2:#24201A;
+      --text:#F1EAE0; --text-muted:#A79C8B; --border:#362F25;
+      --accent:#E2703C; --accent-soft:#3A2419;
+      --live:#6FBF7F; --live-soft:#1E2E20;
+      --open:#E0AA4E; --open-soft:#332612;
+      --planned:#7FA8D6; --planned-soft:#1B2733;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#17140F; --surface:#1F1B15; --surface-2:#24201A;
+    --text:#F1EAE0; --text-muted:#A79C8B; --border:#362F25;
+    --accent:#E2703C; --accent-soft:#3A2419;
+    --live:#6FBF7F; --live-soft:#1E2E20;
+    --open:#E0AA4E; --open-soft:#332612;
+    --planned:#7FA8D6; --planned-soft:#1B2733;
+  }
+  :root[data-theme="light"]{
+    --bg:#F4F0E8; --surface:#FFFFFF; --surface-2:#FBF7EF;
+    --text:#221D17; --text-muted:#6B6155; --border:#E3DACB;
+    --accent:#B14A26; --accent-soft:#F1DDD1;
+    --live:#3F7D4C; --live-soft:#DCEBDD;
+    --open:#B07A1E; --open-soft:#F1E4C7;
+    --planned:#3E6690; --planned-soft:#DCE7F0;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg); color:var(--text); font-family:var(--font-body);
+    margin:0; line-height:1.55; font-size:16px;
+  }
+  .wrap{ max-width:1180px; margin:0 auto; padding:2.5rem 1.5rem 6rem; }
+
+  header.hero{
+    border-bottom:1px solid var(--border); padding-bottom:1.75rem; margin-bottom:2rem;
+  }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--accent); font-weight:700; margin-bottom:0.6rem;
+  }
+  h1{
+    font-size:clamp(1.9rem, 4vw, 2.7rem); font-weight:800; letter-spacing:-0.01em;
+    font-stretch:condensed; margin:0 0 0.5rem; text-wrap:balance;
+  }
+  .sub{ color:var(--text-muted); font-size:1.05rem; max-width:60ch; margin:0 0 1.25rem; }
+  .meta-row{ display:flex; flex-wrap:wrap; gap:0.5rem 1.5rem; align-items:center; font-size:0.85rem; color:var(--text-muted); }
+  .meta-row span.dot{opacity:0.5;}
+
+  .legend{ display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:1.25rem; }
+  .chip{
+    display:inline-flex; align-items:center; gap:0.4rem; padding:0.3rem 0.7rem; border-radius:100px;
+    font-size:0.75rem; font-weight:700; letter-spacing:0.02em; text-transform:uppercase; font-family:var(--font-mono);
+  }
+  .chip::before{ content:""; width:0.5rem; height:0.5rem; border-radius:50%; display:inline-block; }
+  .chip.live{ background:var(--live-soft); color:var(--live); }
+  .chip.live::before{ background:var(--live); }
+  .chip.open{ background:var(--open-soft); color:var(--open); }
+  .chip.open::before{ background:var(--open); }
+  .chip.planned{ background:var(--planned-soft); color:var(--planned); }
+  .chip.planned::before{ background:var(--planned); }
+
+  .layout{ display:grid; grid-template-columns:220px 1fr; gap:2.5rem; align-items:start; }
+  @media (max-width:860px){ .layout{ grid-template-columns:1fr; } }
+
+  nav.toc{ position:sticky; top:1.5rem; }
+  nav.toc ol{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0.15rem; }
+  nav.toc a{
+    display:block; padding:0.4rem 0.6rem; border-radius:8px; color:var(--text-muted); text-decoration:none;
+    font-size:0.85rem; border-left:2px solid transparent;
+  }
+  nav.toc a:hover{ color:var(--text); background:var(--surface-2); }
+  @media (max-width:860px){
+    nav.toc{ position:static; }
+    nav.toc ol{ flex-direction:row; flex-wrap:wrap; overflow-x:auto; padding-bottom:0.5rem; }
+    nav.toc a{ white-space:nowrap; }
+  }
+
+  main{ display:flex; flex-direction:column; gap:2.75rem; min-width:0; }
+  section{ scroll-margin-top:1.5rem; }
+  section > h2{
+    font-size:1.4rem; font-weight:800; margin:0 0 0.3rem; letter-spacing:-0.005em;
+    display:flex; align-items:baseline; gap:0.6rem; flex-wrap:wrap;
+  }
+  section > .section-note{ color:var(--text-muted); font-size:0.92rem; margin:0 0 1.1rem; max-width:70ch; }
+
+  .status-section{ border-left:3px solid var(--planned); background:var(--surface); border-radius:0 12px 12px 0; padding:1.5rem 1.5rem 1.5rem 1.35rem; }
+  .status-section.is-open{ border-left-color:var(--open); }
+
+  .card{ background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.25rem 1.4rem; }
+  .card + .card{ margin-top:0.9rem; }
+  .card h3{ margin:0 0 0.4rem; font-size:1.02rem; font-weight:700; }
+  .card p{ margin:0; color:var(--text-muted); font-size:0.93rem; }
+
+  .table-wrap{ overflow-x:auto; border:1px solid var(--border); border-radius:10px; }
+  table{ border-collapse:collapse; width:100%; font-size:0.9rem; min-width:420px; }
+  thead th{
+    text-align:left; font-family:var(--font-mono); text-transform:uppercase; letter-spacing:0.06em;
+    font-size:0.7rem; color:var(--text-muted); background:var(--surface-2); padding:0.6rem 0.9rem;
+    border-bottom:1px solid var(--border); white-space:nowrap;
+  }
+  tbody td{ padding:0.55rem 0.9rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  tbody tr:last-child td{ border-bottom:none; }
+  .num{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .neg{ color:var(--open); font-weight:700; }
+  .item-code{ font-family:var(--font-mono); font-size:0.85em; background:var(--surface-2); padding:0.1rem 0.4rem; border-radius:5px; }
+
+  ul.plain{ margin:0.4rem 0 0; padding-left:1.2rem; }
+  ul.plain li{ margin-bottom:0.35rem; font-size:0.95rem; }
+  ul.plain li:last-child{ margin-bottom:0; }
+
+  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:0.9rem; }
+  @media (max-width:640px){ .grid-2{ grid-template-columns:1fr; } }
+
+  .flag{
+    display:flex; gap:0.7rem; background:var(--open-soft); border:1px solid var(--open);
+    border-radius:10px; padding:0.9rem 1.1rem; font-size:0.9rem; margin-top:0.9rem;
+  }
+  .flag b{ color:var(--open); }
+
+  .step-list{ counter-reset:step; list-style:none; margin:0.5rem 0 0; padding:0; display:flex; flex-direction:column; gap:0.6rem; }
+  .step-list li{ display:flex; gap:0.8rem; font-size:0.93rem; }
+  .step-list li::before{
+    counter-increment:step; content:counter(step); font-family:var(--font-mono); font-weight:700;
+    color:var(--planned); background:var(--planned-soft); width:1.5rem; height:1.5rem; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.78rem;
+  }
+
+  footer{ margin-top:3.5rem; padding-top:1.5rem; border-top:1px solid var(--border); color:var(--text-muted); font-size:0.82rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Earth Solo — Rust Server</div>
+    <h1>Full Change Report</h1>
+    <p class="sub">Every gameplay change on the server, with the real numbers, so nothing gets missed when writing public-facing info. Split by status: what's live now, what's still open, what's only planned.</p>
+    <div class="meta-row">
+      <span>Last updated 2026-07-27</span>
+      <span class="dot">•</span>
+      <span>Weekly wipe Thursday 3PM AZ</span>
+      <span class="dot">•</span>
+      <span>Small map, ~3000 world size</span>
+    </div>
+    <div class="legend">
+      <span class="chip live">Live</span>
+      <span class="chip open">Open / unconfirmed</span>
+      <span class="chip planned">Planned, not built</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="toc">
+      <ol>
+        <li><a href="#progression">Progression &amp; workbenches</a></li>
+        <li><a href="#gathering">Gathering rates</a></li>
+        <li><a href="#quarries">Quarries</a></li>
+        <li><a href="#loot-metal">HQ Metal in loot</a></li>
+        <li><a href="#threats">Bradley, Heli &amp; scientists</a></li>
+        <li><a href="#removed">Removed &amp; blocked content</a></li>
+        <li><a href="#economy">Economy &amp; trading</a></li>
+        <li><a href="#world">World &amp; spawns</a></li>
+        <li><a href="#building">Building rules</a></li>
+        <li><a href="#solo">Solo enforcement</a></li>
+        <li><a href="#commands">Info commands</a></li>
+        <li><a href="#coal">Weekly Coal event</a></li>
+        <li><a href="#open-issues">Open issues</a></li>
+        <li><a href="#accuracy">Accuracy flags</a></li>
+      </ol>
+    </nav>
+
+    <main>
+
+      <section id="progression">
+        <h2>Progression &amp; workbenches <span class="chip live">Live</span></h2>
+        <p class="section-note">Slow progression is the core identity of the wipe. Three phases, each unlocking more.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Phase</th><th>Days</th><th>Workbench</th><th>Tier unlocked</th></tr></thead>
+            <tbody>
+              <tr><td>Phase 1</td><td class="num">Day 1–2</td><td>Workbench 1 only</td><td>—</td></tr>
+              <tr><td>Phase 2</td><td class="num">Day 3–4</td><td>Workbench 2 (<span class="item-code">/buildwb2</span>)</td><td>Tier 2</td></tr>
+              <tr><td>Phase 3</td><td class="num">Day 5+</td><td>Workbench 3 (<span class="item-code">/buildwb3</span>)</td><td>Tier 3</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="grid-2" style="margin-top:0.9rem;">
+          <div class="card">
+            <h3>Workbench 1 — vanilla menu</h3>
+            <p>500 Wood, 100 Metal Frags, 50 Scrap. Craftable normally in the vanilla menu — this one still works as-is.</p>
+          </div>
+          <div class="card">
+            <h3>Workbench 2 — <span class="item-code">/buildwb2</span></h3>
+            <p>500 Metal Frags, 20 HQM, 500 Scrap. Requires Phase 2+, and standing within 10m of a placed Workbench 1.</p>
+          </div>
+          <div class="card">
+            <h3>Workbench 3 — <span class="item-code">/buildwb3</span></h3>
+            <p>1,000 Metal Frags, 100 HQM, 1,000 Scrap. Requires Phase 3+, and standing within 10m of a placed Workbench 2.</p>
+          </div>
+          <div class="card">
+            <h3>Why chat commands?</h3>
+            <p>No Blueprint Fragments on this server, and the vanilla WB2/WB3 recipes hard-require them client-side — unbuildable through the normal menu no matter what. The commands are the only way to build them now.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="gathering">
+        <h2>Gathering rates <span class="chip live">Live</span></h2>
+        <p class="section-note">Shown as a percentage of vanilla gather rate per swing/hit. Wood is never touched.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Resource</th><th>Phase 1</th><th>Phase 2</th><th>Phase 3+</th></tr></thead>
+            <tbody>
+              <tr><td>Stone</td><td class="num">75%</td><td class="num">100%</td><td class="num">100%</td></tr>
+              <tr><td>Metal Ore</td><td class="num">50%</td><td class="num">75%</td><td class="num">100%</td></tr>
+              <tr><td>Sulfur Ore</td><td class="num">40%</td><td class="num">60%</td><td class="num">80%</td></tr>
+              <tr><td>Wood</td><td class="num">100%</td><td class="num">100%</td><td class="num">100%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="quarries">
+        <h2>Quarries <span class="chip live">Live</span> <span style="font-size:0.7rem;color:var(--text-muted);font-family:var(--font-mono);">rebuilt 2026-07-26</span></h2>
+        <p class="section-note">Just reworked. Quarries no longer trickle output steadily — they burst-fire on a pattern, then shut themselves off for that tank of fuel, same as running dry. Needs a manual restart to run again.</p>
+        <div class="card">
+          <h3>HQ Metal Quarry</h3>
+          <p style="margin-bottom:0.6rem;">Runs on a ~25-tick fuel cycle. Per phase:</p>
+          <ul class="plain">
+            <li><b>Phase 1:</b> 1 HQM on the first tick, nothing for the next 15 ticks, then 1 per tick until it's given 10 HQM total for that tank — then it stops.</li>
+            <li><b>Phase 2:</b> 1 HQM per tick for the first 5 ticks, nothing for the next 5, then 1 per tick until 20 HQM total — then it stops.</li>
+            <li><b>Phase 3:</b> 1 HQM per tick for the first 20 ticks, then 2 per tick until 30 HQM total — then it stops.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Sulfur Quarry &amp; Stone Quarry (stone + metal ore)</h3>
+          <p>No bursting — flat percentage of vanilla output, same numbers every tick: <span class="num">20%</span> in Phase 1, <span class="num">40%</span> in Phase 2, <span class="num">60%</span> in Phase 3.</p>
+        </div>
+      </section>
+
+      <section id="loot-metal">
+        <h2>HQ Metal in loot <span class="chip live">Live</span></h2>
+        <p class="section-note">Separate system from the Quarries above — this replaces HQ Metal found in any crate, barrel, or corpse. Counts by <b>day since wipe</b>, not phase.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Day</th><th>What spawns instead</th></tr></thead>
+            <tbody>
+              <tr><td>Day 1</td><td>250 Metal Fragments (no HQM at all)</td></tr>
+              <tr><td>Day 2</td><td>500 Metal Fragments (no HQM at all)</td></tr>
+              <tr><td>Day 3</td><td class="num">5 HQM</td></tr>
+              <tr><td>Day 4</td><td class="num">10 HQM</td></tr>
+              <tr><td>Day 5</td><td class="num">15 HQM</td></tr>
+              <tr><td>Day 6</td><td class="num">20 HQM</td></tr>
+              <tr><td>Day 7+</td><td class="num">25 HQM</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="threats">
+        <h2>Bradley, Patrol Heli &amp; scientists <span class="chip live">Live</span></h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Bradley APC</h3>
+            <p>Fully disabled in Phase 1 — won't spawn, and any crate it would have dropped is emptied. Full vanilla Bradley from Phase 2 onward.</p>
+          </div>
+          <div class="card">
+            <h3>Patrol Helicopter</h3>
+            <p>Removed on sight, every phase, all wipe long. It does not currently spawn at all — see the accuracy flag below, the in-game /info text doesn't say this correctly yet.</p>
+          </div>
+        </div>
+        <div class="table-wrap" style="margin-top:0.9rem;">
+          <table>
+            <thead><tr><th>Scientist weapon</th><th>Phase 1</th><th>Phase 2</th><th>Phase 3+</th></tr></thead>
+            <tbody>
+              <tr><td>All scientists &amp; tunnel dwellers</td><td>Revolver</td><td>Normal vanilla random loadout</td><td>Normal vanilla random loadout</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="removed">
+        <h2>Removed &amp; blocked content <span class="chip live">Live</span></h2>
+
+        <h3 style="font-size:1rem;margin:0 0 0.5rem;">Permanently blocked — crafting AND loot, no exceptions</h3>
+        <div class="card">
+          <ul class="plain">
+            <li>Wooden Barricade Cover <span style="color:var(--text-muted);">(plain Wooden Barricade is still fine)</span></li>
+            <li>Cannonball</li>
+            <li>Sticks &amp; Charcoal — blocked from crate loot only, still fine from gathering/barrels</li>
+            <li>Basic &amp; Advanced Blueprint Fragments</li>
+            <li>Supply Signal <span style="color:var(--text-muted);">(this is also why there are no airdrops)</span></li>
+            <li>Every boat/naval part: Boat Building Station, Boat Building Plan, Steering Wheel, Sail, Anchor, Small Ramp, Cannon, Plank</li>
+            <li>Clan Table (the deployable item)</li>
+            <li>All 4 armor inserts: Lead, Asbestos, Wooden, Metal</li>
+          </ul>
+        </div>
+
+        <h3 style="font-size:1rem;margin:1.1rem 0 0.5rem;">Removed from the map itself (not player builds)</h3>
+        <div class="card">
+          <ul class="plain">
+            <li>Outpost's unowned Small Oil Refinery, Research Table, Workbench Level 1, and Repair Bench — the free ones that just sit there get removed on sight. <span style="color:var(--text-muted);">Anything you place yourself is completely untouched.</span></li>
+            <li>Outpost's Lucky Caboose casino — card table, slot machine, blackjack machine, and the caboose itself. No gambling anywhere on the server.</li>
+            <li>Outpost's static Clan Table monument fixture and its chairs — on top of the crafting ban above, there's no clan hub to gather at either.</li>
+            <li>The Hunter NPC at the Large Barn monument — no longer spawns, so the Boar Hunt mission can never be picked up.</li>
+          </ul>
+        </div>
+
+        <h3 style="font-size:1rem;margin:1.1rem 0 0.5rem;">Removed monuments &amp; features</h3>
+        <div class="card">
+          <ul class="plain">
+            <li>Underwater Labs — gone</li>
+            <li>Bandit Camp — gone</li>
+            <li>Deep sea — disabled</li>
+            <li>Cargo Ship — disabled</li>
+            <li>Oil Rig — untouched, left alone for now</li>
+            <li>Airdrops — never happen. Supply Signal is blocked and cargo planes are destroyed the instant they spawn.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="economy">
+        <h2>Economy &amp; trading <span class="chip live">Live</span></h2>
+        <p class="section-note">In-person only: vending purchases must be made within 6m of the machine. No remote/drone buying.</p>
+
+        <h3 style="font-size:1rem;margin:0 0 0.5rem;">Price increases</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Item</th><th>Vanilla price</th><th>Server price</th></tr></thead>
+            <tbody>
+              <tr><td>Roadsign Horse Armor</td><td class="num">125 Scrap</td><td class="num">300 Scrap</td></tr>
+              <tr><td>Diesel Fuel</td><td class="num">300 Low Grade Fuel</td><td class="num">500 Low Grade Fuel</td></tr>
+              <tr><td>HQ Horse Shoes</td><td class="num">vanilla</td><td class="num">80 Scrap</td></tr>
+              <tr><td>Single Horse Saddle</td><td class="num">75 Scrap</td><td class="num">200 Scrap</td></tr>
+              <tr><td>Minicopter</td><td class="num">vanilla</td><td class="num">750 Scrap</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="font-size:1rem;margin:1.1rem 0 0.5rem;">Resource &amp; flower/fish exchange — same cost, less back</h3>
+        <p class="section-note" style="margin-top:-0.3rem;">These trade the same Scrap or item as before, but the amount you receive was cut. Not previously written down anywhere — worth a quick confirm that these are all intended before it goes public.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Exchange</th><th>Vanilla</th><th>Server</th><th>Change</th></tr></thead>
+            <tbody>
+              <tr><td>Stone (per 50 Scrap)</td><td class="num">1,000</td><td class="num">500</td><td class="num neg">−50%</td></tr>
+              <tr><td>Wood (per 20 Scrap)</td><td class="num">1,000</td><td class="num">500</td><td class="num neg">−50%</td></tr>
+              <tr><td>Metal Frags (per 25 Scrap)</td><td class="num">250</td><td class="num">125</td><td class="num neg">−50%</td></tr>
+              <tr><td>Low Grade Fuel (per 10 Scrap)</td><td class="num">20</td><td class="num">10</td><td class="num neg">−50%</td></tr>
+              <tr><td>Rose → Scrap (12 Roses)</td><td class="num">50 Scrap</td><td class="num">12 Scrap</td><td class="num neg">−76%</td></tr>
+              <tr><td>Sunflower → Scrap (1)</td><td class="num">3 Scrap</td><td class="num">1 Scrap</td><td class="num neg">−67%</td></tr>
+              <tr><td>Orchid → Scrap (1)</td><td class="num">8 Scrap</td><td class="num">1 Scrap</td><td class="num neg">−87%</td></tr>
+              <tr><td>Small Trout → Scrap (5 fish)</td><td class="num">30 Scrap</td><td class="num">25 Scrap</td><td class="num neg">−17%</td></tr>
+              <tr><td>Yellow Perch → Scrap (5 fish)</td><td class="num">50 Scrap</td><td class="num">40 Scrap</td><td class="num neg">−20%</td></tr>
+              <tr><td>Small Shark → Scrap (2 fish)</td><td class="num">90 Scrap</td><td class="num">60 Scrap</td><td class="num neg">−33%</td></tr>
+              <tr><td>Salmon → Scrap (2 fish)</td><td class="num">55 Scrap</td><td class="num">40 Scrap</td><td class="num neg">−27%</td></tr>
+              <tr><td>Orange Roughy → Scrap (2 fish)</td><td class="num">75 Scrap</td><td class="num">55 Scrap</td><td class="num neg">−27%</td></tr>
+              <tr><td>Catfish → Scrap (2 fish)</td><td class="num">65 Scrap</td><td class="num">50 Scrap</td><td class="num neg">−23%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="flag">
+          <span>⚑</span>
+          <span><b>Worth a look:</b> this whole exchange-nerf table came straight from the plugin code, not from anything in our notes. If this matches what you intended, great — otherwise flag which ones should change back before it's public.</span>
+        </div>
+      </section>
+
+      <section id="world">
+        <h2>World &amp; spawns <span class="chip live">Live</span></h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Single spawn point</h3>
+            <p>Everyone spawns at the same beach location each wipe — whichever spot the very first respawn happens to land on gets locked in for the rest of the wipe. Resets fresh every wipe. Bag/bed respawns are untouched.</p>
+          </div>
+          <div class="card">
+            <h3>Junkpiles halved</h3>
+            <p>Roadside junkpiles (barrel and car wreck spawns) are capped at 50% of the vanilla amount across the map.</p>
+          </div>
+          <div class="card">
+            <h3>Ground ore piles removed</h3>
+            <p>Hand-pickup Metal Ore and Sulfur Ore piles that scatter on the ground are removed the instant they spawn. Only these two — the mineable rock nodes you hit with a pickaxe are untouched, as are Wood and Stone piles.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="building">
+        <h2>Building rules <span class="chip live">Live</span></h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Rule</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Max sleeping bags per player</td><td class="num">5</td></tr>
+              <tr><td>Minimum spacing between your own bags/beds</td><td class="num">100m</td></tr>
+              <tr><td>Sleeping bag respawn cooldown</td><td class="num">5 min</td></tr>
+              <tr><td>Bed respawn cooldown</td><td class="num">2 min</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="section-note" style="margin-top:0.7rem;">Live on-screen distance readout shows while you're holding a bag or bed, so you can see how close you are to the limit before placing.</p>
+      </section>
+
+      <section id="solo">
+        <h2>Solo enforcement <span class="chip live">Live</span></h2>
+        <ul class="plain">
+          <li>Team size capped at 0 — the classic team system is disabled entirely.</li>
+          <li>Clan Table blocked two separate ways: the deployable item can never be crafted, and the static one at Outpost is removed too — no clan hub to gather around even without placing your own.</li>
+        </ul>
+      </section>
+
+      <section id="commands">
+        <h2>Info commands <span class="chip live">Live</span></h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+            <tbody>
+              <tr><td class="item-code">/info</td><td>Prints the server rundown</td></tr>
+              <tr><td class="item-code">/rules</td><td>Same rundown as /info</td></tr>
+              <tr><td class="item-code">/commands</td><td>Lists every player command</td></tr>
+              <tr><td class="item-code">/welcome</td><td>Reopens the new-player popup (Workbench 2/3 + phase explainer)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="coal">
+        <h2 style="border:none;">Weekly Coal cash event <span class="chip planned">Planned — not built yet</span></h2>
+        <div class="status-section">
+          <p class="section-note" style="margin-top:0;">A weekly contest tied to the wipe cycle. Nothing below is live — this is the locked-in design, waiting to be built.</p>
+
+          <h3 style="font-size:1rem;">The idea</h3>
+          <p style="color:var(--text-muted);font-size:0.93rem;">Players convert Scrap into Coal at a vending machine (<b style="color:var(--text);">500 Scrap = 1 Coal</b>). Coal has to be physically carried and stored — it's raidable on the way to the exchange and while held. Whoever holds the most Coal when the wipe ends wins the prize.</p>
+
+          <h3 style="font-size:1rem;">Why no entry fee</h3>
+          <p style="color:var(--text-muted);font-size:0.93rem;">Arizona law treats a contest as gambling only if it has an entry fee, a prize, <i>and</i> chance, all three. Dropping the entry fee removes it from that definition entirely — Dan funds the ~$20 prize himself instead of pooling entry money.</p>
+
+          <h3 style="font-size:1rem;">How the reveal works</h3>
+          <ul class="plain" style="color:var(--text-muted);font-size:0.93rem;">
+            <li>Admin-only <span class="item-code">/checkcoal</span> the rest of the wipe — players can never see each other's totals during normal play.</li>
+            <li>Final ~30 minutes before wipe, the leaderboard opens to everyone: live top 10, plus your own rank if you're outside it.</li>
+            <li>Refreshes every 10–15 seconds normally, every 5 seconds once the countdown crosses the 1-minute mark.</li>
+          </ul>
+
+          <h3 style="font-size:1rem;">Still undecided</h3>
+          <ol class="step-list">
+            <li>One Scrap→Coal exchange location, or several across the map?</li>
+            <li>Leaderboard overlay always-on during the reveal window, or toggleable?</li>
+            <li>Exact reveal window length — 30 minutes is the current thinking, not locked in.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="open-issues">
+        <h2 style="border:none;">Open issues <span class="chip open">Open / unconfirmed</span></h2>
+        <div class="status-section is-open">
+          <p class="section-note" style="margin-top:0;">Built but unverified, known gaps without a fix yet, or still waiting on a decision. Don't advertise these as guaranteed until they're checked off.</p>
+          <ul class="plain">
+            <li><b>Corpse-in-safe-zone exploit:</b> a player's own dead body inside a safe zone may work as free protected storage, since vanilla safe zones block others from looting it. Not yet addressed.</li>
+            <li><b>New Apartment Complex safe zone</b> may be too large (city-block sized). A diagnostic tool exists to check this but hasn't been run yet.</li>
+            <li><b>Tech Tree Control's boat-block</b> doesn't play the denial beep like everywhere else on the server. Waiting on a decision about editing that third-party plugin's source.</li>
+            <li><b>Wipe timing automation</b> (Thursday 3pm) is set up but hasn't been separately confirmed to fire reliably or handle timezones correctly every week.</li>
+            <li><b>Minicopter 3-minute buyer lock</b> is built but not tested with a second player yet.</li>
+            <li><b>Building privilege radius</b> (more than one TC per base area) — research question only, not decided or built.</li>
+            <li><b>Coal at Outpost's newer Marketplace terminals</b> — already added to the classic vending machines, not yet the newer terminal system.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="accuracy">
+        <h2>Accuracy flags <span class="chip open">Open / unconfirmed</span></h2>
+        <p class="section-note">Two things worth fixing before pointing the public at existing in-game text.</p>
+        <div class="flag">
+          <span>⚑</span>
+          <span><b>/info text is stale:</b> it currently says "Heli and Bradley suppressed in phase 1, ease in over the wipe." That's only true for Bradley. Patrol Heli is fully removed at every phase now, it never eases back in.</span>
+        </div>
+        <div class="flag">
+          <span>⚑</span>
+          <span><b>Two different "Coal"s:</b> the item labeled Coal that drops from Bradley crates is actually Charcoal under a different display name (already blocked from loot). The real Coal item, used for the cash event, is separate and currently unused anywhere else. Worth keeping the wording distinct once the event goes live so players don't confuse the two.</span>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    Compiled from the live plugin code and project notes on 2026-07-27. Numbers reflect what's currently deployed — re-check this after any future plugin change.
+  </footer>
+</div>
+</body>
+</html>
