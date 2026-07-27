@@ -203,26 +203,23 @@
         </div>
         <div class="grid-2" style="margin-top:0.9rem;">
           <div class="card">
-            <h3>Workbench Level 1 — vanilla menu</h3>
-            <p>500 Wood, 100 Metal Frags, 50 Scrap. Craftable normally in the vanilla menu — this one still works as-is.</p>
-          </div>
-          <div class="card">
-            <h3>Workbench Level 2 — <span class="item-code">/buildwb2</span></h3>
-            <p>500 Metal Frags, 20 HQM, 500 Scrap. Requires Phase 2+, and standing within 10m of a placed Workbench Level 1.</p>
-          </div>
-          <div class="card">
-            <h3>Workbench Level 3 — <span class="item-code">/buildwb3</span></h3>
-            <p>1,000 Metal Frags, 100 HQM, 1,000 Scrap. Requires Phase 3+, and standing within 10m of a placed Workbench Level 2.</p>
+            <h3>Workbench Level 1</h3>
+            <p>500 Wood, 100 Metal Frags, 50 Scrap.</p>
+            <h3>Workbench Level 2 <span class="item-code">/buildwb2</span></h3>
+            <p>500 Metal Frags, 20 HQM, 500 Scrap. Requires Phase 2 and standing within 10m of a placed Workbench Level 1.</p>
+         
+            <h3>Workbench Level 3 <span class="item-code">/buildwb3</span></h3>
+            <p>1,000 Metal Frags, 100 HQM, 1,000 Scrap. Requires Phase 3 and standing within 10m of a placed Workbench Level 2.</p>
           </div>
           <div class="card">
             <h3>Why chat commands?</h3>
-            <p>No Blueprint Fragments on this server, and the vanilla WB2/WB3 recipes hard-require them client-side — unbuildable through the normal menu no matter what. The commands are the only way to build them now.</p>
+            <p>Since there are no Blueprint Fragments on this server, and the vanilla WB2/WB3 recipes are hard-coded to the crafting menu, WB2/3 are unbuildable through the normal menu no matter what. The commands are the only way to build them now. Just type in chat /buildwb2 or /buildwb3 and it will appear in your inventory.</p>
           </div>
         </div>
       </section>
 
       <section id="gathering">
-        <h2>Gathering rates <span class="chip live">Live</span></h2>
+        <h2>Gathering Rates <span class="chip live">Live</span></h2>
         <p class="section-note">Shown as a percentage of vanilla gather rate per swing/hit. Wood is never touched.</p>
         <div class="table-wrap">
           <table>
@@ -239,25 +236,25 @@
 
       <section id="quarries">
         <h2>Quarries <span class="chip live">Live</span> <span style="font-size:0.7rem;color:var(--text-muted);font-family:var(--font-mono);">rebuilt 2026-07-26</span></h2>
-        <p class="section-note">Just reworked. Quarries no longer trickle output steadily — they burst-fire on a pattern, then shut themselves off for that tank of fuel, same as running dry. Needs a manual restart to run again.</p>
+        <p class="section-note">Quarries no longer trickle output steadily, they output in a pattern and shut themselves off for that tank of diesel, same as running dry. Needs a manual restart to run again.</p>
         <div class="card">
-          <h3>HQ Metal Quarry</h3>
-          <p style="margin-bottom:0.6rem;">Runs on a ~25-tick fuel cycle. Per phase:</p>
+          <h3>HQM Quarry</h3>
+          <p style="margin-bottom:0.6rem;">Runs on a 25-tick fuel cycle. Per phase:</p>
           <ul class="plain">
-            <li><b>Phase 1:</b> 1 HQM on the first tick, nothing for the next 15 ticks, then 1 per tick until it's given 10 HQM total for that tank — then it stops.</li>
-            <li><b>Phase 2:</b> 1 HQM per tick for the first 5 ticks, nothing for the next 5, then 1 per tick until 20 HQM total — then it stops.</li>
-            <li><b>Phase 3:</b> 1 HQM per tick for the first 20 ticks, then 2 per tick until 30 HQM total — then it stops.</li>
+            <li><b>Phase 1:</b> 1 HQM on the first tick, nothing for the next 15 ticks, then 1 per tick until it's given 10 HQM total per diesel.</li>
+            <li><b>Phase 2:</b> 1 HQM per tick for the first 5 ticks, nothing for the next 5, then 1 per tick until 20 HQM total, then it stops.</li>
+            <li><b>Phase 3:</b> 1 HQM per tick for the first 20 ticks, then 2 per tick until 30 HQM total, then it stops.</li>
           </ul>
         </div>
         <div class="card">
           <h3>Sulfur Quarry &amp; Stone Quarry (stone + metal ore)</h3>
-          <p>No bursting — flat percentage of vanilla output, same numbers every tick: <span class="num">20%</span> in Phase 1, <span class="num">40%</span> in Phase 2, <span class="num">60%</span> in Phase 3.</p>
+          <p>A flat percentage of vanilla output, same numbers every tick: <span class="num">20%</span> in Phase 1, <span class="num">40%</span> in Phase 2, <span class="num">60%</span> in Phase 3.</p>
         </div>
       </section>
 
       <section id="loot-metal">
         <h2>HQ Metal in loot <span class="chip live">Live</span></h2>
-        <p class="section-note">Separate system from the Quarries above — this replaces HQ Metal found in any crate, barrel, or corpse. Counts by <b>day since wipe</b>, not phase.</p>
+        <p class="section-note">Separate system from the Quarries above — this replaces HQ Metal found in any crate. Counts by <b>day since wipe</b>, not phase.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Day</th><th>What spawns instead</th></tr></thead>
