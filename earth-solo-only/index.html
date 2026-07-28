@@ -6,19 +6,19 @@
 <title>Earth Solo Only Rust Server Full Change Report</title>
 <style>
   :root{
-    --bg:#EDE1CC; --surface:#F7F0E0; --surface-2:#F1E8D4;
-    --text:#2E2013; --text-muted:#7A6A50; --border:#DDCBA8;
-    --accent:#B85E2A; --accent-soft:#F0DCC4;
-    --live:#5F7A4E; --live-soft:#E1E8D6;
-    --open:#A47C1D; --open-soft:#F0E4BE;
-    --planned:#4F7288; --planned-soft:#DCE6E8;
+    --bg:#000000; --surface:#1A1A1A; --surface-2:#242424;
+    --text:#FFFFFF; --text-muted:#A0A0A0; --border:#333333;
+    --accent:#D97F3D; --accent-soft:#3D2A1A;
+    --live:#8FA37C; --live-soft:#26301F;
+    --open:#C9A227; --open-soft:#33290F;
+    --planned:#7C93A0; --planned-soft:#212A2E;
     --font-body: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   }
   @media (prefers-color-scheme: dark){
     :root{
-      --bg:#221A12; --surface:#2E2418; --surface-2:#362B1C;
-      --text:#EDE1CC; --text-muted:#B3A084; --border:#4A3B27;
+      --bg:#000000; --surface:#1A1A1A; --surface-2:#242424;
+      --text:#FFFFFF; --text-muted:#A0A0A0; --border:#333333;
       --accent:#D97F3D; --accent-soft:#3D2A1A;
       --live:#8FA37C; --live-soft:#26301F;
       --open:#C9A227; --open-soft:#33290F;
@@ -26,20 +26,20 @@
     }
   }
   :root[data-theme="dark"]{
-    --bg:#221A12; --surface:#2E2418; --surface-2:#362B1C;
-    --text:#EDE1CC; --text-muted:#B3A084; --border:#4A3B27;
+    --bg:#000000; --surface:#1A1A1A; --surface-2:#242424;
+    --text:#FFFFFF; --text-muted:#A0A0A0; --border:#333333;
     --accent:#D97F3D; --accent-soft:#3D2A1A;
     --live:#8FA37C; --live-soft:#26301F;
     --open:#C9A227; --open-soft:#33290F;
     --planned:#7C93A0; --planned-soft:#212A2E;
   }
   :root[data-theme="light"]{
-    --bg:#EDE1CC; --surface:#F7F0E0; --surface-2:#F1E8D4;
-    --text:#2E2013; --text-muted:#7A6A50; --border:#DDCBA8;
-    --accent:#B85E2A; --accent-soft:#F0DCC4;
-    --live:#5F7A4E; --live-soft:#E1E8D6;
-    --open:#A47C1D; --open-soft:#F0E4BE;
-    --planned:#4F7288; --planned-soft:#DCE6E8;
+    --bg:#000000; --surface:#1A1A1A; --surface-2:#242424;
+    --text:#FFFFFF; --text-muted:#A0A0A0; --border:#333333;
+    --accent:#D97F3D; --accent-soft:#3D2A1A;
+    --live:#8FA37C; --live-soft:#26301F;
+    --open:#C9A227; --open-soft:#33290F;
+    --planned:#7C93A0; --planned-soft:#212A2E;
   }
 
   *{box-sizing:border-box;}
@@ -203,13 +203,15 @@
         <div style="margin-top:0.9rem;">
           <div class="card">
             <h3>Workbench Level 1</h3>
-            <p>500 Wood, 100 Metal Frags, 50 Scrap.</br>
-            <h3>Workbench Level 2 <span class="item-code">/buildwb2</span></h3>
-            <p>500 Metal Frags, 20 HQM, 500 Scrap. Requires Phase 2 and standing within 10m of a placed Workbench Level 1.</br>
+            <p>500 Wood, 100 Metal Frags, 50 Scrap.</p>
 
-            <h3>Workbench Level 3 <span class="item-code">/buildwb3</span></h3>
+            <h3 style="margin-top:1rem;">Workbench Level 2 <span class="item-code">/buildwb2</span></h3>
+            <p>500 Metal Frags, 20 HQM, 500 Scrap. Requires Phase 2 and standing within 10m of a placed Workbench Level 1.</p>
+
+            <h3 style="margin-top:1rem;">Workbench Level 3 <span class="item-code">/buildwb3</span></h3>
             <p>1,000 Metal Frags, 100 HQM, 1,000 Scrap. Requires Phase 3 and standing within 10m of a placed Workbench Level 2.</p>
-            <h3>Why chat commands?</h3>
+
+            <h3 style="margin-top:1rem;">Why chat commands?</h3>
             <p>Since there are no Blueprint Fragments on this server, and the vanilla WB2/WB3 recipes are hard-coded to the crafting menu, WB2/3 are unbuildable through the normal menu no matter what. The commands are the only way to build them now. Just type in chat /buildwb2 or /buildwb3 and it will appear in your inventory.</p>
           </div>
         </div>
