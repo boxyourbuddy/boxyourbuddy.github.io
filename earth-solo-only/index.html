@@ -438,21 +438,21 @@
       </section>
 
       <section id="coal">
-        <h2 style="border:none;">Weekly Coal cash event <span class="chip planned">Planned — not built yet</span></h2>
+        <h2 style="border:none;">Weekly Cash for Coal Event <span class="chip planned">Planned — not built yet</span></h2>
         <div class="status-section">
-          <p class="section-note" style="margin-top:0;">A weekly contest tied to the wipe cycle. Nothing below is live — this is the locked-in design, waiting to be built.</p>
+          <p class="section-note" style="margin-top:0;">A weekly contest tied to the wipe cycle. Nothing below is live. This is the design in progress, waiting to be built. Changes will occur.</p>
 
           <h3 style="font-size:1rem;">The idea</h3>
-          <p style="color:var(--text-muted);font-size:0.93rem;">Players convert Scrap into Coal at a vending machine (<b style="color:var(--text);">500 Scrap = 1 Coal</b>). Coal has to be physically carried and stored — it's raidable on the way to the exchange and while held. Whoever holds the most Coal when the wipe ends wins the prize.</p>
+          <p style="color:var(--text-muted);font-size:0.93rem;">Players convert Scrap into Coal at a vending machine (<b style="color:var(--text);">250 Scrap = 1 Coal</b>). Coal has to be stored in a box/barrel you have created. Server searches for coal in boxes that have a steam id#. If you raid a base and it has coal. You better take it out and put it in a box you placed or it is not yours yet. Whoever holds the most Coal when the event ends wins the prize.</p>
 
           <h3 style="font-size:1rem;">Why no entry fee</h3>
-          <p style="color:var(--text-muted);font-size:0.93rem;">Arizona law treats a contest as gambling only if it has an entry fee, a prize, <i>and</i> chance, all three. Dropping the entry fee removes it from that definition entirely — Dan funds the ~$20 prize himself instead of pooling entry money.</p>
+          <p style="color:var(--text-muted);font-size:0.93rem;">I am based in Arizona, and Arizona law treats a contest as gambling only if it has an entry fee, a prize, <i>and</i> chance, all three. Dropping the entry fee removes it from that definition entirely — I funds the ~$20 prize myself instead of pooling entry money.</p>
 
           <h3 style="font-size:1rem;">How the reveal works</h3>
           <ul class="plain" style="color:var(--text-muted);font-size:0.93rem;">
-            <li>Admin-only <span class="item-code">/checkcoal</span> the rest of the wipe — players can never see each other's totals during normal play.</li>
-            <li>Final ~30 minutes before wipe, the leaderboard opens to everyone: live top 10, plus your own rank if you're outside it.</li>
-            <li>Refreshes every 10–15 seconds normally, every 5 seconds once the countdown crosses the 1-minute mark.</li>
+            <li>Players can never see each other's totals during the event.</li>
+            <li>For the final ~30 minutes before wipe, the leaderboard opens to everyone: live top 10, plus your own rank if you're outside it. Use the command /checkcoal and /leaderboard in chat.</li>
+            <li>Once active, the leaderboard refreshes every 10–15 seconds, then every 5 seconds once the countdown crosses the 1-minute mark.</li>
           </ul>
 
           <h3 style="font-size:1rem;">Still undecided</h3>
@@ -469,8 +469,7 @@
         <div class="status-section is-open">
           <p class="section-note" style="margin-top:0;">Built but unverified, known gaps without a fix yet, or still waiting on a decision. Don't advertise these as guaranteed until they're checked off.</p>
           <ul class="plain">
-            <li><b>Corpse-in-safe-zone exploit:</b> a player's own dead body inside a safe zone may work as free protected storage, since vanilla safe zones block others from looting it. Not yet addressed.</li>
-            <li><b>New Apartment Complex safe zone</b> may be too large (city-block sized). A diagnostic tool exists to check this but hasn't been run yet.</li>
+            
             <li><b>Tech Tree Control's boat-block</b> doesn't play the denial beep like everywhere else on the server. Waiting on a decision about editing that third-party plugin's source.</li>
             <li><b>Wipe timing automation</b> (Thursday 3pm) is set up but hasn't been separately confirmed to fire reliably or handle timezones correctly every week.</li>
             <li><b>Minicopter 3-minute buyer lock</b> is built but not tested with a second player yet.</li>
@@ -480,18 +479,7 @@
         </div>
       </section>
 
-      <section id="accuracy">
-        <h2>Accuracy flags <span class="chip open">Open / unconfirmed</span></h2>
-        <p class="section-note">Two things worth fixing before pointing the public at existing in-game text.</p>
-        <div class="flag">
-          <span>⚑</span>
-          <span><b>/info text is stale:</b> it currently says "Heli and Bradley suppressed in phase 1, ease in over the wipe." That's only true for Bradley. Patrol Heli is fully removed at every phase now, it never eases back in.</span>
-        </div>
-        <div class="flag">
-          <span>⚑</span>
-          <span><b>Two different "Coal"s:</b> the item labeled Coal that drops from Bradley crates is actually Charcoal under a different display name (already blocked from loot). The real Coal item, used for the cash event, is separate and currently unused anywhere else. Worth keeping the wording distinct once the event goes live so players don't confuse the two.</span>
-        </div>
-      </section>
+    
 
     </main>
   </div>
