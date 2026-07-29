@@ -169,6 +169,7 @@
   <div class="layout">
     <nav class="toc">
       <ol>
+        <li><a href="#coal">Weekly Coal Event</a></li>
         <li><a href="#progression">Progression &amp; Workbenches</a></li>
         <li><a href="#gathering">Gathering Rates</a></li>
         <li><a href="#quarries">Quarries</a></li>
@@ -179,13 +180,40 @@
         <li><a href="#world">World &amp; Spawns</a></li>
         <li><a href="#building">Building Rules</a></li>
         <li><a href="#commands">Info Commands</a></li>
-        <li><a href="#coal">Weekly Coal Event</a></li>
         <li><a href="#open-issues">Open Issues</a></li>
         <li><a href="#accuracy">Accuracy Flags</a></li>
       </ol>
     </nav>
 
     <main>
+
+      <section id="coal">
+        <h2 style="border:none;">Weekly Cash for Coal Event <span class="chip live">Live</span> <span style="font-size:0.7rem;color:var(--text-muted);font-family:var(--font-mono);">exchange + /checkcoal built &amp; tested — leaderboard/reveal window still planned</span></h2>
+        <div class="status-section">
+          <p class="section-note" style="margin-top:0;">A weekly contest tied to the wipe cycle. The Scrap→Coal exchange is live and tested. /checkcoal is live and built for both admins and regular players, but the player-facing side hasn't been tested with a second player yet (see Open Issues). The public end-of-wipe leaderboard reveal below is still design-only, waiting to be built.</p>
+
+          <h3 style="font-size:1rem;">The idea</h3>
+          <p style="color:var(--text-muted);font-size:0.93rem;">Players convert Scrap into Coal at any Outpost vending machine (<b style="color:var(--text);">250 Scrap = 1 Coal</b>). Coal only counts toward your total once it's stored in a box or barrel <b>you placed,</b> (small box, large box, and barrel-type containers all confirmed working) — Tool Cupboards, Lockers, and coal just carried in your inventory don't count. Server tallies by matching each container's owner steam ID, so if you raid a base and it has coal, you have to take it out and put it in a box you placed before it counts as yours. Whoever holds the most Coal when the event ends wins the prize.</p>
+
+          <h3 style="font-size:1rem;">Why no entry fee</h3>
+          <p style="color:var(--text-muted);font-size:0.93rem;">I am based in Arizona, and Arizona law treats a contest as gambling only if it has an entry fee, a prize, <i>and</i> chance, all three. Dropping the entry fee removes it from that definition entirely — I funds the ~$20 prize myself instead of pooling entry money.</p>
+
+          <h3 style="font-size:1rem;">How the reveal works</h3>
+          <ul class="plain" style="color:var(--text-muted);font-size:0.93rem;">
+            <li><b style="color:var(--text);">Live now:</b> /checkcoal in chat works differently by role. Admins get everyone's stored Coal total for the whole server. Regular players get just their own total, usable any time.</li>
+            <li>Players can never see each other's totals during normal play until the reveal an hour before event ends.</li>
+            <li><b>Still planned:</b> 60 minutes before the event ends, the chat command /leaderboard opens to everyone. Live top 10, plus your own rank if you're outside it.</li>
+            <li><b>Still planned:</b> once active, the leaderboard refreshes every 10–15 seconds, then every 5 seconds once the countdown crosses the 1-minute mark.</li>
+          </ul>
+
+          <h3 style="font-size:1rem;">Still undecided</h3>
+          <ol class="step-list">
+            <li>Leaderboard overlay always-on during the reveal window,toggleable or both?</li>
+            <li>Exact reveal window length. Between 30 and 60 minutes before event ends is the current thinking.</li>
+            <li>There must be some requirements for the event to be valid, meaning a player will be paid. I was thinking of a 20 coal minimum and some kind of population average, or total hours played by everyone. If there are only 10 active players (not a real number) for the event, I would not qualify that as a valid event. No payment. It needs to be busy. That is the goal. Requirements will be known before the beginning of the event. I just need to get a better idea of interest. First event is still weeks away, so there is time. </li>
+          </ol>
+        </div>
+      </section>
 
       <section id="progression">
         <h2>Progression &amp; workbenches <span class="chip live">Live</span></h2>
@@ -427,34 +455,6 @@
               <tr><td class="item-code">/welcome</td><td>Reopens the new-player popup (Workbench Level 2/3 + phase explainer)</td></tr>
             </tbody>
           </table>
-        </div>
-      </section>
-
-      <section id="coal">
-        <h2 style="border:none;">Weekly Cash for Coal Event <span class="chip live">Live</span> <span style="font-size:0.7rem;color:var(--text-muted);font-family:var(--font-mono);">exchange + /checkcoal built &amp; tested — leaderboard/reveal window still planned</span></h2>
-        <div class="status-section">
-          <p class="section-note" style="margin-top:0;">A weekly contest tied to the wipe cycle. The Scrap→Coal exchange is live and tested. /checkcoal is live and built for both admins and regular players, but the player-facing side hasn't been tested with a second player yet (see Open Issues). The public end-of-wipe leaderboard reveal below is still design-only, waiting to be built.</p>
-
-          <h3 style="font-size:1rem;">The idea</h3>
-          <p style="color:var(--text-muted);font-size:0.93rem;">Players convert Scrap into Coal at any Outpost vending machine (<b style="color:var(--text);">250 Scrap = 1 Coal</b>). Coal only counts toward your total once it's stored in a box or barrel <b>you placed,</b> (small box, large box, and barrel-type containers all confirmed working) — Tool Cupboards, Lockers, and coal just carried in your inventory don't count. Server tallies by matching each container's owner steam ID, so if you raid a base and it has coal, you have to take it out and put it in a box you placed before it counts as yours. Whoever holds the most Coal when the event ends wins the prize.</p>
-
-          <h3 style="font-size:1rem;">Why no entry fee</h3>
-          <p style="color:var(--text-muted);font-size:0.93rem;">I am based in Arizona, and Arizona law treats a contest as gambling only if it has an entry fee, a prize, <i>and</i> chance, all three. Dropping the entry fee removes it from that definition entirely — I funds the ~$20 prize myself instead of pooling entry money.</p>
-
-          <h3 style="font-size:1rem;">How the reveal works</h3>
-          <ul class="plain" style="color:var(--text-muted);font-size:0.93rem;">
-            <li><b style="color:var(--text);">Live now:</b> /checkcoal in chat works differently by role. Admins get everyone's stored Coal total for the whole server. Regular players get just their own total, usable any time.</li>
-            <li>Players can never see each other's totals during normal play until the reveal an hour before event ends.</li>
-            <li><b>Still planned:</b> 60 minutes before the event ends, the chat command /leaderboard opens to everyone. Live top 10, plus your own rank if you're outside it.</li>
-            <li><b>Still planned:</b> once active, the leaderboard refreshes every 10–15 seconds, then every 5 seconds once the countdown crosses the 1-minute mark.</li>
-          </ul>
-
-          <h3 style="font-size:1rem;">Still undecided</h3>
-          <ol class="step-list">
-            <li>Leaderboard overlay always-on during the reveal window,toggleable or both?</li>
-            <li>Exact reveal window length. Between 30 and 60 minutes before event ends is the current thinking.</li>
-            <li>There must be some requirements for the event to be valid, meaning a player will be paid. I was thinking of a 20 coal minimum and some kind of population average, or total hours played by everyone. If there are only 10 active players (not a real number) for the event, I would not qualify that as a valid event. No payment. It needs to be busy. That is the goal. Requirements will be known before the beginning of the event. I just need to get a better idea of interest. First event is still weeks away, so there is time. </li>
-          </ol>
         </div>
       </section>
 
