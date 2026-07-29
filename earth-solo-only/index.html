@@ -429,21 +429,22 @@
       </section>
 
       <section id="coal">
-        <h2 style="border:none;">Weekly Cash for Coal Event <span class="chip planned">Planned — not built yet</span></h2>
+        <h2 style="border:none;">Weekly Cash for Coal Event <span class="chip live">Live</span> <span style="font-size:0.7rem;color:var(--text-muted);font-family:var(--font-mono);">exchange + /checkcoal built &amp; tested — leaderboard/reveal window still planned</span></h2>
         <div class="status-section">
-          <p class="section-note" style="margin-top:0;">A weekly contest tied to the wipe cycle. Nothing below is live. This is the design in progress, waiting to be built. Changes will occur.</p>
+          <p class="section-note" style="margin-top:0;">A weekly contest tied to the wipe cycle. The Scrap→Coal exchange and the admin-only /checkcoal tally are live and tested. The public end-of-wipe leaderboard reveal below is still design-only, waiting to be built.</p>
 
           <h3 style="font-size:1rem;">The idea</h3>
-          <p style="color:var(--text-muted);font-size:0.93rem;">Players convert Scrap into Coal at a vending machine (<b style="color:var(--text);">250 Scrap = 1 Coal</b>). Coal has to be stored in a box/barrel you have created. Server searches for coal in boxes that have a steam id#. If you raid a base and it has coal. You better take it out and put it in a box you placed or it is not yours yet. Whoever holds the most Coal when the event ends wins the prize.</p>
+          <p style="color:var(--text-muted);font-size:0.93rem;">Players convert Scrap into Coal at any Outpost vending machine (<b style="color:var(--text);">250 Scrap = 1 Coal</b>). Coal only counts toward your total once it's stored in a box or barrel you placed (small box, large box, and barrel-type containers all confirmed working) — Tool Cupboards, Lockers, and coal just carried in your inventory don't count. Server tallies by matching each container's owner steam ID, so if you raid a base and it has coal, you have to take it out and put it in a box you placed before it counts as yours. Whoever holds the most Coal when the event ends wins the prize.</p>
 
           <h3 style="font-size:1rem;">Why no entry fee</h3>
           <p style="color:var(--text-muted);font-size:0.93rem;">I am based in Arizona, and Arizona law treats a contest as gambling only if it has an entry fee, a prize, <i>and</i> chance, all three. Dropping the entry fee removes it from that definition entirely — I funds the ~$20 prize myself instead of pooling entry money.</p>
 
           <h3 style="font-size:1rem;">How the reveal works</h3>
           <ul class="plain" style="color:var(--text-muted);font-size:0.93rem;">
-            <li>Players can never see each other's totals during the event.</li>
-            <li>For the final ~30 minutes before wipe, the leaderboard opens to everyone: live top 10, plus your own rank if you're outside it. Use the command /checkcoal and /leaderboard in chat.</li>
-            <li>Once active, the leaderboard refreshes every 10–15 seconds, then every 5 seconds once the countdown crosses the 1-minute mark.</li>
+            <li><b style="color:var(--text);">Live now:</b> /checkcoal in chat is admin-only, and lists every player's stored Coal total, server-wide.</li>
+            <li>Players can never see each other's totals during normal play.</li>
+            <li><b>Still planned:</b> for the final ~30 minutes before wipe, the leaderboard opens to everyone: live top 10, plus your own rank if you're outside it.</li>
+            <li><b>Still planned:</b> once active, the leaderboard refreshes every 10–15 seconds, then every 5 seconds once the countdown crosses the 1-minute mark.</li>
           </ul>
 
           <h3 style="font-size:1rem;">Still undecided</h3>
