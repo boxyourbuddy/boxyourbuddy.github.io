@@ -66,10 +66,10 @@
 
   .legend{ display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:1.25rem; }
   .chip{
-    display:inline-flex; align-items:center; gap:0.4rem; padding:0.3rem 0.7rem; border-radius:100px;
-    font-size:0.75rem; font-weight:700; letter-spacing:0.02em; text-transform:uppercase; font-family:var(--font-mono);
+    display:inline-flex; align-items:center; gap:0.32rem; padding:0.2rem 0.55rem; border-radius:100px;
+    font-size:0.66rem; font-weight:700; letter-spacing:0.02em; text-transform:uppercase; font-family:var(--font-mono);
   }
-  .chip::before{ content:""; width:0.5rem; height:0.5rem; border-radius:50%; display:inline-block; }
+  .chip::before{ content:""; width:0.42rem; height:0.42rem; border-radius:50%; display:inline-block; }
   .chip.live{ background:var(--live-soft); color:var(--live); }
   .chip.live::before{ background:var(--live); }
   .chip.open{ background:var(--open-soft); color:var(--open); }
@@ -306,18 +306,19 @@
       </section>
 
       <section id="threats">
-        <h2>Bradley, Patrol Heli &amp; Scientists <span class="chip live">Working</span></h2>
+        <h2>Bradley, Patrol Heli &amp; Scientists</h2>
         <div class="grid-2">
           <div class="card">
-            <h3>Bradley</h3>
+            <h3>Bradley <span class="chip open">Open / unconfirmed</span></h3>
             <p>Fully disabled in Phase 1 and will not spawn. Any crate it would have dropped is emptied. Full vanilla Bradley from Phase 2 onward.</p>
           </div>
           <div class="card">
-            <h3>Patrol Helicopter</h3>
+            <h3>Patrol Helicopter <span class="chip live">Working</span></h3>
             <p>Removed on sight, every phase, all wipe long.</p>
           </div>
         </div>
-        <div class="table-wrap" style="margin-top:0.9rem;">
+        <h3 style="font-size:1rem;margin:1.1rem 0 0.5rem;">Scientists <span class="chip live">Working</span></h3>
+        <div class="table-wrap">
           <table>
             <thead><tr><th>Scientist</th><th>Phase 1</th><th>Phase 2</th><th>Phase 3+</th></tr></thead>
             <tbody>
