@@ -128,6 +128,7 @@
   ul.plain li:last-child{ margin-bottom:0; }
 
   .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:0.9rem; }
+  .grid-2 > .card + .card{ margin-top:0; }
   @media (max-width:640px){ .grid-2{ grid-template-columns:1fr; } }
 
   .flag{
