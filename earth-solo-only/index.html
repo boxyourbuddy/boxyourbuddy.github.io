@@ -189,6 +189,7 @@
         <li><a href="#world">World &amp; Spawns</a></li>
         <li><a href="#building">Building Rules</a></li>
         <li><a href="#commands">Info Commands</a></li>
+        <li><a href="#cheaters">Cheaters</a></li>
         <li><a href="#open-issues">Open Issues</a></li>
       </ol>
     </nav>
@@ -495,6 +496,17 @@
         </div>
       </section>
 
+      <section id="cheaters">
+        <h2>Cheaters <span class="chip live">Working</span></h2>
+        <p class="section-note">There is real money on the line here, and that attracts cheaters. This server does not give them a second chance.</p>
+        <ul class="plain" style="color:var(--text-muted);font-size:0.93rem;">
+          <li>Easy Anti-Cheat is on, same as any official server.</li>
+          <li>On top of EAC, Rust runs its own server-side checks for flying, noclipping through walls, impossible melee hits and faked projectiles. Every one of those checks is set to its strongest level.</li>
+          <li><b>Enforcement is set to level 2.</b> By default Rust only kicks a player when those checks catch them, which means they reconnect a few seconds later and carry on. Level 2 bans them instead. One detection, gone for good.</li>
+          <li>Admins are exempt from these checks, so admin movement and testing never triggers a false ban.</li>
+        </ul>
+      </section>
+
       <section id="open-issues">
         <h2 style="border:none;">Open issues <span class="chip open">Open</span></h2>
         <div class="status-section is-open">
@@ -503,7 +515,6 @@
 
             <li>Map size is currently 3000 for testing. If demand becomes high enough the map size will jump up accordingly.</li>
             <li>Bradley needs to be tested properly across all phases to confirm it does not spawn in Phase 1.</li>
-            <li>Wipe timing automation (Thursday 3pm) is set up but hasn't been separately confirmed to fire reliably or handle timezones correctly every week.</li>
             <li>Minicopter 3-minute buyer lock is built but not tested with a second player yet.</li>
             <li>/checkcoal for regular players (player view) is built but not tested. I need a second player to confirm it shows only their own Coal, not the full player list.</li>
             <li>Thinking of adding coal to the Marketplace vending machines in outpost since they are sitting there doing nothing.</li>
