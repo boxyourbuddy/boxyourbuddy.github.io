@@ -291,20 +291,42 @@
       </section>
 
       <section id="quarries">
-        <h2>Quarries <span class="chip live">Working</span> <span style="font-size:0.7rem;color:var(--text-muted);font-family:var(--font-mono);">rebuilt 2026-07-26</span></h2>
-        <p class="section-note">Quarries no longer trickle output steadily, they output in a pattern and shut themselves off for that tank of diesel, same as running dry. Needs a manual restart to run again.</p>
+        <h2>Quarries <span class="chip live">Working</span> <span style="font-size:0.7rem;color:var(--text-muted);font-family:var(--font-mono);">updated 2026-08-03</span></h2>
+        <p class="section-note">Quarries no longer trickle output steadily, they output in a pattern and shut themselves off for that tank of diesel, same as running dry. Needs a manual restart to run again. Output ramps down as the wipe goes on, so the first tank of diesel is the richest one.</p>
         <div class="card">
           <h3>HQM Quarry</h3>
           <p style="margin-bottom:0.6rem;">Runs on a 25-tick fuel cycle. Per phase:</p>
           <ul class="plain" style="color:var(--text-muted);font-size:0.93rem;">
-            <li><b>Phase 1:</b> 1 HQM on the first tick, nothing for the next 15 ticks, then 1 per tick until it's given 10 HQM total per diesel.</li>
+            <li><b>Phase 1:</b> 1 HQM per tick for the first 20 ticks, then 2 per tick until 30 HQM total, then it stops.</li>
             <li><b>Phase 2:</b> 1 HQM per tick for the first 5 ticks, nothing for the next 5, then 1 per tick until 20 HQM total, then it stops.</li>
-            <li><b>Phase 3:</b> 1 HQM per tick for the first 20 ticks, then 2 per tick until 30 HQM total, then it stops.</li>
+            <li><b>Phase 3:</b> 1 HQM on the first tick, nothing for the next 15 ticks, then 1 per tick until it's given 10 HQM total per diesel.</li>
           </ul>
         </div>
         <div class="card">
+          <h3>Pump Jack (Power Plant)</h3>
+          <p style="margin-bottom:0.6rem;">Also a 25-tick fuel cycle. Totals per tank of diesel:</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Resource</th><th>Phase 1</th><th>Phase 2</th><th>Phase 3</th></tr></thead>
+              <tbody>
+                <tr><td>Crude Oil</td><td class="num">30</td><td class="num">24</td><td class="num">18</td></tr>
+                <tr><td>Low Grade Fuel</td><td class="num">85</td><td class="num">68</td><td class="num">51</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
           <h3>Sulfur Quarry &amp; Stone Quarry (stone + metal ore)</h3>
-          <p>A flat percentage of vanilla output, same numbers every tick: <span class="num">20%</span> in Phase 1, <span class="num">40%</span> in Phase 2, <span class="num">60%</span> in Phase 3.</p>
+          <p>A flat percentage of vanilla output, same numbers every tick.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Resource</th><th>Phase 1</th><th>Phase 2</th><th>Phase 3</th></tr></thead>
+              <tbody>
+                <tr><td>Stone &amp; Metal Ore</td><td class="num">80%</td><td class="num">60%</td><td class="num">40%</td></tr>
+                <tr><td>Sulfur</td><td class="num">50%</td><td class="num">40%</td><td class="num">30%</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
