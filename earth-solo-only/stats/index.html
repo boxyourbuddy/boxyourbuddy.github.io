@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earth Solo Only Player Stats</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7NDGQGQM5G');
+</script>
+<style>
+  :root{
+    --bg:#000000; --surface:#1A1A1A; --surface-2:#242424;
+    --text:#FFFFFF; --text-muted:#A0A0A0; --border:#333333;
+    --accent:#D97F3D; --accent-soft:#3D2A1A;
+    --font-body: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg); color:var(--text); font-family:var(--font-body);
+    margin:0; line-height:1.55; font-size:16px;
+  }
+  .wrap{ max-width:1400px; margin:0 auto; padding:2.5rem 1.5rem 6rem; }
+
+  header.hero{ border-bottom:1px solid var(--border); padding-bottom:1.5rem; margin-bottom:1.5rem; }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--accent); font-weight:700; margin-bottom:0.6rem;
+  }
+  h1{
+    font-size:clamp(1.9rem, 4vw, 2.7rem); font-weight:800; letter-spacing:-0.01em;
+    font-stretch:condensed; margin:0 0 0.5rem;
+  }
+  .sub{ color:var(--text-muted); font-size:0.92rem; max-width:60ch; margin:0; }
+  .back{ color:var(--text-muted); font-size:0.85rem; text-decoration:none; }
+  .back:hover{ color:var(--text); }
+
+  .controls{ display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center; margin-bottom:1.25rem; }
+  .controls input, .controls select{
+    background:var(--surface); color:var(--text); border:1px solid var(--border);
+    border-radius:8px; padding:0.5rem 0.7rem; font-size:0.9rem; font-family:inherit;
+  }
+  .controls input{ min-width:220px; }
+  .controls input:focus, .controls select:focus{ outline:none; border-color:var(--accent); }
+  .count{ color:var(--text-muted); font-size:0.85rem; margin-left:auto; font-family:var(--font-mono); }
+
+  nav.tabs{
+    display:flex; flex-wrap:wrap; gap:0.15rem; border-bottom:1px solid var(--border); margin-bottom:1.25rem;
+  }
+  nav.tabs button{
+    background:none; border:none; border-bottom:2px solid transparent; color:var(--text-muted);
+    font-family:var(--font-mono); font-size:0.74rem; letter-spacing:0.09em; text-transform:uppercase;
+    font-weight:700; padding:0.7rem 0.85rem; cursor:pointer;
+  }
+  nav.tabs button:hover{ color:var(--text); }
+  nav.tabs button[aria-selected="true"]{ color:var(--accent); border-bottom-color:var(--accent); }
+
+  .table-scroll{ overflow-x:auto; border:1px solid var(--border); border-radius:12px; background:var(--surface); }
+  table{ border-collapse:collapse; width:100%; font-size:0.9rem; }
+  th, td{ padding:0.6rem 0.85rem; text-align:right; white-space:nowrap; }
+  th:first-child, td:first-child{ text-align:left; position:sticky; left:0; background:var(--surface); }
+  thead th{
+    color:var(--text-muted); font-weight:700; font-size:0.78rem; cursor:pointer; user-select:none;
+    border-bottom:1px solid var(--border); background:var(--surface-2);
+  }
+  thead th:first-child{ background:var(--surface-2); }
+  thead th:hover{ color:var(--text); }
+  thead th[data-sorted]{ color:var(--accent); }
+  thead th[data-sorted]::after{ content:" \25B2"; font-size:0.7em; }
+  thead th[data-sorted="desc"]::after{ content:" \25BC"; font-size:0.7em; }
+  tbody tr + tr td{ border-top:1px solid var(--border); }
+  tbody tr:hover td{ background:var(--surface-2); }
+  tbody tr:hover td:first-child{ background:var(--surface-2); }
+  td.name{ color:var(--accent); font-weight:600; }
+  td.zero{ color:var(--text-muted); }
+  .num{ font-variant-numeric:tabular-nums; }
+
+  .notice{
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:1.25rem 1.4rem; color:var(--text-muted); font-size:0.93rem;
+  }
+  .notice code{ font-family:var(--font-mono); font-size:0.85rem; color:var(--text); }
+  .notice ul{ margin:0.6rem 0 0; padding-left:1.2rem; }
+
+  footer{ margin-top:3rem; border-top:1px solid var(--border); padding-top:1.25rem; color:var(--text-muted); font-size:0.82rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Earth Solo Only</div>
+    <h1>Player Stats</h1>
+    <p class="sub">Everything the server has recorded, per wipe and all time. Data comes from the Player Stats Logger plugin.</p>
+    <p style="margin:0.9rem 0 0;"><a class="back" href="../index.html">&larr; Server change report</a></p>
+  </header>
+
+  <div class="controls">
+    <input id="search" type="search" placeholder="Search player..." autocomplete="off">
+    <select id="source"></select>
+    <span class="count" id="count"></span>
+  </div>
+
+  <nav class="tabs" id="tabs" role="tablist"></nav>
+
+  <div id="view"></div>
+
+  <footer id="footer"></footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------------------------------------------------------------------------
+  // Data sources.
+  //
+  // The Oxide data files are dropped into this folder unchanged, under the names
+  // the plugin writes. A static page cannot list a directory, so archived wipes
+  // are declared in wipes.json. That file is optional: without it the page still
+  // shows all time and the current wipe.
+  //
+  // wipes.json is a plain array, newest first:
+  //   [ { "file": "PlayerStatsLogger_Wipe_2026-08-06.json", "label": "6 August 2026" } ]
+  // ---------------------------------------------------------------------------
+  var BASE_SOURCES = [
+    { id: "alltime", label: "All Time",  file: "PlayerStatsLogger_AllTime.json" },
+    { id: "current", label: "This Wipe", file: "PlayerStatsLogger_CurrentWipe.json" }
+  ];
+
+  // ---------------------------------------------------------------------------
+  // Tabs.
+  //
+  // A tab is either a fixed list of counter keys, or a prefix. Prefix tabs build
+  // their columns from whatever keys the data actually contains, so a stat added
+  // to the plugin appears here on its own with no edit to this page.
+  // ---------------------------------------------------------------------------
+  var TABS = [
+    { id:"overview", label:"Overview", columns:[
+      { key:"@hours",  label:"Hours" },
+      { key:"@kdr",    label:"KDR", decimals:2 },
+      { key:"pvp.kills",  label:"Kills" },
+      { key:"pvp.deaths", label:"Deaths" },
+      { key:"coal.bought", label:"Coal Bought" },
+      { key:"loot.containers", label:"Containers Looted" }
+    ]},
+    { id:"pvp", label:"PVP", columns:[
+      { key:"@kdr",    label:"KDR", decimals:2 },
+      { key:"pvp.kills",  label:"Kills" },
+      { key:"pvp.deaths", label:"Deaths" },
+      { key:"pvp.headshots", label:"Headshots" },
+      { key:"pvp.headshots.downed", label:"Executions" },
+      { key:"@hsdist", label:"Avg Headshot (m)", decimals:1 }
+    ]},
+    { id:"coal",      label:"Coal",      prefix:"coal." },
+    { id:"resources", label:"Resources", prefix:"gather." },
+    { id:"weapons",   label:"Weapons",   prefix:"weapon." },
+    { id:"looting",   label:"Looting",   prefix:"loot." },
+    { id:"food",      label:"Food",      prefix:"consume." }
+  ];
+
+  var state = {
+    sourceId: "current",
+    tabId: "overview",
+    search: "",
+    sortKey: null,
+    sortDir: "desc",
+    cache: {},
+    sources: BASE_SOURCES.slice()
+  };
+
+  var el = {
+    search: document.getElementById("search"),
+    source: document.getElementById("source"),
+    count:  document.getElementById("count"),
+    tabs:   document.getElementById("tabs"),
+    view:   document.getElementById("view"),
+    footer: document.getElementById("footer")
+  };
+
+  // --- helpers ---------------------------------------------------------------
+
+  function counter(player, key){
+    var c = player.Counters || {};
+    return typeof c[key] === "number" ? c[key] : 0;
+  }
+
+  // Derived columns, the ones that are a calculation rather than a stored number.
+  function derived(player, key){
+    if (key === "@hours") return (player.PlaytimeSeconds || 0) / 3600;
+    if (key === "@kdr"){
+      var k = counter(player, "pvp.kills"), d = counter(player, "pvp.deaths");
+      return d === 0 ? k : k / d;
+    }
+    if (key === "@hsdist"){
+      var hs = counter(player, "pvp.headshots");
+      return hs === 0 ? 0 : (counter(player, "pvp.headshots.distance.cm") / 100) / hs;
+    }
+    return counter(player, key);
+  }
+
+  function value(player, key){
+    return key.charAt(0) === "@" ? derived(player, key) : counter(player, key);
+  }
+
+  function format(n, decimals){
+    if (decimals) return n.toLocaleString(undefined, { minimumFractionDigits:decimals, maximumFractionDigits:decimals });
+    return Math.round(n).toLocaleString();
+  }
+
+  // "gather.stones" -> "Stones", "weapon.rock.fired" -> "Rock Fired".
+  function prettify(key, prefix){
+    var rest = key.slice(prefix.length);
+    return rest.split(".").map(function(word){
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(" ");
+  }
+
+  // --- loading ---------------------------------------------------------------
+
+  function fetchJson(file){
+    return fetch(file, { cache:"no-store" }).then(function(res){
+      if (!res.ok) throw new Error(res.status + " " + res.statusText);
+      return res.json();
+    });
+  }
+
+  function loadSource(id){
+    if (state.cache[id]) return Promise.resolve(state.cache[id]);
+
+    var source = state.sources.filter(function(s){ return s.id === id; })[0];
+    if (!source) return Promise.resolve(null);
+
+    return fetchJson(source.file).then(function(data){
+      state.cache[id] = data;
+      return data;
+    }).catch(function(err){
+      state.cache[id] = { error: err.message, file: source.file };
+      return state.cache[id];
+    });
+  }
+
+  // --- rendering -------------------------------------------------------------
+
+  function currentTab(){
+    return TABS.filter(function(t){ return t.id === state.tabId; })[0];
+  }
+
+  // A prefix tab's columns are whatever keys exist in this data set, ordered by
+  // server-wide total so the busiest stat sits nearest the name.
+  function columnsFor(tab, players){
+    if (tab.columns) return tab.columns;
+
+    var totals = {};
+    players.forEach(function(p){
+      var counters = p.Counters || {};
+      Object.keys(counters).forEach(function(key){
+        if (key.indexOf(tab.prefix) !== 0) return;
+        totals[key] = (totals[key] || 0) + counters[key];
+      });
+    });
+
+    return Object.keys(totals).sort(function(a, b){
+      return totals[b] - totals[a];
+    }).map(function(key){
+      return { key: key, label: prettify(key, tab.prefix) };
+    });
+  }
+
+  function render(){
+    var data = state.cache[state.sourceId];
+    if (!data){ el.view.innerHTML = '<div class="notice">Loading...</div>'; return; }
+
+    if (data.error){
+      el.view.innerHTML = '<div class="notice"><strong>No data file yet.</strong>'
+        + '<p style="margin:0.6rem 0 0;">This page reads the Player Stats Logger files straight out of the server\'s '
+        + '<code>oxide/data</code> folder. Download them from the LOW.ms File Manager and drop them in beside this page:</p>'
+        + '<ul><li><code>PlayerStatsLogger_AllTime.json</code></li>'
+        + '<li><code>PlayerStatsLogger_CurrentWipe.json</code></li>'
+        + '<li>any <code>PlayerStatsLogger_Wipe_*.json</code> archives, listed in <code>wipes.json</code></li></ul>'
+        + '<p style="margin:0.6rem 0 0;">Missing: <code>' + data.file + '</code> (' + data.error + ')</p></div>';
+      el.count.textContent = "";
+      el.footer.textContent = "";
+      return;
+    }
+
+    var players = Object.keys(data.Players || {}).map(function(steamId){
+      var p = data.Players[steamId];
+      p.SteamId = steamId;
+      p.Name = p.LastKnownName || steamId;
+      return p;
+    });
+
+    var tab = currentTab();
+    var columns = columnsFor(tab, players);
+
+    var needle = state.search.trim().toLowerCase();
+    var rows = needle
+      ? players.filter(function(p){ return p.Name.toLowerCase().indexOf(needle) !== -1; })
+      : players;
+
+    // Default sort is the first column, biggest first. Names sort alphabetically.
+    var sortKey = state.sortKey || (columns.length ? columns[0].key : "@name");
+    var dir = state.sortDir === "asc" ? 1 : -1;
+    rows = rows.slice().sort(function(a, b){
+      if (sortKey === "@name") return a.Name.localeCompare(b.Name) * dir;
+      return (value(a, sortKey) - value(b, sortKey)) * dir;
+    });
+
+    el.count.textContent = rows.length + (rows.length === 1 ? " player" : " players");
+
+    if (!columns.length){
+      el.view.innerHTML = '<div class="notice">Nothing recorded under <strong>' + tab.label
+        + '</strong> yet. The counters exist, no one has triggered them in this wipe.</div>';
+    } else {
+      var html = '<div class="table-scroll"><table><thead><tr>';
+      html += '<th data-key="@name"' + (sortKey === "@name" ? ' data-sorted="' + state.sortDir + '"' : '') + '>Player</th>';
+      columns.forEach(function(col){
+        html += '<th data-key="' + col.key + '"'
+             + (sortKey === col.key ? ' data-sorted="' + state.sortDir + '"' : '')
+             + '>' + col.label + '</th>';
+      });
+      html += '</tr></thead><tbody>';
+
+      rows.forEach(function(p){
+        html += '<tr><td class="name">' + escapeHtml(p.Name) + '</td>';
+        columns.forEach(function(col){
+          var n = value(p, col.key);
+          html += '<td class="num' + (n ? '' : ' zero') + '">' + format(n, col.decimals) + '</td>';
+        });
+        html += '</tr>';
+      });
+
+      html += '</tbody></table></div>';
+      el.view.innerHTML = html;
+
+      Array.prototype.forEach.call(el.view.querySelectorAll("th"), function(th){
+        th.addEventListener("click", function(){
+          var key = th.getAttribute("data-key");
+          if (state.sortKey === key){
+            state.sortDir = state.sortDir === "desc" ? "asc" : "desc";
+          } else {
+            state.sortKey = key;
+            state.sortDir = key === "@name" ? "asc" : "desc";
+          }
+          render();
+        });
+      });
+    }
+
+    var started = data.WipeStarted ? new Date(data.WipeStarted) : null;
+    el.footer.textContent = started && !isNaN(started)
+      ? "Wipe started " + started.toLocaleString() + "."
+      : "All-time totals across every wipe.";
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+    });
+  }
+
+  function renderTabs(){
+    el.tabs.innerHTML = TABS.map(function(tab){
+      return '<button role="tab" data-id="' + tab.id + '" aria-selected="'
+        + (tab.id === state.tabId) + '">' + tab.label + '</button>';
+    }).join("");
+
+    Array.prototype.forEach.call(el.tabs.querySelectorAll("button"), function(button){
+      button.addEventListener("click", function(){
+        state.tabId = button.getAttribute("data-id");
+        state.sortKey = null;
+        state.sortDir = "desc";
+        renderTabs();
+        render();
+      });
+    });
+  }
+
+  function renderSources(){
+    el.source.innerHTML = state.sources.map(function(s){
+      return '<option value="' + s.id + '"' + (s.id === state.sourceId ? " selected" : "") + '>' + s.label + '</option>';
+    }).join("");
+  }
+
+  // --- wiring ----------------------------------------------------------------
+
+  el.search.addEventListener("input", function(){
+    state.search = el.search.value;
+    render();
+  });
+
+  el.source.addEventListener("change", function(){
+    state.sourceId = el.source.value;
+    el.view.innerHTML = '<div class="notice">Loading...</div>';
+    loadSource(state.sourceId).then(render);
+  });
+
+  renderTabs();
+  renderSources();
+  el.view.innerHTML = '<div class="notice">Loading...</div>';
+
+  // Archived wipes are optional. A missing wipes.json is normal on a server that
+  // has not wiped since the logger went in, so it is not treated as an error.
+  fetchJson("wipes.json").then(function(list){
+    if (!Array.isArray(list)) return;
+    list.forEach(function(entry, index){
+      state.sources.push({ id: "wipe" + index, label: entry.label || entry.file, file: entry.file });
+    });
+    renderSources();
+  }).catch(function(){ /* no archives yet */ })
+    .then(function(){ return loadSource(state.sourceId); })
+    .then(render);
+
+})();
+</script>
+</body>
+</html>

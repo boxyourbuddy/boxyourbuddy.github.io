@@ -1,0 +1,6156 @@
+{
+  "WipeStarted": "2026-07-30T21:52:58.6456885Z",
+  "Players": {
+    "76561199832728920": {
+      "LastKnownName": "Rust! At The Disco",
+      "PlaytimeSeconds": 87.156041899999991,
+      "Counters": {}
+    },
+    "76561198128593835": {
+      "LastKnownName": "Earth",
+      "PlaytimeSeconds": 94395.740522700071,
+      "Counters": {
+        "loot.containers": 9,
+        "coal.bought": 2,
+        "weapon.bow.hunting.fired": 7
+      }
+    },
+    "76561199586826808": {
+      "LastKnownName": "SkillGap89*",
+      "PlaytimeSeconds": 32.910971499999995,
+      "Counters": {}
+    },
+    "76561198094718034": {
+      "LastKnownName": "Kydasteel",
+      "PlaytimeSeconds": 1568.095593,
+      "Counters": {}
+    },
+    "76561199089836050": {
+      "LastKnownName": "hallvardlm",
+      "PlaytimeSeconds": 342.0649259,
+      "Counters": {}
+    },
+    "76561199031773531": {
+      "LastKnownName": "SUPERIORBEEING27",
+      "PlaytimeSeconds": 500.8727836,
+      "Counters": {}
+    },
+    "76561198015847156": {
+      "LastKnownName": "Nodd",
+      "PlaytimeSeconds": 11128.241131699999,
+      "Counters": {}
+    },
+    "76561199510303490": {
+      "LastKnownName": "[GIN] Skameika",
+      "PlaytimeSeconds": 1198.6764274,
+      "Counters": {}
+    },
+    "76561199664097824": {
+      "LastKnownName": "༒︎𝚗𝚘𝚝ʰᵉʳᵉ༒",
+      "PlaytimeSeconds": 70.5811508,
+      "Counters": {}
+    },
+    "76561199165546183": {
+      "LastKnownName": "CHIKEN JOE",
+      "PlaytimeSeconds": 4161.1826575,
+      "Counters": {}
+    },
+    "76561199702920724": {
+      "LastKnownName": "中国ファイナルBoss",
+      "PlaytimeSeconds": 94.400301399999989,
+      "Counters": {}
+    },
+    "76561198749823620": {
+      "LastKnownName": "Player 2",
+      "PlaytimeSeconds": 528.6955336,
+      "Counters": {}
+    },
+    "76561198330447976": {
+      "LastKnownName": "Alechang0620",
+      "PlaytimeSeconds": 349.9375794,
+      "Counters": {}
+    }
+  },
+  "Events": [
+    {
+      "time": "2026-07-30T22:15:42.6344921Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-07-30T22:19:20.4799591Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T22:25:08.2181954Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T22:25:11.4830565Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T22:25:53.1228958Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-07-30T22:28:10.7593113Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T22:28:16.7045138Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T22:28:44.1058754Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T22:29:12.7409621Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T22:29:31.2882896Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T22:30:28.5636976Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-30T22:32:50.5053101Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T22:33:37.3413382Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198094718034",
+        "container": "crate_shore"
+      }
+    },
+    {
+      "time": "2026-07-30T22:34:46.9592289Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198094718034",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-07-30T22:36:40.6070807Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-30T22:37:08.2361555Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198094718034",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-30T22:37:33.1312272Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198094718034",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-30T22:37:44.2374689Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-30T22:37:47.5317962Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-30T22:39:10.8435602Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-30T22:39:54.4486873Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-30T22:41:23.2084768Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuel_storage"
+      }
+    },
+    {
+      "time": "2026-07-30T22:42:23.7060316Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-30T22:42:45.6566612Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-30T22:42:58.0841412Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T22:44:50.7522688Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198094718034",
+        "victimName": "Kydasteel",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-07-30T22:46:13.8252186Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198094718034",
+        "container": "fuel_storage"
+      }
+    },
+    {
+      "time": "2026-07-30T22:47:35.0943751Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuel_storage"
+      }
+    },
+    {
+      "time": "2026-07-30T22:47:42.1205251Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuel_storage"
+      }
+    },
+    {
+      "time": "2026-07-30T22:49:02.2819932Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198094718034",
+        "container": "fuel_storage"
+      }
+    },
+    {
+      "time": "2026-07-30T23:26:13.9971202Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-07-30T23:42:50.2609883Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T23:43:00.0320673Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T23:44:12.7266524Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T23:52:57.3562394Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T23:55:55.8758327Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T23:56:08.1665994Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T23:56:15.4478076Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T23:57:10.7728514Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T23:57:18.1126278Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T23:57:49.5486286Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T23:59:11.3934408Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-30T23:59:15.1910205Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T00:00:22.2526491Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T00:01:06.1883135Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T00:01:30.3675029Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T00:03:11.3384341Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T00:03:39.1909225Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T00:05:04.0766239Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T00:05:07.2700693Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T01:05:38.7985404Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199089836050",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-07-31T01:05:44.0293032Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-07-31T01:05:45.3714313Z",
+      "type": "death",
+      "data": {
+        "victim": "76561199832728920",
+        "victimName": "Rust! At The Disco",
+        "wasWounded": false,
+        "pvp": true,
+        "attacker": "76561199089836050",
+        "weapon": "rock"
+      }
+    },
+    {
+      "time": "2026-07-31T01:06:22.1096503Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-07-31T01:06:23.6202479Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199089836050",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T01:09:07.9189763Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T01:09:12.3307582Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T01:09:18.4953942Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-31T01:09:28.0587788Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "water_catcher_small"
+      }
+    },
+    {
+      "time": "2026-07-31T01:09:34.5629191Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-31T01:10:51.1927065Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuel_storage"
+      }
+    },
+    {
+      "time": "2026-07-31T01:13:33.2708754Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis"
+      }
+    },
+    {
+      "time": "2026-07-31T01:19:35.7548205Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": true,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "pistol.revolver"
+      }
+    },
+    {
+      "time": "2026-07-31T01:46:54.2388003Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "researchtable_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T03:45:29.7453639Z",
+      "type": "death",
+      "data": {
+        "victim": "76561199089836050",
+        "victimName": "hallvardlm",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-07-31T09:23:36.5874066Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_shore"
+      }
+    },
+    {
+      "time": "2026-07-31T09:23:41.9535789Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-07-31T09:23:43.2267652Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-07-31T09:25:02.0796195Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-07-31T09:25:04.5189471Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-31T09:25:13.1270936Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "researchtable_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T09:25:14.3166009Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "water_catcher_small"
+      }
+    },
+    {
+      "time": "2026-07-31T09:26:20.2245009Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T09:26:40.7929069Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T09:26:44.3514044Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T09:26:45.7228722Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T09:26:48.5181699Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T09:26:53.6888481Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T09:26:56.5262451Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T09:27:33.0475039Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T09:27:40.5519115Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T09:27:42.9348182Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T09:30:05.4019250Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "minecart"
+      }
+    },
+    {
+      "time": "2026-07-31T10:05:41.8268575Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:06:08.9250309Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:07:12.6503416Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T10:07:20.2092214Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T10:07:29.3118100Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T10:08:17.9674145Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T10:08:26.4636985Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T10:08:31.1485670Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T10:08:41.5925877Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T10:08:41.7676303Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T10:08:50.2548548Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_mine"
+      }
+    },
+    {
+      "time": "2026-07-31T10:08:50.4018914Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_mine"
+      }
+    },
+    {
+      "time": "2026-07-31T10:08:52.2018508Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T10:08:55.7013043Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T10:08:55.8607198Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T10:09:05.8565175Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T10:09:37.8512430Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "modular_car_fuel_storage"
+      }
+    },
+    {
+      "time": "2026-07-31T10:09:54.8774579Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T10:10:14.4405480Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T10:10:34.2861064Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T10:11:08.4542833Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-31T10:11:13.1460296Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-07-31T10:11:14.3735408Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-07-31T10:11:15.7553935Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "water_catcher_small"
+      }
+    },
+    {
+      "time": "2026-07-31T10:11:24.4474667Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "researchtable_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:11:49.8170789Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T10:11:53.4235371Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_tools"
+      }
+    },
+    {
+      "time": "2026-07-31T10:11:53.6125844Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_tools"
+      }
+    },
+    {
+      "time": "2026-07-31T10:12:44.4946167Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:12:57.7905389Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:12:57.9775885Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:14:06.3607448Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-07-31T10:14:52.6784011Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:15:19.3566109Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:15:29.8225393Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:15:46.4334953Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:15:47.3005069Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:15:49.9739398Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:15:51.1139829Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:16:12.3211838Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:16:12.5291941Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:17:13.0359347Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_tools"
+      }
+    },
+    {
+      "time": "2026-07-31T10:17:23.8354110Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:18:15.5512795Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_tools"
+      }
+    },
+    {
+      "time": "2026-07-31T10:18:21.2228193Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_tools"
+      }
+    },
+    {
+      "time": "2026-07-31T10:19:25.2151514Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:21:26.8179551Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-07-31T10:21:27.0280079Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-07-31T10:21:36.5903147Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "food_cache_004"
+      }
+    },
+    {
+      "time": "2026-07-31T10:22:06.9774785Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T10:22:11.7300489Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:22:11.9160946Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:22:51.1414025Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:22:51.2942491Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:23:01.2677682Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T10:23:01.4758194Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T10:23:37.3798601Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "item_drop"
+      }
+    },
+    {
+      "time": "2026-07-31T10:23:37.5478644Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "item_drop"
+      }
+    },
+    {
+      "time": "2026-07-31T10:23:50.0717542Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "fusebox"
+      }
+    },
+    {
+      "time": "2026-07-31T10:24:03.6636976Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:24:05.5674212Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:24:10.2949597Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-31T10:24:10.4900080Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-31T10:24:12.9741696Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": false,
+        "pvp": true,
+        "attacker": "76561199510303490",
+        "weapon": "spear.stone"
+      }
+    },
+    {
+      "time": "2026-07-31T10:24:14.2554106Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "fusebox"
+      }
+    },
+    {
+      "time": "2026-07-31T10:25:01.5273184Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:25:34.9994565Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "player_corpse"
+      }
+    },
+    {
+      "time": "2026-07-31T10:25:35.1841263Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "player_corpse"
+      }
+    },
+    {
+      "time": "2026-07-31T10:25:40.0077369Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:26:37.4944333Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:26:37.6634747Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:27:13.1776214Z",
+      "type": "death",
+      "data": {
+        "victim": "76561199510303490",
+        "victimName": "[GIN] Skameika",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-07-31T10:27:25.5500320Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-07-31T10:27:27.1072436Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-07-31T10:29:13.9108013Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T10:29:22.2259800Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199510303490",
+        "container": "abovegroundpool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:30:22.1685964Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T10:31:42.8986131Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:31:43.0686549Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:33:19.9899468Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:34:11.9628493Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:34:12.1042680Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:34:53.4238060Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:36:20.8114148Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-07-31T10:36:49.2764672Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-07-31T10:36:49.4665127Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-07-31T10:39:56.6486431Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T10:40:22.2032694Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T10:40:52.6774028Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T10:41:20.9276679Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T10:41:58.5519701Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:41:58.7470181Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:42:01.0936632Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:42:04.1289921Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:42:06.1779199Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:42:28.0290376Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:42:28.1805922Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:42:59.3626829Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:42:59.5507297Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:43:05.6788905Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:45:20.7390620Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:45:20.9322665Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:45:27.9471798Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:45:29.4620275Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:45:37.6663015Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:45:47.0842019Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:45:49.6745125Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:45:54.4508499Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:45:59.0192916Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:46:04.7118029Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:46:39.9899198Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T10:46:44.6718751Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T10:47:01.3621880Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T10:47:01.5262282Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T10:47:09.0818209Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:47:09.2667660Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:47:35.9190891Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:47:36.1062250Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:48:37.6243926Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T10:48:37.8064375Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T10:49:03.1209458Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2_food"
+      }
+    },
+    {
+      "time": "2026-07-31T10:49:08.7540246Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2_medical"
+      }
+    },
+    {
+      "time": "2026-07-31T10:49:10.6371710Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2_medical"
+      }
+    },
+    {
+      "time": "2026-07-31T10:49:10.8637915Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2_medical"
+      }
+    },
+    {
+      "time": "2026-07-31T10:49:26.9185976Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2_medical"
+      }
+    },
+    {
+      "time": "2026-07-31T10:49:51.2538941Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:49:51.4069323Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:50:18.6064762Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "fusebox"
+      }
+    },
+    {
+      "time": "2026-07-31T10:50:58.7950376Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T10:51:00.8282944Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:51:02.7633393Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:51:06.3213080Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:51:08.5976230Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:51:10.4887697Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:51:53.4612712Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:52:29.0092224Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:52:38.1214230Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:52:38.2709042Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:52:59.8943076Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:54:07.2001456Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:54:07.3721867Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T10:54:46.1648457Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T10:54:55.4348028Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T10:55:00.5384549Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T10:55:39.0775792Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T10:56:02.2673398Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T10:56:09.4917493Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T10:56:09.6847979Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T10:56:49.1334559Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:56:52.9658162Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:57:05.5477074Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:57:11.7638129Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:57:14.6221377Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:57:23.8856992Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:57:31.8460077Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:57:41.9540862Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:57:58.3289468Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:58:09.3155903Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:58:14.6816864Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:58:52.5648387Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:58:57.1208058Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:58:59.6836509Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:59:23.5414239Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:59:31.6451816Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:59:31.8547597Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:59:37.8463912Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:59:38.0544429Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T10:59:58.4552922Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:01:05.9398379Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:01:13.1811951Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:01:17.7387823Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:01:21.8044668Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:01:26.5030465Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:01:41.7924705Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:01:46.9517531Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:02:08.0325573Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:02:17.2938188Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "campfire"
+      }
+    },
+    {
+      "time": "2026-07-31T11:02:26.2771995Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:03:18.5081980Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:03:26.3121726Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:03:34.2723353Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:03:45.4660899Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "campfire"
+      }
+    },
+    {
+      "time": "2026-07-31T11:03:48.4586587Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:03:50.5020577Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "campfire"
+      }
+    },
+    {
+      "time": "2026-07-31T11:04:05.0898786Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "campfire"
+      }
+    },
+    {
+      "time": "2026-07-31T11:04:08.1166072Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "furnace"
+      }
+    },
+    {
+      "time": "2026-07-31T11:04:10.2670786Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "furnace"
+      }
+    },
+    {
+      "time": "2026-07-31T11:04:12.1195119Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:04:14.7713534Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "furnace"
+      }
+    },
+    {
+      "time": "2026-07-31T11:04:27.3988321Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "campfire"
+      }
+    },
+    {
+      "time": "2026-07-31T11:04:29.9280953Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:04:43.5364306Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:04:54.7541906Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:05:01.6419433Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:05:06.8458010Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:05:09.4745735Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:05:13.1593227Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "researchtable_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:06:31.6929108Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:06:34.1877415Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:06:42.4659001Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "box.wooden.large"
+      }
+    },
+    {
+      "time": "2026-07-31T11:06:45.3189631Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:06:53.1196405Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "campfire"
+      }
+    },
+    {
+      "time": "2026-07-31T11:11:48.2769641Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:11:48.4350037Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:11:58.6331317Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T11:12:02.9095515Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T11:12:27.3648335Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T11:12:27.5341869Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T11:12:48.4555415Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:12:56.1016484Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T11:13:56.1001722Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:13:57.2585377Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:13:58.1407560Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:14:00.3929290Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:14:09.2965428Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:14:14.1881965Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:14:16.0572271Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:14:20.0729090Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:14:28.1436759Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T11:20:24.5235383Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:20:24.7275880Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:25:03.8215315Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:25:19.3830121Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T11:25:25.9877120Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:26:53.9516196Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:27:01.6494069Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T11:27:01.8444558Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T11:28:26.8182473Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199664097824",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-31T11:33:44.0635116Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T11:34:01.7358299Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T11:34:01.9458807Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T11:34:16.0223449Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2_food"
+      }
+    },
+    {
+      "time": "2026-07-31T11:34:23.7548161Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:34:24.0118798Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:35:03.0861251Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:35:17.8448810Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T11:37:24.7456640Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:37:43.5828140Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:38:04.8482757Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "fusebox"
+      }
+    },
+    {
+      "time": "2026-07-31T11:38:09.3196639Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "fusebox"
+      }
+    },
+    {
+      "time": "2026-07-31T11:38:23.9858232Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T11:38:24.1739332Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T11:38:25.8460163Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:38:46.2427865Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T11:39:00.8373597Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:39:50.7473403Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "trash-pile-1"
+      }
+    },
+    {
+      "time": "2026-07-31T11:39:50.8873756Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "trash-pile-1"
+      }
+    },
+    {
+      "time": "2026-07-31T11:40:57.7273317Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:40:57.9138144Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:41:36.4824515Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T11:41:47.3524505Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T11:42:20.6508486Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T11:46:52.2378961Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "codelockedhackablecrate"
+      }
+    },
+    {
+      "time": "2026-07-31T11:54:44.7614544Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "trash-pile-1"
+      }
+    },
+    {
+      "time": "2026-07-31T11:55:02.4167558Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:55:02.6718171Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:57:37.9752859Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T11:57:39.8753914Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:57:42.9709053Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T11:57:44.9132331Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:58:03.3696903Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "fusebox"
+      }
+    },
+    {
+      "time": "2026-07-31T11:58:48.6063183Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T11:58:50.3878260Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T11:58:52.7187067Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:58:57.2459808Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:58:57.4320269Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:58:59.6103044Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T11:59:01.7016802Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:59:06.6505145Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-07-31T11:59:58.7673397Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T12:00:30.5192185Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T12:02:26.3344212Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T12:02:26.5204664Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T12:02:34.4475569Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T12:02:34.6045942Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T12:02:45.6585349Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T12:03:03.2906204Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T12:03:03.4566621Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T12:03:06.2979632Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-07-31T12:03:20.4752349Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T12:03:20.6232718Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T12:03:26.6541582Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T12:03:29.6373206Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "foodbox"
+      }
+    },
+    {
+      "time": "2026-07-31T12:03:32.5230829Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "foodbox"
+      }
+    },
+    {
+      "time": "2026-07-31T12:03:32.7449102Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "foodbox"
+      }
+    },
+    {
+      "time": "2026-07-31T12:03:44.7571385Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-07-31T12:03:48.5076939Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-07-31T12:03:51.8901012Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-07-31T12:04:40.9574871Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:04:58.2933719Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:17.3163172Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:18.4542438Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:19.8139090Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:22.1355869Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:24.5995212Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "box.wooden.large"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:30.4507878Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:31.4194127Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:37.4501767Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:44.4148224Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:45.5706103Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:46.4387918Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:47.0834804Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:52.6188824Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:53.7055389Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:56.4354485Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "box.wooden.large"
+      }
+    },
+    {
+      "time": "2026-07-31T12:05:58.2350231Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:06:02.4965545Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "campfire"
+      }
+    },
+    {
+      "time": "2026-07-31T12:06:33.5734910Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:06:41.1114220Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T12:06:58.5559313Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198015847156",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T17:28:26.8107531Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198094718034",
+        "victimName": "Kydasteel",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-07-31T19:14:45.3859654Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-07-31T19:14:56.2881970Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T19:15:32.0003256Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-07-31T19:15:36.6755378Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "water_catcher_small"
+      }
+    },
+    {
+      "time": "2026-07-31T19:29:36.5193371Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T19:29:47.2293196Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T19:30:00.7957350Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T19:37:13.3204312Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T19:55:10.8415834Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-07-31T19:55:56.4118661Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_weapons"
+      }
+    },
+    {
+      "time": "2026-07-31T20:15:42.7761097Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_weapons"
+      }
+    },
+    {
+      "time": "2026-07-31T20:16:12.1740732Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_weapons"
+      }
+    },
+    {
+      "time": "2026-07-31T20:28:18.9030217Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuel_storage"
+      }
+    },
+    {
+      "time": "2026-07-31T20:31:55.2013588Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-07-31T20:32:38.4597731Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "item_drop_backpack"
+      }
+    },
+    {
+      "time": "2026-07-31T20:42:12.1073366Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "water_catcher_small.static"
+      }
+    },
+    {
+      "time": "2026-07-31T20:58:28.5944004Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:06:52.5853325Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:07:01.7515205Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:07:31.3782667Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:08:17.2445260Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:08:45.9297261Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:09:59.7402859Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:17:32.3625517Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:22:23.4503809Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:23:11.0144459Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:23:38.6366797Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:23:42.6965669Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:23:46.3570161Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:24:51.6435477Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:28:42.3685159Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:28:48.1894042Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:31:31.7580696Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T21:55:05.0355498Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T22:00:55.2883151Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T22:01:19.3119730Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T22:03:33.7227858Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_weapons"
+      }
+    },
+    {
+      "time": "2026-07-31T22:07:23.1005318Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-07-31T22:35:49.4539463Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": true,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-07-31T22:41:26.7606412Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T22:41:36.8611278Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T22:41:58.2749454Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-07-31T22:52:55.0723030Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-08-01T00:16:58.7169825Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T00:18:57.0554127Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-08-01T00:18:58.5869506Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-01T00:19:07.3728613Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T00:24:09.3823117Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-08-01T00:24:26.3074310Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:26:42.1574297Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:26:43.5368344Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:26:44.6646846Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:26:46.0511762Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:27:25.3732001Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2_food"
+      }
+    },
+    {
+      "time": "2026-08-01T00:27:27.1555428Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2_medical"
+      }
+    },
+    {
+      "time": "2026-08-01T00:27:29.8723290Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2_food"
+      }
+    },
+    {
+      "time": "2026-08-01T00:28:30.5074274Z",
+      "type": "death",
+      "data": {
+        "victim": "76561199165546183",
+        "victimName": "CHIKEN JOE",
+        "wasWounded": true,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-01T00:29:11.4049761Z",
+      "type": "death",
+      "data": {
+        "victim": "76561199165546183",
+        "victimName": "CHIKEN JOE",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-01T00:29:56.7851957Z",
+      "type": "death",
+      "data": {
+        "victim": "76561199165546183",
+        "victimName": "CHIKEN JOE",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-01T00:30:08.5607826Z",
+      "type": "death",
+      "data": {
+        "victim": "76561199165546183",
+        "victimName": "CHIKEN JOE",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-01T00:37:24.5674470Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-01T00:37:27.1326013Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-08-01T00:37:30.4089304Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-08-01T00:37:35.9406076Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "vehicle_parts"
+      }
+    },
+    {
+      "time": "2026-08-01T00:37:39.1597295Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-08-01T00:38:21.6997842Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "locker.campermodule"
+      }
+    },
+    {
+      "time": "2026-08-01T00:41:46.5530982Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-01T00:41:48.7033360Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-01T00:41:51.3746471Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_elite"
+      }
+    },
+    {
+      "time": "2026-08-01T00:41:54.5020099Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:41:59.0398103Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:42:01.8627425Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_elite"
+      }
+    },
+    {
+      "time": "2026-08-01T00:42:11.6691733Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:42:31.5154013Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:42:34.0072699Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:42:36.7259218Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:42:38.7945261Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-01T00:42:43.5439183Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-01T00:42:47.0020731Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:42:50.5267098Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_elite"
+      }
+    },
+    {
+      "time": "2026-08-01T00:42:54.2442088Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-01T00:43:00.1893876Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-01T00:43:26.8681595Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-01T00:43:28.9103719Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-01T00:43:38.2772610Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:43:40.6339914Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:43:48.5651344Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:44:10.0647162Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-01T00:44:15.9478605Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:44:26.3043563Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:44:36.9300131Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:44:44.5215997Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:45:00.9188774Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:45:09.2775511Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:45:20.8068659Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:45:47.5069509Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:45:49.8362905Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-01T00:46:01.6136895Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-01T00:46:09.5020652Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:46:19.2956138Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:46:35.9849652Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:46:47.5431903Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:46:54.8389233Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:46:58.5931550Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:47:13.3017872Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-01T00:47:23.8208827Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-08-01T00:47:35.9199291Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T00:51:50.5164145Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T01:00:18.8342660Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "codelockedhackablecrate"
+      }
+    },
+    {
+      "time": "2026-08-01T01:00:42.6496720Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "codelockedhackablecrate"
+      }
+    },
+    {
+      "time": "2026-08-01T01:03:02.4540414Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "codelockedhackablecrate"
+      }
+    },
+    {
+      "time": "2026-08-01T01:04:41.3777238Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "codelockedhackablecrate"
+      }
+    },
+    {
+      "time": "2026-08-01T01:10:18.6966840Z",
+      "type": "death",
+      "data": {
+        "victim": "76561199165546183",
+        "victimName": "CHIKEN JOE",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-01T01:22:40.4314736Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199165546183",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-08-01T01:29:55.9472180Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T01:30:13.5105510Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T01:54:27.5238061Z",
+      "type": "death",
+      "data": {
+        "victim": "76561199165546183",
+        "victimName": "CHIKEN JOE",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-01T02:36:51.1152001Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": true,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-01T02:52:39.3976369Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "item_drop_backpack"
+      }
+    },
+    {
+      "time": "2026-08-01T02:53:20.8956979Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-01T02:53:30.5142205Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "water_catcher_small"
+      }
+    },
+    {
+      "time": "2026-08-01T02:54:20.2095714Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-01T02:56:57.4308788Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-01T02:59:55.6915897Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:06:05.7977659Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:06:17.8619808Z",
+      "type": "loot",
+      "data": {
+        "player": "76561199702920724",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:11:59.6718864Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:13:08.1382381Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:13:12.4965626Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:13:20.7854403Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:13:35.0206378Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:17:51.1717809Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198749823620",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-01T03:17:51.3478229Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198749823620",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-01T03:18:12.5046891Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198749823620",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:18:41.0284372Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198749823620",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:19:30.4532798Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198749823620",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:20:29.5727998Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198749823620",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:20:29.7904362Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198749823620",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:20:34.2061507Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198749823620",
+        "container": "abovegroundpool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:20:34.4322070Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198749823620",
+        "container": "abovegroundpool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:21:05.0185292Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198749823620",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:21:41.2976781Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198749823620",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:23:10.6754219Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198749823620",
+        "container": "minecart"
+      }
+    },
+    {
+      "time": "2026-08-01T03:23:10.8945417Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198749823620",
+        "container": "minecart"
+      }
+    },
+    {
+      "time": "2026-08-01T03:25:43.6536374Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198749823620",
+        "victimName": "Player 2",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-01T03:28:27.0130106Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "player_corpse"
+      }
+    },
+    {
+      "time": "2026-08-01T03:35:18.0002295Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:35:38.6413069Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T03:36:34.6462358Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-08-01T03:36:39.8389309Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-08-01T14:17:30.7022329Z",
+      "type": "death",
+      "data": {
+        "victim": "76561199702920724",
+        "victimName": "中国ファイナルBoss",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-01T14:35:48.1227745Z",
+      "type": "death",
+      "data": {
+        "victim": "76561199510303490",
+        "victimName": "[GIN] Skameika",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-01T20:07:37.6340869Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "water_catcher_small"
+      }
+    },
+    {
+      "time": "2026-08-01T20:07:41.3631235Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "water_catcher_small"
+      }
+    },
+    {
+      "time": "2026-08-01T20:33:54.4105101Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T20:49:23.9786378Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T20:50:11.1468215Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T20:50:15.8944396Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T20:50:27.3670191Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T20:50:43.0021025Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T20:52:20.8115922Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T21:15:24.6635417Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T21:15:26.1748018Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T21:15:28.5340497Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T21:50:40.7662920Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": true,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-01T21:51:14.3929726Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-08-01T23:14:41.7838947Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T23:14:48.3023776Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T23:15:19.3762059Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-01T23:37:46.4583185Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": true,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-01T23:39:48.9862783Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "water_catcher_small"
+      }
+    },
+    {
+      "time": "2026-08-02T00:26:43.9365793Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "skylantern.skylantern.orange"
+      }
+    },
+    {
+      "time": "2026-08-02T00:28:13.1144172Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-08-02T00:28:38.2525592Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "skylantern.skylantern.orange"
+      }
+    },
+    {
+      "time": "2026-08-02T00:29:53.9898510Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-02T01:15:46.9431899Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": true,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-02T01:23:20.2720063Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "item_drop_backpack"
+      }
+    },
+    {
+      "time": "2026-08-02T01:26:41.0765730Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "ridablehorse"
+      }
+    },
+    {
+      "time": "2026-08-02T02:00:05.5789727Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-02T02:01:30.1761796Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198330447976",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-08-02T02:01:48.7104094Z",
+      "type": "death",
+      "data": {
+        "victim": "76561199031773531",
+        "victimName": "SUPERIORBEEING27",
+        "wasWounded": false,
+        "pvp": true,
+        "attacker": "76561198330447976",
+        "weapon": "rock"
+      }
+    },
+    {
+      "time": "2026-08-02T02:01:51.5704138Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198330447976",
+        "container": "player_corpse"
+      }
+    },
+    {
+      "time": "2026-08-02T02:02:17.8592525Z",
+      "type": "death",
+      "data": {
+        "victim": "76561199586826808",
+        "victimName": "SkillGap89*",
+        "wasWounded": false,
+        "pvp": true,
+        "attacker": "76561198330447976",
+        "weapon": "rock"
+      }
+    },
+    {
+      "time": "2026-08-02T02:03:56.7072006Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198330447976",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-02T02:04:59.2360966Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198330447976",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-02T02:05:01.8606238Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198330447976",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-08-02T02:05:15.2468265Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198330447976",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-02T02:06:07.3849529Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198330447976",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-08-02T02:30:10.6878393Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198330447976",
+        "victimName": "Alechang0620",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-02T02:55:49.0727566Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-02T02:56:05.9534823Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-02T02:59:06.3675309Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-02T02:59:20.3925561Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-02T02:59:24.1402531Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-02T02:59:41.7052848Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-02T03:02:45.0764241Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-02T03:02:47.5337043Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-02T03:02:51.6709037Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-02T03:04:22.8298495Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-02T03:05:47.9746180Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-02T08:03:08.7180630Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-02T18:42:24.9806353Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-02T19:02:36.4514310Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-02T19:10:35.2311112Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-08-02T19:10:50.5912133Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_attire"
+      }
+    },
+    {
+      "time": "2026-08-02T19:10:52.7134035Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_tools"
+      }
+    },
+    {
+      "time": "2026-08-02T19:11:10.2135391Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_weapons"
+      }
+    },
+    {
+      "time": "2026-08-02T19:15:05.2908285Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_weapons"
+      }
+    },
+    {
+      "time": "2026-08-02T19:15:33.9525027Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_weapons"
+      }
+    },
+    {
+      "time": "2026-08-02T19:17:34.3641128Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_weapons"
+      }
+    },
+    {
+      "time": "2026-08-02T19:20:01.9663103Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-08-02T19:20:19.3457029Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-08-02T19:20:23.3918426Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-08-02T19:23:23.2002614Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-02T20:03:58.5096597Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-02T20:21:24.0555151Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": true,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-02T20:31:48.4598807Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "item_drop_backpack"
+      }
+    },
+    {
+      "time": "2026-08-02T20:32:04.0793635Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-02T20:32:08.2905719Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-02T20:51:33.7386290Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": true,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-02T21:15:05.2314712Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-02T21:18:01.5017371Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": false,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-03T00:03:28.8678437Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": true,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "unknown"
+      }
+    },
+    {
+      "time": "2026-08-03T00:06:38.8476798Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-03T00:06:47.0949729Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-03T00:28:08.3472212Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "legacy_furnace"
+      }
+    },
+    {
+      "time": "2026-08-03T00:28:41.1673835Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "legacy_furnace"
+      }
+    },
+    {
+      "time": "2026-08-03T00:33:35.6290170Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "legacy_furnace"
+      }
+    },
+    {
+      "time": "2026-08-03T00:46:57.7340645Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-03T00:47:37.8259210Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "legacy_furnace"
+      }
+    },
+    {
+      "time": "2026-08-03T00:49:22.6147806Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-03T01:19:11.8493658Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis"
+      }
+    },
+    {
+      "time": "2026-08-03T01:19:14.4200551Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis"
+      }
+    },
+    {
+      "time": "2026-08-03T01:30:43.1691680Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-03T01:32:00.0203731Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "player"
+      }
+    },
+    {
+      "time": "2026-08-03T01:32:50.6896059Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-08-03T01:33:07.1402693Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-08-03T01:33:44.3842647Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-08-03T01:34:15.8656411Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-08-03T01:34:20.3186307Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-08-03T01:34:46.6093681Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-08-03T01:35:00.6813476Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-08-03T01:35:31.0012900Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-08-03T01:35:59.3061951Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-08-03T01:37:34.8246437Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-08-03T01:37:36.7587488Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-08-03T01:45:36.5315054Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-08-03T01:47:53.9019023Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "box.wooden.large"
+      }
+    },
+    {
+      "time": "2026-08-03T01:47:57.1999514Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-03T01:48:00.4045622Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-03T01:48:04.8525533Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-03T01:48:10.1403599Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-03T01:48:12.2083994Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-03T01:48:14.2668865Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-03T01:48:19.5902437Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "box.wooden.large"
+      }
+    },
+    {
+      "time": "2026-08-03T01:48:23.8216365Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "furnace"
+      }
+    },
+    {
+      "time": "2026-08-03T01:48:25.4645917Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "furnace"
+      }
+    },
+    {
+      "time": "2026-08-03T01:48:26.8404515Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-03T01:48:35.8268087Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "woodbox_deployed"
+      }
+    },
+    {
+      "time": "2026-08-03T02:01:15.2175402Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuel_storage"
+      }
+    },
+    {
+      "time": "2026-08-03T02:09:41.8134005Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-03T02:10:40.9985218Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": true,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "pistol.m92"
+      }
+    },
+    {
+      "time": "2026-08-03T18:53:01.8029063Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-03T19:00:53.8056489Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-03T19:01:20.8905595Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-03T19:01:26.1803987Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-03T19:01:34.7141759Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-03T19:01:59.9967235Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-03T19:02:06.9102021Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-03T19:02:24.0307793Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-03T20:24:22.5630265Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T20:24:37.0971680Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:25:25.5220403Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:26:26.1709367Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:28:10.8702226Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T20:28:20.6816207Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:30:01.9156106Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:31:03.6506793Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T20:31:13.0216829Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:32:12.3663255Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:33:19.0149826Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:34:19.3814538Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T20:34:28.3804431Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:42:31.8398588Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T20:42:49.5733187Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:44:52.8428535Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:46:23.5278428Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T20:46:32.6524690Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:48:08.7453777Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:48:34.3390599Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:49:42.0043740Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T20:49:50.4871001Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:51:55.5251594Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hopperoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:53:31.3134170Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T20:53:44.9089258Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:55:45.9433962Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T20:56:02.9031258Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T20:56:07.1485523Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T20:56:11.6290921Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:01:00.7031553Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T21:01:07.2152388Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:02:52.0281969Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:03:34.8416599Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:03:45.2863046Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T21:03:52.3545999Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:05:18.7372601Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:05:50.4790067Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:05:55.9772921Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T21:06:24.6312631Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:08:06.5049313Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:08:39.5563231Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:10:31.0771297Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:10:36.2289637Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T21:10:48.2563089Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:23:19.5196138Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T21:23:27.8330029Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:25:38.7525477Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:26:21.8755102Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "fuelstorage"
+      }
+    },
+    {
+      "time": "2026-08-03T21:26:34.5576187Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:28:17.8191620Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crudeoutput"
+      }
+    },
+    {
+      "time": "2026-08-03T21:31:39.3001273Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-03T21:52:36.2394843Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-08-03T21:53:10.9907565Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-08-03T21:54:48.0173847Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crate_tools"
+      }
+    },
+    {
+      "time": "2026-08-03T21:55:27.0089255Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-08-03T21:57:05.0145126Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-08-03T21:57:44.2975080Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-08-03T21:58:01.9595838Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-08-03T21:58:18.9195889Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "recycler_static"
+      }
+    },
+    {
+      "time": "2026-08-03T21:58:44.2006250Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hobobarrel_static"
+      }
+    },
+    {
+      "time": "2026-08-03T21:58:51.4610999Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "hobobarrel_static"
+      }
+    },
+    {
+      "time": "2026-08-03T22:03:59.4739228Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crate_normal"
+      }
+    },
+    {
+      "time": "2026-08-03T22:15:07.1540575Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crate_basic"
+      }
+    },
+    {
+      "time": "2026-08-03T22:17:54.0608126Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "shopkeeper_vm_invis_waterwell"
+      }
+    },
+    {
+      "time": "2026-08-03T22:22:09.1090194Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-03T22:24:44.4203513Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "scientist_corpse"
+      }
+    },
+    {
+      "time": "2026-08-03T22:28:42.5481303Z",
+      "type": "death",
+      "data": {
+        "victim": "76561198128593835",
+        "victimName": "Earth",
+        "wasWounded": true,
+        "pvp": false,
+        "attacker": null,
+        "weapon": "pistol.m92"
+      }
+    },
+    {
+      "time": "2026-08-03T22:38:29.5601082Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-03T22:51:37.2809453Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    },
+    {
+      "time": "2026-08-03T23:08:10.7526688Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_tools"
+      }
+    },
+    {
+      "time": "2026-08-03T23:08:15.1019460Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_attire"
+      }
+    },
+    {
+      "time": "2026-08-03T23:08:18.2910420Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_resources"
+      }
+    },
+    {
+      "time": "2026-08-03T23:09:50.8527732Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "npcvendingmachine_weapons"
+      }
+    },
+    {
+      "time": "2026-08-03T23:31:32.8905155Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "storage_barrel_b"
+      }
+    },
+    {
+      "time": "2026-08-03T23:33:27.7958037Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-03T23:33:45.1677401Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-03T23:33:52.4643716Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "crate_normal_2"
+      }
+    },
+    {
+      "time": "2026-08-03T23:36:07.5331016Z",
+      "type": "loot",
+      "data": {
+        "player": "76561198128593835",
+        "container": "cupboard.tool.deployed"
+      }
+    }
+  ]
+}
