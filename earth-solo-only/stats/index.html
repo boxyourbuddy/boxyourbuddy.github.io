@@ -80,6 +80,12 @@
   td.zero{ color:var(--text-muted); }
   .num{ font-variant-numeric:tabular-nums; }
 
+  .section-title{
+    font-family:var(--font-mono); font-size:0.74rem; letter-spacing:0.09em; text-transform:uppercase;
+    font-weight:700; color:var(--text-muted); margin:1.75rem 0 0.6rem;
+  }
+  .section-title:first-child{ margin-top:0; }
+
   .notice{
     background:var(--surface); border:1px solid var(--border); border-radius:12px;
     padding:1.25rem 1.4rem; color:var(--text-muted); font-size:0.93rem;
@@ -130,9 +136,13 @@
   // ---------------------------------------------------------------------------
   // Tabs.
   //
-  // A tab is either a fixed list of counter keys, or a prefix. Prefix tabs build
-  // their columns from whatever keys the data actually contains, so a stat added
-  // to the plugin appears here on its own with no edit to this page.
+  // A tab holds one or more sections, and a section is either a fixed list of
+  // counter keys or a key prefix. Prefix sections build their columns from
+  // whatever keys the data actually contains, so a stat added to the plugin
+  // appears here on its own with no edit to this page.
+  //
+  // A tab written with columns/prefix at the top level is treated as a single
+  // untitled section, which is the common case.
   // ---------------------------------------------------------------------------
   var TABS = [
     { id:"overview", label:"Overview", columns:[
@@ -162,6 +172,10 @@
       { key:"pvp.headshots.downed", label:"Executions" },
       { key:"@hsdist", label:"Avg Headshot (m)", decimals:1 }
     ]},
+    { id:"pve", label:"PVE", sections:[
+      { title:"Killed",    prefix:"pve." },
+      { title:"Killed By", prefix:"killedby." }
+    ]},
     { id:"coal",      label:"Coal",      prefix:"coal." },
     { id:"resources", label:"Resources", prefix:"gather." },
     { id:"weapons",   label:"Weapons",   prefix:"weapon." },
@@ -174,8 +188,9 @@
     sourceId: "current",
     tabId: "overview",
     search: "",
-    sortKey: null,
-    sortDir: "desc"
+    // Sort is per section, keyed "<tab id>|<section index>", so two tables on the
+    // same tab sort independently.
+    sort: {}
   };
 
   var el = {
@@ -256,16 +271,16 @@
     return TABS.filter(function(t){ return t.id === state.tabId; })[0];
   }
 
-  // A prefix tab's columns are whatever keys exist in this data set, ordered by
-  // server-wide total so the busiest stat sits nearest the name.
-  function columnsFor(tab, players){
-    if (tab.columns) return tab.columns;
+  // A prefix section's columns are whatever keys exist in this data set, ordered
+  // by server-wide total so the busiest stat sits nearest the name.
+  function columnsFor(section, players){
+    if (section.columns) return section.columns;
 
     var totals = {};
     players.forEach(function(p){
       var counters = p.counters || {};
       Object.keys(counters).forEach(function(key){
-        if (key.indexOf(tab.prefix) !== 0) return;
+        if (key.indexOf(section.prefix) !== 0) return;
         totals[key] = (totals[key] || 0) + counters[key];
       });
     });
@@ -273,8 +288,12 @@
     return Object.keys(totals).sort(function(a, b){
       return totals[b] - totals[a];
     }).map(function(key){
-      return { key: key, label: prettify(key, tab.prefix) };
+      return { key: key, label: prettify(key, section.prefix) };
     });
+  }
+
+  function sectionsFor(tab){
+    return tab.sections || [ { columns: tab.columns, prefix: tab.prefix } ];
   }
 
   function render(){
@@ -303,33 +322,45 @@
     });
 
     var tab = currentTab();
-    var columns = columnsFor(tab, players);
+    var sections = sectionsFor(tab);
 
     var needle = state.search.trim().toLowerCase();
-    var rows = needle
+    var visible = needle
       ? players.filter(function(p){ return p.Name.toLowerCase().indexOf(needle) !== -1; })
       : players;
 
-    // Default sort is the first column, biggest first. Names sort alphabetically.
-    var sortKey = state.sortKey || (columns.length ? columns[0].key : "@name");
-    var dir = state.sortDir === "asc" ? 1 : -1;
-    rows = rows.slice().sort(function(a, b){
-      if (sortKey === "@name") return a.Name.localeCompare(b.Name) * dir;
-      return (value(a, sortKey) - value(b, sortKey)) * dir;
-    });
+    el.count.textContent = visible.length + (visible.length === 1 ? " player" : " players");
 
-    el.count.textContent = rows.length + (rows.length === 1 ? " player" : " players");
+    var html = "";
 
-    if (!columns.length){
-      el.view.innerHTML = '<div class="notice">Nothing recorded under <strong>' + tab.label
-        + '</strong> yet. The counters exist, no one has triggered them in this wipe.</div>';
-    } else {
-      var html = '<div class="table-scroll"><table><thead><tr>';
-      html += '<th data-key="@name"' + (sortKey === "@name" ? ' data-sorted="' + state.sortDir + '"' : '') + '>Player</th>';
+    sections.forEach(function(section, index){
+      var columns = columnsFor(section, players);
+      var sortId = tab.id + "|" + index;
+
+      if (section.title) html += '<h2 class="section-title">' + escapeHtml(section.title) + '</h2>';
+
+      if (!columns.length){
+        html += '<div class="notice">Nothing recorded under <strong>'
+          + escapeHtml(section.title || tab.label)
+          + '</strong> yet. The counters exist, no one has triggered them in this wipe.</div>';
+        return;
+      }
+
+      // Default sort is the first column, biggest first. Names sort alphabetically.
+      var sort = state.sort[sortId] || { key: columns[0].key, dir: "desc" };
+      var dir = sort.dir === "asc" ? 1 : -1;
+
+      var rows = visible.slice().sort(function(a, b){
+        if (sort.key === "@name") return a.Name.localeCompare(b.Name) * dir;
+        return (value(a, sort.key) - value(b, sort.key)) * dir;
+      });
+
+      html += '<div class="table-scroll"><table data-sort-id="' + sortId + '"><thead><tr>';
+      html += '<th data-key="@name"' + (sort.key === "@name" ? ' data-sorted="' + sort.dir + '"' : '') + '>Player</th>';
       columns.forEach(function(col){
         html += '<th data-key="' + col.key + '"'
-             + (sortKey === col.key ? ' data-sorted="' + state.sortDir + '"' : '')
-             + '>' + col.label + '</th>';
+             + (sort.key === col.key ? ' data-sorted="' + sort.dir + '"' : '')
+             + '>' + escapeHtml(col.label) + '</th>';
       });
       html += '</tr></thead><tbody>';
 
@@ -343,21 +374,24 @@
       });
 
       html += '</tbody></table></div>';
-      el.view.innerHTML = html;
+    });
 
-      Array.prototype.forEach.call(el.view.querySelectorAll("th"), function(th){
-        th.addEventListener("click", function(){
-          var key = th.getAttribute("data-key");
-          if (state.sortKey === key){
-            state.sortDir = state.sortDir === "desc" ? "asc" : "desc";
-          } else {
-            state.sortKey = key;
-            state.sortDir = key === "@name" ? "asc" : "desc";
-          }
-          render();
-        });
+    el.view.innerHTML = html;
+
+    Array.prototype.forEach.call(el.view.querySelectorAll("th"), function(th){
+      th.addEventListener("click", function(){
+        var sortId = th.closest("table").getAttribute("data-sort-id");
+        var key = th.getAttribute("data-key");
+        var sort = state.sort[sortId];
+
+        if (sort && sort.key === key){
+          sort.dir = sort.dir === "desc" ? "asc" : "desc";
+        } else {
+          state.sort[sortId] = { key: key, dir: key === "@name" ? "asc" : "desc" };
+        }
+        render();
       });
-    }
+    });
 
     var parts = [];
 
@@ -389,8 +423,6 @@
     Array.prototype.forEach.call(el.tabs.querySelectorAll("button"), function(button){
       button.addEventListener("click", function(){
         state.tabId = button.getAttribute("data-id");
-        state.sortKey = null;
-        state.sortDir = "desc";
         renderTabs();
         render();
       });
@@ -414,8 +446,6 @@
 
   el.source.addEventListener("change", function(){
     state.sourceId = el.source.value;
-    state.sortKey = null;
-    state.sortDir = "desc";
     render();
   });
 
