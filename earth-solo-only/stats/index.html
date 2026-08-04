@@ -153,7 +153,17 @@
       { key:"@kdr",    label:"KDR", decimals:2 },
       { key:"pvp.kills",  label:"Kills" },
       { key:"pvp.deaths", label:"Deaths" },
+      { key:"pvp.suicides", label:"Suicides" },
+      { key:"pvp.wounded", label:"Wounded" },
+      { key:"pvp.recoveries", label:"Recoveries" },
+      { key:"med.syringe.medical", label:"Syringes" },
+      { key:"med.bandage", label:"Bandages" },
+      { key:"med.largemedkit", label:"Medkits" },
+      { key:"pvp.shots.fired", label:"Shots Fired" },
+      { key:"pvp.shots.hit", label:"Shots Hit" },
+      { key:"@accuracy", label:"Accuracy %", decimals:1 },
       { key:"pvp.headshots", label:"Headshots" },
+      { key:"pvp.headshots.kills", label:"Headshot Kills" },
       { key:"pvp.headshots.downed", label:"Executions" },
       { key:"@hsdist", label:"Avg Headshot (m)", decimals:1 }
     ]},
@@ -197,9 +207,14 @@
       var k = counter(player, "pvp.kills"), d = counter(player, "pvp.deaths");
       return d === 0 ? k : k / d;
     }
+    if (key === "@accuracy"){
+      var fired = counter(player, "pvp.shots.fired");
+      return fired === 0 ? 0 : counter(player, "pvp.shots.hit") * 100 / fired;
+    }
+    // Distance is recorded on headshot kills only, so the average is over those.
     if (key === "@hsdist"){
-      var hs = counter(player, "pvp.headshots");
-      return hs === 0 ? 0 : (counter(player, "pvp.headshots.distance.cm") / 100) / hs;
+      var hsKills = counter(player, "pvp.headshots.kills");
+      return hsKills === 0 ? 0 : (counter(player, "pvp.headshots.distance.cm") / 100) / hsKills;
     }
     return counter(player, key);
   }
