@@ -145,48 +145,198 @@
   // untitled section, which is the common case.
   // ---------------------------------------------------------------------------
   var TABS = [
-    { id:"overview", label:"Overview", columns:[
-      { key:"@hours",  label:"Hours" },
-      { key:"@kdr",    label:"KDR", decimals:2 },
-      { key:"pvp.kills",  label:"Kills" },
-      { key:"pvp.deaths", label:"Deaths" },
-      { key:"coal.bought", label:"Coal Bought" },
-      { key:"loot.containers", label:"Containers Looted" }
-    ]},
     { id:"pvp", label:"PVP", columns:[
-      { key:"@kdr",    label:"KDR", decimals:2 },
-      { key:"pvp.kills",  label:"Kills" },
+      { key:"@kdr",              label:"KDR", decimals:2 },
+      { key:"pvp.kills",         label:"Kills" },
+      { key:"pvp.deaths",        label:"Deaths" },
+      { key:"pvp.suicides",      label:"Suicides" },
+      { key:"pvp.wounded",       label:"Wounded" },
+      { key:"pvp.recoveries",    label:"Wounded Recoveries" },
+      { key:"med.syringe.medical", label:"Syringes Used" },
+      { key:"med.bandage",       label:"Bandages Used" },
+      { key:"med.largemedkit",   label:"Medkits Used" },
+      { key:"pvp.shots.fired",   label:"Shots Fired" },
+      { key:"pvp.shots.hit",     label:"Shots Hit" },
+      { key:"pvp.headshots",     label:"Headshots" },
+      // Ours, from here on.
       { key:"pvp.deaths.player", label:"Deaths to Players" },
-      { key:"pvp.deaths", label:"Deaths (All)" },
-      { key:"pvp.suicides", label:"Suicides" },
-      { key:"pvp.wounded", label:"Wounded" },
-      { key:"pvp.recoveries", label:"Recoveries" },
-      { key:"med.syringe.medical", label:"Syringes" },
-      { key:"med.bandage", label:"Bandages" },
-      { key:"med.largemedkit", label:"Medkits" },
-      { key:"pvp.shots.fired", label:"Shots Fired" },
-      { key:"pvp.shots.hit", label:"Shots Hit" },
-      { key:"@accuracy", label:"Accuracy %", decimals:1 },
-      { key:"pvp.headshots", label:"Headshots" },
-      { key:"pvp.headshots.kills", label:"Headshot Kills" },
+      { key:"@accuracy",         label:"Accuracy %", decimals:1 },
+      { key:"pvp.headshots.kills",  label:"Headshot Kills" },
       { key:"pvp.headshots.downed", label:"Executions" },
-      { key:"@hsdist", label:"Avg Headshot (m)", decimals:1 }
+      { key:"@hsdist",           label:"Avg Headshot (m)", decimals:1 }
     ]},
+
     { id:"pve", label:"PVE", sections:[
-      { title:"Killed",    prefix:"pve." },
-      { title:"Killed By", prefix:"killedby." }
+      { title:"Killed", columns:[
+        { key:"pve.scientist",     label:"Scientist" },
+        { key:"pve.tunneldweller", label:"Tunnel Dweller" },
+        { key:"pve.bear",          label:"Bear" },
+        { key:"pve.polarbear",     label:"Polar Bear" },
+        { key:"pve.boar",          label:"Boar" },
+        { key:"pve.wolf",          label:"Wolf" },
+        { key:"pve.stag",          label:"Stag" },
+        { key:"pve.shark",         label:"Shark" },
+        { key:"pve.crocodile",     label:"Crocodile" },
+        { key:"pve.tiger",         label:"Tiger" },
+        { key:"pve.panther",       label:"Panther" },
+        { key:"pve.snake",         label:"Snake" },
+        { key:"pve.bradley",       label:"Bradley APC" },
+        { key:"vehicle.cars.shredded", label:"Cars Shredded" }
+      ]},
+      // Ours. Moose does not break deaths down by what killed you.
+      { title:"Killed By", columns:[
+        { key:"killedby.player",        label:"Player" },
+        { key:"killedby.scientist",     label:"Scientist" },
+        { key:"killedby.tunneldweller", label:"Tunnel Dweller" },
+        { key:"killedby.bear",          label:"Bear" },
+        { key:"killedby.polarbear",     label:"Polar Bear" },
+        { key:"killedby.boar",          label:"Boar" },
+        { key:"killedby.wolf",          label:"Wolf" },
+        { key:"killedby.crocodile",     label:"Crocodile" },
+        { key:"killedby.tiger",         label:"Tiger" },
+        { key:"killedby.panther",       label:"Panther" },
+        { key:"killedby.snake",         label:"Snake" },
+        { key:"killedby.shark",         label:"Shark" },
+        { key:"killedby.bradley",       label:"Bradley APC" },
+        { key:"killedby.patrolhelicopter", label:"Patrol Heli" },
+        { key:"killedby.fall",          label:"Fall" },
+        { key:"killedby.drowned",       label:"Drowning" },
+        { key:"killedby.cold",          label:"Cold" },
+        { key:"killedby.heat",          label:"Heat" },
+        { key:"killedby.hunger",        label:"Hunger" },
+        { key:"killedby.thirst",        label:"Thirst" },
+        { key:"killedby.radiation",     label:"Radiation" },
+        { key:"killedby.bleeding",      label:"Bleeding" },
+        { key:"killedby.self",          label:"Self" }
+      ]}
     ]},
-    { id:"coal",      label:"Coal",      prefix:"coal." },
-    { id:"resources", label:"Resources", prefix:"gather." },
-    { id:"weapons",   label:"Weapons",   prefix:"weapon." },
-    { id:"looting",   label:"Looting",   prefix:"loot." },
-    { id:"food",      label:"Food",      prefix:"consume." }
+
+    { id:"resources", label:"Resources", columns:[
+      { key:"gather.wood",         label:"Wood" },
+      { key:"gather.stones",       label:"Stone" },
+      { key:"gather.metal.ore",    label:"Metal Ore" },
+      { key:"gather.sulfur.ore",   label:"Sulfur Ore" },
+      { key:"gather.hq.metal.ore", label:"HQM Ore" },
+      { key:"resource.diesel",     label:"Diesel Collected" },
+      // Ours. The Coal Event is the whole point of this server.
+      { key:"coal.bought",         label:"Coal Bought" },
+      { key:"coal.stored",         label:"Coal Stored" }
+    ]},
+
+    { id:"building", label:"Building", columns:[
+      { key:"build.blocks",      label:"Blocks Built" },
+      { key:"build.boat.blocks", label:"Boat Blocks Built" },
+      { key:"build.upgraded",    label:"Blocks Upgraded" },
+      { key:"build.demolished",  label:"Blocks Demolished" },
+      { key:"build.used.hqm",    label:"HQM Used" },
+      { key:"build.used.metal",  label:"Metal Used" },
+      { key:"build.used.stone",  label:"Stone Used" },
+      { key:"build.used.wood",   label:"Wood Used" }
+    ]},
+
+    { id:"farming", label:"Farming", columns:[
+      // These come off the same gather counters as the Resources tab, because in
+      // Rust hemp, animals and crops are all harvested through the same path.
+      { key:"gather.cloth",          label:"Cloth" },
+      { key:"gather.fat.animal",     label:"Animal Fat" },
+      { key:"gather.leather",        label:"Leather" },
+      { key:"gather.bone.fragments", label:"Bone Fragments" },
+      { key:"gather.mushroom",       label:"Mushroom" },
+      { key:"gather.pumpkin",        label:"Pumpkin" },
+      { key:"gather.corn",           label:"Corn" },
+      { key:"gather.wheat",          label:"Wheat" },
+      { key:"gather.potato",         label:"Potato" },
+      { key:"@berries",              label:"Berry" }
+    ]},
+
+    { id:"looting", label:"Looting", columns:[
+      { key:"loot.crate",        label:"Loot Crate" },
+      { key:"loot.barrel",       label:"Loot Barrel" },
+      { key:"loot.oilcontainer", label:"Oil Container" },
+      { key:"loot.elitecrate",   label:"Elite Crate" },
+      { key:"loot.lockedcrate",  label:"Locked Crate" },
+      { key:"loot.airdrop",      label:"Airdrop" },
+      { key:"loot.bradleycrate", label:"Bradley Crate" },
+      { key:"loot.helicrate",    label:"Heli Crate" },
+      { key:"card.green",        label:"Green Card Uses" },
+      { key:"card.blue",         label:"Blue Card Uses" },
+      { key:"card.red",          label:"Red Card Uses" },
+      // Ours. Every container opened, whatever type.
+      { key:"loot.containers",   label:"Containers Opened" }
+    ]},
+
+    { id:"recycling", label:"Recycling", columns:[
+      { key:"recycle.cycles",           label:"Recycler Cycles" },
+      { key:"recycle.items",            label:"Total Items Recycled" },
+      { key:"recycle.items.monument",   label:"Items Recycled (Monument)" },
+      { key:"recycle.items.safezone",   label:"Items Recycled (Safe Zone)" },
+      { key:"recycle.scrap",            label:"Scrap Produced" },
+      { key:"recycle.hqm",              label:"HQM Produced" },
+      { key:"recycle.metal",            label:"Metal Produced" },
+      { key:"recycle.cloth",            label:"Cloth Produced" }
+    ]},
+
+    { id:"boom", label:"Boom", columns:[
+      { key:"boom.rocket.basic",       label:"Rocket" },
+      { key:"boom.rocket.hv",          label:"H.V. Rocket" },
+      { key:"boom.rocket.incendiary",  label:"Incen. Rocket" },
+      { key:"boom.explosive.ammo",     label:"Explo. Ammo" },
+      { key:"boom.explosive.timed",    label:"C4" },
+      { key:"boom.satchel",            label:"Satchel Charge" },
+      { key:"boom.mlrs",               label:"MLRS" },
+      { key:"boom.mortar.he",          label:"Mortar H.E." },
+      { key:"boom.mortar.frag",        label:"Mortar Frag" },
+      { key:"boom.40mm.he",            label:"40mm H.E." },
+      { key:"boom.40mm.smoke",         label:"40mm Smoke" },
+      { key:"boom.grenade.f1",         label:"F1 Grenade" },
+      { key:"boom.grenade.beancan",    label:"Beancan Grenade" },
+      { key:"boom.grenade.flash",      label:"Flashbang" },
+      { key:"boom.grenade.smoke",      label:"Smoke" }
+    ]},
+
+    { id:"vehicles", label:"Vehicles", columns:[
+      { key:"vehicle.fuel.used",              label:"Fuel Used" },
+      { key:"vehicle.bought.minicopter",      label:"Minicopters Bought" },
+      { key:"vehicle.bought.scraptransport",  label:"Scrap Helis Bought" },
+      { key:"vehicle.bought.attackhelicopter", label:"Attack Helis Bought" },
+      { key:"vehicle.bought.hab",             label:"HABs Bought" },
+      { key:"vehicle.bought.rowboat",         label:"Boats Bought" },
+      { key:"vehicle.bought.rhib",            label:"Rhibs Bought" },
+      { key:"vehicle.bought.submarinesolo",   label:"Solo Subs Bought" },
+      { key:"vehicle.bought.submarineduo",    label:"Duo Subs Bought" },
+      { key:"vehicle.horse.claimed",          label:"Horse Claimed" }
+    ]},
+
+    { id:"vehiclecombat", label:"Vehicle Combat", columns:[
+      { key:"heli.rockets.fired", label:"Attack Heli Rockets Fired" },
+      { key:"heli.guns.fired",    label:"Attack Heli Guns Fired" },
+      { key:"heli.flares.used",   label:"Attack Heli Flares Used" },
+      { key:"heli.kills",         label:"Attack Heli Kills" },
+      { key:"sub.torpedos.fired", label:"Submarine Torpedos Fired" },
+      { key:"sub.kills",          label:"Submarine Kills" }
+    ]},
+
+    { id:"fishing", label:"Fishing", columns:[
+      { key:"@catchrate",       label:"Catch %", decimals:2 },
+      { key:"fish.casts",       label:"Casts" },
+      { key:"fish.caught",      label:"Fishes Caught" },
+      { key:"fish.catfish",     label:"Catfish" },
+      { key:"fish.orangeroughy", label:"Orange Roughy" },
+      { key:"fish.salmon",      label:"Salmon" },
+      { key:"fish.smallshark",  label:"Small Shark" },
+      { key:"fish.smalltrout",  label:"Small Trout" },
+      { key:"fish.yellowperch", label:"Yellow Perch" },
+      { key:"fish.anchovy",     label:"Anchovy" },
+      { key:"fish.herring",     label:"Herring" },
+      { key:"fish.sardine",     label:"Sardine" },
+      { key:"fish.junk",        label:"Junk" }
+    ]}
   ];
 
   var state = {
     payload: null,
     sourceId: "current",
-    tabId: "overview",
+    tabId: "pvp",
     search: "",
     // Sort is per section, keyed "<tab id>|<section index>", so two tables on the
     // same tab sort independently.
@@ -211,7 +361,6 @@
 
   // Derived columns, the ones that are a calculation rather than a stored number.
   function derived(player, key){
-    if (key === "@hours") return player.hours || 0;
     // Player versus player only. Deaths to animals, falls and the kill command are
     // still deaths, they just do not belong in a player-versus-player ratio.
     if (key === "@kdr"){
@@ -223,6 +372,18 @@
       return fired === 0 ? 0 : counter(player, "pvp.shots.hit") * 100 / fired;
     }
     // Distance is recorded on headshot kills only, so the average is over those.
+    // Rust has six berry colours and Moose shows one number, so they are summed.
+    if (key === "@berries"){
+      var counters = player.counters || {}, total = 0;
+      Object.keys(counters).forEach(function(k){
+        if (k.indexOf("gather.") === 0 && k.indexOf("berry") !== -1) total += counters[k];
+      });
+      return total;
+    }
+    if (key === "@catchrate"){
+      var casts = counter(player, "fish.casts");
+      return casts === 0 ? 0 : counter(player, "fish.caught") / casts;
+    }
     if (key === "@hsdist"){
       var hsKills = counter(player, "pvp.headshots.kills");
       return hsKills === 0 ? 0 : (counter(player, "pvp.headshots.distance.cm") / 100) / hsKills;
@@ -237,14 +398,6 @@
   function format(n, decimals){
     if (decimals) return n.toLocaleString(undefined, { minimumFractionDigits:decimals, maximumFractionDigits:decimals });
     return Math.round(n).toLocaleString();
-  }
-
-  // "gather.stones" -> "Stones", "weapon.rock.fired" -> "Rock Fired".
-  function prettify(key, prefix){
-    var rest = key.slice(prefix.length);
-    return rest.split(".").map(function(word){
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    }).join(" ");
   }
 
   // --- loading ---------------------------------------------------------------
@@ -271,29 +424,8 @@
     return TABS.filter(function(t){ return t.id === state.tabId; })[0];
   }
 
-  // A prefix section's columns are whatever keys exist in this data set, ordered
-  // by server-wide total so the busiest stat sits nearest the name.
-  function columnsFor(section, players){
-    if (section.columns) return section.columns;
-
-    var totals = {};
-    players.forEach(function(p){
-      var counters = p.counters || {};
-      Object.keys(counters).forEach(function(key){
-        if (key.indexOf(section.prefix) !== 0) return;
-        totals[key] = (totals[key] || 0) + counters[key];
-      });
-    });
-
-    return Object.keys(totals).sort(function(a, b){
-      return totals[b] - totals[a];
-    }).map(function(key){
-      return { key: key, label: prettify(key, section.prefix) };
-    });
-  }
-
   function sectionsFor(tab){
-    return tab.sections || [ { columns: tab.columns, prefix: tab.prefix } ];
+    return tab.sections || [ { columns: tab.columns } ];
   }
 
   function render(){
@@ -334,17 +466,10 @@
     var html = "";
 
     sections.forEach(function(section, index){
-      var columns = columnsFor(section, players);
+      var columns = section.columns;
       var sortId = tab.id + "|" + index;
 
       if (section.title) html += '<h2 class="section-title">' + escapeHtml(section.title) + '</h2>';
-
-      if (!columns.length){
-        html += '<div class="notice">Nothing recorded under <strong>'
-          + escapeHtml(section.title || tab.label)
-          + '</strong> yet. The counters exist, no one has triggered them in this wipe.</div>';
-        return;
-      }
 
       // Default sort is the first column, biggest first. Names sort alphabetically.
       var sort = state.sort[sortId] || { key: columns[0].key, dir: "desc" };
