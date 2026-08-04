@@ -146,7 +146,8 @@
     { id:"pvp", label:"PVP", columns:[
       { key:"@kdr",    label:"KDR", decimals:2 },
       { key:"pvp.kills",  label:"Kills" },
-      { key:"pvp.deaths", label:"Deaths" },
+      { key:"pvp.deaths.player", label:"Deaths to Players" },
+      { key:"pvp.deaths", label:"Deaths (All)" },
       { key:"pvp.suicides", label:"Suicides" },
       { key:"pvp.wounded", label:"Wounded" },
       { key:"pvp.recoveries", label:"Recoveries" },
@@ -196,8 +197,10 @@
   // Derived columns, the ones that are a calculation rather than a stored number.
   function derived(player, key){
     if (key === "@hours") return player.hours || 0;
+    // Player versus player only. Deaths to animals, falls and the kill command are
+    // still deaths, they just do not belong in a player-versus-player ratio.
     if (key === "@kdr"){
-      var k = counter(player, "pvp.kills"), d = counter(player, "pvp.deaths");
+      var k = counter(player, "pvp.kills"), d = counter(player, "pvp.deaths.player");
       return d === 0 ? k : k / d;
     }
     if (key === "@accuracy"){
