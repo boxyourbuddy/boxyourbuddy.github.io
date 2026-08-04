@@ -118,20 +118,14 @@
   "use strict";
 
   // ---------------------------------------------------------------------------
-  // Data sources.
+  // Data source.
   //
-  // The Oxide data files are dropped into this folder unchanged, under the names
-  // the plugin writes. A static page cannot list a directory, so archived wipes
-  // are declared in wipes.json. That file is optional: without it the page still
-  // shows all time and the current wipe.
-  //
-  // wipes.json is a plain array, newest first:
-  //   [ { "file": "PlayerStatsLogger_Wipe_2026-08-06.json", "label": "6 August 2026" } ]
+  // data.json is committed straight into this folder by the Player Stats Logger
+  // plugin every few minutes, so nothing here is copied by hand. It carries every
+  // set (this wipe, all time, and archived wipes later) in one file, which keeps
+  // the upload to a single commit.
   // ---------------------------------------------------------------------------
-  var BASE_SOURCES = [
-    { id: "alltime", label: "All Time",  file: "PlayerStatsLogger_AllTime.json" },
-    { id: "current", label: "This Wipe", file: "PlayerStatsLogger_CurrentWipe.json" }
-  ];
+  var DATA_FILE = "data.json";
 
   // ---------------------------------------------------------------------------
   // Tabs.
@@ -175,13 +169,12 @@
   ];
 
   var state = {
+    payload: null,
     sourceId: "current",
     tabId: "overview",
     search: "",
     sortKey: null,
-    sortDir: "desc",
-    cache: {},
-    sources: BASE_SOURCES.slice()
+    sortDir: "desc"
   };
 
   var el = {
@@ -196,13 +189,13 @@
   // --- helpers ---------------------------------------------------------------
 
   function counter(player, key){
-    var c = player.Counters || {};
+    var c = player.counters || {};
     return typeof c[key] === "number" ? c[key] : 0;
   }
 
   // Derived columns, the ones that are a calculation rather than a stored number.
   function derived(player, key){
-    if (key === "@hours") return (player.PlaytimeSeconds || 0) / 3600;
+    if (key === "@hours") return player.hours || 0;
     if (key === "@kdr"){
       var k = counter(player, "pvp.kills"), d = counter(player, "pvp.deaths");
       return d === 0 ? k : k / d;
@@ -238,26 +231,20 @@
 
   // --- loading ---------------------------------------------------------------
 
-  function fetchJson(file){
-    return fetch(file, { cache:"no-store" }).then(function(res){
+  function load(){
+    return fetch(DATA_FILE, { cache:"no-store" }).then(function(res){
       if (!res.ok) throw new Error(res.status + " " + res.statusText);
       return res.json();
+    }).then(function(data){
+      state.payload = data;
+    }).catch(function(err){
+      state.payload = { error: err.message };
     });
   }
 
-  function loadSource(id){
-    if (state.cache[id]) return Promise.resolve(state.cache[id]);
-
-    var source = state.sources.filter(function(s){ return s.id === id; })[0];
-    if (!source) return Promise.resolve(null);
-
-    return fetchJson(source.file).then(function(data){
-      state.cache[id] = data;
-      return data;
-    }).catch(function(err){
-      state.cache[id] = { error: err.message, file: source.file };
-      return state.cache[id];
-    });
+  function currentSet(){
+    var sets = (state.payload && state.payload.sets) || [];
+    return sets.filter(function(s){ return s.id === state.sourceId; })[0] || sets[0] || null;
   }
 
   // --- rendering -------------------------------------------------------------
@@ -273,7 +260,7 @@
 
     var totals = {};
     players.forEach(function(p){
-      var counters = p.Counters || {};
+      var counters = p.counters || {};
       Object.keys(counters).forEach(function(key){
         if (key.indexOf(tab.prefix) !== 0) return;
         totals[key] = (totals[key] || 0) + counters[key];
@@ -288,26 +275,27 @@
   }
 
   function render(){
-    var data = state.cache[state.sourceId];
-    if (!data){ el.view.innerHTML = '<div class="notice">Loading...</div>'; return; }
+    var payload = state.payload;
+    if (!payload){ el.view.innerHTML = '<div class="notice">Loading...</div>'; return; }
 
-    if (data.error){
-      el.view.innerHTML = '<div class="notice"><strong>No data file yet.</strong>'
-        + '<p style="margin:0.6rem 0 0;">This page reads the Player Stats Logger files straight out of the server\'s '
-        + '<code>oxide/data</code> folder. Download them from the LOW.ms File Manager and drop them in beside this page:</p>'
-        + '<ul><li><code>PlayerStatsLogger_AllTime.json</code></li>'
-        + '<li><code>PlayerStatsLogger_CurrentWipe.json</code></li>'
-        + '<li>any <code>PlayerStatsLogger_Wipe_*.json</code> archives, listed in <code>wipes.json</code></li></ul>'
-        + '<p style="margin:0.6rem 0 0;">Missing: <code>' + data.file + '</code> (' + data.error + ')</p></div>';
+    if (payload.error){
+      el.view.innerHTML = '<div class="notice"><strong>No data yet.</strong>'
+        + '<p style="margin:0.6rem 0 0;">This page reads <code>data.json</code>, which the Player Stats Logger plugin '
+        + 'commits into this folder on a timer. If it is missing, the upload has not run yet or the plugin has no '
+        + 'GitHub token set.</p>'
+        + '<p style="margin:0.6rem 0 0;">Error: <code>' + escapeHtml(payload.error) + '</code></p></div>';
       el.count.textContent = "";
       el.footer.textContent = "";
       return;
     }
 
-    var players = Object.keys(data.Players || {}).map(function(steamId){
-      var p = data.Players[steamId];
+    var set = currentSet();
+    if (!set){ el.view.innerHTML = '<div class="notice">The data file has no player sets in it.</div>'; return; }
+
+    var players = Object.keys(set.players || {}).map(function(steamId){
+      var p = set.players[steamId];
       p.SteamId = steamId;
-      p.Name = p.LastKnownName || steamId;
+      p.Name = p.name || steamId;
       return p;
     });
 
@@ -368,10 +356,19 @@
       });
     }
 
-    var started = data.WipeStarted ? new Date(data.WipeStarted) : null;
-    el.footer.textContent = started && !isNaN(started)
-      ? "Wipe started " + started.toLocaleString() + "."
-      : "All-time totals across every wipe.";
+    var parts = [];
+
+    if (state.sourceId === "alltime"){
+      parts.push("All-time totals across every wipe.");
+    } else {
+      var started = payload.wipeStarted ? new Date(payload.wipeStarted) : null;
+      if (started && !isNaN(started)) parts.push("Wipe started " + started.toLocaleString() + ".");
+    }
+
+    var generated = payload.generated ? new Date(payload.generated) : null;
+    if (generated && !isNaN(generated)) parts.push("Updated " + generated.toLocaleString() + ".");
+
+    el.footer.textContent = parts.join(" ");
   }
 
   function escapeHtml(s){
@@ -398,8 +395,10 @@
   }
 
   function renderSources(){
-    el.source.innerHTML = state.sources.map(function(s){
-      return '<option value="' + s.id + '"' + (s.id === state.sourceId ? " selected" : "") + '>' + s.label + '</option>';
+    var sets = (state.payload && state.payload.sets) || [];
+    el.source.innerHTML = sets.map(function(s){
+      return '<option value="' + s.id + '"' + (s.id === state.sourceId ? " selected" : "")
+        + '>' + escapeHtml(s.label || s.id) + '</option>';
     }).join("");
   }
 
@@ -412,25 +411,18 @@
 
   el.source.addEventListener("change", function(){
     state.sourceId = el.source.value;
-    el.view.innerHTML = '<div class="notice">Loading...</div>';
-    loadSource(state.sourceId).then(render);
+    state.sortKey = null;
+    state.sortDir = "desc";
+    render();
   });
 
   renderTabs();
-  renderSources();
   el.view.innerHTML = '<div class="notice">Loading...</div>';
 
-  // Archived wipes are optional. A missing wipes.json is normal on a server that
-  // has not wiped since the logger went in, so it is not treated as an error.
-  fetchJson("wipes.json").then(function(list){
-    if (!Array.isArray(list)) return;
-    list.forEach(function(entry, index){
-      state.sources.push({ id: "wipe" + index, label: entry.label || entry.file, file: entry.file });
-    });
+  load().then(function(){
     renderSources();
-  }).catch(function(){ /* no archives yet */ })
-    .then(function(){ return loadSource(state.sourceId); })
-    .then(render);
+    render();
+  });
 
 })();
 </script>
