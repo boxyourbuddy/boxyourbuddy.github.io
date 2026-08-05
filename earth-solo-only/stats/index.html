@@ -147,6 +147,15 @@
   // A tab written with columns/prefix at the top level is treated as a single
   // untitled section, which is the common case.
   // ---------------------------------------------------------------------------
+  // Every trap on the death side. Feeds both the Killed By columns below and the
+  // @trapdeaths total, so a new trap gets added in one place.
+  var TRAP_DEATH_KEYS = [
+    "killedby.guntrap", "killedby.landmine", "killedby.beartrap",
+    "killedby.spikes.trap", "killedby.flameturret", "killedby.autoturret",
+    "killedby.teslacoil", "killedby.spikes.floor", "killedby.barricade.metal",
+    "killedby.barricade.wood", "killedby.barricade.woodwire"
+  ];
+
   var TABS = [
     { id:"pvp", label:"PVP", columns:[
       { key:"@kdr",              label:"KDR", decimals:2 },
@@ -187,6 +196,7 @@
         { key:"trap.barricade.woodwire", label:"Barbed\nBarricade" }
       ]},
       { title:"Killed By", columns:[
+        { key:"@trapdeaths",           label:"Trap\nDeaths" },
         { key:"killedby.guntrap",      label:"Shotgun\nTrap" },
         { key:"killedby.landmine",     label:"Landmine" },
         { key:"killedby.beartrap",     label:"Bear\nTrap" },
@@ -416,6 +426,13 @@
       Object.keys(counters).forEach(function(k){
         if (k.indexOf("gather.") === 0 && k.indexOf("berry") !== -1) total += counters[k];
       });
+      return total;
+    }
+    // The kill side has a real trap.kills total from the plugin. The death side has
+    // no such counter, so it is summed here from the same eleven traps.
+    if (key === "@trapdeaths"){
+      var total = 0;
+      TRAP_DEATH_KEYS.forEach(function(k){ total += counter(player, k); });
       return total;
     }
     if (key === "@catchrate"){
