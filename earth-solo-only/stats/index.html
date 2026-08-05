@@ -166,19 +166,39 @@
       { key:"@accuracy",         label:"Accuracy %", decimals:1 },
       { key:"pvp.headshots.kills",  label:"Headshot\nKills" },
       { key:"pvp.headshots.downed", label:"Headshot on\nDowned Player" },
-      { key:"@hsdist",           label:"Average\nHeadshot/meter", decimals:1 },
-      { key:"trap.kills",        label:"Trap\nKills" },
-      { key:"trap.guntrap",      label:"Shotgun\nTrap" },
-      { key:"trap.landmine",     label:"Landmine" },
-      { key:"trap.beartrap",     label:"Bear\nTrap" },
-      { key:"trap.spikes.trap",  label:"Spikes\nTrap" },
-      { key:"trap.flameturret",  label:"Flame\nTurret" },
-      { key:"trap.autoturret",   label:"Auto\nTurret" },
-      { key:"trap.teslacoil",    label:"Tesla\nCoil" },
-      { key:"trap.spikes.floor", label:"Floor\nSpikes" },
-      { key:"trap.barricade.metal", label:"Metal\nBarricade" },
-      { key:"trap.barricade.wood", label:"Wooden\nBarricade" },
-      { key:"trap.barricade.woodwire", label:"Barbed\nBarricade" }
+      { key:"@hsdist",           label:"Average\nHeadshot/meter", decimals:1 }
+    ]},
+
+    // Ours. Traps are player-placed, so this is PVP, not PVE. Kills and deaths
+    // are the same eleven traps twice, one section each.
+    { id:"traps", label:"TRAPS", sections:[
+      { title:"Kills", columns:[
+        { key:"trap.kills",        label:"Trap\nKills" },
+        { key:"trap.guntrap",      label:"Shotgun\nTrap" },
+        { key:"trap.landmine",     label:"Landmine" },
+        { key:"trap.beartrap",     label:"Bear\nTrap" },
+        { key:"trap.spikes.trap",  label:"Spikes\nTrap" },
+        { key:"trap.flameturret",  label:"Flame\nTurret" },
+        { key:"trap.autoturret",   label:"Auto\nTurret" },
+        { key:"trap.teslacoil",    label:"Tesla\nCoil" },
+        { key:"trap.spikes.floor", label:"Floor\nSpikes" },
+        { key:"trap.barricade.metal", label:"Metal\nBarricade" },
+        { key:"trap.barricade.wood", label:"Wooden\nBarricade" },
+        { key:"trap.barricade.woodwire", label:"Barbed\nBarricade" }
+      ]},
+      { title:"Killed By", columns:[
+        { key:"killedby.guntrap",      label:"Shotgun\nTrap" },
+        { key:"killedby.landmine",     label:"Landmine" },
+        { key:"killedby.beartrap",     label:"Bear\nTrap" },
+        { key:"killedby.spikes.trap",  label:"Spikes\nTrap" },
+        { key:"killedby.flameturret",  label:"Flame\nTurret" },
+        { key:"killedby.autoturret",   label:"Auto\nTurret" },
+        { key:"killedby.teslacoil",    label:"Tesla\nCoil" },
+        { key:"killedby.spikes.floor", label:"Floor\nSpikes" },
+        { key:"killedby.barricade.metal", label:"Metal\nBarricade" },
+        { key:"killedby.barricade.wood", label:"Wooden\nBarricade" },
+        { key:"killedby.barricade.woodwire", label:"Barbed\nBarricade" }
+      ]}
     ]},
 
     { id:"pve", label:"PVE", sections:[
