@@ -233,8 +233,9 @@
         { key:"vehicle.cars.shredded", label:"Cars Shredded" }
       ]},
       // Ours. Moose does not break deaths down by what killed you.
+      // No Player column here, that is Deaths to Players on the PVP tab. No Patrol Heli
+      // either, it is suppressed server-wide.
       { title:"Killed By", columns:[
-        { key:"killedby.player",        label:"Player" },
         { key:"killedby.scientist",     label:"Scientist" },
         { key:"killedby.tunneldweller", label:"Tunnel Dweller" },
         { key:"killedby.bear",          label:"Bear" },
@@ -247,7 +248,6 @@
         { key:"killedby.snake",         label:"Snake" },
         { key:"killedby.shark",         label:"Shark" },
         { key:"killedby.bradley",       label:"Bradley APC" },
-        { key:"killedby.patrolhelicopter", label:"Patrol Heli" },
         { key:"killedby.sentry", label:"Sentry" },
         { key:"killedby.fall",          label:"Fall" },
         { key:"killedby.drowned",       label:"Drowning" },
