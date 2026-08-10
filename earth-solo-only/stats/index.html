@@ -281,8 +281,9 @@
     ]},
 
     { id:"building", label:"Building", columns:[
+      // Boat Blocks Built dropped 9 August 2026: boats are permanently blocked on this
+      // server, so building on a tugboat can never happen and the column could only read 0.
       { key:"build.blocks",      label:"Blocks Built" },
-      { key:"build.boat.blocks", label:"Boat Blocks Built" },
       { key:"build.upgraded",    label:"Blocks Upgraded" },
       { key:"build.demolished",  label:"Blocks Demolished" },
       { key:"build.used.hqm",    label:"HQM Used" },
