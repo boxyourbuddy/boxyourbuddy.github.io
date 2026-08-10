@@ -304,7 +304,12 @@
       { key:"gather.corn",           label:"Corn" },
       { key:"gather.wheat",          label:"Wheat" },
       { key:"gather.potato",         label:"Potato" },
-      { key:"@berries",              label:"Berry" }
+      { key:"gather.red.berry",      label:"Red Berry" },
+      { key:"gather.blue.berry",     label:"Blue Berry" },
+      { key:"gather.black.berry",    label:"Black Berry" },
+      { key:"gather.green.berry",    label:"Green Berry" },
+      { key:"gather.white.berry",    label:"White Berry" },
+      { key:"gather.yellow.berry",   label:"Yellow Berry" }
     ]},
 
     { id:"looting", label:"Looting", columns:[
@@ -434,14 +439,6 @@
       return fired === 0 ? 0 : counter(player, "pvp.shots.hit") * 100 / fired;
     }
     // Distance is recorded on headshot kills only, so the average is over those.
-    // Rust has six berry colours and Moose shows one number, so they are summed.
-    if (key === "@berries"){
-      var counters = player.counters || {}, total = 0;
-      Object.keys(counters).forEach(function(k){
-        if (k.indexOf("gather.") === 0 && k.indexOf("berry") !== -1) total += counters[k];
-      });
-      return total;
-    }
     // The kill side has a real trap.kills total from the plugin. The death side has
     // no such counter, so it is summed here from the same eleven traps.
     if (key === "@trapdeaths"){
