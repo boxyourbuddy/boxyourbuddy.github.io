@@ -241,9 +241,9 @@
         { key:"pve.snake",         label:"Snake" },
         { key:"pve.bradley",       label:"Bradley APC" },
         { key:"vehicle.cars.shredded", label:"Cars Shredded" },
-        // The other two thirds of the headshot split. The player third is on the PVP tab.
-        { key:"pve.headshots.scientist", label:"Headshots\nScientist" },
-        { key:"pve.headshots.animal",    label:"Headshots\nAnimal" }
+        // The other half of the headshot split, the player half is on the PVP tab. There
+        // is no animal column: Rust never flags a headshot on an animal, so it read 0.
+        { key:"pve.headshots.scientist", label:"Headshots\nScientist" }
       ]},
       // Ours. Moose does not break deaths down by what killed you.
       // No Player column here, that is Deaths to Players on the PVP tab. No Patrol Heli
