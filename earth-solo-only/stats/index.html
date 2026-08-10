@@ -178,7 +178,9 @@
       { key:"med.largemedkit",   label:"Medkits\nUsed" },
       { key:"pvp.shots.fired",   label:"Shots\nFired" },
       { key:"pvp.shots.hit",     label:"Shots\nHit" },
-      { key:"pvp.headshots",     label:"Headshots" },
+      // Headshots on real players only. The old pvp.headshots key is still written as a
+      // combined total, but it mixes in scientists and animals, so it is not shown here.
+      { key:"pvp.headshots.player", label:"Headshots" },
       // Ours, from here on.
       { key:"pvp.deaths.player", label:"Deaths to\nPlayers" },
       { key:"@accuracy",         label:"Accuracy %", decimals:1 },
@@ -238,7 +240,10 @@
         { key:"pve.panther",       label:"Panther" },
         { key:"pve.snake",         label:"Snake" },
         { key:"pve.bradley",       label:"Bradley APC" },
-        { key:"vehicle.cars.shredded", label:"Cars Shredded" }
+        { key:"vehicle.cars.shredded", label:"Cars Shredded" },
+        // The other two thirds of the headshot split. The player third is on the PVP tab.
+        { key:"pve.headshots.scientist", label:"Headshots\nScientist" },
+        { key:"pve.headshots.animal",    label:"Headshots\nAnimal" }
       ]},
       // Ours. Moose does not break deaths down by what killed you.
       // No Player column here, that is Deaths to Players on the PVP tab. No Patrol Heli
