@@ -306,10 +306,50 @@
       { key:"gather.potato",         label:"Potato" },
       { key:"gather.red.berry",      label:"Red Berry" },
       { key:"gather.blue.berry",     label:"Blue Berry" },
-      { key:"gather.black.berry",    label:"Black Berry" },
       { key:"gather.green.berry",    label:"Green Berry" },
       { key:"gather.white.berry",    label:"White Berry" },
       { key:"gather.yellow.berry",   label:"Yellow Berry" }
+    ]},
+
+    // Every recipe the mixing table makes, credited to whoever owns the table.
+    //
+    // The keys were read off the running server by making one of each rather than
+    // written from the item names, because Facepunch uses two naming schemes side by
+    // side: healingtea.advanced but advancedcoolingtea. Do not pattern-match a new
+    // one, make it and read the key.
+    { id:"mixing", label:"Mixing Table", columns:[
+      { key:"mix.healingtea",                  label:"Healing\nBasic" },
+      { key:"mix.healingtea.advanced",         label:"Healing\nAdvanced" },
+      { key:"mix.healingtea.pure",             label:"Healing\nPure" },
+      { key:"mix.maxhealthtea",                label:"Max Health\nBasic" },
+      { key:"mix.maxhealthtea.advanced",       label:"Max Health\nAdvanced" },
+      { key:"mix.maxhealthtea.pure",           label:"Max Health\nPure" },
+      { key:"mix.oretea",                      label:"Ore\nBasic" },
+      { key:"mix.oretea.advanced",             label:"Ore\nAdvanced" },
+      { key:"mix.oretea.pure",                 label:"Ore\nPure" },
+      { key:"mix.scraptea",                    label:"Scrap\nBasic" },
+      { key:"mix.scraptea.advanced",           label:"Scrap\nAdvanced" },
+      { key:"mix.scraptea.pure",               label:"Scrap\nPure" },
+      { key:"mix.woodtea",                     label:"Wood\nBasic" },
+      { key:"mix.woodtea.advanced",            label:"Wood\nAdvanced" },
+      { key:"mix.woodtea.pure",                label:"Wood\nPure" },
+      { key:"mix.radiationresisttea",          label:"Radiation\nBasic" },
+      { key:"mix.radiationresisttea.advanced", label:"Radiation\nAdvanced" },
+      { key:"mix.radiationresisttea.pure",     label:"Radiation\nPure" },
+      { key:"mix.harvestingtea",               label:"Harvesting\nBasic" },
+      { key:"mix.advancedharvestingtea",       label:"Harvesting\nAdvanced" },
+      { key:"mix.pureharvestingtea",           label:"Harvesting\nPure" },
+      { key:"mix.coolingtea",                  label:"Cooling\nBasic" },
+      { key:"mix.advancedcoolingtea",          label:"Cooling\nAdvanced" },
+      { key:"mix.purecoolingtea",              label:"Cooling\nPure" },
+      { key:"mix.warmingtea",                  label:"Warming\nBasic" },
+      { key:"mix.advancedwarmingtea",          label:"Warming\nAdvanced" },
+      { key:"mix.purewarmingtea",              label:"Warming\nPure" },
+      { key:"mix.craftingtea_quality",         label:"Crafting\nBasic" },
+      { key:"mix.advancedcraftingtea_quality", label:"Crafting\nAdvanced" },
+      { key:"mix.purecraftingtea_quality",     label:"Crafting\nPure" },
+      { key:"mix.gunpowder",                   label:"Gunpowder" },
+      { key:"mix.lowgradefuel",                label:"Low Grade Fuel" }
     ]},
 
     { id:"looting", label:"Looting", columns:[
