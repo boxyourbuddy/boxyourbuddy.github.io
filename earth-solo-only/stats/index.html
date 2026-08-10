@@ -276,7 +276,11 @@
       { key:"gather.metal.ore",    label:"Metal Ore" },
       { key:"gather.sulfur.ore",   label:"Sulfur Ore" },
       { key:"gather.hq.metal.ore", label:"HQM Ore" },
-      { key:"resource.diesel",     label:"Diesel Collected" }
+      { key:"resource.diesel",     label:"Diesel Collected" },
+      // Workbench crafting only. The mixing table makes both of these too, and that
+      // half is counted separately on the Mixing Table tab.
+      { key:"craft.gunpowder",     label:"Gunpowder\nCrafted" },
+      { key:"craft.lowgradefuel",  label:"Low Grade\nCrafted" }
       // Coal Bought and Coal Stored moved to the COAL tab. Not duplicated here.
     ]},
 
@@ -337,7 +341,8 @@
       { key:"mix.radiationresisttea.advanced", label:"Radiation\nAdvanced" },
       { key:"mix.radiationresisttea.pure",     label:"Radiation\nPure" },
       { key:"mix.harvestingtea",               label:"Harvesting\nBasic" },
-      { key:"mix.advancedharvestingtea",       label:"Harvesting\nAdvanced" },
+      // Facepunch typo in their own shortname: advance, no d, on this one item only.
+      { key:"mix.advanceharvestingtea",        label:"Harvesting\nAdvanced" },
       { key:"mix.pureharvestingtea",           label:"Harvesting\nPure" },
       { key:"mix.coolingtea",                  label:"Cooling\nBasic" },
       { key:"mix.advancedcoolingtea",          label:"Cooling\nAdvanced" },
