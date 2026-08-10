@@ -157,6 +157,15 @@
   ];
 
   var TABS = [
+    // Ours, and first because the Coal Event is the point of this server. Coal Bought and
+    // Coal Stored used to sit at the bottom of the Resources tab and were moved here rather
+    // than shown twice, the same call as pulling the trap columns out of PVP.
+    { id:"coal", label:"COAL", columns:[
+      { key:"@hours",      label:"Hours\nPlayed", decimals:1 },
+      { key:"coal.bought", label:"Coal\nBought" },
+      { key:"coal.stored", label:"Coal\nStored" }
+    ]},
+
     { id:"pvp", label:"PVP", columns:[
       { key:"@kdr",              label:"KDR", decimals:2 },
       { key:"pvp.kills",         label:"Kills" },
@@ -267,10 +276,8 @@
       { key:"gather.metal.ore",    label:"Metal Ore" },
       { key:"gather.sulfur.ore",   label:"Sulfur Ore" },
       { key:"gather.hq.metal.ore", label:"HQM Ore" },
-      { key:"resource.diesel",     label:"Diesel Collected" },
-      // Ours. The Coal Event is the whole point of this server.
-      { key:"coal.bought",         label:"Coal Bought" },
-      { key:"coal.stored",         label:"Coal Stored" }
+      { key:"resource.diesel",     label:"Diesel Collected" }
+      // Coal Bought and Coal Stored moved to the COAL tab. Not duplicated here.
     ]},
 
     { id:"building", label:"Building", columns:[
@@ -386,7 +393,7 @@
   var state = {
     payload: null,
     sourceId: "current",
-    tabId: "pvp",
+    tabId: "coal",
     search: "",
     // Sort is per section, keyed "<tab id>|<section index>", so two tables on the
     // same tab sort independently.
@@ -411,6 +418,10 @@
 
   // Derived columns, the ones that are a calculation rather than a stored number.
   function derived(player, key){
+    // Playtime is a top-level field rather than a counter, because it is seconds banked
+    // rather than a count of events. Pulled through here so a tab can list it as a column
+    // and sort on it like any other number.
+    if (key === "@hours") return typeof player.hours === "number" ? player.hours : 0;
     // Player versus player only. Deaths to animals, falls and the kill command are
     // still deaths, they just do not belong in a player-versus-player ratio.
     if (key === "@kdr"){
