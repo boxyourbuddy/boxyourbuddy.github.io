@@ -366,6 +366,9 @@
     // container including a player's own boxes. Bradley is "for now" -- it comes back if a
     // Launch Site ever lands on the map.
     { id:"looting", label:"Looting", columns:[
+      // A downed player, their corpse or the bag it leaves, counted once per victim per
+      // 90 seconds so one kill reads as one loot.
+      { key:"loot.player",       label:"Players Looted" },
       { key:"loot.crate",        label:"Loot Crate" },
       { key:"loot.barrel",       label:"Loot Barrel" },
       { key:"loot.oilcontainer", label:"Oil Container" },
