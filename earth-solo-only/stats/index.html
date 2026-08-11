@@ -360,20 +360,17 @@
       { key:"mix.lowgradefuel",                label:"Low Grade Fuel" }
     ]},
 
+    // Elite Crate, Locked Crate, Airdrop, Bradley Crate, Heli Crate and Red Card Uses were
+    // all removed 10 August 2026: none of them can happen on this server, so each could only
+    // ever read 0. Containers Opened went with them, having counted every open of every
+    // container including a player's own boxes. Bradley is "for now" -- it comes back if a
+    // Launch Site ever lands on the map.
     { id:"looting", label:"Looting", columns:[
       { key:"loot.crate",        label:"Loot Crate" },
       { key:"loot.barrel",       label:"Loot Barrel" },
       { key:"loot.oilcontainer", label:"Oil Container" },
-      { key:"loot.elitecrate",   label:"Elite Crate" },
-      { key:"loot.lockedcrate",  label:"Locked Crate" },
-      { key:"loot.airdrop",      label:"Airdrop" },
-      { key:"loot.bradleycrate", label:"Bradley Crate" },
-      { key:"loot.helicrate",    label:"Heli Crate" },
       { key:"card.green",        label:"Green Card Uses" },
-      { key:"card.blue",         label:"Blue Card Uses" },
-      { key:"card.red",          label:"Red Card Uses" },
-      // Ours. Every container opened, whatever type.
-      { key:"loot.containers",   label:"Containers Opened" }
+      { key:"card.blue",         label:"Blue Card Uses" }
     ]},
 
     { id:"recycling", label:"Recycling", columns:[
