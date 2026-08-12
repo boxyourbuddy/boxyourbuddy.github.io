@@ -373,18 +373,22 @@
       { key:"loot.barrel",       label:"Loot Barrel" },
       { key:"loot.oilcontainer", label:"Oil Container" },
       { key:"card.green",        label:"Green Card Uses" },
-      { key:"card.blue",         label:"Blue Card Uses" }
+      { key:"card.blue",         label:"Blue Card Uses" },
+      // Taking anything out of a recycler somebody else was running. Once per looter per
+      // pile, so pulling five stacks is one, and a new run can be stolen from again.
+      { key:"loot.recycler",     label:"Recyclers\nLooted" }
     ]},
 
+    // Items Recycled is PHYSICAL items eaten by the machine, so a stack of 10 Sheet Metal
+    // is 10. The four materials are read out of the recycler's own output slots rather
+    // than calculated, so the phase efficiency ramp cannot make them disagree with what
+    // players actually got. Credit goes to whoever flipped the switch.
     { id:"recycling", label:"Recycling", columns:[
-      { key:"recycle.cycles",           label:"Recycler Cycles" },
-      { key:"recycle.items",            label:"Total Items Recycled" },
-      { key:"recycle.items.monument",   label:"Items Recycled (Monument)" },
-      { key:"recycle.items.safezone",   label:"Items Recycled (Safe Zone)" },
-      { key:"recycle.scrap",            label:"Scrap Produced" },
-      { key:"recycle.hqm",              label:"HQM Produced" },
-      { key:"recycle.metal",            label:"Metal Produced" },
-      { key:"recycle.cloth",            label:"Cloth Produced" }
+      { key:"recycle.items",           label:"Items\nRecycled" },
+      { key:"recycle.scrap",           label:"Scrap" },
+      { key:"recycle.metal.refined",   label:"HQM" },
+      { key:"recycle.metal.fragments", label:"Metal\nFragments" },
+      { key:"recycle.cloth",           label:"Cloth" }
     ]},
 
     { id:"boom", label:"Boom", columns:[
