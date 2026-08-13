@@ -431,31 +431,6 @@
     { id:"vehicles", label:"Minicopters", columns:[
       { key:"vehicle.bought.minicopter",   label:"Minis Bought" },
       { key:"vehicle.crashed.minicopter",  label:"Minis Crashed" }
-    ]},
-
-    { id:"vehiclecombat", label:"Vehicle Combat", columns:[
-      { key:"heli.rockets.fired", label:"Attack Heli Rockets Fired" },
-      { key:"heli.guns.fired",    label:"Attack Heli Guns Fired" },
-      { key:"heli.flares.used",   label:"Attack Heli Flares Used" },
-      { key:"heli.kills",         label:"Attack Heli Kills" },
-      { key:"sub.torpedos.fired", label:"Submarine Torpedos Fired" },
-      { key:"sub.kills",          label:"Submarine Kills" }
-    ]},
-
-    { id:"fishing", label:"Fishing", columns:[
-      { key:"@catchrate",       label:"Catch %", decimals:2 },
-      { key:"fish.casts",       label:"Casts" },
-      { key:"fish.caught",      label:"Fishes Caught" },
-      { key:"fish.catfish",     label:"Catfish" },
-      { key:"fish.orangeroughy", label:"Orange Roughy" },
-      { key:"fish.salmon",      label:"Salmon" },
-      { key:"fish.smallshark",  label:"Small Shark" },
-      { key:"fish.smalltrout",  label:"Small Trout" },
-      { key:"fish.yellowperch", label:"Yellow Perch" },
-      { key:"fish.anchovy",     label:"Anchovy" },
-      { key:"fish.herring",     label:"Herring" },
-      { key:"fish.sardine",     label:"Sardine" },
-      { key:"fish.junk",        label:"Junk" }
     ]}
   ];
 
@@ -508,10 +483,6 @@
       var total = 0;
       TRAP_DEATH_KEYS.forEach(function(k){ total += counter(player, k); });
       return total;
-    }
-    if (key === "@catchrate"){
-      var casts = counter(player, "fish.casts");
-      return casts === 0 ? 0 : counter(player, "fish.caught") / casts;
     }
     if (key === "@hsdist"){
       var hsKills = counter(player, "pvp.headshots.kills");
