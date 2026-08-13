@@ -86,7 +86,9 @@
   .chip.planned::before{ background:var(--planned); }
   a.chip{ text-decoration:none; }
   a.chip:hover{ opacity:0.85; }
-  .legend-note{ font-size:0.78rem; color:var(--text-muted); }
+  .legend-donate{ display:inline-flex; align-items:center; gap:0.5rem; margin-left:1.6rem; }
+  @media (max-width:640px){ .legend-donate{ margin-left:0; } }
+  .legend-note{ font-size:0.78rem; color:var(--text-muted); text-decoration:none; }
 
   .layout{ display:grid; grid-template-columns:220px 1fr; gap:2.5rem; align-items:start; }
   @media (max-width:860px){ .layout{ grid-template-columns:1fr; } }
@@ -173,8 +175,10 @@
     <div class="legend">
       <span class="chip live">Working</span>
       <span class="chip open">Open</span>
-      <a href="/earth-solo-only/donate/" class="chip live">Donate</a>
-      <span class="legend-note">grow the prize pool</span>
+      <span class="legend-donate">
+        <a href="/earth-solo-only/donate/" class="chip live">Donate</a>
+        <a href="/earth-solo-only/donate/" class="legend-note">GROW the prize pool</a>
+      </span>
     </div>
   </header>
 
