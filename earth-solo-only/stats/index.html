@@ -269,7 +269,8 @@
         { key:"killedby.thirst",        label:"Thirst" },
         { key:"killedby.radiation",     label:"Radiation" },
         { key:"killedby.bleeding",      label:"Bleeding" },
-        { key:"killedby.self",          label:"Self" }
+        { key:"killedby.self",          label:"Self" },
+        { key:"@otherdeaths",           label:"Other" }
       ]}
     ]},
 
@@ -460,8 +461,52 @@
     return typeof c[key] === "number" ? c[key] : 0;
   }
 
+  // Every killedby.* key that already has a column of its own somewhere on this page.
+  // Collected by walking TABS rather than kept as a second list, so adding or removing a
+  // Killed By column adjusts the Other total on its own and the two can never disagree.
+  // Worked out once and cached, since it cannot change after load.
+  // Death causes another TAB already accounts for, kept out of Other so the same death is
+  // never shown twice. Deaths to Players on the PVP tab is the identical single death as
+  // killedby.player, one for one. Dan's rule, 13 August 2026: the full death count is
+  // accounted for ACROSS the page rather than inside one section, since PVP and PVE are
+  // different tabs. So PVE's Killed By sums to deaths minus player kills, and the PVP tab
+  // carries the rest.
+  // NOT the same situation as suicides: pvp.suicides reads 3 against killedby.suicide 1,
+  // so that pair are parallel counters rather than one death shown twice, and
+  // killedby.suicide stays in Other.
+  var DEATH_KEYS_ON_OTHER_TABS = ["killedby.player"];
+
+  var shownDeathKeys = null;
+  function shownDeathKeySet(){
+    if (shownDeathKeys) return shownDeathKeys;
+    shownDeathKeys = {};
+    TABS.forEach(function(tab){
+      (tab.sections || [tab]).forEach(function(section){
+        (section.columns || []).forEach(function(col){
+          if (col.key.indexOf("killedby.") === 0) shownDeathKeys[col.key] = true;
+        });
+      });
+    });
+    DEATH_KEYS_ON_OTHER_TABS.forEach(function(k){ shownDeathKeys[k] = true; });
+    return shownDeathKeys;
+  }
+
   // Derived columns, the ones that are a calculation rather than a stored number.
   function derived(player, key){
+    // Every death no Killed By column accounts for, so the section always adds up to the
+    // Deaths total on the PVP tab. Done by SUBTRACTION rather than by summing a list of
+    // leftover keys, because the whole point is to catch causes nobody has thought of.
+    // The car shredder, a car chassis, a minicopter, killedby.unknown and any damage type
+    // Rust adds later all land here with no edit to this page, and so does a death that
+    // recorded no cause at all, which a key list could never see.
+    // Deaths to players are the one thing deliberately NOT here, because the PVP tab
+    // already accounts for that exact death. See DEATH_KEYS_ON_OTHER_TABS above.
+    if (key === "@otherdeaths"){
+      var shown = shownDeathKeySet(), accounted = 0;
+      for (var k in shown) accounted += counter(player, k);
+      var rest = counter(player, "pvp.deaths") - accounted;
+      return rest > 0 ? rest : 0;
+    }
     // Playtime is a top-level field rather than a counter, because it is seconds banked
     // rather than a count of events. Pulled through here so a tab can list it as a column
     // and sort on it like any other number.
