@@ -689,9 +689,6 @@
       parts.push(set.label + ", final.");
     }
 
-    var generated = payload.generated ? new Date(payload.generated) : null;
-    if (generated && !isNaN(generated)) parts.push("Updated " + generated.toLocaleString() + ".");
-
     el.footer.textContent = parts.join(" ");
   }
 
