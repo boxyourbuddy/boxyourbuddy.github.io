@@ -580,8 +580,8 @@
     if (payload.error){
       el.view.innerHTML = '<div class="notice"><strong>No data yet.</strong>'
         + '<p style="margin:0.6rem 0 0;">This page reads <code>data.json</code>, which the Player Stats Logger plugin '
-        + 'commits into this folder on a timer. If it is missing, the upload has not run yet or the plugin has no '
-        + 'GitHub token set.</p>'
+        + 'commits into this folder once a week, when the event ends. If it is missing, no event has finished yet or '
+        + 'the plugin has no GitHub token set.</p>'
         + '<p style="margin:0.6rem 0 0;">Error: <code>' + escapeHtml(payload.error) + '</code></p></div>';
       el.count.textContent = "";
       el.footer.textContent = "";
@@ -590,6 +590,21 @@
 
     var set = currentSet();
     if (!set){ el.view.innerHTML = '<div class="notice">The data file has no player sets in it.</div>'; return; }
+
+    // A set can carry a message instead of a table. That is how the week in progress is
+    // handled: the current event's numbers are not published until the event ends, so the
+    // entry exists in the dropdown and explains itself rather than being missing.
+    if (set.message){
+      el.view.innerHTML = '<div class="notice">' + escapeHtml(set.message) + '</div>';
+      el.count.textContent = "";
+
+      // This branch returns before the footer is built at the end of render(), and
+      // this is the view the page opens on, so the date would otherwise be missing
+      // exactly where most people look.
+      var stamp = payload.generated ? new Date(payload.generated) : null;
+      el.footer.textContent = stamp && !isNaN(stamp) ? "Updated " + stamp.toLocaleString() + "." : "";
+      return;
+    }
 
     var players = Object.keys(set.players || {}).map(function(steamId){
       var p = set.players[steamId];
@@ -667,9 +682,13 @@
 
     if (state.sourceId === "alltime"){
       parts.push("All-time totals across every wipe.");
-    } else {
+    } else if (state.sourceId === "current"){
+      // wipeStarted describes the week in progress, so it only belongs on that set.
+      // An archived week carries its own dates in its label instead.
       var started = payload.wipeStarted ? new Date(payload.wipeStarted) : null;
       if (started && !isNaN(started)) parts.push("Wipe started " + started.toLocaleString() + ".");
+    } else {
+      parts.push(set.label + ", final.");
     }
 
     var generated = payload.generated ? new Date(payload.generated) : null;
