@@ -594,17 +594,13 @@
     // A set can carry a message instead of a table. That is how the week in progress is
     // handled: the current event's numbers are not published until the event ends, so the
     // entry exists in the dropdown and explains itself rather than being missing.
-    if (set.message){
-      el.view.innerHTML = '<div class="notice">' + escapeHtml(set.message) + '</div>';
-      el.count.textContent = "";
-
-      // This branch returns before the footer is built at the end of render(), and
-      // this is the view the page opens on, so the date would otherwise be missing
-      // exactly where most people look.
-      var stamp = payload.generated ? new Date(payload.generated) : null;
-      el.footer.textContent = stamp && !isNaN(stamp) ? "Updated " + stamp.toLocaleString() + "." : "";
-      return;
-    }
+    // A set can carry a message instead of data. That is how the week in progress is
+    // handled: its numbers are not published until the event ends.
+    //
+    // The message goes ABOVE the tables rather than replacing them, and the tables
+    // still draw with their headers and no rows, so anyone can tab through and see
+    // exactly which stats the server records while the week itself stays hidden.
+    var notice = set.message ? '<div class="notice">' + escapeHtml(set.message) + '</div>' : "";
 
     var players = Object.keys(set.players || {}).map(function(steamId){
       var p = set.players[steamId];
@@ -621,9 +617,11 @@
       ? players.filter(function(p){ return p.Name.toLowerCase().indexOf(needle) !== -1; })
       : players;
 
-    el.count.textContent = visible.length + (visible.length === 1 ? " player" : " players");
+    // No player count on a hidden week. There is nothing to count and "0 players"
+    // reads like a fault rather than a deliberate blank.
+    el.count.textContent = set.message ? "" : visible.length + (visible.length === 1 ? " player" : " players");
 
-    var html = "";
+    var html = notice;
 
     sections.forEach(function(section, index){
       var columns = section.columns;
