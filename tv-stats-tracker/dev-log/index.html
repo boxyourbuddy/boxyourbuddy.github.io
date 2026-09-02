@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Stats Dev Log — BoxYourBuddy</title>
+    <meta name="description" content="Version history for TV Stats for macOS. Every release, what changed, and when.">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7NDGQGQM5G');
+    </script>
+    <style>
+        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        body { margin: 0; background: #000; color: #fff; overflow-x: hidden; }
+        .page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px 80px; }
+        .top-bar { width: 100%; max-width: 760px; margin-bottom: 30px; }
+        .back-link { font-size: 0.75rem; letter-spacing: 3px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; }
+        .back-link:hover { color: #FFF0AD; }
+        .content { width: 100%; max-width: 760px; }
+        .hero-title h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin: 0 0 6px; font-weight: 800; letter-spacing: -0.5px; }
+        .hero-desc { font-size: 1rem; color: #888; line-height: 1.7; margin-bottom: 20px; font-weight: normal; }
+        hr { border: 0; border-top: 1px solid #1a1a1a; margin: 36px 0; }
+        .release { margin-bottom: 44px; }
+        .release-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+        .release-version { font-size: 0.8rem; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: #FFF0AD; }
+        .release-date { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #555; }
+        ul { list-style: none; padding: 0; margin: 0; }
+        ul li { font-size: 0.95rem; color: #aaa; line-height: 1.6; padding: 10px 0 10px 20px; border-bottom: 1px solid #111; position: relative; font-weight: normal; }
+        ul li:last-child { border-bottom: none; }
+        ul li::before { content: "—"; position: absolute; left: 0; color: #333; }
+        ul li b { color: #ddd; font-weight: 600; }
+        .footer-tag { margin-top: 60px; padding-top: 30px; border-top: 1px solid #1a1a1a; }
+        .footer-tag p { font-size: 0.8rem; letter-spacing: 3px; color: #444; text-transform: uppercase; margin: 4px 0; }
+        .footer-tag .highlight { color: #FFF0AD; }
+        .page-header { text-align: center; margin-bottom: 16px; width: 100%; }
+        .brand-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; }
+        .brand-logo { width: 50px; height: auto; }
+        .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; font-family: Arial, sans-serif; font-weight: bold; }
+        .brand-name .tint { color: #FFF0AD; }
+        .site-nav { margin-top: 16px; display: flex; gap: 20px; justify-content: center; align-items: center; }
+        .site-nav a { font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; font-family: Arial, sans-serif; font-weight: bold; }
+        .site-nav a:hover { color: #FFF0AD; }
+        .site-nav .dot { height: 15px; width: 15px; display: inline-block; vertical-align: middle; }
+    </style>
+</head>
+<body>
+    <div class="page">
+
+        <header class="page-header">
+            <div class="brand-wrap">
+                <img src="/images/box_logo_circle_red.png" alt="BoxYourBuddy logo" class="brand-logo">
+                <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
+            </div>
+            <nav class="site-nav">
+                <a href="/">HOME</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/writing/">WRITING</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/art/">ART</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/apps/" style="color: #FFF0AD;">APPS</a>
+            </nav>
+        </header>
+
+        <div class="top-bar">
+            <a href="/tv-stats-tracker/" class="back-link">← Back to TV Stats</a>
+        </div>
+
+        <div class="content">
+
+            <div class="hero-title">
+                <h2>TV Stats Dev Log</h2>
+                <p class="hero-desc">Every release, what changed, and when. Newest first.</p>
+            </div>
+
+            <hr>
+
+            <div class="release">
+                <div class="release-head">
+                    <span class="release-version">Version 1.1.0</span>
+                    <span class="release-date">September 2, 2026</span>
+                </div>
+                <ul>
+                    <li><b>Faster startup.</b> The app was re-saving your settings hundreds of times every time it opened. It now saves once. Home, Movies and TV Shows all load noticeably quicker.</li>
+                    <li><b>Episode counts only count episodes that have aired.</b> Announced episodes that have not aired yet no longer inflate your totals. This affected watch percentages, the "X of Y episodes watched" line, the episode count on a show's page, and which shows get hidden when Hide Watched is on.</li>
+                    <li><b>Episode totals refresh on their own.</b> A show's episode count used to be saved once and never updated, so percentages drifted and some climbed over 100%. They now refresh in the background after a week.</li>
+                    <li><b>No more made up totals.</b> If the app does not know a show's episode count yet, it shows no percentage instead of guessing from the wrong number.</li>
+                    <li><b>Fixed wrong Next Up episodes.</b> When a request to the database failed, the app treated it as proof the episode did not exist and skipped ahead to the wrong season. Failed requests are now recognized as failures, so nothing wrong is shown or saved, and it tries again.</li>
+                    <li><b>Fewer failed requests.</b> Opening the app used to fire off a lookup for every show at once, which the database rate limited. Lookups now go out in small groups. That burst is what caused the wrong episodes in the first place.</li>
+                    <li><b>Episode cast now shows the actual cast.</b> The cast list was showing the show's main cast, identical on every episode. Guest stars are now included, so the people actually in that episode appear. Silo season 1 episode 1 went from 7 names to 28.</li>
+                    <li><b>Hours watched on every actor.</b> The hours badge was capped at the first 15 people. Every actor with watched hours now gets one, and actor data is stored properly so it loads instantly on repeat visits instead of downloading again every time.</li>
+                    <li><b>Watched history file split in two.</b> Guest star and crew details moved into their own file, taking the history file from 73 MB down to 12 MB. Opening the app went from about 1.1 seconds to under a tenth of a second, and marking an episode watched went from about three quarters of a second to about a sixth. Nothing was deleted, and a full backup of the original file is kept.</li>
+                </ul>
+            </div>
+
+            <div class="footer-tag">
+                <p>TV Stats v1.1.0 &nbsp;·&nbsp; <span class="highlight">Free</span> &nbsp;·&nbsp; No Ads &nbsp;·&nbsp; macOS</p>
+                <p>More stats than Trakt. No subscription needed.</p>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
