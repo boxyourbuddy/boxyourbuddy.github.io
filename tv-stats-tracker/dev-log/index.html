@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TV Stats Dev Log — BoxYourBuddy</title>
+    <title>TV Stats Dev Log · BoxYourBuddy</title>
     <meta name="description" content="Version history for TV Stats for macOS. Every release, what changed, and when.">
     <link rel="icon" href="/favicon.png" type="image/png">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"></script>
@@ -31,7 +31,7 @@
         ul { list-style: none; padding: 0; margin: 0; }
         ul li { font-size: 0.95rem; color: #aaa; line-height: 1.6; padding: 10px 0 10px 20px; border-bottom: 1px solid #111; position: relative; font-weight: normal; }
         ul li:last-child { border-bottom: none; }
-        ul li::before { content: "—"; position: absolute; left: 0; color: #333; }
+        ul li::before { content: "\2022"; position: absolute; left: 0; color: #333; }
         ul li b { color: #ddd; font-weight: 600; }
         .footer-tag { margin-top: 60px; padding-top: 30px; border-top: 1px solid #1a1a1a; }
         .footer-tag p { font-size: 0.8rem; letter-spacing: 3px; color: #444; text-transform: uppercase; margin: 4px 0; }
@@ -85,13 +85,12 @@
                     <span class="release-date">September 2, 2026</span>
                 </div>
                 <ul>
-                    <li><b>Faster startup.</b> The app was re-saving your settings hundreds of times every time it opened. It now saves once. Home, Movies and TV Shows all load noticeably quicker.</li>
-                    <li><b>Episode counts only count episodes that have aired.</b> Announced episodes that have not aired yet no longer inflate your totals. This affected watch percentages, the "X of Y episodes watched" line, the episode count on a show's page, and which shows get hidden when Hide Watched is on.</li>
-                    <li><b>Episode totals refresh on their own.</b> A show's episode count used to be saved once and never updated, so percentages drifted and some climbed over 100%. They now refresh in the background after a week.</li>
-                    <li><b>No more made up totals.</b> If the app does not know a show's episode count yet, it shows no percentage instead of guessing from the wrong number.</li>
-                    <li><b>Fixed wrong Next Up episodes.</b> When a request to the database failed, the app treated it as proof the episode did not exist and skipped ahead to the wrong season. Failed requests are now recognized as failures, so nothing wrong is shown or saved, and it tries again.</li>
-                    <li><b>Fewer failed requests.</b> Opening the app used to fire off a lookup for every show at once, which the database rate limited. Lookups now go out in small groups. That burst is what caused the wrong episodes in the first place.</li>
-                    <li><b>Episode cast now shows the actual cast.</b> The cast list was showing the show's main cast, identical on every episode. Guest stars are now included, so the people actually in that episode appear. Silo season 1 episode 1 went from 7 names to 28.</li>
+                    <li><b>Faster startup.</b> For safety I had the app write to disk on every settings change. It just never batched, so they piled up. Opening the app was re-saving the entire settings file hundreds of times before it could draw the first screen. It now saves once after the changes settle. There is a forced save if the window closes, so nothing can be lost. Home, Movies and TV Shows all load noticeably quicker.</li>
+                    <li><b>Stats.</b> Announced episodes that have not aired yet no longer "exist" to the app, so stats and watch percentages are not affected.</li>
+                    <li><b>Episode totals refresh on their own.</b> A show's episode count used to be saved once at the time you first watched the show and never updated unless you opened that show's main page again. So, percentages drifted and were able to be over 100%. They now refresh in the background after a week.</li>
+                    <li><b>Fixed wrong Next Up episodes.</b> When a request to the database failed, the app treated it as proof the episode did not exist and skipped ahead to the wrong season. Failed requests are now recognized as failures, so nothing wrong is shown or saved.</li>
+                    <li><b>Fewer failed requests.</b> Opening the app used to fire a lookup for every show in your history at once, which the database rate limited. Lookups now occur in small groups. That burst and the limit at the open was causing wrong episodes to show.</li>
+                    <li><b>Episode cast update.</b> The cast list was listing the show's main cast, identical on every episode. Guest stars are now included, so the actors actually in that episode appear.</li>
                     <li><b>Hours watched on every actor.</b> The hours badge was capped at the first 15 people. Every actor with watched hours now gets one, and actor data is stored properly so it loads instantly on repeat visits instead of downloading again every time.</li>
                     <li><b>Watched history file split in two.</b> Guest star and crew details moved into their own file, taking the history file from 73 MB down to 12 MB. Opening the app went from about 1.1 seconds to under a tenth of a second, and marking an episode watched went from about three quarters of a second to about a sixth. Nothing was deleted, and a full backup of the original file is kept.</li>
                 </ul>
