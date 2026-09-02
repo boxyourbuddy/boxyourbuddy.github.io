@@ -91,7 +91,7 @@
                     <li><b>Fixed wrong Next Up episodes.</b> When a request to the database failed, the app treated it as proof the episode did not exist and skipped ahead to the wrong season. Failed requests are now recognized as failures, so nothing wrong is shown or saved.</li>
                     <li><b>Fewer failed requests.</b> Opening the app used to fire a lookup for every show in your history at once, which the database rate limited. Lookups now occur in small groups. That burst and the limit at the open was causing wrong episodes to show.</li>
                     <li><b>Episode cast update.</b> The cast list was listing the show's main cast, identical on every episode. Guest stars are now included, so the actors actually in that episode appear.</li>
-                    <li><b>Hours watched on every actor.</b> The hours badge was capped at the first 15 people. Every actor with watched hours now gets one, and actor data is stored properly so it loads instantly on repeat visits instead of downloading again every time.</li>
+                    <li><b>Hours watched on every actor.</b> The hours watched badge was capped at the first 15 actors listed for each episode page and movie page. Every actor with watched hours now gets one.</li>
                     <li><b>Watched history file split in two.</b> Guest star and crew details moved into their own file, taking the history file from 73 MB down to 12 MB. Opening the app went from about 1.1 seconds to under a tenth of a second, and marking an episode watched went from about three quarters of a second to about a sixth. Nothing was deleted, and a full backup of the original file is kept.</li>
                 </ul>
             </div>
