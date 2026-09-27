@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7NDGQGQM5G');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Thoughts of Trains",
+  "url": "https://boxyourbuddy.com/thoughts-of-trains/",
+  "image": "https://boxyourbuddy.com/thoughts-of-trains/media/shot-05-packed-spring.jpg",
+  "description": "A calm train routing puzzle. Flip the switches and send every train to the station that matches it. One mistake and you are done.",
+  "author": { "@type": "Organization", "name": "boxyourbuddy" },
+  "gamePlatform": ["macOS", "Windows"],
+  "genre": ["Puzzle", "Casual", "Strategy"],
+  "playMode": "SinglePlayer"
+}
+</script>
+<title>Thoughts of Trains | A Calm Train Routing Puzzle</title>
+<link rel="icon" href="/favicon.png" type="image/png">
+<meta name="description" content="A calm train routing puzzle. Flip the switches and send every train to the station that matches it. One mistake and you are done. Coming soon to Steam.">
+<meta property="og:title" content="Thoughts of Trains">
+<meta property="og:description" content="Flip the switches and send every train to the station that matches it. One mistake and you are done. Coming soon to Steam.">
+<meta property="og:image" content="https://boxyourbuddy.com/thoughts-of-trains/media/shot-05-packed-spring.jpg">
+<meta property="og:type" content="website">
+
+<style>
+    :root {
+        --bg: #000000;
+        --card: #111111;
+        --line: #222222;
+        --text: #ffffff;
+        --dim: #a0a0a0;
+        --faint: #666666;
+        --accent: #FFF0AD;
+    }
+    html, body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+    * { box-sizing: border-box; }
+
+    /* site header, same as the other product pages */
+    .page-header { text-align: center; padding: 40px 20px 16px; border-bottom: 1px solid rgba(255, 240, 173, 0.5); }
+    .brand-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; }
+    .brand-logo { width: 50px; height: auto; }
+    .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; font-family: Arial, sans-serif; font-weight: bold; }
+    .brand-name .tint { color: #FFF0AD; }
+    .site-nav { margin-top: 16px; display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap; }
+    .site-nav a { font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; font-family: Arial, sans-serif; font-weight: bold; }
+    .site-nav a:hover { color: #FFF0AD; }
+    .site-nav .dot { height: 15px; width: 15px; display: inline-block; vertical-align: middle; }
+
+    .store { width: 100%; max-width: 1200px; margin: 0 auto; padding: 28px 20px 40px; }
+
+    /* title row */
+    .crumbs { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--faint); font-family: Arial, sans-serif; font-weight: bold; }
+    .crumbs a { color: var(--faint); text-decoration: none; }
+    .crumbs a:hover { color: var(--accent); }
+    .game-title { font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 800; letter-spacing: -1px; margin: 8px 0 18px; line-height: 1.1; }
+
+    /* media + summary */
+    .top { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
+    .panel { background: var(--card); border: 1px solid var(--line); border-radius: 12px; }
+
+    .viewer { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #050505; border-radius: 12px 12px 0 0; overflow: hidden; }
+    .viewer video, .viewer img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .viewer img { cursor: zoom-in; }
+    .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 64px; border: none; background: rgba(0,0,0,0.55); color: #fff; font-size: 1.4rem; cursor: pointer; opacity: 0; transition: opacity 0.2s; }
+    .viewer:hover .nav-arrow { opacity: 1; }
+    .nav-arrow:hover { color: var(--accent); }
+    .nav-arrow.prev { left: 0; border-radius: 0 8px 8px 0; }
+    .nav-arrow.next { right: 0; border-radius: 8px 0 0 8px; }
+
+    .strip { display: flex; gap: 8px; overflow-x: auto; padding: 10px; scrollbar-width: thin; scrollbar-color: #333 transparent; }
+    .thumb { position: relative; flex: 0 0 auto; width: 116px; aspect-ratio: 16 / 9; border-radius: 4px; overflow: hidden; border: 2px solid transparent; cursor: pointer; background: #050505; padding: 0; opacity: 0.6; transition: opacity 0.2s, border-color 0.2s; }
+    .thumb:hover { opacity: 1; }
+    .thumb.on { border-color: var(--accent); opacity: 1; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumb .play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .thumb .play::after { content: ""; width: 0; height: 0; border-left: 14px solid #fff; border-top: 9px solid transparent; border-bottom: 9px solid transparent; filter: drop-shadow(0 0 4px rgba(0,0,0,0.9)); margin-left: 3px; }
+    .caption { padding: 0 12px 12px; font-size: 0.75rem; color: var(--dim); min-height: 1.4em; }
+
+    .summary { padding: 0 0 16px; overflow: hidden; }
+    .capsule { position: relative; aspect-ratio: 460 / 215; background: url("media/shot-07-calm-summer.jpg") center / cover; border-radius: 12px 12px 0 0; display: flex; align-items: center; justify-content: center; }
+    .capsule::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(0,0,0,0.55), rgba(0,0,0,0.15) 70%); border-radius: inherit; }
+    .capsule img { position: relative; width: 88%; height: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8)); }
+    .blurb { color: var(--dim); font-size: 0.85rem; line-height: 1.6; padding: 14px 16px 4px; margin: 0; }
+    .facts { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; padding: 12px 16px 0; font-size: 0.72rem; }
+    .facts dt { color: var(--faint); letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
+    .facts dd { margin: 0; color: var(--text); }
+    .facts dd.accent { color: var(--accent); }
+    .tags-label { padding: 14px 16px 6px; font-size: 0.72rem; color: var(--faint); letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px; }
+    .tag { font-size: 0.7rem; color: var(--dim); background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 4px; padding: 3px 8px; }
+
+    /* buy box */
+    .buy { margin-top: 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 18px 20px; background: linear-gradient(90deg, #141414, #0c0c0c); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 12px; }
+    .buy h2 { margin: 0; font-size: 1.15rem; font-weight: 800; }
+    .platforms { margin-top: 4px; font-size: 0.7rem; color: var(--faint); letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
+    .soon { display: inline-flex; flex-direction: column; align-items: center; padding: 8px 18px; border-radius: 8px; background: #1c1c1c; border: 1px solid #333; color: var(--accent); font-weight: 700; font-size: 0.9rem; line-height: 1.3; cursor: default; }
+    .soon span { font-size: 0.65rem; font-weight: 400; color: var(--dim); margin-top: 2px; }
+
+    /* lower columns */
+    .lower { margin-top: 20px; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
+    .section { padding: 22px 24px 24px; }
+    .section + .section { margin-top: 20px; }
+    .section-title { font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); font-family: Arial, sans-serif; font-weight: bold; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+    .about h3 { font-size: 1rem; margin: 22px 0 8px; }
+    .about h3:first-of-type { margin-top: 4px; }
+    .about p { color: var(--dim); font-size: 0.9rem; line-height: 1.7; margin: 0 0 12px; }
+    .about img { width: 100%; border-radius: 8px; border: 1px solid var(--line); margin: 6px 0 14px; display: block; }
+
+    .reqs-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+    .reqs-tabs button { font-family: inherit; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--dim); background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+    .reqs-tabs button.on { color: #000; background: var(--accent); border-color: var(--accent); }
+    .reqs { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 0.82rem; margin: 0; }
+    .reqs dt { color: var(--faint); font-weight: 700; }
+    .reqs dd { margin: 0; color: var(--dim); }
+    .reqs.hidden { display: none; }
+
+    .side { padding: 18px 18px 20px; }
+    .side + .side { margin-top: 20px; }
+    .features { list-style: none; margin: 0; padding: 0; }
+    .features li { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: var(--dim); padding: 7px 0; border-bottom: 1px solid #1a1a1a; }
+    .features li:last-child { border-bottom: none; }
+    .features li::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--accent); flex: none; }
+    .langs { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .langs th { font-size: 0.62rem; letter-spacing: 1px; text-transform: uppercase; color: var(--faint); font-weight: 700; text-align: center; padding: 0 4px 8px; }
+    .langs th:first-child { text-align: left; }
+    .langs td { color: var(--dim); padding: 6px 4px; border-top: 1px solid #1a1a1a; text-align: center; }
+    .langs td:first-child { text-align: left; color: var(--text); }
+    .langs .yes { color: var(--accent); }
+    .side p { color: var(--dim); font-size: 0.8rem; line-height: 1.6; margin: 0; }
+    .side a { color: var(--accent); }
+
+    .footer-note { font-size: 0.8rem; color: rgba(255,255,255,0.2); margin-top: 50px; text-align: center; border-top: 1px solid #111; padding-top: 20px; }
+
+    /* full size screenshot */
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: none; align-items: center; justify-content: center; z-index: 10; cursor: zoom-out; padding: 20px; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 100%; max-height: 100%; border-radius: 8px; }
+
+    @media (max-width: 900px) {
+        .top, .lower { grid-template-columns: minmax(0, 1fr); }
+        .nav-arrow { opacity: 1; }
+    }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+    <div class="brand-wrap">
+        <img src="/images/box_logo_circle_red.png" alt="BoxYourBuddy logo" class="brand-logo">
+        <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
+    </div>
+    <nav class="site-nav">
+        <a href="/">HOME</a>
+        <img src="/favicon.png" class="dot" alt="">
+        <a href="/writing/">WRITING</a>
+        <img src="/favicon.png" class="dot" alt="">
+        <a href="/art/">ART</a>
+        <img src="/favicon.png" class="dot" alt="">
+        <a href="/apps/" style="color: #FFF0AD;">APPS</a>
+    </nav>
+</header>
+
+<main class="store">
+    <div class="crumbs"><a href="/apps/">Apps</a> &rsaquo; Games &rsaquo; Thoughts of Trains</div>
+    <h2 class="game-title">Thoughts of Trains</h2>
+
+    <div class="top">
+        <div class="panel">
+            <div class="viewer" id="viewer">
+                <button class="nav-arrow prev" id="prev" aria-label="Previous">&lsaquo;</button>
+                <button class="nav-arrow next" id="next" aria-label="Next">&rsaquo;</button>
+            </div>
+            <div class="strip" id="strip"></div>
+            <div class="caption" id="caption"></div>
+        </div>
+
+        <aside class="panel summary">
+            <div class="capsule"><img src="media/title-smoke.png" alt="Thoughts of Trains"></div>
+            <p class="blurb">A calm train routing puzzle. Trains roll out one after another, each wearing a shape and a colour. Flip the switches and send every one to the station that matches it. One mistake and you are done.</p>
+            <dl class="facts">
+                <dt>Release</dt><dd class="accent">Coming soon</dd>
+                <dt>Developer</dt><dd>boxyourbuddy</dd>
+                <dt>Publisher</dt><dd>boxyourbuddy</dd>
+            </dl>
+            <div class="tags-label">Tags</div>
+            <div class="tags">
+                <span class="tag">Trains</span>
+                <span class="tag">Puzzle</span>
+                <span class="tag">Casual</span>
+                <span class="tag">Relaxing</span>
+                <span class="tag">Strategy</span>
+                <span class="tag">Procedural Generation</span>
+                <span class="tag">Minimalist</span>
+                <span class="tag">Singleplayer</span>
+            </div>
+        </aside>
+    </div>
+
+    <div class="buy">
+        <div>
+            <h2>Thoughts of Trains</h2>
+            <div class="platforms">macOS &middot; Windows</div>
+        </div>
+        <div class="soon">Coming soon to Steam<span>check back for the store link</span></div>
+    </div>
+
+    <div class="lower">
+        <div>
+            <section class="panel section about">
+                <h2 class="section-title">About This Game</h2>
+
+                <h3>One job. Get every train home.</h3>
+                <p>You are the controller. Trains come out of the entry one after another, each carrying a shape in a colour on its nose. Somewhere on the map is the station with that same shape and colour. Click a switch to flip it, and the train takes the other branch. Get it to the right platform and it is home. Send it to the wrong one, or to a station that is closed, and you are done.</p>
+                <p>A switch stays where you left it. You might flip one for the red circle and then need it straight back for the blue star right behind it. That is the whole game, and it gets busy.</p>
+
+                <img src="media/shot-06-busy-fall.jpg" alt="A busy map in fall with many trains on the track">
+
+                <h3>Stations wake up as you go</h3>
+                <p>A map starts with only a few stations open. Every few trains you deliver, another one lights up, and it never goes back to sleep. The map only ever gets bigger, and so does the number of trains you are keeping track of at once.</p>
+
+                <h3>Every seed is a place</h3>
+                <p>Type any word as a seed, or hit Randomize for one of over a hundred train words. The same seed always builds the same place: the same track, the same lakes, the same forest. What happens on it is different every run, from which stations open first to the season and where the sun sits.</p>
+
+                <img src="media/shot-08-quiet-winter.jpg" alt="A quiet winter map with snow and bare trees">
+
+                <h3>Four seasons</h3>
+                <p>Spring plants flowers round the open stations. Fall drops leaves under the trees. Winter lays snow on the branches and freezes the lakes. Pick one, or let each run choose.</p>
+
+                <h3>Made to sound like trains</h3>
+                <p>Every sound in the game is made by the game itself. Trains clack and chuff across open ground, a bell climbs the scale with every train you get home, and a low hum builds underneath as the map fills up.</p>
+
+                <h3>Your stats, kept on your machine</h3>
+                <p>Every game you finish is recorded: trains delivered, time played, switch flips, your best maps and when in the day you play. It all stays on your computer.</p>
+            </section>
+
+            <section class="panel section">
+                <h2 class="section-title">System Requirements</h2>
+                <div class="reqs-tabs">
+                    <button class="on" data-os="mac">macOS</button>
+                    <button data-os="win">Windows</button>
+                </div>
+                <dl class="reqs" id="reqs-mac">
+                    <dt>OS</dt><dd>macOS 12 Monterey or later</dd>
+                    <dt>Processor</dt><dd>Apple Silicon (M1 or later)</dd>
+                    <dt>Memory</dt><dd>4 GB RAM</dd>
+                    <dt>Storage</dt><dd>300 MB available space</dd>
+                    <dt>Display</dt><dd>1440 x 810 or larger recommended</dd>
+                </dl>
+                <dl class="reqs hidden" id="reqs-win">
+                    <dt>OS</dt><dd>Windows 10 64-bit or later</dd>
+                    <dt>Processor</dt><dd>Dual core, 2 GHz</dd>
+                    <dt>Memory</dt><dd>4 GB RAM</dd>
+                    <dt>Storage</dt><dd>300 MB available space</dd>
+                    <dt>Display</dt><dd>1440 x 810 or larger recommended</dd>
+                </dl>
+            </section>
+        </div>
+
+        <aside>
+            <section class="panel side">
+                <h2 class="section-title">Features</h2>
+                <ul class="features">
+                    <li>Single-player</li>
+                    <li>Plays fully offline</li>
+                    <li>No ads</li>
+                    <li>No microtransactions</li>
+                    <li>Seeded maps you can share</li>
+                    <li>Stats saved on your machine</li>
+                    <li>Windowed or fullscreen</li>
+                </ul>
+            </section>
+
+            <section class="panel side">
+                <h2 class="section-title">Languages</h2>
+                <table class="langs">
+                    <tr><th></th><th>Interface</th><th>Full Audio</th><th>Subtitles</th></tr>
+                    <tr><td>English</td><td class="yes">&#10003;</td><td>&ndash;</td><td>&ndash;</td></tr>
+                </table>
+            </section>
+
+            <section class="panel side">
+                <h2 class="section-title">More from boxyourbuddy</h2>
+                <p>Free Mac apps with no ads and no accounts. See them all on the <a href="/apps/">apps page</a>.</p>
+            </section>
+        </aside>
+    </div>
+
+    <div class="footer-note">Thoughts of Trains &middot; boxyourbuddy</div>
+</main>
+
+<div class="lightbox" id="lightbox"><img alt=""></div>
+
+<script>
+    const media = [
+        { type: 'video', src: 'media/video-open.mp4',     poster: 'media/video-open.jpg',     caption: 'How it plays' },
+        { type: 'video', src: 'media/video-speeds.mp4',   poster: 'media/video-speeds.jpg',   caption: 'Every train speed' },
+        { type: 'video', src: 'media/video-stations.mp4', poster: 'media/video-stations.jpg', caption: 'One seed, nineteen maps' },
+        { type: 'video', src: 'media/video-seeds.mp4',    poster: 'media/video-seeds.jpg',    caption: 'Pick a seed or type your own' },
+        { type: 'image', src: 'media/shot-05-packed-spring.jpg', caption: 'A packed map in spring' },
+        { type: 'image', src: 'media/shot-06-busy-fall.jpg',     caption: 'A busy map in fall' },
+        { type: 'image', src: 'media/shot-07-calm-summer.jpg',   caption: 'A calm start in summer' },
+        { type: 'image', src: 'media/shot-08-quiet-winter.jpg',  caption: 'A quiet map in winter' },
+        { type: 'image', src: 'media/shot-03-end-screen.jpg',    caption: 'The end of a run' },
+        { type: 'image', src: 'media/shot-01-settings.jpg',      caption: 'Settings' },
+        { type: 'image', src: 'media/shot-04-pause.jpg',         caption: 'Paused' },
+        { type: 'image', src: 'media/shot-02-stats-1.jpg',       caption: 'Your stats' },
+        { type: 'image', src: 'media/shot-02-stats-2.jpg',       caption: 'Your stats' },
+        { type: 'image', src: 'media/shot-02-stats-3.jpg',       caption: 'Your stats' },
+        { type: 'image', src: 'media/shot-02-stats-4.jpg',       caption: 'Your stats' },
+        { type: 'image', src: 'media/shot-02-stats-5.jpg',       caption: 'Your stats' }
+    ];
+
+    const viewer = document.getElementById('viewer');
+    const strip = document.getElementById('strip');
+    const caption = document.getElementById('caption');
+    const lightbox = document.getElementById('lightbox');
+    let current = -1;
+
+    media.forEach((m, i) => {
+        const b = document.createElement('button');
+        b.className = 'thumb';
+        b.setAttribute('aria-label', m.caption);
+        b.innerHTML = '<img src="' + (m.poster || m.src) + '" alt="" loading="lazy">' + (m.type === 'video' ? '<span class="play"></span>' : '');
+        b.addEventListener('click', () => show(i, true));
+        strip.appendChild(b);
+    });
+
+    function show(i, userPicked) {
+        i = (i + media.length) % media.length;
+        if (i === current) return;
+        current = i;
+        const m = media[i];
+        viewer.querySelectorAll('video, img').forEach(el => el.remove());
+
+        let el;
+        if (m.type === 'video') {
+            el = document.createElement('video');
+            el.src = m.src;
+            el.poster = m.poster;
+            el.controls = true;
+            el.playsInline = true;
+            el.preload = 'metadata';
+            // the first video starts muted like a store page; anything the visitor picks plays with sound
+            el.muted = !userPicked;
+            el.autoplay = true;
+            el.addEventListener('ended', () => show(current + 1, userPicked));
+        } else {
+            el = document.createElement('img');
+            el.src = m.src;
+            el.alt = m.caption;
+            el.addEventListener('click', () => {
+                lightbox.querySelector('img').src = m.src;
+                lightbox.classList.add('open');
+            });
+        }
+        viewer.prepend(el);
+        caption.textContent = m.caption;
+
+        strip.querySelectorAll('.thumb').forEach((t, n) => t.classList.toggle('on', n === i));
+        const t = strip.children[i];
+        strip.scrollTo({ left: t.offsetLeft - strip.clientWidth / 2 + t.clientWidth / 2, behavior: 'smooth' });
+    }
+
+    document.getElementById('prev').addEventListener('click', () => show(current - 1, true));
+    document.getElementById('next').addEventListener('click', () => show(current + 1, true));
+    lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') lightbox.classList.remove('open');
+        if (lightbox.classList.contains('open')) return;
+        if (e.key === 'ArrowRight') show(current + 1, true);
+        if (e.key === 'ArrowLeft') show(current - 1, true);
+    });
+
+    document.querySelectorAll('.reqs-tabs button').forEach(b => b.addEventListener('click', () => {
+        document.querySelectorAll('.reqs-tabs button').forEach(x => x.classList.toggle('on', x === b));
+        document.getElementById('reqs-mac').classList.toggle('hidden', b.dataset.os !== 'mac');
+        document.getElementById('reqs-win').classList.toggle('hidden', b.dataset.os !== 'win');
+    }));
+
+    show(0, false);
+</script>
+
+</body>
+</html>
