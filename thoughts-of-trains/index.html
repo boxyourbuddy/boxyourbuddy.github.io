@@ -97,9 +97,9 @@
     .caption { padding: 0 12px 12px; font-size: 0.75rem; color: var(--dim); min-height: 1.4em; }
 
     .summary { padding: 0 0 16px; overflow: hidden; }
-    .capsule { position: relative; aspect-ratio: 460 / 215; background: url("media/shot-06-calm-fall.jpg") center / cover; border-radius: 12px 12px 0 0; display: flex; align-items: center; justify-content: center; }
-    .capsule::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(0,0,0,0.55), rgba(0,0,0,0.15) 70%); border-radius: inherit; }
-    .capsule img { position: relative; width: 88%; height: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8)); }
+    /* the game's own title card; the radius matches its 18px corners at 618 x 204 so no map shows past them */
+    .capsule { padding: 16px 16px 0; }
+    .capsule img { width: 100%; height: auto; display: block; border-radius: 2.9% / 8.8%; }
     .blurb { color: var(--dim); font-size: 0.85rem; line-height: 1.6; padding: 14px 16px 4px; margin: 0; }
     .facts { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; padding: 12px 16px 0; font-size: 0.72rem; }
     .facts dt { color: var(--faint); letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
@@ -195,7 +195,7 @@
         </div>
 
         <aside class="panel summary">
-            <div class="capsule"><img src="media/title-smoke.png" alt="Thoughts of Trains"></div>
+            <div class="capsule"><img src="media/title-card.jpg" alt="Thoughts of Trains. One mistake and you are done!"></div>
             <p class="blurb">A calm train routing puzzle. Trains roll out one after another, each wearing a shape and a colour. Flip the switches and send every one to the station that matches it. One mistake and you are done.</p>
             <dl class="facts">
                 <dt>Release</dt><dd class="accent">Coming soon</dd>
@@ -335,6 +335,10 @@
     const caption = document.getElementById('caption');
     const lightbox = document.getElementById('lightbox');
     let current = -1;
+    // one sound setting for the whole playlist: starts muted so autoplay is allowed,
+    // and whatever the visitor sets on any video carries to every video after it
+    let muted = true;
+    let volume = 1;
 
     media.forEach((m, i) => {
         const b = document.createElement('button');
@@ -360,8 +364,9 @@
             el.controls = true;
             el.playsInline = true;
             el.preload = 'metadata';
-            // the first video starts muted like a store page; anything the visitor picks plays with sound
-            el.muted = !userPicked;
+            el.muted = muted;
+            el.volume = volume;
+            el.addEventListener('volumechange', () => { muted = el.muted; volume = el.volume; });
             el.autoplay = true;
             el.addEventListener('ended', () => show(current + 1, userPicked));
         } else {
