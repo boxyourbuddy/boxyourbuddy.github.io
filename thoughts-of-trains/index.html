@@ -17,18 +17,19 @@
   "name": "Thoughts of Trains",
   "url": "https://boxyourbuddy.com/thoughts-of-trains/",
   "image": "https://boxyourbuddy.com/thoughts-of-trains/media/shot-05-packed-spring.jpg",
-  "description": "A brain game that will test your ability to multi-task crossed with a switch management game made with the settings of RimWorld in mind. An indie game by a solo dev. Management, logic, puzzle, time management, arcade, score attack and trains. All ages. Coming soon to Steam.",
+  "description": "A brain game that will test your ability to multi-task crossed with a switch management game made with the settings of RimWorld in mind. An indie game by a solo dev. Management, logic, puzzle, time management, arcade, score attack and trains. All ages. Out now for macOS on itch.io. Windows coming soon.",
   "author": { "@type": "Organization", "name": "boxyourbuddy" },
   "gamePlatform": ["macOS", "Windows"],
   "genre": ["Management", "Logic", "Puzzle", "Time Management", "Arcade", "Indie"],
-  "playMode": "SinglePlayer"
+  "playMode": "SinglePlayer",
+  "offers": { "@type": "Offer", "price": "6.99", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://boxyourbuddy.itch.io/thoughts-of-trains" }
 }
 </script>
 <title>Thoughts of Trains | Indie Train Management and Logic Puzzle Game</title>
 <link rel="icon" href="/favicon.png" type="image/png">
-<meta name="description" content="A brain game that will test your ability to multi-task crossed with a switch management game made with the settings of RimWorld in mind. An indie game by a solo dev. Management, logic, puzzle, time management, arcade, score attack and trains. All ages. Coming soon to Steam.">
+<meta name="description" content="A brain game that will test your ability to multi-task crossed with a switch management game made with the settings of RimWorld in mind. An indie game by a solo dev. Management, logic, puzzle, time management, arcade, score attack and trains. All ages. Out now for macOS on itch.io. Windows coming soon.">
 <meta property="og:title" content="Thoughts of Trains">
-<meta property="og:description" content="A brain game that will test your ability to multi-task crossed with a switch management game made with the settings of RimWorld in mind. An indie game by a solo dev. Management, logic, puzzle, time management, arcade, score attack and trains. All ages. Coming soon to Steam.">
+<meta property="og:description" content="A brain game that will test your ability to multi-task crossed with a switch management game made with the settings of RimWorld in mind. An indie game by a solo dev. Management, logic, puzzle, time management, arcade, score attack and trains. All ages. Out now for macOS on itch.io. Windows coming soon.">
 <meta property="og:image" content="https://boxyourbuddy.com/thoughts-of-trains/media/shot-05-packed-spring.jpg">
 <meta property="og:type" content="website">
 
@@ -115,6 +116,13 @@
     .platforms { margin-top: 4px; font-size: 0.7rem; color: var(--faint); letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
     .soon { display: inline-flex; flex-direction: column; align-items: center; padding: 8px 18px; border-radius: 8px; background: #1c1c1c; border: 1px solid #333; color: var(--accent); font-weight: 700; font-size: 0.9rem; line-height: 1.3; cursor: default; }
     .soon span { font-size: 0.65rem; font-weight: 400; color: var(--dim); margin-top: 2px; }
+    .buy-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .buy-os { font-size: 0.7rem; color: var(--faint); letter-spacing: 2px; text-transform: uppercase; font-weight: 700; min-width: 72px; }
+    .buy-opts { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+    .price { font-size: 1.05rem; font-weight: 800; color: var(--text); }
+    .buy-btn { display: inline-flex; flex-direction: column; align-items: center; padding: 8px 18px; border-radius: 8px; background: var(--accent); color: #000; font-weight: 800; font-size: 0.9rem; line-height: 1.3; text-decoration: none; }
+    .buy-btn:hover { background: #fff; }
+    .buy-btn span { font-size: 0.65rem; font-weight: 400; color: #333; margin-top: 2px; }
 
     /* lower columns */
     .lower { margin-top: 20px; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
@@ -200,7 +208,7 @@
             <div class="capsule"><img src="media/title-card.jpg" alt="Thoughts of Trains. One mistake and you are done!"></div>
             <p class="blurb">A brain game that will test your ability to multi-task crossed with a switch management game made with the settings of RimWorld in mind. Tune the settings the way you like and play. All ages.</p>
             <dl class="facts">
-                <dt>Release</dt><dd class="accent">Coming soon</dd>
+                <dt>Release</dt><dd class="accent">Out now on macOS</dd>
                 <dt>Developer</dt><dd>boxyourbuddy</dd>
                 <dt>Publisher</dt><dd>boxyourbuddy</dd>
             </dl>
@@ -236,7 +244,17 @@
             <h2>Thoughts of Trains</h2>
             <div class="platforms">macOS &middot; Windows</div>
         </div>
-        <div class="soon">Coming soon to Steam<span>check back for the store link</span></div>
+        <div class="buy-opts">
+            <div class="buy-row">
+                <div class="buy-os">macOS</div>
+                <div class="price">$6.99</div>
+                <a class="buy-btn" href="https://boxyourbuddy.itch.io/thoughts-of-trains" target="_blank" rel="noopener">Buy on itch.io<span>Apple Silicon Macs</span></a>
+            </div>
+            <div class="buy-row">
+                <div class="buy-os">Windows</div>
+                <div class="soon">Coming soon</div>
+            </div>
+        </div>
     </div>
 
     <div class="lower">
