@@ -134,6 +134,15 @@
     .about p { color: var(--dim); font-size: 0.9rem; line-height: 1.7; margin: 0 0 12px; }
     .about img { width: 100%; border-radius: 8px; border: 1px solid var(--line); margin: 6px 0 14px; display: block; }
 
+    /* activity feed, newest first */
+    .post-date { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--faint); font-weight: 700; margin: 0 0 8px; }
+    .post { background: #161616; border: 1px solid #2a2a2a; border-radius: 8px; padding: 14px 16px; }
+    .post + .post-date { margin-top: 18px; }
+    .post-kind { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--faint); font-weight: 700; }
+    .post h3 { font-size: 1rem; margin: 4px 0 6px; }
+    .post p { color: var(--dim); font-size: 0.88rem; line-height: 1.6; margin: 0; }
+    .post a { color: var(--accent); }
+
     .reqs-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
     .reqs-tabs button { font-family: inherit; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--dim); background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 6px; padding: 6px 12px; cursor: pointer; }
     .reqs-tabs button.on { color: #000; background: var(--accent); border-color: var(--accent); }
@@ -259,6 +268,16 @@
 
     <div class="lower">
         <div>
+            <section class="panel section">
+                <h2 class="section-title">Activity</h2>
+                <div class="post-date">September 27, 2026</div>
+                <div class="post">
+                    <div class="post-kind">Release</div>
+                    <h3>Version 0.5 is out</h3>
+                    <p>Thoughts of Trains 0.5 is released and available now for Apple Silicon Macs on <a href="https://boxyourbuddy.itch.io/thoughts-of-trains" target="_blank" rel="noopener">itch.io</a>. Windows is coming soon.</p>
+                </div>
+            </section>
+
             <section class="panel section about">
                 <h2 class="section-title">About This Game</h2>
 
