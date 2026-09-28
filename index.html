@@ -26,8 +26,27 @@
         .tagline { margin-top: 20px; font-size: 1.1rem; color: #fff; letter-spacing: 2px; text-transform: uppercase; }
         .news-link { display: block; margin-top: 28px; text-align: center; text-decoration: none; color: #FFF0AD; font-size: clamp(1.1rem, 3.6vw, 1.9rem); letter-spacing: 2px; text-transform: uppercase; }
         .news-link:hover { color: #fff; }
-        .trailer-wrap { width: 100%; max-width: 960px; margin-top: 20px; }
-        .trailer { display: block; width: 100%; aspect-ratio: 16 / 9; background: #111; border: 2px solid #222; border-radius: 6px; }
+        .player { width: 100%; max-width: 960px; margin-top: 20px; background: #111; border: 1px solid #222; border-radius: 12px; }
+        .viewer { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #050505; border-radius: 12px 12px 0 0; overflow: hidden; }
+        .viewer video, .viewer img { width: 100%; height: 100%; object-fit: contain; display: block; }
+        .viewer img { cursor: zoom-in; }
+        .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 64px; border: none; background: rgba(0,0,0,0.55); color: #fff; font-size: 1.4rem; cursor: pointer; opacity: 0; transition: opacity 0.2s; z-index: 2; }
+        .viewer:hover .nav-arrow { opacity: 1; }
+        .nav-arrow:hover { color: #FFF0AD; }
+        .nav-arrow.prev { left: 0; border-radius: 0 8px 8px 0; }
+        .nav-arrow.next { right: 0; border-radius: 8px 0 0 8px; }
+        .strip { display: flex; gap: 8px; overflow-x: auto; padding: 10px; scrollbar-width: thin; scrollbar-color: #333 transparent; }
+        .thumb { position: relative; flex: 0 0 auto; width: 116px; aspect-ratio: 16 / 9; border-radius: 4px; overflow: hidden; border: 2px solid transparent; cursor: pointer; background: #050505; padding: 0; opacity: 0.6; transition: opacity 0.2s, border-color 0.2s; }
+        .thumb:hover { opacity: 1; }
+        .thumb.on { border-color: #FFF0AD; opacity: 1; }
+        .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .thumb .play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+        .thumb .play::after { content: ""; width: 0; height: 0; border-left: 14px solid #fff; border-top: 9px solid transparent; border-bottom: 9px solid transparent; filter: drop-shadow(0 0 4px rgba(0,0,0,0.9)); margin-left: 3px; }
+        .caption { padding: 0 12px 12px; font-size: 0.75rem; color: #a0a0a0; font-weight: normal; min-height: 1.4em; }
+        .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: none; align-items: center; justify-content: center; z-index: 10; cursor: zoom-out; padding: 20px; }
+        .lightbox.open { display: flex; }
+        .lightbox img { max-width: 100%; max-height: 100%; border-radius: 8px; }
+        @media (max-width: 900px) { .nav-arrow { opacity: 1; } }
         .cards { width: 100%; max-width: 960px; margin-top: 24px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; align-items: stretch; }
         @media (max-width: 600px) { .cards { grid-template-columns: 1fr; } }
         .card { display: block; text-decoration: none; color: #fff; background: #0a0a0a; border: 1px solid #222; border-radius: 6px; padding: 14px; transition: border-color 0.2s; }
@@ -56,8 +75,13 @@
 
         <a href="thoughts-of-trains/" class="news-link">Thoughts of Trains is Now Available!</a>
 
-        <div class="trailer-wrap">
-            <video class="trailer" src="thoughts-of-trains/media/video-open.mp4" poster="thoughts-of-trains/media/video-open.jpg" autoplay muted playsinline controls preload="auto"></video>
+        <div class="player">
+            <div class="viewer" id="viewer">
+                <button class="nav-arrow prev" id="prev" aria-label="Previous">&lsaquo;</button>
+                <button class="nav-arrow next" id="next" aria-label="Next">&rsaquo;</button>
+            </div>
+            <div class="strip" id="strip"></div>
+            <div class="caption" id="caption"></div>
         </div>
 
         <div class="cards">
@@ -76,5 +100,99 @@
         </div>
 
     </div>
+
+    <div class="lightbox" id="lightbox"><img alt=""></div>
+
+    <script>
+    const media = [
+        { type: 'video', src: 'media/video-open.mp4',     poster: 'media/video-open.jpg',     caption: 'How it plays' },
+        { type: 'video', src: 'media/video-speeds.mp4',   poster: 'media/video-speeds.jpg',   caption: 'Every train speed' },
+        { type: 'video', src: 'media/video-stations.mp4', poster: 'media/video-stations.jpg', caption: 'One seed, nineteen maps' },
+        { type: 'video', src: 'media/video-seeds.mp4',    poster: 'media/video-seeds.jpg',    caption: 'Pick a seed or type your own' },
+        { type: 'image', src: 'media/shot-05-packed-spring.jpg', caption: 'A packed map in spring' },
+        { type: 'image', src: 'media/shot-06-calm-fall.jpg',       caption: 'A calm map in fall' },
+        { type: 'image', src: 'media/shot-07-busy-summer.jpg',     caption: 'A busy map in summer' },
+        { type: 'image', src: 'media/shot-08-winter.jpg',          caption: 'Frozen lakes in winter' },
+        { type: 'image', src: 'media/shot-03-end-screen.jpg',    caption: 'The end of a run' },
+        { type: 'image', src: 'media/shot-01-settings.jpg',      caption: 'Settings' },
+        { type: 'image', src: 'media/shot-04-pause.jpg',         caption: 'Paused' },
+        { type: 'image', src: 'media/shot-02-stats-1.jpg',       caption: 'Your stats' },
+        { type: 'image', src: 'media/shot-02-stats-2.jpg',       caption: 'Your stats' },
+        { type: 'image', src: 'media/shot-02-stats-3.jpg',       caption: 'Your stats' },
+        { type: 'image', src: 'media/shot-02-stats-4.jpg',       caption: 'Your stats' },
+        { type: 'image', src: 'media/shot-02-stats-5.jpg',       caption: 'Your stats' }
+    ];
+
+    // the media live in the game's folder
+    media.forEach(m => { m.src = 'thoughts-of-trains/' + m.src; if (m.poster) m.poster = 'thoughts-of-trains/' + m.poster; });
+
+    const viewer = document.getElementById('viewer');
+    const strip = document.getElementById('strip');
+    const caption = document.getElementById('caption');
+    const lightbox = document.getElementById('lightbox');
+    let current = -1;
+    // one sound setting for the whole playlist: starts muted so autoplay is allowed,
+    // and whatever the visitor sets on any video carries to every video after it
+    let muted = true;
+    let volume = 1;
+
+    media.forEach((m, i) => {
+        const b = document.createElement('button');
+        b.className = 'thumb';
+        b.setAttribute('aria-label', m.caption);
+        b.innerHTML = '<img src="' + (m.poster || m.src) + '" alt="" loading="lazy">' + (m.type === 'video' ? '<span class="play"></span>' : '');
+        b.addEventListener('click', () => show(i, true));
+        strip.appendChild(b);
+    });
+
+    function show(i, userPicked) {
+        i = (i + media.length) % media.length;
+        if (i === current) return;
+        current = i;
+        const m = media[i];
+        viewer.querySelectorAll('video, img').forEach(el => el.remove());
+
+        let el;
+        if (m.type === 'video') {
+            el = document.createElement('video');
+            el.src = m.src;
+            el.poster = m.poster;
+            el.controls = true;
+            el.playsInline = true;
+            el.preload = 'metadata';
+            el.muted = muted;
+            el.volume = volume;
+            el.addEventListener('volumechange', () => { muted = el.muted; volume = el.volume; });
+            el.autoplay = true;
+            el.addEventListener('ended', () => show(current + 1, userPicked));
+        } else {
+            el = document.createElement('img');
+            el.src = m.src;
+            el.alt = m.caption;
+            el.addEventListener('click', () => {
+                lightbox.querySelector('img').src = m.src;
+                lightbox.classList.add('open');
+            });
+        }
+        viewer.prepend(el);
+        caption.textContent = m.caption;
+
+        strip.querySelectorAll('.thumb').forEach((t, n) => t.classList.toggle('on', n === i));
+        const t = strip.children[i];
+        strip.scrollTo({ left: t.offsetLeft - strip.clientWidth / 2 + t.clientWidth / 2, behavior: 'smooth' });
+    }
+
+    document.getElementById('prev').addEventListener('click', () => show(current - 1, true));
+    document.getElementById('next').addEventListener('click', () => show(current + 1, true));
+    lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') lightbox.classList.remove('open');
+        if (lightbox.classList.contains('open')) return;
+        if (e.key === 'ArrowRight') show(current + 1, true);
+        if (e.key === 'ArrowLeft') show(current - 1, true);
+    });
+
+    show(0, false);
+    </script>
 </body>
 </html>
