@@ -143,6 +143,13 @@
     .post p { color: var(--dim); font-size: 0.88rem; line-height: 1.6; margin: 0; }
     .post a { color: var(--accent); }
     .activity { margin-top: 20px; }
+    .install { margin-top: 20px; }
+    .steps { margin: 0; padding-left: 22px; color: var(--dim); font-size: 0.88rem; line-height: 1.7; }
+    .steps li { margin-bottom: 6px; padding-left: 4px; }
+    .steps li::marker { color: var(--accent); font-weight: 700; }
+    .steps strong { color: var(--text); font-weight: 600; }
+    .install p { color: var(--dim); font-size: 0.88rem; line-height: 1.7; margin: 14px 0 8px; }
+    .install code { display: block; background: #161616; border: 1px solid #2a2a2a; border-radius: 6px; padding: 10px 12px; color: var(--text); font-size: 0.8rem; overflow-x: auto; white-space: nowrap; }
 
     .reqs-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
     .reqs-tabs button { font-family: inherit; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--dim); background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 6px; padding: 6px 12px; cursor: pointer; }
@@ -343,6 +350,19 @@
             <h3>Version 0.5 is out</h3>
             <p>Thoughts of Trains 0.5 is released and available now for Apple Silicon Macs on <a href="https://boxyourbuddy.itch.io/thoughts-of-trains" target="_blank" rel="noopener">itch.io</a>. Windows is coming soon.</p>
         </div>
+    </section>
+
+    <section class="panel section install">
+        <h2 class="section-title">Installing on macOS</h2>
+        <ol class="steps">
+            <li>Download the zip from itch.io and double click it to unzip.</li>
+            <li>Drag <strong>Thoughts of Trains</strong> into your <strong>Applications</strong> folder.</li>
+            <li>Open it. macOS will warn that it cannot check the app. Close the warning with <strong>Done</strong> (or <strong>Cancel</strong> on older macOS). Do not move it to the Trash.</li>
+            <li>Open <strong>System Settings</strong> &gt; <strong>Privacy &amp; Security</strong>, scroll down and click <strong>Open Anyway</strong> beside Thoughts of Trains.</li>
+            <li>Open the game again and click <strong>Open</strong>. You only need to do this once.</li>
+        </ol>
+        <p>If Open Anyway does not show up, open Terminal, paste this line and press Return, then open the game:</p>
+        <code>xattr -dr com.apple.quarantine "/Applications/Thoughts of Trains.app"</code>
     </section>
 
     <div class="footer-note">Thoughts of Trains &middot; boxyourbuddy</div>
