@@ -19,10 +19,10 @@
         .observer-header { text-align: center; margin-bottom: 8px; }
         .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; }
         .brand-name .tint { color: #FFF0AD; }
-        .identity-line { margin-top: 15px; font-size: 0.75rem; letter-spacing: 4px; color: #888; display: flex; justify-content: center; align-items: center; gap: 15px; }
-        .dot { height: 15px; width: 15px; display: inline-block; vertical-align: middle; }
-        .dev-link { color: #888; text-decoration: none; letter-spacing: 4px; }
-        .dev-link:hover { color: #FFF0AD; }
+        .nav { margin-top: 16px; display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap; }
+        .nav a { font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; }
+        .nav a:hover { color: #FFF0AD; }
+        .nav .dot { height: 15px; width: 15px; display: inline-block; vertical-align: middle; }
         .tagline { margin-top: 20px; font-size: 1.1rem; color: #fff; letter-spacing: 2px; text-transform: uppercase; }
         .news-link { display: block; margin-top: 28px; text-align: center; text-decoration: none; color: #FFF0AD; font-size: clamp(1.1rem, 3.6vw, 1.9rem); letter-spacing: 2px; text-transform: uppercase; }
         .news-link:hover { color: #fff; }
@@ -63,12 +63,17 @@
     <div class="observer-page">
         <header class="observer-header">
             <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
-            <div class="identity-line">
-                <a href="writing/" class="dev-link">WRITER</a><img src="/favicon.png" class="dot" alt="">
-                <a href="/art/" class="dev-link">ARTIST</a><img src="/favicon.png" class="dot" alt="">
-                <a href="/apps/" class="dev-link">APP DEV</a><img src="/favicon.png" class="dot" alt="">
-                <a href="/games/" class="dev-link">GAME DEV</a>
-            </div>
+            <nav class="nav">
+                <a href="/" style="color: #FFF0AD;">HOME</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/writing/">WRITING</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/art/">ART</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/apps/">APPS</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/games/">GAMES</a>
+            </nav>
             <p class="tagline">Silent Observer</p>
             <img src="images/box-small.png" alt="" style="max-width: 70px; width: 100%; display: block; margin: 8px auto 0;">
         </header>
