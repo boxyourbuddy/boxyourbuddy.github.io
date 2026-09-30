@@ -80,7 +80,7 @@
     .panel { background: var(--card); border: 1px solid var(--line); border-radius: 12px; }
 
     .viewer { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #050505; border-radius: 12px 12px 0 0; overflow: hidden; }
-    .viewer video, .viewer img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .viewer video, .viewer img, .viewer iframe { width: 100%; height: 100%; object-fit: contain; display: block; border: 0; }
     .viewer img { cursor: zoom-in; }
     .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 64px; border: none; background: rgba(0,0,0,0.55); color: #fff; font-size: 1.4rem; cursor: pointer; opacity: 0; transition: opacity 0.2s; }
     .viewer:hover .nav-arrow { opacity: 1; }
@@ -384,7 +384,8 @@
 
 <script>
     const media = [
-        { type: 'video', src: 'media/video-open.mp4',     poster: 'media/video-open.jpg',     caption: 'How it plays' },
+        { type: 'youtube', id: '1cZHIj4KX2g', poster: 'https://i.ytimg.com/vi/1cZHIj4KX2g/hqdefault.jpg', caption: 'Trailer' },
+        { type: 'video', src: 'media/video-open.mp4',    poster: 'media/video-open.jpg',     caption: 'How it plays' },
         { type: 'video', src: 'media/video-speeds.mp4',   poster: 'media/video-speeds.jpg',   caption: 'Every train speed' },
         { type: 'video', src: 'media/video-stations.mp4', poster: 'media/video-stations.jpg', caption: 'One seed, nineteen maps' },
         { type: 'video', src: 'media/video-seeds.mp4',    poster: 'media/video-seeds.jpg',    caption: 'Pick a seed or type your own' },
@@ -416,7 +417,7 @@
         const b = document.createElement('button');
         b.className = 'thumb';
         b.setAttribute('aria-label', m.caption);
-        b.innerHTML = '<img src="' + (m.poster || m.src) + '" alt="" loading="lazy">' + (m.type === 'video' ? '<span class="play"></span>' : '');
+        b.innerHTML = '<img src="' + (m.poster || m.src) + '" alt="" loading="lazy">' + (m.type !== 'image' ? '<span class="play"></span>' : '');
         b.addEventListener('click', () => show(i, true));
         strip.appendChild(b);
     });
@@ -426,10 +427,17 @@
         if (i === current) return;
         current = i;
         const m = media[i];
-        viewer.querySelectorAll('video, img').forEach(el => el.remove());
+        viewer.querySelectorAll('video, img, iframe').forEach(el => el.remove());
 
         let el;
-        if (m.type === 'video') {
+        if (m.type === 'youtube') {
+            // enablejsapi lets Google Analytics record plays of the embed on its own
+            el = document.createElement('iframe');
+            el.src = 'https://www.youtube.com/embed/' + m.id + '?enablejsapi=1&rel=0&playsinline=1&autoplay=1&mute=' + (muted ? 1 : 0);
+            el.title = m.caption;
+            el.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+            el.allowFullscreen = true;
+        } else if (m.type === 'video') {
             el = document.createElement('video');
             el.src = m.src;
             el.poster = m.poster;
@@ -441,6 +449,7 @@
             el.addEventListener('volumechange', () => { muted = el.muted; volume = el.volume; });
             el.autoplay = true;
             el.addEventListener('ended', () => show(current + 1, userPicked));
+            trackVideo(el, m);
         } else {
             el = document.createElement('img');
             el.src = m.src;
@@ -456,6 +465,42 @@
         strip.querySelectorAll('.thumb').forEach((t, n) => t.classList.toggle('on', n === i));
         const t = strip.children[i];
         strip.scrollTo({ left: t.offsetLeft - strip.clientWidth / 2 + t.clientWidth / 2, behavior: 'smooth' });
+    }
+
+    // the page's own videos report under the same event names Google Analytics uses
+    // for YouTube, so the trailer and the short videos land in one report by title
+    function trackVideo(el, m) {
+        const sent = new Set();
+        const send = (name, extra) => {
+            if (typeof gtag !== 'function') return;
+            gtag('event', name, Object.assign({
+                video_title: m.caption,
+                video_url: new URL(m.src, location.href).href,
+                video_provider: 'boxyourbuddy',
+                video_duration: Math.round(el.duration || 0)
+            }, extra));
+        };
+        // 'playing', not 'play': by then the length is known
+        el.addEventListener('playing', () => {
+            if (sent.has('start')) return;
+            sent.add('start');
+            send('video_start', { video_current_time: Math.round(el.currentTime), video_percent: 0 });
+        });
+        el.addEventListener('timeupdate', () => {
+            if (!el.duration) return;
+            const pct = el.currentTime / el.duration * 100;
+            [10, 25, 50, 75].forEach(p => {
+                if (pct >= p && !sent.has(p)) {
+                    sent.add(p);
+                    send('video_progress', { video_current_time: Math.round(el.currentTime), video_percent: p });
+                }
+            });
+        });
+        el.addEventListener('ended', () => {
+            if (sent.has('complete')) return;
+            sent.add('complete');
+            send('video_complete', { video_current_time: Math.round(el.duration), video_percent: 100 });
+        });
     }
 
     document.getElementById('prev').addEventListener('click', () => show(current - 1, true));
