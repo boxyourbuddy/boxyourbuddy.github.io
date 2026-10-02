@@ -68,7 +68,6 @@
     .app-title { font-size: 1.1rem; font-weight: 600; color: var(--dim); margin-bottom: 18px; letter-spacing: 0.5px; }
     .manifesto-tag { font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; display: block; margin-bottom: 18px; }
     .subtitle { font-size: 1rem; color: var(--dim); margin: 0 auto 32px; max-width: 680px; line-height: 1.6; }
-    .btn-group { display: flex; justify-content: center; align-items: stretch; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
     .btn-base {
         min-width: 190px;
         padding: 10px 18px;
@@ -88,16 +87,11 @@
         line-height: 1.3;
     }
     .btn-base:hover { transform: translateY(-1px); }
-    .btn-sub { font-size: 0.7rem; font-weight: 400; opacity: 0.7; margin-top: 2px; }
-    .btn-download { background: #ffffff; color: #000000; }
-    .btn-download:hover { background: #f0f0f0; }
-    .btn-reddit { color: var(--reddit); background: transparent; border-color: #333; }
-    .btn-reddit:hover { border-color: var(--reddit); }
     .btn-support { background: var(--cash); color: #ffffff; }
     .btn-support:hover { opacity: 0.92; }
-    .hero-links { display: flex; justify-content: center; align-items: center; gap: 12px 24px; flex-wrap: wrap; margin-bottom: 40px; }
-    .hero-links a { color: var(--accent); font-size: 0.72rem; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 700; text-decoration: none; line-height: 1.6; border-bottom: 1px solid rgba(255, 240, 173, 0.4); padding-bottom: 2px; }
-    .hero-links a:hover { border-bottom-color: var(--accent); }
+    .buy { display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; max-width: 1000px; margin: 0 auto 40px; padding: 18px 20px; box-sizing: border-box; background: linear-gradient(90deg, #141414, #0c0c0c); border: 1px solid var(--line); border-radius: 12px; }
+    .buy-btn { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 8px; background: var(--accent); border: 1px solid var(--accent); color: #000; font-weight: 800; font-size: 0.9rem; line-height: 1.3; text-decoration: none; transition: background 0.15s, border-color 0.15s; }
+    .buy-btn:hover { background: #fff; border-color: #fff; }
     .hero-note { font-size: 0.95rem; color: var(--dim); margin: 20px auto 0; line-height: 1.6; }
 
     /* Screenshot frame */
@@ -190,14 +184,12 @@
         <p class="subtitle">
             Deep forensic analytics for your media history by tracking movies and tv episodes you watch all done locally on your Mac. No cloud, no data tracking, just your watch history visualized.
         </p>
-        <div class="btn-group">
-            <a href="https://boxyourbuddy.com/TVStats.dmg" class="btn-base btn-download" onclick="gtag('event', 'download', { 'event_category': 'app', 'event_label': 'TVStats' });">Download Free App<span class="btn-sub">happens instantly!</span></a>
-            <a href="https://www.reddit.com/r/TVStats/" target="_blank" class="btn-base btn-reddit">Join the Community<span class="btn-sub">reddit/r/tvstats</span></a>
-            <a href="https://cash.app/$boxyourbuddy" target="_blank" class="btn-base btn-support">Support Project<span class="btn-sub">when it helps you</span></a>
-        </div>
-        <div class="hero-links">
-            <a href="/tv-stats-tracker/tv-stats-features/">FULL LIST OF FEATURES FOR TV STATS TRACKER<br>ITS TOO HUGE FOR THIS PAGE</a>
-            <a href="/tv-stats-tracker/dev-log/">Dev Log</a>
+        <div class="buy">
+            <a class="buy-btn" href="https://boxyourbuddy.com/TVStats.dmg" onclick="gtag('event', 'download', { 'event_category': 'app', 'event_label': 'TVStats' });">Download Free App</a>
+            <a class="buy-btn" href="/tv-stats-tracker/tv-stats-features/">Full Features</a>
+            <a class="buy-btn" href="/tv-stats-tracker/dev-log/">Dev Log</a>
+            <a class="buy-btn" href="https://www.reddit.com/r/TVStats/" target="_blank">Join the Community</a>
+            <a class="buy-btn" href="https://cash.app/$boxyourbuddy" target="_blank">Support Project</a>
         </div>
         <div class="shot hero-shot">
             <img src="/images/tv-stats-hero.png" alt="TV Stats dashboard visualising movie and tv episode history with total watched hours and rewatched stats">
