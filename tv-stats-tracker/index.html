@@ -115,8 +115,8 @@
     .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
     @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
     .feature { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; }
-    .feature .shot-img { aspect-ratio: 16 / 10; display: flex; align-items: flex-start; justify-content: center; background: #080808; }
-    .feature .shot-img img { width: 100%; height: 100%; object-fit: contain; object-position: top center; }
+    .feature .shot-img { aspect-ratio: 16 / 10; display: flex; align-items: center; justify-content: center; background: #080808; }
+    .feature .shot-img img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
     .feature-text { padding: 16px 6px 6px; text-align: left; }
     .feature h3 { margin: 0 0 6px; font-size: 1.05rem; color: #fff; }
     .feature p { color: var(--dim); font-size: 0.88rem; margin: 0; line-height: 1.55; }
@@ -189,7 +189,7 @@
         </div>
         <div class="shot hero-shot">
             <div class="shot-bar"><span></span><span></span><span></span></div>
-            <img src="/images/hero2.png" alt="TV Stats dashboard visualising movie and tv episode history with total watched hours and rewatched stats">
+            <img src="/images/tv-stats-hero.png" alt="TV Stats dashboard visualising movie and tv episode history with total watched hours and rewatched stats">
         </div>
         <p class="hero-note">All of this is FREE!<br>If you were using Trakt.tv you would need $60/year for 1/2 these features.</p>
     </section>
@@ -197,56 +197,56 @@
     <section class="features">
         <div class="grid">
             <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/personal-history-actor-stats.png" alt="Personal Actor Stats" loading="lazy"></div></div>
+                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-actor.png" alt="Personal Actor Stats" loading="lazy"></div></div>
                 <div class="feature-text">
                     <h3>Personal Actor Stats</h3>
                     <p>See exactly how many movies, episodes, and rewatch hours you have for every actor on their main page</p>
                 </div>
             </div>
             <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/movies-filtered-by-netflix.png" alt="Provider Filters" loading="lazy"></div></div>
+                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-netflix.png" alt="Provider Filters" loading="lazy"></div></div>
                 <div class="feature-text">
                     <h3>Provider Filters</h3>
                     <p>Search for Movies or TV Shows only playing on Netflix, Hulu, Prime, etc. Not hidden behind a paywall</p>
                 </div>
             </div>
             <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/binge-stats-bar.png" alt="Binge Analytics" loading="lazy"></div></div>
+                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-binge.png" alt="Binge Analytics" loading="lazy"></div></div>
                 <div class="feature-text">
                     <h3>Binge Analytics</h3>
                     <p>Identify your most intense viewing sessions with dedicated binge tracking</p>
                 </div>
             </div>
             <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/2d-heatmap-peak-viewing.png" alt="Habit Heatmaps" loading="lazy"></div></div>
+                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-heatmap.png" alt="Habit Heatmaps" loading="lazy"></div></div>
                 <div class="feature-text">
                     <h3>Habit Heatmaps</h3>
                     <p>Find your "TV Prime Time" with frequency mapping across days and hours</p>
                 </div>
             </div>
             <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/hbo-originals.png" alt="Network Insights" loading="lazy"></div></div>
+                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-hbo-originals.png" alt="Network Insights" loading="lazy"></div></div>
                 <div class="feature-text">
                     <h3>Network Insights</h3>
                     <p>Looking for HBO or Hulu Originals? It is easy to find them with the "Originals" filter for each streaming provider</p>
                 </div>
             </div>
             <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/top-actors.png" alt="Cast Distribution" loading="lazy"></div></div>
+                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-top-actors.png" alt="Cast Distribution" loading="lazy"></div></div>
                 <div class="feature-text">
                     <h3>Cast Distribution</h3>
                     <p>Top actors stat for the current time period you choose to filter all your stats</p>
                 </div>
             </div>
             <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/calendar.png" alt="Native Calendar View" loading="lazy"></div></div>
+                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-calendar.png" alt="Native Calendar View" loading="lazy"></div></div>
                 <div class="feature-text">
                     <h3>Native Calendar View</h3>
                     <p>Look here to see what is coming up for the TV Shows you have started watching</p>
                 </div>
             </div>
             <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/continue-watching.png" alt="Next on the List" loading="lazy"></div></div>
+                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-continue-watching.png" alt="Next on the List" loading="lazy"></div></div>
                 <div class="feature-text">
                     <h3>Next on the List</h3>
                     <p>Continue Watching section shows the next episode that is coming up for the shows you are currently watching</p>
