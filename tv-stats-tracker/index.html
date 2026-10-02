@@ -110,16 +110,24 @@
     .shot img { display: block; width: 100%; height: auto; }
     .hero-shot { max-width: 1000px; margin: 0 auto; box-shadow: 0 30px 80px rgba(0,0,0,0.8); }
 
-    /* Feature grid */
-    .features { padding: 56px 0 8px; }
-    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
-    .feature { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; }
-    .feature .shot-img { aspect-ratio: 16 / 10; display: flex; align-items: center; justify-content: center; background: #080808; }
-    .feature .shot-img img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
-    .feature-text { padding: 16px 6px 6px; text-align: left; }
-    .feature h3 { margin: 0 0 6px; font-size: 1.05rem; color: #fff; }
-    .feature p { color: var(--dim); font-size: 0.88rem; margin: 0; line-height: 1.55; }
+    /* Slideshow */
+    .slides { padding: 64px 0 8px; width: min(1400px, calc(100vw - 32px)); margin-left: 50%; transform: translateX(-50%); }
+    .slide-stage { position: relative; }
+    .slide-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; }
+    .slide-track::-webkit-scrollbar { display: none; }
+    .slide { flex: 0 0 100%; scroll-snap-align: start; }
+    .slide .shot { box-shadow: 0 30px 80px rgba(0,0,0,0.8); }
+    .slide-text { max-width: 720px; margin: 0 auto; padding: 28px 16px 0; text-align: center; }
+    .slide-text h3 { margin: 0 0 8px; font-size: 1.4rem; color: #fff; }
+    .slide-text p { color: var(--dim); font-size: 1rem; margin: 0; line-height: 1.6; }
+    .slide-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; border: 1px solid #333; background: rgba(0,0,0,0.75); color: #fff; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .slide-arrow:hover { border-color: var(--accent); color: var(--accent); }
+    .slide-arrow.prev { left: 16px; }
+    .slide-arrow.next { right: 16px; }
+    .slide-dots { display: flex; justify-content: center; gap: 8px; margin-top: 24px; flex-wrap: wrap; }
+    .slide-dots button { width: 8px; height: 8px; padding: 0; border-radius: 50%; border: 0; background: #333; cursor: pointer; }
+    .slide-dots button.on { background: var(--accent); }
+    .slides.single .slide-arrow, .slides.single .slide-dots { display: none; }
 
     /* Manifesto */
     .manifesto { margin: 48px auto 48px; padding: 32px 16px 0; border-top: 1px solid var(--line); max-width: 600px; text-align: center; }
@@ -188,71 +196,125 @@
             <a href="/tv-stats-tracker/dev-log/">Dev Log</a>
         </div>
         <div class="shot hero-shot">
-            <div class="shot-bar"><span></span><span></span><span></span></div>
             <img src="/images/tv-stats-hero.png" alt="TV Stats dashboard visualising movie and tv episode history with total watched hours and rewatched stats">
         </div>
         <p class="hero-note">All of this is FREE!<br>If you were using Trakt.tv you would need $60/year for 1/2 these features.</p>
     </section>
 
-    <section class="features">
-        <div class="grid">
-            <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-actor.png" alt="Personal Actor Stats" loading="lazy"></div></div>
-                <div class="feature-text">
-                    <h3>Personal Actor Stats</h3>
-                    <p>See exactly how many movies, episodes, and rewatch hours you have for every actor on their main page</p>
+    <section class="slides">
+        <div class="slide-stage">
+            <div class="slide-track">
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-continue-watching.jpg" alt="Next on the List"></div>
+                    <div class="slide-text">
+                        <h3>Next on the List</h3>
+                        <p>Continue Watching section shows the next episode that is coming up for the shows you are currently watching</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-continue-movies.jpg" alt="Next Movie in the Series" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>Next Movie in the Series</h3>
+                        <p>Continue Watching also tracks movie series, so you always know which one to watch next.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-tv-shows.jpg" alt="TV Shows Page" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>TV Shows Page</h3>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-originals.jpg" alt="Originals" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>Originals</h3>
+                        <p>It is now easy to find network and streaming provider originals. Just hit the "Originals" button.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-100-watched.jpg" alt="100% Watched" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>100% Watched</h3>
+                        <p>Every show you are caught up on, whether it has ended, is coming back for another season, or has its next episode still on the way.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-movies.jpg" alt="Movies Page" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>Movies Page</h3>
+                        <p>Trending tab shows movies that are available to stream.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-theaters.jpg" alt="Theaters/Rent/Buy" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>Theaters/Rent/Buy</h3>
+                        <p>Movies that can only be seen in the theater, rented, or bought. No "free" streaming version.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-actor.jpg" alt="Personal Actor Stats" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>Personal Actor Stats</h3>
+                        <p>See exactly how many movies, episodes, and rewatch hours you have for every actor on their main page</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-filmography.jpg" alt="Full filmography" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>People page also shows full filmography.</h3>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-watchlist.jpg" alt="Watchlist" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>Watchlist</h3>
+                        <p>TV Shows and Movies can be added to a Watchlist.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-history.jpg" alt="Watch History" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>Watch History</h3>
+                        <p>A list by date of everything you have marked watched.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-stats.jpg" alt="Stats" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>Stats</h3>
+                        <p>Stats for this week, this month, this year, all time or any custom date you choose.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-stats-breakdown.jpg" alt="Watches by studio, network, genre and service" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>Watches by studio, network, genre and service.</h3>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-top-actors-movies.jpg" alt="Top Movie actors" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>Top Movie actors filtered to all time.</h3>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-top-actors-tv.jpg" alt="Top TV Show actors" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>Top TV Show actors filtered to all time.</h3>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="shot"><img src="/images/tv-stats-slide-settings.jpg" alt="Import, sync and backup settings" loading="lazy"></div>
+                    <div class="slide-text">
+                        <h3>Import, sync, or back up your watch history, including from Trakt.tv.</h3>
+                    </div>
                 </div>
             </div>
-            <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-netflix.png" alt="Provider Filters" loading="lazy"></div></div>
-                <div class="feature-text">
-                    <h3>Provider Filters</h3>
-                    <p>Search for Movies or TV Shows only playing on Netflix, Hulu, Prime, etc. Not hidden behind a paywall</p>
-                </div>
-            </div>
-            <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-binge.png" alt="Binge Analytics" loading="lazy"></div></div>
-                <div class="feature-text">
-                    <h3>Binge Analytics</h3>
-                    <p>Identify your most intense viewing sessions with dedicated binge tracking</p>
-                </div>
-            </div>
-            <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-heatmap.png" alt="Habit Heatmaps" loading="lazy"></div></div>
-                <div class="feature-text">
-                    <h3>Habit Heatmaps</h3>
-                    <p>Find your "TV Prime Time" with frequency mapping across days and hours</p>
-                </div>
-            </div>
-            <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-hbo-originals.png" alt="Network Insights" loading="lazy"></div></div>
-                <div class="feature-text">
-                    <h3>Network Insights</h3>
-                    <p>Looking for HBO or Hulu Originals? It is easy to find them with the "Originals" filter for each streaming provider</p>
-                </div>
-            </div>
-            <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-top-actors.png" alt="Cast Distribution" loading="lazy"></div></div>
-                <div class="feature-text">
-                    <h3>Cast Distribution</h3>
-                    <p>Top actors stat for the current time period you choose to filter all your stats</p>
-                </div>
-            </div>
-            <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-calendar.png" alt="Native Calendar View" loading="lazy"></div></div>
-                <div class="feature-text">
-                    <h3>Native Calendar View</h3>
-                    <p>Look here to see what is coming up for the TV Shows you have started watching</p>
-                </div>
-            </div>
-            <div class="feature">
-                <div class="shot"><div class="shot-bar"><span></span><span></span><span></span></div><div class="shot-img"><img src="/images/tv-stats-continue-watching.png" alt="Next on the List" loading="lazy"></div></div>
-                <div class="feature-text">
-                    <h3>Next on the List</h3>
-                    <p>Continue Watching section shows the next episode that is coming up for the shows you are currently watching</p>
-                </div>
-            </div>
+            <button class="slide-arrow prev" aria-label="Previous">&#8249;</button>
+            <button class="slide-arrow next" aria-label="Next">&#8250;</button>
         </div>
+        <div class="slide-dots"></div>
     </section>
 
     <div class="manifesto">
@@ -290,6 +352,42 @@
         <a href="https://www.themoviedb.org"><img src="tmdb-logo.svg" alt="TMDB" style="height: 12px; vertical-align: middle; margin-right: 6px;"></a>Movie and TV data from <a href="https://www.themoviedb.org" style="text-decoration: underline;">TMDB</a>. This product uses the TMDB API but is not endorsed or certified by TMDB.
     </div>
 </main>
+
+<script>
+(function () {
+    var root = document.querySelector('.slides');
+    var track = root.querySelector('.slide-track');
+    var slides = track.querySelectorAll('.slide');
+    var dots = root.querySelector('.slide-dots');
+    if (slides.length < 2) { root.classList.add('single'); return; }
+    var cur = 0;
+    slides.forEach(function (_, i) {
+        var d = document.createElement('button');
+        d.setAttribute('aria-label', 'Slide ' + (i + 1));
+        d.onclick = function () { go(i); };
+        dots.appendChild(d);
+    });
+    function go(i) {
+        cur = (i + slides.length) % slides.length;
+        track.scrollTo({ left: track.clientWidth * cur });
+        mark();
+    }
+    function mark() {
+        dots.querySelectorAll('button').forEach(function (d, i) { d.classList.toggle('on', i === cur); });
+    }
+    root.querySelector('.prev').onclick = function () { go(cur - 1); };
+    root.querySelector('.next').onclick = function () { go(cur + 1); };
+    track.addEventListener('scroll', function () {
+        var i = Math.round(track.scrollLeft / track.clientWidth);
+        if (i !== cur) { cur = i; mark(); }
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') go(cur - 1);
+        if (e.key === 'ArrowRight') go(cur + 1);
+    });
+    mark();
+})();
+</script>
 
 </body>
 </html>
