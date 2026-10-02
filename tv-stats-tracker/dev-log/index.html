@@ -83,6 +83,21 @@
 
             <div class="release">
                 <div class="release-head">
+                    <span class="release-version">Version 1.2.1</span>
+                    <span class="release-date">October 2, 2026</span>
+                </div>
+                <ul>
+                    <li><b>Deleted plays stay deleted.</b> Fixed a bug where plays you deleted showed up in your history again. This happened because they were never deleted from Trakt, so the daily Trakt check brought them back.</li>
+                    <li><b>Deletes sync with Trakt.</b> When you delete something from your watch history, it now syncs with Trakt immediately. If Trakt can not be reached, it tries again the next time you open the app.</li>
+                    <li><b>Continue Watching no longer loses shows.</b> Sometimes a show you were partway through disappeared from Continue Watching and only came back after you marked another episode. This happened when the app asked for your next episode and got no answer. The show now stays in its spot and says "Checking next episode…" until the app gets a real answer.</li>
+                    <li><b>Fewer failed lookups at launch.</b> When the app opens, Continue Watching looks up the next episode for every show you are watching while Trakt is also syncing. The database the app gets its show info from only answers so many requests at once, so some shows got no answer. It now looks up a few shows at a time with a short pause in between, so the page fills in correctly the first time more often.</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="release">
+                <div class="release-head">
                     <span class="release-version">Version 1.2.0</span>
                     <span class="release-date">September 21, 2026</span>
                 </div>
@@ -124,7 +139,7 @@
             </div>
 
             <div class="footer-tag">
-                <p>TV Stats v1.2.0 &nbsp;·&nbsp; <span class="highlight">Free</span> &nbsp;·&nbsp; No Ads &nbsp;·&nbsp; macOS</p>
+                <p>TV Stats v1.2.1 &nbsp;·&nbsp; <span class="highlight">Free</span> &nbsp;·&nbsp; No Ads &nbsp;·&nbsp; macOS</p>
                 <p>More stats than Trakt. No subscription needed.</p>
             </div>
 
