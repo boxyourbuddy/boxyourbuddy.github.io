@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caught in a Stare — BoxYourBuddy</title>
+    <meta name="description" content="Have you ever been caught staring at someone even though you were just in a daze?">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="boxyourbuddy">
+    <meta property="og:title" content="Caught in a Stare">
+    <meta property="og:description" content="Have you ever been caught staring at someone even though you were just in a daze?">
+    <meta property="og:url" content="https://boxyourbuddy.com/writing/caught-in-a-stare/">
+    <meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*_cfsKbnnF1uio5uz64tooA.jpeg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Caught in a Stare">
+    <meta name="twitter:description" content="Have you ever been caught staring at someone even though you were just in a daze?">
+    <meta name="twitter:image" content="https://cdn-images-1.medium.com/max/800/1*_cfsKbnnF1uio5uz64tooA.jpeg">
     <link rel="icon" href="/favicon.png" type="image/png">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"></script>
     <script>
@@ -35,6 +46,10 @@
         .story figure img { width: 100%; height: auto; display: block; border-radius: 4px; }
         .story figcaption { font-size: 0.8rem; color: #555; margin-top: 8px; text-align: center; font-weight: normal; }
         hr { border: 0; border-top: 1px solid #222; margin: 40px 0; }
+            .story-end { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px 24px; margin-top: 48px; padding-top: 24px; border-top: 1px solid #222; }
+        .story-end .side { display: flex; flex-wrap: wrap; gap: 16px 24px; }
+        .story-end a, .story-end button { font-family: Arial, sans-serif; font-size: 0.75rem; letter-spacing: 3px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; background: none; border: 0; padding: 0; cursor: pointer; }
+        .story-end a:hover, .story-end button:hover { color: #FFF0AD; }
     </style>
 </head>
 <body>
@@ -95,7 +110,35 @@
             <p>I descended into the subway station and my train immediately came which only brightened my day more. When that happens it is like hitting the lottery for $10.</p>
 
             <p>There were no seats available, of course, because of the large gathering of people looking at a large man that is made of marshmallows. I snuggled up to a pole and began to daydream. That is when I was caught staring at someone even though I was in a daze and had no idea they were there.</p>
+            <div class="story-end">
+                <div class="side">
+                    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Back to top</a>
+                    <button type="button" id="share-link">Share</button>
+                </div>
+                <div class="side">
+                    <a href="/writing/i-take-10000-steps-around-my-swimming-pool-every-day/">← Previous story</a>
+                    <a href="/writing/the-lady-butterfly/">Next story →</a>
+                </div>
+            </div>
+
         </div>
     </div>
+<script>
+(function () {
+    var b = document.getElementById('share-link');
+    if (!b) return;
+    b.addEventListener('click', function () {
+        var url = window.location.origin + window.location.pathname;
+        function done() { b.textContent = 'Link copied'; setTimeout(function () { b.textContent = 'Share'; }, 2000); }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(done, function () { fallback(url); done(); });
+        } else { fallback(url); done(); }
+    });
+    function fallback(t) {
+        var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0';
+        document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(a);
+    }
+})();
+</script>
 </body>
 </html>

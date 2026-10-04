@@ -47,6 +47,10 @@
         .story figure img { width: 100%; height: auto; display: block; border-radius: 4px; }
         .story figcaption { font-size: 0.8rem; color: #555; margin-top: 8px; text-align: center; font-weight: normal; }
         hr { border: 0; border-top: 1px solid #222; margin: 40px 0; }
+            .story-end { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px 24px; margin-top: 48px; padding-top: 24px; border-top: 1px solid #222; }
+        .story-end .side { display: flex; flex-wrap: wrap; gap: 16px 24px; }
+        .story-end a, .story-end button { font-family: Arial, sans-serif; font-size: 0.75rem; letter-spacing: 3px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; background: none; border: 0; padding: 0; cursor: pointer; }
+        .story-end a:hover, .story-end button:hover { color: #FFF0AD; }
     </style>
 </head>
 <body>
@@ -83,7 +87,35 @@
 <p>I was perfectly fine doing this. Others may not have made the same choice as me. I am ok with that as well. If wearing the shoes makes you uncomfortable and sad, I would understand. There is no need to trouble your mental health. If this is the case, I would try to sell them or give them to a person in need.</p>
 <p>Are you still vegan if you continue to wear the boots? Again, it all depends upon who you ask. In my own life, I know that I currently do everything I can to be a good vegan. I have no way of controlling the decisions I made in the past, but I can choose to make good decisions in the present and future.</p>
 <p>Good luck on your journey!</p>
+            <div class="story-end">
+                <div class="side">
+                    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Back to top</a>
+                    <button type="button" id="share-link">Share</button>
+                </div>
+                <div class="side">
+                    <a href="/writing/this-baby-did-something-naughty-at-the-grocery-store/">← Previous story</a>
+                    <a href="/writing/i-sculpt-my-arms-by-using-my-sink-every-night/">Next story →</a>
+                </div>
+            </div>
+
         </div>
     </div>
+<script>
+(function () {
+    var b = document.getElementById('share-link');
+    if (!b) return;
+    b.addEventListener('click', function () {
+        var url = window.location.origin + window.location.pathname;
+        function done() { b.textContent = 'Link copied'; setTimeout(function () { b.textContent = 'Share'; }, 2000); }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(done, function () { fallback(url); done(); });
+        } else { fallback(url); done(); }
+    });
+    function fallback(t) {
+        var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0';
+        document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(a);
+    }
+})();
+</script>
 </body>
 </html>

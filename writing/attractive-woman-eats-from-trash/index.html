@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attractive Woman Eats From Trash — BoxYourBuddy</title>
+    <meta name="description" content="I got stuck on a prompt in Midjourney again. attractive women eating from the trash.">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="boxyourbuddy">
+    <meta property="og:title" content="Attractive Woman Eats From Trash">
+    <meta property="og:description" content="I got stuck on a prompt in Midjourney again. attractive women eating from the trash.">
+    <meta property="og:url" content="https://boxyourbuddy.com/writing/attractive-woman-eats-from-trash/">
+    <meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*m8hQkONOTsm7ajHeJ7393g.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Attractive Woman Eats From Trash">
+    <meta name="twitter:description" content="I got stuck on a prompt in Midjourney again. attractive women eating from the trash.">
+    <meta name="twitter:image" content="https://cdn-images-1.medium.com/max/800/1*m8hQkONOTsm7ajHeJ7393g.png">
     <link rel="icon" href="/favicon.png" type="image/png">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"></script>
     <script>
@@ -32,6 +43,10 @@
         .story-meta { font-size: 0.75rem; letter-spacing: 3px; color: #555; text-transform: uppercase; margin-bottom: 40px; font-weight: bold; }
         .story p { font-size: 1.05rem; line-height: 1.8; color: #ccc; margin-bottom: 24px; font-weight: normal; }
         hr { border: 0; border-top: 1px solid #222; margin: 40px 0; }
+            .story-end { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px 24px; margin-top: 48px; padding-top: 24px; border-top: 1px solid #222; }
+        .story-end .side { display: flex; flex-wrap: wrap; gap: 16px 24px; }
+        .story-end a, .story-end button { font-family: Arial, sans-serif; font-size: 0.75rem; letter-spacing: 3px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; background: none; border: 0; padding: 0; cursor: pointer; }
+        .story-end a:hover, .story-end button:hover { color: #FFF0AD; }
     </style>
 </head>
 <body>
@@ -254,7 +269,35 @@
             <p>We don't even have time to go on about the trial that took place over that very photo. The supermodel ended up taking the guy who bought her old phone to court over the rights of the photo. It was a long trial with a lot of drama, but it boiled down to one simple thing. She traded the phone in for a new model. It was not hers anymore, and anything in it is basically finders keepers.</p>
 
             <p>Or finders creepers in this case.</p>
+            <div class="story-end">
+                <div class="side">
+                    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Back to top</a>
+                    <button type="button" id="share-link">Share</button>
+                </div>
+                <div class="side">
+                    <a href="/writing/made-of-concrete/">← Previous story</a>
+                    <a href="/writing/remember-somebody-has-it-worse-than-you/">Next story →</a>
+                </div>
+            </div>
+
         </div>
     </div>
+<script>
+(function () {
+    var b = document.getElementById('share-link');
+    if (!b) return;
+    b.addEventListener('click', function () {
+        var url = window.location.origin + window.location.pathname;
+        function done() { b.textContent = 'Link copied'; setTimeout(function () { b.textContent = 'Share'; }, 2000); }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(done, function () { fallback(url); done(); });
+        } else { fallback(url); done(); }
+    });
+    function fallback(t) {
+        var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0';
+        document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(a);
+    }
+})();
+</script>
 </body>
 </html>

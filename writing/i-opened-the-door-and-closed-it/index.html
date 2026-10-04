@@ -47,6 +47,10 @@
         .story figure img { width: 100%; height: auto; display: block; border-radius: 4px; }
         .story figcaption { font-size: 0.8rem; color: #555; margin-top: 8px; text-align: center; font-weight: normal; }
         hr { border: 0; border-top: 1px solid #222; margin: 40px 0; }
+            .story-end { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px 24px; margin-top: 48px; padding-top: 24px; border-top: 1px solid #222; }
+        .story-end .side { display: flex; flex-wrap: wrap; gap: 16px 24px; }
+        .story-end a, .story-end button { font-family: Arial, sans-serif; font-size: 0.75rem; letter-spacing: 3px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; background: none; border: 0; padding: 0; cursor: pointer; }
+        .story-end a:hover, .story-end button:hover { color: #FFF0AD; }
     </style>
 </head>
 <body>
@@ -82,7 +86,35 @@
 <p>The table being flipped was glass and also had a pitcher of white sangria, 2 glasses, 13 flowers in a vase and two plants of the same species at different periods of growth. The glass was about half an inch thick. The flowers were orange. I don't know what they were called.</p>
 <p>A second later, a cat that had been laying on the floor had to jump out of the way from the incoming death of falling furniture, over a stuffed mouse it was probably playing with earlier, and on to the couch to save itself. The cat was white with grey spots and had the look in its eye like it had seen this before. The mouse was all brown with a black tail and bloodshot eyes. The couch was a deep shade of earth. Leather I think.</p>
 <p>I wondered what the significance of the heart in the tunnel was as I turned around and walked out the door.</p>
+            <div class="story-end">
+                <div class="side">
+                    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Back to top</a>
+                    <button type="button" id="share-link">Share</button>
+                </div>
+                <div class="side">
+                    <a href="/writing/simple-solution-for-hiccups/">← Previous story</a>
+                    <a href="/writing/this-baby-did-something-naughty-at-the-grocery-store/">Next story →</a>
+                </div>
+            </div>
+
         </div>
     </div>
+<script>
+(function () {
+    var b = document.getElementById('share-link');
+    if (!b) return;
+    b.addEventListener('click', function () {
+        var url = window.location.origin + window.location.pathname;
+        function done() { b.textContent = 'Link copied'; setTimeout(function () { b.textContent = 'Share'; }, 2000); }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(done, function () { fallback(url); done(); });
+        } else { fallback(url); done(); }
+    });
+    function fallback(t) {
+        var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0';
+        document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(a);
+    }
+})();
+</script>
 </body>
 </html>

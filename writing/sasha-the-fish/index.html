@@ -47,6 +47,10 @@
         .story figure img { width: 100%; height: auto; display: block; border-radius: 4px; }
         .story figcaption { font-size: 0.8rem; color: #555; margin-top: 8px; text-align: center; font-weight: normal; }
         hr { border: 0; border-top: 1px solid #222; margin: 40px 0; }
+            .story-end { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px 24px; margin-top: 48px; padding-top: 24px; border-top: 1px solid #222; }
+        .story-end .side { display: flex; flex-wrap: wrap; gap: 16px 24px; }
+        .story-end a, .story-end button { font-family: Arial, sans-serif; font-size: 0.75rem; letter-spacing: 3px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; background: none; border: 0; padding: 0; cursor: pointer; }
+        .story-end a:hover, .story-end button:hover { color: #FFF0AD; }
     </style>
 </head>
 <body>
@@ -75,11 +79,11 @@
             <p class="story-meta">May 12, 2017 &nbsp;·&nbsp; Dan Stout</p>
             <hr>
 
-            <figure><img src="https://github.com/boxyourbuddy/boxyourbuddy.github.io/blob/main/images/sasha-gumballs.jpg?raw=true"Sasha the Fish">
+            <figure><img src="https://github.com/boxyourbuddy/boxyourbuddy.github.io/blob/main/images/sasha-gumballs.jpg?raw=true" alt="Sasha the Fish">
             <figcaption>Photo by Dan Stout</figcaption>
             </figure>
 
-<p>The Beginning.<p/>
+<p>The Beginning.</p>
 
 <p>I was strolling through Central Park on a sunny day long ago when I noticed a splash in a puddle up ahead of me. As I got closer, I saw that it was a fish struggling to stay alive in what water remained of it’s current home. I don’t know why I did this, but I told the little fish to take a deep breath and think good thoughts. Then I snatched it up and put it in my pocket. I also scooped up some of the water from the puddle and poured it into my pocket. I was hoping to create a more suitable environment for the trip we were about to take home.</p>
 
@@ -88,7 +92,35 @@
 <p>I told Sasha to hold tight. I put on my power walk from The Mall, past the drum circle and roller skaters, through Strawberry Fields and into the subway station underneath The Dakota on West 72nd street. The subway gods were with me because a B train arrived just as I took the last of the steps down the platform. Unfortunately, the B train was running local that day because of construction. This trip was going to be a bit longer than I hoped. My stop was at 145th street in Harlem. Not real close.</p>
 
 <p>I was ready to exit a full 45 seconds before the train had stopped. I moved quickly through the crowd and up three levels to the street and made my usual five minute walk in just three. She was fine. We have been friends since.</p>
+            <div class="story-end">
+                <div class="side">
+                    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Back to top</a>
+                    <button type="button" id="share-link">Share</button>
+                </div>
+                <div class="side">
+                    <a href="/writing/lather-me-in-linseed-oil-and-expose-my-grain/">← Previous story</a>
+                    <a href="/writing/how-to-train-a-grasshopper-the-right-way/">Next story →</a>
+                </div>
+            </div>
+
         </div>
     </div>
+<script>
+(function () {
+    var b = document.getElementById('share-link');
+    if (!b) return;
+    b.addEventListener('click', function () {
+        var url = window.location.origin + window.location.pathname;
+        function done() { b.textContent = 'Link copied'; setTimeout(function () { b.textContent = 'Share'; }, 2000); }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(done, function () { fallback(url); done(); });
+        } else { fallback(url); done(); }
+    });
+    function fallback(t) {
+        var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0';
+        document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(a);
+    }
+})();
+</script>
 </body>
 </html>
