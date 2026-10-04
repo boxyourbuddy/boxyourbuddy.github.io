@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape | boxyourbuddy</title>
+    <meta name="description" content="Escape, original art by boxyourbuddy.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="boxyourbuddy">
+    <meta property="og:title" content="Escape | boxyourbuddy">
+    <meta property="og:description" content="Escape, original art by boxyourbuddy.">
+    <meta property="og:url" content="https://boxyourbuddy.com/art/escape/">
+    <meta property="og:image" content="https://boxyourbuddy.com/art/escape1200.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Escape | boxyourbuddy">
+    <meta name="twitter:description" content="Escape, original art by boxyourbuddy.">
+    <meta name="twitter:image" content="https://boxyourbuddy.com/art/escape1200.jpg">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7NDGQGQM5G');
+    </script>
+    <style>
+        * { box-sizing: border-box; font-family: Arial, sans-serif; font-weight: bold; }
+        body { margin: 0; background: #000; color: #fff; overflow-x: hidden; }
+        .page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
+        .page-header { text-align: center; margin-bottom: 40px; width: 100%; }
+        .brand-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; }
+        .brand-logo { width: 50px; height: auto; }
+        .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; }
+        .brand-name .tint { color: #FFF0AD; }
+        .nav { margin-top: 16px; display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap; }
+        .nav a { font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; }
+        .nav a:hover { color: #FFF0AD; }
+        .nav .dot { height: 15px; width: 15px; display: inline-block; vertical-align: middle; }
+        .frame { width: fit-content; max-width: min(100%, 1000px); }
+        .frame img { display: block; max-width: 100%; width: auto; height: auto; }
+        .art-title { font-size: clamp(1.5rem, 4vw, 2.2rem); letter-spacing: 1px; margin: 24px 0 0; }
+        .story-end { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px 24px; margin-top: 32px; padding-top: 24px; border-top: 1px solid #222; }
+        .story-end .side { display: flex; flex-wrap: wrap; gap: 16px 24px; }
+        .story-end a, .story-end button { font-family: Arial, sans-serif; font-size: 0.75rem; letter-spacing: 3px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; background: none; border: 0; padding: 0; cursor: pointer; }
+        .story-end a:hover, .story-end button:hover { color: #FFF0AD; }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="page-header">
+            <div class="brand-wrap">
+                <img src="/images/box-small.png" alt="boxyourbuddy logo" class="brand-logo">
+                <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
+            </div>
+            <nav class="nav">
+                <a href="/">HOME</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/writing/">WRITING</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/art/" style="color: #FFF0AD;">ART</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/apps/">APPS</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/games/">GAMES</a>
+            </nav>
+        </header>
+
+        <div class="frame">
+            <img src="/art/escape1200.jpg" alt="Escape">
+            <h2 class="art-title">Escape</h2>
+
+            <div class="story-end">
+                <div class="side">
+                    <a href="/art/">&larr; Back to gallery</a>
+                    <button type="button" id="share-link">Share</button>
+                </div>
+                <div class="side">
+                    <a href="/art/embeded/">&larr; Previous</a>
+                    <a href="/art/free/">Next &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+(function () {
+    var b = document.getElementById('share-link');
+    if (!b) return;
+    b.addEventListener('click', function () {
+        var url = window.location.origin + window.location.pathname;
+        function done() { b.textContent = 'Link copied'; setTimeout(function () { b.textContent = 'Share'; }, 2000); }
+        function fallback(t) {
+            var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0';
+            document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(a);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(done, function () { fallback(url); done(); });
+        } else { fallback(url); done(); }
+    });
+})();
+</script>
+</body>
+</html>
