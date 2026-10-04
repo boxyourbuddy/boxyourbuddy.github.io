@@ -101,7 +101,7 @@
 
     <script>
         (function () {
-            var PICS = [{"src": "above1200.jpg", "w": 720, "h": 540, "title": "Above"}, {"src": "all-at-once1200.jpg", "w": 720, "h": 360, "title": "All at Once"}, {"src": "combo-number-three1200.jpg", "w": 720, "h": 360, "title": "Combo Number Three"}, {"src": "disappear.jpg", "w": 720, "h": 720, "title": "Disappear"}, {"src": "elevation-four600.jpg", "w": 600, "h": 750, "title": "Elevation Four"}, {"src": "embeded1200.jpg", "w": 720, "h": 360, "title": "Embeded"}, {"src": "escape1200.jpg", "w": 720, "h": 540, "title": "Escape"}, {"src": "free1200.jpg", "w": 720, "h": 540, "title": "Free"}, {"src": "green21200.jpg", "w": 720, "h": 360, "title": "Green 2"}, {"src": "im-out-of-control-sketch.jpg", "w": 2005, "h": 958, "title": "I'm Out of Control"}, {"src": "inside-my-head.jpg", "w": 720, "h": 360, "title": "Inside My Head"}, {"src": "light-1200x600.jpg", "w": 720, "h": 360, "title": "Light"}, {"src": "noon1200.jpg", "w": 720, "h": 393, "title": "Noon"}, {"src": "repeat202400.jpg", "w": 720, "h": 389, "title": "Repeat"}, {"src": "revolve1200.jpg", "w": 720, "h": 360, "title": "Revolve"}, {"src": "river.jpg", "w": 720, "h": 480, "title": "River"}, {"src": "sketch-42418.jpg", "w": 720, "h": 586, "title": "Sketch 42418"}, {"src": "stormyprint.jpg", "w": 720, "h": 360, "title": "Stormy"}, {"src": "sway1200.jpg", "w": 720, "h": 540, "title": "Sway"}, {"src": "swim1200.jpg", "w": 720, "h": 480, "title": "Swim"}, {"src": "unruled1200.jpg", "w": 720, "h": 360, "title": "Unruled"}];
+            var PICS = [];
             var box = document.getElementById('mosaic');
             var NARROW = 640;
             var state = { tree: null, order: null };
@@ -188,7 +188,7 @@
                     if (!d) {
                         d = document.createElement('a');
                         d.className = 'tile';
-                        d.href = '/art/' + r.pic.title.toLowerCase().replace(/'/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') + '/';
+                        d.href = '/art/' + r.pic.slug + '/';
                         var img = document.createElement('img');
                         img.src = r.pic.src; img.alt = r.pic.title;
                         img.width = r.pic.w; img.height = r.pic.h;
@@ -217,7 +217,10 @@
 
             var timer = null;
             window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(layout, 120); });
-            layout();
+            fetch('/art/pictures.json').then(function (r) { return r.json(); }).then(function (list) {
+                PICS = list;
+                layout();
+            });
         })();
     </script>
 </body>

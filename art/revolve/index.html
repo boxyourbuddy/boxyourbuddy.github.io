@@ -75,8 +75,8 @@
                     <button type="button" id="share-link">Share</button>
                 </div>
                 <div class="side">
-                    <a href="/art/repeat/">&larr; Previous</a>
-                    <a href="/art/river/">Next &rarr;</a>
+                    <a href="/art/repeat/" id="prev-art">&larr; Previous</a>
+                    <a href="/art/river/" id="next-art">Next &rarr;</a>
                 </div>
             </div>
         </div>
@@ -96,6 +96,18 @@
             navigator.clipboard.writeText(url).then(done, function () { fallback(url); done(); });
         } else { fallback(url); done(); }
     });
+})();
+(function () {
+    var prev = document.getElementById('prev-art'), next = document.getElementById('next-art');
+    if (!prev || !next) return;
+    fetch('/art/pictures.json').then(function (r) { return r.json(); }).then(function (list) {
+        list = list.slice().sort(function (a, b) { var x = a.title.toLowerCase(), y = b.title.toLowerCase(); return x < y ? -1 : x > y ? 1 : 0; });
+        var here = window.location.pathname.split('/').filter(function (p) { return p && p !== 'index.html'; }).pop();
+        var i = list.findIndex(function (p) { return p.slug === here; });
+        if (i < 0 || list.length < 2) return;
+        prev.href = '/art/' + list[(i - 1 + list.length) % list.length].slug + '/';
+        next.href = '/art/' + list[(i + 1) % list.length].slug + '/';
+    }).catch(function () {});
 })();
 </script>
 </body>

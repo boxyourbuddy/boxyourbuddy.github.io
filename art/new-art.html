@@ -161,6 +161,7 @@
             font-weight: bold;
         }
         .preview-item .remove:hover { background: #ff4444; }
+        .preview-item input[type="text"] { padding: 6px 8px; font-size: 0.8rem; margin-top: 6px; }
         .preview-item .fname {
             font-size: 0.6rem;
             color: #444;
@@ -216,7 +217,7 @@
 
     <div class="tool-header">
         <h1>Art Manager</h1>
-        <p>Add or remove photos from the art slideshow.</p>
+        <p>Add or remove art from the gallery.</p>
     </div>
 
     <!-- Token -->
@@ -230,7 +231,7 @@
 
     <!-- Current art -->
     <div class="field">
-        <p class="section-label">Current Art in Slideshow</p>
+        <p class="section-label">Current Art in Gallery</p>
         <button class="load-btn" id="loadBtn" onclick="loadCurrentArt()">Load Current Art</button>
         <div class="art-grid" id="artGrid">
             <p class="art-placeholder">Click above to load.</p>
@@ -367,7 +368,7 @@
                     canvas.width = w;
                     canvas.height = h;
                     canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                    res(canvas.toDataURL('image/jpeg', 0.88).split(',')[1]);
+                    res({ base64: canvas.toDataURL('image/jpeg', 0.88).split(',')[1], w, h });
                 };
                 img.src = ev.target.result;
             };
@@ -401,6 +402,181 @@
     }
 
     // ─── Current art loader ───────────────────────────────────────────────────
+    // ─── Picture list helpers ─────────────────────────────────────────────
+    function escAttr(str) {
+        return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function slugifyTitle(t) {
+        return t.toLowerCase().replace(/'/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+
+    function prettyTitle(filename) {
+        return filename.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ').trim().replace(/\b[a-z]/g, c => c.toUpperCase());
+    }
+
+    // Previous and Next follow alphabetical order by title
+    function sortList(list) {
+        return list.slice().sort((a, b) => {
+            const x = a.title.toLowerCase(), y = b.title.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
+    }
+
+    async function readList(token) {
+        const f = await ghGet(token, 'art/pictures.json');
+        return { sha: f.sha, list: JSON.parse(b64Decode(f.content)) };
+    }
+
+    function listContent(list) {
+        return b64Encode(JSON.stringify(list, null, 2) + '\n');
+    }
+
+    function pageHtml(title, slug, filename, prevSlug, nextSlug) {
+        const t = escAttr(title);
+        return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${t} | boxyourbuddy</title>
+    <meta name="description" content="${t}, original art by boxyourbuddy.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="boxyourbuddy">
+    <meta property="og:title" content="${t} | boxyourbuddy">
+    <meta property="og:description" content="${t}, original art by boxyourbuddy.">
+    <meta property="og:url" content="https://boxyourbuddy.com/art/${slug}/">
+    <meta property="og:image" content="https://boxyourbuddy.com/art/${filename}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${t} | boxyourbuddy">
+    <meta name="twitter:description" content="${t}, original art by boxyourbuddy.">
+    <meta name="twitter:image" content="https://boxyourbuddy.com/art/${filename}">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"><\/script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7NDGQGQM5G');
+    <\/script>
+    <style>
+        * { box-sizing: border-box; font-family: Arial, sans-serif; font-weight: bold; }
+        body { margin: 0; background: #000; color: #fff; overflow-x: hidden; }
+        .page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
+        .page-header { text-align: center; margin-bottom: 40px; width: 100%; }
+        .brand-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; }
+        .brand-logo { width: 50px; height: auto; }
+        .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; }
+        .brand-name .tint { color: #FFF0AD; }
+        .nav { margin-top: 16px; display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap; }
+        .nav a { font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; }
+        .nav a:hover { color: #FFF0AD; }
+        .nav .dot { height: 15px; width: 15px; display: inline-block; vertical-align: middle; }
+        .frame { width: fit-content; max-width: min(100%, 1000px); }
+        .frame img { display: block; max-width: 100%; width: auto; height: auto; }
+        .art-title { font-size: clamp(1.5rem, 4vw, 2.2rem); letter-spacing: 1px; margin: 24px 0 0; }
+        .story-end { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px 24px; margin-top: 32px; padding-top: 24px; border-top: 1px solid #222; }
+        .story-end .side { display: flex; flex-wrap: wrap; gap: 16px 24px; }
+        .story-end a, .story-end button { font-family: Arial, sans-serif; font-size: 0.75rem; letter-spacing: 3px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; background: none; border: 0; padding: 0; cursor: pointer; }
+        .story-end a:hover, .story-end button:hover { color: #FFF0AD; }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="page-header">
+            <div class="brand-wrap">
+                <img src="/images/box-small.png" alt="boxyourbuddy logo" class="brand-logo">
+                <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
+            </div>
+            <nav class="nav">
+                <a href="/">HOME</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/writing/">WRITING</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/art/" style="color: #FFF0AD;">ART</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/apps/">APPS</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/games/">GAMES</a>
+            </nav>
+        </header>
+
+        <div class="frame">
+            <img src="/art/${filename}" alt="${t}">
+            <h2 class="art-title">${t}</h2>
+
+            <div class="story-end">
+                <div class="side">
+                    <a href="/art/">&larr; Back to gallery</a>
+                    <button type="button" id="share-link">Share</button>
+                </div>
+                <div class="side">
+                    <a href="/art/${prevSlug}/" id="prev-art">&larr; Previous</a>
+                    <a href="/art/${nextSlug}/" id="next-art">Next &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+(function () {
+    var b = document.getElementById('share-link');
+    if (!b) return;
+    b.addEventListener('click', function () {
+        var url = window.location.origin + window.location.pathname;
+        function done() { b.textContent = 'Link copied'; setTimeout(function () { b.textContent = 'Share'; }, 2000); }
+        function fallback(t) {
+            var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0';
+            document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(a);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(done, function () { fallback(url); done(); });
+        } else { fallback(url); done(); }
+    });
+})();
+(function () {
+    var prev = document.getElementById('prev-art'), next = document.getElementById('next-art');
+    if (!prev || !next) return;
+    fetch('/art/pictures.json').then(function (r) { return r.json(); }).then(function (list) {
+        list = list.slice().sort(function (a, b) { var x = a.title.toLowerCase(), y = b.title.toLowerCase(); return x < y ? -1 : x > y ? 1 : 0; });
+        var here = window.location.pathname.split('/').filter(function (p) { return p && p !== 'index.html'; }).pop();
+        var i = list.findIndex(function (p) { return p.slug === here; });
+        if (i < 0 || list.length < 2) return;
+        prev.href = '/art/' + list[(i - 1 + list.length) % list.length].slug + '/';
+        next.href = '/art/' + list[(i + 1) % list.length].slug + '/';
+    }).catch(function () {});
+})();
+<\/script>
+</body>
+</html>
+`;
+    }
+
+    async function sitemapAdd(token, locs) {
+        const f = await ghGet(token, 'sitemap.xml');
+        let xml = b64Decode(f.content), changed = false;
+        locs.forEach(loc => {
+            if (xml.includes(`<loc>${loc}</loc>`)) return;
+            xml = xml.replace('</urlset>', `  <url>\n    <loc>${loc}</loc>\n    <priority>0.5</priority>\n    <changefreq>yearly</changefreq>\n  </url>\n\n</urlset>`);
+            changed = true;
+        });
+        if (changed) await ghPut(token, 'sitemap.xml', b64Encode(xml), 'Add art pages to sitemap', f.sha);
+        return changed;
+    }
+
+    async function sitemapRemove(token, loc) {
+        const f = await ghGet(token, 'sitemap.xml');
+        let xml = b64Decode(f.content);
+        const at = xml.indexOf(`<loc>${loc}</loc>`);
+        if (at < 0) return false;
+        const start = xml.lastIndexOf('  <url>', at);
+        let end = xml.indexOf('</url>', at) + '</url>'.length;
+        while (xml[end] === '\n') end++;
+        xml = xml.slice(0, start) + xml.slice(end);
+        await ghPut(token, 'sitemap.xml', b64Encode(xml), 'Remove art page from sitemap', f.sha);
+        return true;
+    }
+
+    // ─── Load current art ─────────────────────────────────────────────────
     async function loadCurrentArt() {
         const token = getToken();
         if (!token) { alert('Please enter your GitHub token first.'); return; }
@@ -412,29 +588,20 @@
         grid.innerHTML = '';
 
         try {
-            const indexFile = await ghGet(token, 'art/index.html');
-            const html = b64Decode(indexFile.content);
+            const { list } = await readList(token);
 
-            // Parse slide img srcs
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const slides = Array.from(doc.querySelectorAll('.slide img'));
-
-            if (slides.length === 0) {
-                grid.innerHTML = '<p class="art-placeholder">No photos in slideshow yet.</p>';
+            if (list.length === 0) {
+                grid.innerHTML = '<p class="art-placeholder">No art in the gallery yet.</p>';
                 return;
             }
 
-            slides.forEach(img => {
-                const src = img.getAttribute('src');
-                const filename = src.replace(/^.*\//, ''); // strip any path prefix
-
+            sortList(list).forEach(p => {
                 const item = document.createElement('div');
                 item.className = 'art-item';
                 item.innerHTML = `
-                    <img src="${RAW}/art/${filename}?t=${Date.now()}" alt="${filename}">
-                    <button class="del-btn" onclick="deleteArt('${filename}', this)">DELETE</button>
-                    <div class="fname">${filename}</div>
+                    <img src="${RAW}/art/${p.src}?t=${Date.now()}" alt="${escAttr(p.title)}">
+                    <button class="del-btn" onclick="deleteArt('${p.src}', this)">DELETE</button>
+                    <div class="fname">${escAttr(p.title)}</div>
                 `;
                 grid.appendChild(item);
             });
@@ -447,9 +614,9 @@
         }
     }
 
-    // ─── Delete art ───────────────────────────────────────────────────────────
+    // ─── Delete art ─────────────────────────────────────────────────────────
     async function deleteArt(filename, btnEl) {
-        if (!confirm(`Are you sure you want to delete "${filename}"?\n\nThis will remove it from the slideshow and delete the image file.`)) return;
+        if (!confirm(`Are you sure you want to delete "${filename}"?\n\nThis will remove it from the gallery and delete its picture and its page.`)) return;
 
         const token = getToken();
         if (!token) { alert('Please enter your GitHub token first.'); return; }
@@ -459,36 +626,36 @@
         logClear();
 
         try {
-            // 1. Remove slide from index.html
-            logLine(`Fetching art/index.html…`);
-            const indexFile = await ghGet(token, 'art/index.html');
-            let html = b64Decode(indexFile.content);
+            logLine('Reading the picture list…');
+            const cur = await readList(token);
+            const entry = cur.list.find(p => p.src === filename);
+            if (!entry) throw new Error(`Could not find "${filename}" in the picture list`);
 
-            // Remove the slide div containing this filename
-            const before = html;
-            html = html.replace(
-                new RegExp(`\\s*<div class="slide[^"]*"><img src="${filename}"[^>]*><\\/div>`, 'g'),
-                ''
-            );
+            logLine('Updating the picture list…');
+            await ghPut(token, 'art/pictures.json', listContent(cur.list.filter(p => p.src !== filename)),
+                `Remove art: ${filename}`, cur.sha);
+            logLine('  ✓ removed from the gallery', 'ok');
 
-            if (html === before) {
-                throw new Error(`Could not find slide for "${filename}" in index.html`);
-            }
+            logLine(`Deleting art/${entry.slug}/index.html…`);
+            try {
+                const pageFile = await ghGet(token, `art/${entry.slug}/index.html`);
+                await ghDelete(token, `art/${entry.slug}/index.html`, pageFile.sha, `Delete art page: ${entry.title}`);
+                logLine('  ✓ page deleted', 'ok');
+            } catch (e) { logLine(`  could not delete the page: ${e.message}`, 'err'); }
 
-            logLine(`Updating art/index.html…`);
-            await ghPut(token, 'art/index.html', b64Encode(html),
-                `Remove art: ${filename}`, indexFile.sha);
-            logLine(`  ✓ removed from slideshow`, 'ok');
-
-            // 2. Delete the image file
             logLine(`Deleting art/${filename}…`);
             const imgFile = await ghGet(token, `art/${filename}`);
             await ghDelete(token, `art/${filename}`, imgFile.sha, `Delete art image: ${filename}`);
-            logLine(`  ✓ image deleted`, 'ok');
+            logLine('  ✓ image deleted', 'ok');
 
-            logLine(`✓ Done - "${filename}" removed. Changes are live on GitHub.`, 'done');
+            try {
+                logLine('Updating sitemap.xml…');
+                await sitemapRemove(token, `https://boxyourbuddy.com/art/${entry.slug}/`);
+                logLine('  ✓ updated', 'ok');
+            } catch (e) { logLine(`  could not update sitemap.xml: ${e.message}`, 'err'); }
 
-            // Remove from grid
+            logLine(`✓ Done - "${entry.title}" removed. Changes are live on GitHub.`, 'done');
+
             btnEl.closest('.art-item').remove();
 
         } catch (err) {
@@ -519,7 +686,7 @@
     function addFiles(files) {
         for (const file of files) {
             if (!file.type.startsWith('image/')) continue;
-            selectedFiles.push({ file, objectUrl: URL.createObjectURL(file) });
+            selectedFiles.push({ file, objectUrl: URL.createObjectURL(file), title: prettyTitle(file.name) });
         }
         renderPreviews();
     }
@@ -534,6 +701,7 @@
                 <img src="${item.objectUrl}" alt="">
                 <button class="remove" onclick="removeFile(${i})">✕</button>
                 <div class="fname">${item.file.name}</div>
+                <input type="text" placeholder="Title" value="${escAttr(item.title)}" oninput="selectedFiles[${i}].title = this.value">
             `;
             grid.appendChild(div);
         });
@@ -555,47 +723,65 @@
         logClear();
 
         try {
-            const uploaded = [];
+            logLine('Reading the picture list…');
+            const cur = await readList(token);
+            let list = cur.list.slice();
+            const added = [];
 
             for (const item of selectedFiles) {
-                // Always output as .jpg after canvas resize
-                const slug = slugifyFilename(item.file.name).replace(/\.[^.]+$/, '');
-                const filename = `${slug}.jpg`;
-                const destPath = `art/${filename}`;
-                logLine(`Resizing & uploading ${filename}…`);
+                const title = (item.title || '').trim() || prettyTitle(item.file.name);
+                const slug = slugifyTitle(title);
+                if (!slug) throw new Error(`"${title}" is not a usable title.`);
 
+                // Always output as .jpg after canvas resize
+                const base = slugifyFilename(item.file.name).replace(/\.[^.]+$/, '');
+                const filename = `${base}.jpg`;
+                const clash = list.find(p => p.slug === slug && p.src !== filename);
+                if (clash) throw new Error(`A piece titled "${clash.title}" already exists. Choose a different title.`);
+
+                logLine(`Resizing & uploading ${filename}…`);
                 let existingSha = null;
                 try {
-                    const existing = await ghGet(token, destPath);
+                    const existing = await ghGet(token, `art/${filename}`);
                     existingSha = existing.sha;
-                    logLine(`  already exists - overwriting`, 'info');
+                    logLine('  already exists - overwriting', 'info');
                 } catch (e) { /* new file */ }
 
-                const base64 = await resizeAndEncode(item.file);
-                await ghPut(token, destPath, base64, `Add art: ${filename}`, existingSha);
-                logLine(`  ✓ uploaded`, 'ok');
-                uploaded.push({ filename, alt: filename.replace(/[-_]/g, ' ').replace(/\.[^.]+$/, '') });
+                const enc = await resizeAndEncode(item.file);
+                await ghPut(token, `art/${filename}`, enc.base64, `Add art: ${filename}`, existingSha);
+                logLine('  ✓ uploaded', 'ok');
+
+                list = list.filter(p => p.src !== filename);
+                list.push({ src: filename, w: enc.w, h: enc.h, title, slug });
+                added.push({ title, slug, filename });
             }
 
-            logLine('Fetching art/index.html…');
-            const indexFile = await ghGet(token, 'art/index.html');
-            let html = b64Decode(indexFile.content);
-
-            const newSlides = uploaded.map(u =>
-                `            <div class="slide"><img src="${u.filename}" alt="${u.alt}"></div>`
-            ).join('\n');
-
-            if (!html.includes('<!-- SLIDES -->')) {
-                throw new Error('Could not find <!-- SLIDES --> marker in art/index.html');
+            // Pages first, so the gallery never lists a picture without its page
+            const sorted = sortList(list);
+            for (const a of added) {
+                const i = sorted.findIndex(p => p.slug === a.slug);
+                const prevSlug = sorted[(i - 1 + sorted.length) % sorted.length].slug;
+                const nextSlug = sorted[(i + 1) % sorted.length].slug;
+                logLine(`Creating art/${a.slug}/index.html…`);
+                let pageSha = null;
+                try { pageSha = (await ghGet(token, `art/${a.slug}/index.html`)).sha; } catch (e) { /* new page */ }
+                await ghPut(token, `art/${a.slug}/index.html`, b64Encode(pageHtml(a.title, a.slug, a.filename, prevSlug, nextSlug)),
+                    `Add art page: ${a.title}`, pageSha);
+                logLine('  ✓ page created', 'ok');
             }
 
-            html = html.replace('<!-- SLIDES -->', `${newSlides}\n            <!-- SLIDES -->`);
+            logLine('Updating the picture list…');
+            await ghPut(token, 'art/pictures.json', listContent(list),
+                `Add ${added.length} piece${added.length > 1 ? 's' : ''} to the art gallery`, cur.sha);
+            logLine('  ✓ updated', 'ok');
 
-            logLine('Updating art/index.html…');
-            await ghPut(token, 'art/index.html', b64Encode(html),
-                `Add ${uploaded.length} photo${uploaded.length > 1 ? 's' : ''} to art page`, indexFile.sha);
+            try {
+                logLine('Updating sitemap.xml…');
+                await sitemapAdd(token, added.map(a => `https://boxyourbuddy.com/art/${a.slug}/`));
+                logLine('  ✓ updated', 'ok');
+            } catch (e) { logLine(`  could not update sitemap.xml: ${e.message}`, 'err'); }
 
-            logLine(`✓ Done - ${uploaded.length} photo${uploaded.length > 1 ? 's' : ''} added. Changes are live on GitHub.`, 'done');
+            logLine(`✓ Done - ${added.length} piece${added.length > 1 ? 's' : ''} added. Changes are live on GitHub.`, 'done');
 
             selectedFiles.forEach(f => URL.revokeObjectURL(f.objectUrl));
             selectedFiles = [];
