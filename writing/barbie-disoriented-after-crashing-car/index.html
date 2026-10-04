@@ -57,7 +57,7 @@
     <div class="page">
         <header class="page-header">
             <div class="brand-wrap">
-                <img src="../../images/box-small.png" alt="BoxYourBuddy logo" class="brand-logo">
+                <img src="../../images/box-small.png" alt="boxyourbuddy logo" class="brand-logo">
                 <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
             </div>
             <nav class="nav">
@@ -131,8 +131,8 @@
                     <button type="button" id="share-link">Share</button>
                 </div>
                 <div class="side">
-                    <a href="/writing/play-with-your-food-if-it-makes-you-happy/">← Previous story</a>
-                    <a href="/writing/i-take-10000-steps-around-my-swimming-pool-every-day/">Next story →</a>
+                    <a href="/writing/play-with-your-food-if-it-makes-you-happy/" id="prev-story">← Previous story</a>
+                    <a href="/writing/i-take-10000-steps-around-my-swimming-pool-every-day/" id="next-story">Next story →</a>
                 </div>
             </div>
 
@@ -140,19 +140,31 @@
     </div>
 <script>
 (function () {
-    var b = document.getElementById('share-link');
-    if (!b) return;
-    b.addEventListener('click', function () {
-        var url = window.location.origin + window.location.pathname;
-        function done() { b.textContent = 'Link copied'; setTimeout(function () { b.textContent = 'Share'; }, 2000); }
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(url).then(done, function () { fallback(url); done(); });
-        } else { fallback(url); done(); }
-    });
-    function fallback(t) {
-        var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0';
-        document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(a);
+    var share = document.getElementById('share-link');
+    if (share) {
+        share.addEventListener('click', function () {
+            var url = window.location.origin + window.location.pathname;
+            function done() { share.textContent = 'Link copied'; setTimeout(function () { share.textContent = 'Share'; }, 2000); }
+            function fallback(t) {
+                var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0';
+                document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(a);
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(done, function () { fallback(url); done(); });
+            } else { fallback(url); done(); }
+        });
     }
+    var prev = document.getElementById('prev-story'), next = document.getElementById('next-story');
+    if (!prev || !next) return;
+    fetch('/writing/').then(function (r) { return r.text(); }).then(function (t) {
+        var doc = new DOMParser().parseFromString(t, 'text/html');
+        var slugs = Array.prototype.map.call(doc.querySelectorAll('.cards a.card'), function (a) { return (a.getAttribute('href') || '').split('/').filter(Boolean)[0]; });
+        var here = window.location.pathname.split('/').filter(Boolean).pop();
+        var i = slugs.indexOf(here);
+        if (i < 0 || slugs.length < 2) return;
+        prev.href = '/writing/' + slugs[(i - 1 + slugs.length) % slugs.length] + '/';
+        next.href = '/writing/' + slugs[(i + 1) % slugs.length] + '/';
+    }).catch(function () {});
 })();
 </script>
 </body>

@@ -57,7 +57,7 @@
     <div class="page">
         <header class="page-header">
             <div class="brand-wrap">
-                <img src="../../images/box-small.png" alt="BoxYourBuddy logo" class="brand-logo">
+                <img src="../../images/box-small.png" alt="boxyourbuddy logo" class="brand-logo">
                 <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
             </div>
             <nav class="nav">
@@ -79,7 +79,7 @@
             <p class="story-meta">January 26, 2019 &nbsp;·&nbsp; Dan Stout</p>
             <hr>
 
-            <figure><img src="/writing/jelly-beans-and-birds/jelly-beans-and-birds-01.jpeg" alt="Jelly Bean Plant — Sedum Rubrotinctum | photo by Dan Stout"><figcaption>Jelly Bean Plant — Sedum Rubrotinctum | photo by Dan Stout</figcaption></figure>
+            <figure><img src="/writing/jelly-beans-and-birds/jelly-beans-and-birds-01.jpeg" alt="Jelly Bean Plant, Sedum Rubrotinctum | photo by Dan Stout"><figcaption>Jelly Bean Plant, Sedum Rubrotinctum | photo by Dan Stout</figcaption></figure>
 <p>This is known as the jelly bean plant, or the pork and beans plant. It is one of the many Sedum varieties. It doesn't make me hungry.</p>
 <p>The fact that humans have named it after two foods should mean it's perfectly reasonable for birds to think of it as food too. They do. When I have the first daily look at my garden I will sometimes notice an entire plant missing.</p>
 <p>Uprooted! Gone.</p>
@@ -94,8 +94,8 @@
                     <button type="button" id="share-link">Share</button>
                 </div>
                 <div class="side">
-                    <a href="/writing/labeling-a-food-plant-based-and-what-it-really-means/">← Previous story</a>
-                    <a href="/writing/cereal-and-frosting/">Next story →</a>
+                    <a href="/writing/labeling-a-food-plant-based-and-what-it-really-means/" id="prev-story">← Previous story</a>
+                    <a href="/writing/cereal-and-frosting/" id="next-story">Next story →</a>
                 </div>
             </div>
 
@@ -103,19 +103,31 @@
     </div>
 <script>
 (function () {
-    var b = document.getElementById('share-link');
-    if (!b) return;
-    b.addEventListener('click', function () {
-        var url = window.location.origin + window.location.pathname;
-        function done() { b.textContent = 'Link copied'; setTimeout(function () { b.textContent = 'Share'; }, 2000); }
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(url).then(done, function () { fallback(url); done(); });
-        } else { fallback(url); done(); }
-    });
-    function fallback(t) {
-        var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0';
-        document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(a);
+    var share = document.getElementById('share-link');
+    if (share) {
+        share.addEventListener('click', function () {
+            var url = window.location.origin + window.location.pathname;
+            function done() { share.textContent = 'Link copied'; setTimeout(function () { share.textContent = 'Share'; }, 2000); }
+            function fallback(t) {
+                var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0';
+                document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(a);
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(done, function () { fallback(url); done(); });
+            } else { fallback(url); done(); }
+        });
     }
+    var prev = document.getElementById('prev-story'), next = document.getElementById('next-story');
+    if (!prev || !next) return;
+    fetch('/writing/').then(function (r) { return r.text(); }).then(function (t) {
+        var doc = new DOMParser().parseFromString(t, 'text/html');
+        var slugs = Array.prototype.map.call(doc.querySelectorAll('.cards a.card'), function (a) { return (a.getAttribute('href') || '').split('/').filter(Boolean)[0]; });
+        var here = window.location.pathname.split('/').filter(Boolean).pop();
+        var i = slugs.indexOf(here);
+        if (i < 0 || slugs.length < 2) return;
+        prev.href = '/writing/' + slugs[(i - 1 + slugs.length) % slugs.length] + '/';
+        next.href = '/writing/' + slugs[(i + 1) % slugs.length] + '/';
+    }).catch(function () {});
 })();
 </script>
 </body>

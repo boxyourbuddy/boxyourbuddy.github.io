@@ -486,7 +486,7 @@
             await ghDelete(token, `art/${filename}`, imgFile.sha, `Delete art image: ${filename}`);
             logLine(`  ✓ image deleted`, 'ok');
 
-            logLine(`✓ Done — "${filename}" removed. Changes are live on GitHub.`, 'done');
+            logLine(`✓ Done - "${filename}" removed. Changes are live on GitHub.`, 'done');
 
             // Remove from grid
             btnEl.closest('.art-item').remove();
@@ -568,7 +568,7 @@
                 try {
                     const existing = await ghGet(token, destPath);
                     existingSha = existing.sha;
-                    logLine(`  already exists — overwriting`, 'info');
+                    logLine(`  already exists - overwriting`, 'info');
                 } catch (e) { /* new file */ }
 
                 const base64 = await resizeAndEncode(item.file);
@@ -595,7 +595,7 @@
             await ghPut(token, 'art/index.html', b64Encode(html),
                 `Add ${uploaded.length} photo${uploaded.length > 1 ? 's' : ''} to art page`, indexFile.sha);
 
-            logLine(`✓ Done — ${uploaded.length} photo${uploaded.length > 1 ? 's' : ''} added. Changes are live on GitHub.`, 'done');
+            logLine(`✓ Done - ${uploaded.length} photo${uploaded.length > 1 ? 's' : ''} added. Changes are live on GitHub.`, 'done');
 
             selectedFiles.forEach(f => URL.revokeObjectURL(f.objectUrl));
             selectedFiles = [];

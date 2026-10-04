@@ -214,13 +214,13 @@
 
     <!-- Card description -->
     <div class="field">
-        <label>Card Description — short line shown on the writing page</label>
+        <label>Card Description - short line shown on the writing page</label>
         <textarea id="description" rows="2" placeholder="One or two sentences shown on the writing page card..."></textarea>
     </div>
 
     <!-- Card photo -->
     <div class="field">
-        <label>Card Photo — shown on writing page</label>
+        <label>Card Photo - shown on writing page</label>
         <div class="upload-area" id="cardUploadArea" onclick="document.getElementById('cardPhotoInput').click()">
             <p>Click or drag photo here</p>
             <input type="file" id="cardPhotoInput" accept="image/*">
@@ -636,14 +636,40 @@
         return { html: html.trim(), imageEntries };
     }
 
+    function escAttr(str) { return escHtml(str || '').replace(/"/g, '&quot;'); }
+
+    // Full web address for a card picture, used for the sharing preview
+    function absImg(src) {
+        const site = 'https://boxyourbuddy.com';
+        if (!src) return site + '/images/oatmeal-face.jpg';
+        if (src.startsWith('http')) {
+            const m = src.match(/github\.com\/[^/]+\/[^/]+\/blob\/main\/([^?]*)/);
+            return m ? site + '/' + m[1] : src;
+        }
+        if (src.startsWith('../')) return site + '/' + src.slice(3);
+        if (src.startsWith('/')) return site + src;
+        return site + '/writing/' + src;
+    }
+
     // ─── Story page template ──────────────────────────────────────────────────
-    function storyPageHtml(title, date, bodyHtml) {
+    function storyPageHtml(title, date, bodyHtml, description, ogImage, slug) {
         return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${escHtml(title)} | boxyourbuddy</title>
+    <meta name="description" content="${escAttr(description)}">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="boxyourbuddy">
+    <meta property="og:title" content="${escAttr(title)}">
+    <meta property="og:description" content="${escAttr(description)}">
+    <meta property="og:url" content="https://boxyourbuddy.com/writing/${slug}/">
+    <meta property="og:image" content="${ogImage}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${escAttr(title)}">
+    <meta name="twitter:description" content="${escAttr(description)}">
+    <meta name="twitter:image" content="${ogImage}">
     <link rel="icon" href="/favicon.png" type="image/png">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"><\/script>
     <script>
@@ -664,7 +690,7 @@
         .nav { margin-top: 16px; display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap; }
         .nav a { font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; }
         .nav a:hover { color: #FFF0AD; }
-        .nav .dot { height: 5px; width: 5px; background-color: #FFF0AD; border-radius: 50%; display: inline-block; }
+        .nav .dot { height: 15px; width: 15px; display: inline-block; vertical-align: middle; }
         .story { width: 100%; max-width: 640px; }
         .back-link { display: inline-block; font-size: 0.75rem; letter-spacing: 3px; color: #555; text-decoration: none; text-transform: uppercase; font-weight: bold; margin-bottom: 30px; }
         .back-link:hover { color: #FFF0AD; }
@@ -676,22 +702,26 @@
         .story figure img { width: 100%; height: auto; display: block; border-radius: 4px; }
         .story figcaption { font-size: 0.8rem; color: #555; margin-top: 8px; text-align: center; font-weight: normal; }
         hr { border: 0; border-top: 1px solid #222; margin: 40px 0; }
+        .story-end { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px 24px; margin-top: 48px; padding-top: 24px; border-top: 1px solid #222; }
+        .story-end .side { display: flex; flex-wrap: wrap; gap: 16px 24px; }
+        .story-end a, .story-end button { font-family: Arial, sans-serif; font-size: 0.75rem; letter-spacing: 3px; color: #888; text-decoration: none; text-transform: uppercase; font-weight: bold; background: none; border: 0; padding: 0; cursor: pointer; }
+        .story-end a:hover, .story-end button:hover { color: #FFF0AD; }
     </style>
 </head>
 <body>
     <div class="page">
         <header class="page-header">
             <div class="brand-wrap">
-                <img src="../../images/box-small.png" alt="BoxYourBuddy logo" class="brand-logo">
+                <img src="../../images/box-small.png" alt="boxyourbuddy logo" class="brand-logo">
                 <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
             </div>
             <nav class="nav">
                 <a href="/">HOME</a>
-                <span class="dot"></span>
+                <img src="/favicon.png" class="dot" alt="">
                 <a href="/writing/" style="color: #FFF0AD;">WRITING</a>
-                <span class="dot"></span>
+                <img src="/favicon.png" class="dot" alt="">
                 <a href="/art/">ART</a>
-                <span class="dot"></span>
+                <img src="/favicon.png" class="dot" alt="">
                 <a href="/apps/">APPS</a>
                 <img src="/favicon.png" class="dot" alt="">
                 <a href="/games/">GAMES</a>
@@ -705,8 +735,48 @@
             <hr>
 
             ${bodyHtml}
+
+            <div class="story-end">
+                <div class="side">
+                    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Back to top</a>
+                    <button type="button" id="share-link">Share</button>
+                </div>
+                <div class="side">
+                    <a href="/writing/" id="prev-story">← Previous story</a>
+                    <a href="/writing/" id="next-story">Next story →</a>
+                </div>
+            </div>
         </div>
     </div>
+<script>
+(function () {
+    var share = document.getElementById('share-link');
+    if (share) {
+        share.addEventListener('click', function () {
+            var url = window.location.origin + window.location.pathname;
+            function done() { share.textContent = 'Link copied'; setTimeout(function () { share.textContent = 'Share'; }, 2000); }
+            function fallback(t) {
+                var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0';
+                document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(a);
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(done, function () { fallback(url); done(); });
+            } else { fallback(url); done(); }
+        });
+    }
+    var prev = document.getElementById('prev-story'), next = document.getElementById('next-story');
+    if (!prev || !next) return;
+    fetch('/writing/').then(function (r) { return r.text(); }).then(function (t) {
+        var doc = new DOMParser().parseFromString(t, 'text/html');
+        var slugs = Array.prototype.map.call(doc.querySelectorAll('.cards a.card'), function (a) { return (a.getAttribute('href') || '').split('/').filter(Boolean)[0]; });
+        var here = window.location.pathname.split('/').filter(Boolean).pop();
+        var i = slugs.indexOf(here);
+        if (i < 0 || slugs.length < 2) return;
+        prev.href = '/writing/' + slugs[(i - 1 + slugs.length) % slugs.length] + '/';
+        next.href = '/writing/' + slugs[(i + 1) % slugs.length] + '/';
+    }).catch(function () {});
+})();
+<\/script>
 </body>
 </html>`;
     }
@@ -737,7 +807,7 @@
             document.getElementById('title').value =
                 doc.querySelector('.story-title')?.textContent.trim() || '';
 
-            // Date — parse "May 2, 2026 · Dan Stout"
+            // Date - parse "May 2, 2026 · Dan Stout"
             const metaRaw = doc.querySelector('.story-meta')?.textContent || '';
             const datePart = metaRaw.split('·')[0].replace(/ /g, ' ').trim();
             document.getElementById('date').value = parseDateToInput(datePart);
@@ -754,7 +824,7 @@
 
             // Reconstruct editor from story body
             const storyEl = doc.querySelector('.story');
-            ['a.back-link', 'h2.story-title', 'p.story-meta', 'hr'].forEach(sel => {
+            ['a.back-link', 'h2.story-title', 'p.story-meta', 'hr', 'div.story-end'].forEach(sel => {
                 storyEl.querySelector(sel)?.remove();
             });
 
@@ -776,7 +846,10 @@
                 if (node.nodeName === 'FIGURE') {
                     const imgEl = node.querySelector('img');
                     const caption = node.querySelector('figcaption')?.textContent.trim() || '';
-                    const filename = (imgEl?.getAttribute('src') || '').replace(/^\.\//, '');
+                    const filename = (imgEl?.getAttribute('src') || '')
+                        .replace(/^\.\//, '')
+                        .replace('https://boxyourbuddy.com', '')
+                        .replace(`/writing/${slug}/`, '');
                     const id = 'fig-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
                     existingImagePaths[id] = filename;
                     const figure = buildFigureElement(
@@ -861,7 +934,7 @@
             pubLog.line(`Uploading writing/${slug}/index.html…`);
             let storySha = null;
             try { storySha = (await ghGet(token, storyPath)).sha; } catch (e) {}
-            await ghPut(token, storyPath, b64Encode(storyPageHtml(title, date, bodyHtml)),
+            await ghPut(token, storyPath, b64Encode(storyPageHtml(title, date, bodyHtml, description, absImg(cardFilename ? `${slug}/${cardFilename}` : ''), slug)),
                 `Add story: ${title}`, storySha);
             pubLog.line('  ✓ uploaded', 'ok');
 
@@ -885,7 +958,24 @@
             await ghPut(token, 'writing/index.html', b64Encode(indexHtml),
                 `Add writing card: ${title}`, indexFile.sha);
             pubLog.line('  ✓ updated', 'ok');
-            pubLog.line(`✓ Done — "${title}" is live at boxyourbuddy.com/writing/${slug}/`, 'done');
+
+            // 5. Add the story to sitemap.xml so Google finds it
+            try {
+                pubLog.line('Updating sitemap.xml…');
+                const smFile = await ghGet(token, 'sitemap.xml');
+                let sm = b64Decode(smFile.content);
+                const loc = `https://boxyourbuddy.com/writing/${slug}/`;
+                if (sm.includes(`<loc>${loc}</loc>`)) {
+                    pubLog.line('  already listed', 'ok');
+                } else {
+                    sm = sm.replace('</urlset>', `  <url>\n    <loc>${loc}</loc>\n    <priority>0.6</priority>\n    <changefreq>yearly</changefreq>\n  </url>\n\n</urlset>`);
+                    await ghPut(token, 'sitemap.xml', b64Encode(sm), `Add to sitemap: ${title}`, smFile.sha);
+                    pubLog.line('  ✓ updated', 'ok');
+                }
+            } catch (smErr) {
+                pubLog.line(`  could not update sitemap.xml: ${smErr.message}`, 'err');
+            }
+            pubLog.line(`✓ Done - "${title}" is live at boxyourbuddy.com/writing/${slug}/`, 'done');
 
             loadCards();
 
@@ -943,7 +1033,7 @@
             const storyPath = `writing/${editSlug}/index.html`;
             pubLog.line(`Saving writing/${editSlug}/index.html…`);
             const storySha = (await ghGet(token, storyPath)).sha;
-            await ghPut(token, storyPath, b64Encode(storyPageHtml(title, date, bodyHtml)),
+            await ghPut(token, storyPath, b64Encode(storyPageHtml(title, date, bodyHtml, description, absImg(cardImgSrcForIndex), editSlug)),
                 `Edit story: ${title}`, storySha);
             pubLog.line('  ✓ saved', 'ok');
 
@@ -983,7 +1073,7 @@
             await ghPut(token, 'writing/index.html', b64Encode(indexHtml),
                 `Update writing card: ${title}`, indexFile.sha);
             pubLog.line('  ✓ updated', 'ok');
-            pubLog.line(`✓ Done — "${title}" updated at boxyourbuddy.com/writing/${editSlug}/`, 'done');
+            pubLog.line(`✓ Done - "${title}" updated at boxyourbuddy.com/writing/${editSlug}/`, 'done');
 
             existingCardPhotoSrc = cardImgSrcForIndex;
             renderCardList();
@@ -1131,7 +1221,7 @@
 
             ordLog.line('Saving new order…');
             await ghPut(token, 'writing/index.html', b64Encode(html), 'Reorder writing cards', indexFile.sha);
-            ordLog.line('✓ Card order saved — live on GitHub.', 'done');
+            ordLog.line('✓ Card order saved - live on GitHub.', 'done');
 
         } catch (err) {
             ordLog.line(`Error: ${err.message}`, 'err');
