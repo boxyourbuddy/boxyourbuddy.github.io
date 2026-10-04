@@ -241,4 +241,28 @@
     <changefreq>yearly</changefreq>
   </url>
 
+  <url>
+    <loc>https://boxyourbuddy.com/thoughts-of-trains/</loc>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://boxyourbuddy.com/games/</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://boxyourbuddy.com/apps/size-matters/</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://boxyourbuddy.com/tv-stats-tracker/dev-log/</loc>
+    <priority>0.5</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
 </urlset>
