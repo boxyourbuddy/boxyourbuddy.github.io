@@ -65,11 +65,10 @@
         .nav a:hover { color: #FFF0AD; }
         .nav .dot { height: 15px; width: 15px; display: inline-block; vertical-align: middle; }
 
-        .slideshow { width: 100%; max-width: 720px; cursor: default; }
-        .slide { display: none; }
-        .slide.active { display: block; animation: fadeIn 0.6s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .slide img { width: 100%; height: auto; max-height: 600px; object-fit: contain; display: block; }
+        .intro-note { max-width: 720px; width: 100%; color: #888; font-size: 0.95rem; line-height: 1.8; font-weight: normal; margin: 0 0 40px; }
+        .mosaic { position: relative; width: 100%; max-width: 1100px; margin: 0 auto; }
+        .tile { position: absolute; padding: 3px; }
+        .tile img { width: 100%; height: 100%; object-fit: contain; display: block; }
     </style>
 </head>
 <body>
@@ -92,70 +91,131 @@
             </nav>
         </header>
 
-        <div class="slideshow" id="slideshow">
-            <div class="slide active"><img src="im-out-of-control-sketch.jpg" alt="I'm Out of Control, sketch by Dan Stout aka boxyourbuddy"></div>
-                        <div class="slide"><img src="disappear.jpg" alt="disappear"></div>
-            <div class="slide"><img src="elevation-four600.jpg" alt="elevation four600"></div>
-            <div class="slide"><img src="sketch-42418.jpg" alt="sketch 42418"></div>
-            <div class="slide"><img src="noon1200.jpg" alt="noon1200"></div>
-                        <div class="slide"><img src="above1200.jpg" alt="above1200"></div>
-            <div class="slide"><img src="all-at-once1200.jpg" alt="all at once1200"></div>
-            <div class="slide"><img src="combo-number-three1200.jpg" alt="combo number three1200"></div>
-            <div class="slide"><img src="embeded1200.jpg" alt="embeded1200"></div>
-            <div class="slide"><img src="escape1200.jpg" alt="escape1200"></div>
-            <div class="slide"><img src="free1200.jpg" alt="free1200"></div>
-            <div class="slide"><img src="green21200.jpg" alt="green21200"></div>
-            <div class="slide"><img src="inside-my-head.jpg" alt="inside my head"></div>
-                        <div class="slide"><img src="light-1200x600.jpg" alt="light 1200x600"></div>
-            <div class="slide"><img src="repeat202400.jpg" alt="repeat202400"></div>
-            <div class="slide"><img src="revolve1200.jpg" alt="revolve1200"></div>
-            <div class="slide"><img src="river.jpg" alt="river"></div>
-            <div class="slide"><img src="stormyprint.jpg" alt="stormyprint"></div>
-                        <div class="slide"><img src="sway1200.jpg" alt="sway1200"></div>
-            <div class="slide"><img src="swim1200.jpg" alt="swim1200"></div>
-            <div class="slide"><img src="unruled1200.jpg" alt="unruled1200"></div>
-            <!-- SLIDES -->
-        </div>
+        <p class="intro-note">Most of these images were made taking an actual photo of someone or something, loading it into gimp, and stretching it around until it became something pleasant for my eyes to look at. In a few I used a pencil. The others are just using the paint tools in gimp. All of these were made before AI art was a thing.</p>
 
-        <hr style="border: none; border-top: 1px solid #333; width: 100%; max-width: 720px; margin: 40px 0;">
-        <p style="max-width: 720px; width: 100%; color: #888; font-size: 0.95rem; line-height: 1.8; font-weight: normal;">Most of these images were made taking an actual photo of someone or something, loading it into gimp, and stretching it around until it became something pleasant for my eyes to look at. In a few I used a pencil. The others are just using the paint tools in gimp. All of these were made before AI art was a thing.</p>
-        <p style="color: #888; font-size: 1.5rem; text-align: center;">&#9774;</p>
+        <div class="mosaic" id="mosaic"></div>
+
+        <p style="color: #888; font-size: 1.5rem; text-align: center; margin-top: 40px;">&#9774;</p>
     </div>
 
     <script>
         (function () {
-            var slides = Array.from(document.querySelectorAll('.slide'));
-            if (slides.length < 2) return;
+            var PICS = [{"src": "above1200.jpg", "w": 720, "h": 540, "title": "Above"}, {"src": "all-at-once1200.jpg", "w": 720, "h": 360, "title": "All at Once"}, {"src": "combo-number-three1200.jpg", "w": 720, "h": 360, "title": "Combo Number Three"}, {"src": "disappear.jpg", "w": 720, "h": 720, "title": "Disappear"}, {"src": "elevation-four600.jpg", "w": 600, "h": 750, "title": "Elevation Four"}, {"src": "embeded1200.jpg", "w": 720, "h": 360, "title": "Embeded"}, {"src": "escape1200.jpg", "w": 720, "h": 540, "title": "Escape"}, {"src": "free1200.jpg", "w": 720, "h": 540, "title": "Free"}, {"src": "green21200.jpg", "w": 720, "h": 360, "title": "Green 2"}, {"src": "im-out-of-control-sketch.jpg", "w": 2005, "h": 958, "title": "I'm Out of Control"}, {"src": "inside-my-head.jpg", "w": 720, "h": 360, "title": "Inside My Head"}, {"src": "light-1200x600.jpg", "w": 720, "h": 360, "title": "Light"}, {"src": "noon1200.jpg", "w": 720, "h": 393, "title": "Noon"}, {"src": "repeat202400.jpg", "w": 720, "h": 389, "title": "Repeat"}, {"src": "revolve1200.jpg", "w": 720, "h": 360, "title": "Revolve"}, {"src": "river.jpg", "w": 720, "h": 480, "title": "River"}, {"src": "sketch-42418.jpg", "w": 720, "h": 586, "title": "Sketch 42418"}, {"src": "stormyprint.jpg", "w": 720, "h": 360, "title": "Stormy"}, {"src": "sway1200.jpg", "w": 720, "h": 540, "title": "Sway"}, {"src": "swim1200.jpg", "w": 720, "h": 480, "title": "Swim"}, {"src": "unruled1200.jpg", "w": 720, "h": 360, "title": "Unruled"}];
+            var box = document.getElementById('mosaic');
+            var NARROW = 640;
+            var state = { tree: null, order: null };
+            var els = {};
 
-            // Shuffle
-            for (var i = slides.length - 1; i > 0; i--) {
-                var j = Math.floor(Math.random() * (i + 1));
-                var tmp = slides[i]; slides[i] = slides[j]; slides[j] = tmp;
+            function shuffle(a) {
+                a = a.slice();
+                for (var i = a.length - 1; i > 0; i--) {
+                    var j = Math.floor(Math.random() * (i + 1));
+                    var t = a[i]; a[i] = a[j]; a[j] = t;
+                }
+                return a;
             }
-            var ss = document.getElementById('slideshow');
-            slides.forEach(function (s) { s.classList.remove('active'); ss.appendChild(s); });
-            slides[0].classList.add('active');
 
-            var current = 0;
+            // Builds a random collage: each step puts two groups side by side or stacked.
+            function build(items) {
+                if (items.length === 1) return { pic: items[0], a: items[0].w / items[0].h };
+                var n = items.length;
+                var k = Math.round(n / 2) + Math.floor(Math.random() * 3) - 1;
+                k = Math.max(1, Math.min(n - 1, k));
+                var l = build(items.slice(0, k)), r = build(items.slice(k));
+                var dir = Math.random() < 0.5 ? 'h' : 'v';
+                var a = dir === 'h' ? l.a + r.a : 1 / (1 / l.a + 1 / r.a);
+                return { dir: dir, l: l, r: r, a: a };
+            }
+
+            function place(node, x, y, w, h, out) {
+                if (node.pic) { out.push({ pic: node.pic, x: x, y: y, w: w, h: h }); return; }
+                if (node.dir === 'h') {
+                    var w1 = w * node.l.a / (node.l.a + node.r.a);
+                    place(node.l, x, y, w1, h, out);
+                    place(node.r, x + w1, y, w - w1, h, out);
+                } else {
+                    var h1 = h * (1 / node.l.a) / (1 / node.l.a + 1 / node.r.a);
+                    place(node.l, x, y, w, h1, out);
+                    place(node.r, x, y + h1, w, h - h1, out);
+                }
+            }
+
+            function mosaic(tree, W) {
+                var H = W / tree.a, out = [];
+                place(tree, 0, 0, W, H, out);
+                return { H: H, rects: out };
+            }
+
+            // Tries many random collages and keeps one with no tiny pictures and a pleasant shape.
+            function pickTree(W) {
+                var good = [];
+                for (var t = 0; t < 5000; t++) {
+                    var tree = build(shuffle(PICS));
+                    var m = mosaic(tree, W), min = 1e9;
+                    m.rects.forEach(function (r) { min = Math.min(min, r.w, r.h); });
+                    var ratio = m.H / W;
+                    if (ratio >= 0.5 && ratio <= 0.85) good.push({ tree: tree, q: min });
+                }
+                if (!good.length) return null;
+                good.sort(function (a, b) { return b.q - a.q; });
+                return good[Math.floor(Math.random() * Math.min(5, good.length))].tree;
+            }
+
+            // Phones: simple rows, every picture still shown whole.
+            function rows(order, W) {
+                var target = Math.max(90, W * 0.3), out = [], y = 0, i = 0;
+                while (i < order.length) {
+                    var row = [], sum = 0;
+                    while (i < order.length && sum * target < W) { row.push(order[i]); sum += order[i].w / order[i].h; i++; }
+                    var h = W / sum;
+                    if (i >= order.length && h > target * 1.4) h = target;
+                    var x = 0;
+                    row.forEach(function (p) {
+                        var w = h * p.w / p.h;
+                        out.push({ pic: p, x: x, y: y, w: w, h: h });
+                        x += w;
+                    });
+                    y += h;
+                }
+                return { H: y, rects: out };
+            }
+
+            function render(m) {
+                box.style.height = Math.round(m.H) + 'px';
+                m.rects.forEach(function (r) {
+                    var d = els[r.pic.src];
+                    if (!d) {
+                        d = document.createElement('div');
+                        d.className = 'tile';
+                        var img = document.createElement('img');
+                        img.src = r.pic.src; img.alt = r.pic.title;
+                        img.width = r.pic.w; img.height = r.pic.h;
+                        d.appendChild(img);
+                        box.appendChild(d);
+                        els[r.pic.src] = d;
+                    }
+                    var l = Math.round(r.x), t = Math.round(r.y);
+                    d.style.left = l + 'px';
+                    d.style.top = t + 'px';
+                    d.style.width = (Math.round(r.x + r.w) - l) + 'px';
+                    d.style.height = (Math.round(r.y + r.h) - t) + 'px';
+                });
+            }
+
+            function layout() {
+                var W = box.clientWidth;
+                if (!W) return;
+                if (W >= NARROW) {
+                    if (!state.tree) state.tree = pickTree(W);
+                    if (state.tree) { render(mosaic(state.tree, W)); return; }
+                }
+                if (!state.order) state.order = shuffle(PICS);
+                render(rows(state.order, W));
+            }
+
             var timer = null;
-
-            function showSlide(n) {
-                slides[current].classList.remove('active');
-                current = (n + slides.length) % slides.length;
-                slides[current].classList.add('active');
-            }
-
-            function next() { showSlide(current + 1); }
-
-            function startTimer() {
-                clearInterval(timer);
-                timer = setInterval(next, 5000);
-            }
-
-            ss.addEventListener('mouseenter', function () { clearInterval(timer); });
-            ss.addEventListener('mouseleave', startTimer);
-
-            startTimer();
+            window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(layout, 120); });
+            layout();
         })();
     </script>
 </body>
