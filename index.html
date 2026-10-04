@@ -163,7 +163,7 @@
         const b = document.createElement('button');
         b.className = 'thumb';
         b.setAttribute('aria-label', m.caption);
-        b.innerHTML = '<img src="' + (m.poster || m.src) + '" alt="" loading="lazy">' + (m.type === 'video' ? '<span class="play"></span>' : '');
+        b.innerHTML = '<img src="' + (m.poster || m.src).replace('/media/', '/media/thumbs/') + '" alt="" loading="lazy">' + (m.type === 'video' ? '<span class="play"></span>' : '');
         b.addEventListener('click', () => show(i, true));
         strip.appendChild(b);
     });
