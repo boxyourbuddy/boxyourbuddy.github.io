@@ -75,8 +75,6 @@
         .stat-label { font-size: 0.7rem; letter-spacing: 3px; color: #888; text-transform: uppercase; }
         .stat-value { font-size: 1.5rem; margin-top: 4px; font-variant-numeric: tabular-nums; }
         .stat-value.good { color: #8fe08f; }
-        .forfeit { background: #111; color: #888; border: 1px solid #333; border-radius: 6px; padding: 0 18px; font-size: 0.9rem; cursor: pointer; letter-spacing: 1px; }
-        .forfeit:hover, .forfeit.arm { color: #ff8a80; border-color: #ff8a80; }
         .play-main { display: grid; grid-template-columns: 220px 1fr; gap: 16px; align-items: start; }
         .visual { position: relative; background: #0a0a0a; border: 1px solid #222; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 10px; min-height: 300px; overflow: visible; }
         .visual svg { width: 100%; max-width: 200px; height: auto; overflow: visible; }
@@ -93,6 +91,8 @@
         #typingLine { white-space: pre; }
         .typing { position: relative; font-size: 1.35rem; line-height: 2; overflow: hidden; cursor: text; min-width: 0; border-color: #333; }
         .typing.focused { border-color: #FFF0AD; }
+        .quit-hint { display: block; margin: -8px auto 0; background: none; border: 0; padding: 0; color: #666; font-size: 0.8rem; letter-spacing: 1px; cursor: pointer; }
+        .quit-hint:hover { color: #ff8a80; }
         .typing .ok { color: #8fe08f; }
         .typing .bad { color: #fff; background: #b3261e; border-radius: 2px; }
         .typing .todo { color: #555; }
@@ -202,7 +202,7 @@
                 </div>
 
                 <div class="start-row"><button class="btn" id="startBtn">Start</button></div>
-                <p class="note">Books from <a href="https://standardebooks.org/" target="_blank" rel="noopener">Standard Ebooks</a>, free public domain classics. The clock starts the moment you press Start.</p>
+                <p class="note">Books from <a href="https://standardebooks.org/" target="_blank" rel="noopener">Standard Ebooks</a>, free public domain classics. The clock starts when you type the first letter.</p>
             </section>
 
             <!-- PLAY -->
@@ -212,7 +212,6 @@
                     <div class="stat"><div class="stat-label">Avg WPM</div><div class="stat-value" id="sWpm">0</div></div>
                     <div class="stat"><div class="stat-label">Goal</div><div class="stat-value" id="sGoal">50</div></div>
                     <div class="stat"><div class="stat-label">Accuracy</div><div class="stat-value" id="sAcc">100%</div></div>
-                    <button class="forfeit" id="forfeitBtn">Forfeit</button>
                 </div>
                 <div class="play-main">
                     <div class="visual" id="visual"></div>
@@ -222,6 +221,7 @@
                             <div id="typingLine"></div>
                             <div class="click-to-type hidden" id="clickToType">CLICK HERE TO TYPE</div>
                         </div>
+                        <button class="quit-hint" id="quitBtn">Hit Escape to Quit</button>
                     </div>
                 </div>
                 <div class="now-typing" id="nowTyping"></div>
@@ -576,10 +576,10 @@
             g = {
                 text: '', segments: [], pos: 0, lineStart: 0, wrong: '',
                 goal: settings.goal, category: settings.cat,
-                startT: performance.now(), endT: 0,
+                startT: null, endT: 0,   // the clock starts on the first key typed
                 strokes: 0, goodStrokes: 0, mistakes: 0,
                 samples: [{ t: 0, pos: 0 }], series: [], best: 0,
-                loadingNext: false, over: false, forfeitArmed: 0
+                loadingNext: false, over: false
             };
             appendItem(firstItem);
             g.segments[0].enterT = 0;
@@ -592,7 +592,7 @@
             g.segments.push(Object.assign({}, item, { text: undefined, start, end: g.text.length, enterT: null }));
         }
 
-        function elapsed() { return (g.endT || performance.now()) - g.startT; }
+        function elapsed() { return g.startT === null ? 0 : (g.endT || performance.now()) - g.startT; }
         function avgWpm() { return wpmOf(g.pos, elapsed()); }
 
         // Make sure more text is on the way before the current one runs out.
@@ -722,6 +722,7 @@
             if (!g || g.over) return;
             const lineEnd = (lineAt(g.lineStart) || { end: g.lineStart }).end;
             if (g.pos >= g.text.length) return; // waiting for text
+            if (g.startT === null) g.startT = performance.now();
             g.strokes++;
             if (!g.wrong && ch === g.text[g.pos]) {
                 g.goodStrokes++;
@@ -748,6 +749,7 @@
         const input = $('hiddenInput');
         input.addEventListener('keydown', e => {
             if (!g || g.over) return;
+            if (e.key === 'Escape') { e.preventDefault(); finish(false); return; }
             if (e.ctrlKey || e.metaKey || e.altKey) return;
             if (e.key === 'Backspace') { e.preventDefault(); backspace(); return; }
             if (e.key === 'Tab' || e.key === 'Enter') { e.preventDefault(); return; }
@@ -806,7 +808,7 @@
             tickTimer = setInterval(() => {
                 if (!g || g.over) return;
                 updateStats();
-                if (++n % 10 === 0) sample();
+                if (g.startT !== null && ++n % 10 === 0) sample();
                 checkPop();
             }, 100);
             track('tfs_start', { goal: g.goal, category: categoryName(g.category) });
@@ -836,25 +838,20 @@
             prepare();
         }
 
-        $('forfeitBtn').addEventListener('click', () => {
+        $('quitBtn').addEventListener('click', () => {
             if (!g || g.over) return;
-            const b = $('forfeitBtn');
-            if (b.classList.contains('arm')) { finish(false); return; }
-            b.classList.add('arm'); b.textContent = 'Click again to forfeit';
-            clearTimeout(g.forfeitArmed);
-            g.forfeitArmed = setTimeout(() => { b.classList.remove('arm'); b.textContent = 'Forfeit'; focusInput(); }, 3000);
+            finish(false);
         });
 
         // ---------- Results ----------
         function showResults() {
-            const b = $('forfeitBtn'); b.classList.remove('arm'); b.textContent = 'Forfeit';
             $('shareMsg').textContent = '';
             const ms = elapsed();
             const typed = g.text.slice(0, g.pos);
             const words = typed.trim() ? typed.trim().split(/\s+/).length : 0;
             const acc = g.strokes ? (g.goodStrokes / g.strokes * 100) : 100;
             const word = $('rWord');
-            word.textContent = g.popped ? 'POPPED!' : 'FORFEITED';
+            word.textContent = g.popped ? 'POPPED!' : 'QUIT';
             word.className = 'result-word ' + (g.popped ? 'popped' : 'forfeit');
             $('rSub').textContent = g.popped
                 ? `You reached ${g.goal} WPM in ${fmtTime(ms)}.`
@@ -872,7 +869,7 @@
                 ['Accuracy', acc.toFixed(1) + '%'],
                 ['Category', categoryName(g.category)],
                 ['Texts typed', String(g.segments.filter(s => s.enterT !== null).length)],
-                ['Result', g.popped ? 'Popped' : 'Forfeited']
+                ['Result', g.popped ? 'Popped' : 'Quit']
             ];
             $('rGrid').innerHTML = tiles.map(([l, v]) => `<div class="stat"><div class="stat-label">${l}</div><div class="stat-value" style="font-size:1.2rem">${esc(v)}</div></div>`).join('');
 
@@ -947,7 +944,7 @@
             x.letterSpacing = '0px';
             x.fillStyle = g.popped ? gold : '#ff8a80';
             x.font = 'bold 112px Arial, sans-serif';
-            x.fillText(g.popped ? 'POPPED!' : 'FORFEITED', 74, 232);
+            x.fillText(g.popped ? 'POPPED!' : 'QUIT', 74, 232);
             x.fillStyle = '#ccc'; x.font = '34px Arial, sans-serif';
             x.fillText(g.popped ? `${g.goal} WPM goal reached in ${fmtTime(ms)}` : `Reached ${Math.round(avg)} of ${g.goal} WPM in ${fmtTime(ms)}`, 80, 290);
 
