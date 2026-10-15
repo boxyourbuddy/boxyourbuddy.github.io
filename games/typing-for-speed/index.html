@@ -268,6 +268,7 @@
         const PRELOAD_WHEN_LEFT = 4000;  // start getting the next text when this many characters are left
         const ROLLING_SECONDS = 10;
         const MAX_WRONG = 10;
+        const MIN_START_PARA = 80;       // a book starts on a paragraph at least this long
         const SE = 'https://standardebooks.org';
 
         const BUILT_IN = [
@@ -351,13 +352,13 @@
             root.querySelectorAll('p').forEach(p => {
                 p.querySelectorAll('br').forEach(br => br.replaceWith(' '));
                 const t = clean(p.textContent);
-                if (t) paras.push({ t, sec: p.closest('section, article') });
+                if (t) paras.push({ t });
             });
             if (!paras.length) throw new Error('no text');
-            const starts = [];
-            for (let i = 0; i < paras.length; i++) if (i === 0 || paras[i].sec !== paras[i - 1].sec) starts.push(i);
-            const usable = starts.filter(i => i < paras.length * 0.75);
-            const from = usable.length > 1 ? usable[Math.floor(Math.random() * usable.length)] : 0;
+            // Start on a random real paragraph (not a short line like "* * *") in the first three quarters.
+            const usable = [];
+            for (let i = 0; i < paras.length * 0.75; i++) if (paras[i].t.length >= MIN_START_PARA) usable.push(i);
+            const from = usable.length ? usable[Math.floor(Math.random() * usable.length)] : 0;
             const text = paras.slice(from).map(p => p.t).join(' ');
             if (text.length < 1500) throw new Error('too short');
             return text;
