@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing for Speed | boxyourbuddy</title>
+    <meta name="description" content="A free typing game. Pick a speed goal, type real books, and watch the balloon fill. Hit your goal and it pops.">
+    <meta name="author" content="Dan Stout">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="boxyourbuddy">
+    <meta property="og:title" content="Typing for Speed">
+    <meta property="og:description" content="A free typing game. Pick a speed goal, type real books, and watch the balloon fill. Hit your goal and it pops.">
+    <meta property="og:url" content="https://boxyourbuddy.com/games/typing-for-speed/">
+    <meta property="og:image" content="https://boxyourbuddy.com/games/typing-for-speed/preview.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Typing for Speed">
+    <meta name="twitter:description" content="A free typing game. Pick a speed goal, type real books, and watch the balloon fill. Hit your goal and it pops.">
+    <meta name="twitter:image" content="https://boxyourbuddy.com/games/typing-for-speed/preview.jpg">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NDGQGQM5G"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7NDGQGQM5G');
+    </script>
+    <style>
+        * { box-sizing: border-box; font-family: Arial, sans-serif; font-weight: bold; }
+        body { margin: 0; background: #000; color: #fff; overflow-x: hidden; }
+        .page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
+        .page-header { text-align: center; margin-bottom: 40px; width: 100%; }
+        .brand-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; }
+        .brand-logo { width: 50px; height: auto; }
+        .brand-name { letter-spacing: 2px; margin: 0; font-size: clamp(1.5rem, 5vw, 2.8rem); text-transform: uppercase; }
+        .brand-name .tint { color: #FFF0AD; }
+        .nav { margin-top: 16px; display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap; }
+        .nav a { font-size: 0.75rem; letter-spacing: 4px; color: #888; text-decoration: none; text-transform: uppercase; }
+        .nav a:hover { color: #FFF0AD; }
+        .nav .dot { height: 15px; width: 15px; display: inline-block; vertical-align: middle; }
+
+        .game { width: 100%; max-width: 1000px; }
+        .game-title { font-size: clamp(1.6rem, 4vw, 2.2rem); margin: 0 0 6px; text-align: center; }
+        .game-sub { color: #888; font-weight: normal; text-align: center; margin: 0 0 28px; line-height: 1.6; }
+        .panel { background: #0a0a0a; border: 1px solid #222; border-radius: 8px; padding: 22px; }
+        .hidden { display: none !important; }
+
+        /* Setup */
+        .setup { display: grid; gap: 22px; }
+        .field-label { display: block; font-size: 0.8rem; letter-spacing: 3px; color: #888; text-transform: uppercase; margin-bottom: 10px; }
+        .goal-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .chip { background: #111; color: #fff; border: 1px solid #333; border-radius: 6px; padding: 10px 14px; font-size: 1rem; cursor: pointer; }
+        .chip:hover { border-color: #FFF0AD; }
+        .chip.on { background: #FFF0AD; color: #000; border-color: #FFF0AD; }
+        .goal-input { width: 90px; background: #111; color: #fff; border: 1px solid #333; border-radius: 6px; padding: 10px; font-size: 1rem; }
+        .cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+        .cats .chip { text-align: left; }
+        .chip .count { display: block; font-size: 0.75rem; color: #888; font-weight: normal; margin-top: 3px; }
+        .chip.on .count { color: #444; }
+        .upnext { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+        .upnext-text { color: #ccc; font-weight: normal; line-height: 1.5; }
+        .upnext-text b { color: #fff; }
+        .mydoc textarea { width: 100%; min-height: 140px; background: #111; color: #fff; border: 1px solid #333; border-radius: 6px; padding: 12px; font-weight: normal; font-size: 0.95rem; line-height: 1.5; resize: vertical; }
+        .mydoc-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 10px; color: #888; font-weight: normal; }
+        .btn { background: #FFF0AD; color: #000; border: none; border-radius: 6px; padding: 14px 28px; font-size: 1.1rem; cursor: pointer; letter-spacing: 1px; }
+        .btn:hover { filter: brightness(1.08); }
+        .btn:disabled { opacity: 0.5; cursor: default; }
+        .btn-ghost { background: transparent; color: #FFF0AD; border: 1px solid #FFF0AD; }
+        .start-row { display: flex; justify-content: center; }
+        .note { color: #666; font-weight: normal; font-size: 0.85rem; text-align: center; line-height: 1.6; }
+        .note a { color: #888; }
+
+        /* Play */
+        .statbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; margin-bottom: 16px; }
+        .stat { background: #111; border-radius: 6px; padding: 10px 14px; flex: 1 1 110px; }
+        .stat-label { font-size: 0.7rem; letter-spacing: 3px; color: #888; text-transform: uppercase; }
+        .stat-value { font-size: 1.5rem; margin-top: 4px; font-variant-numeric: tabular-nums; }
+        .stat-value.good { color: #8fe08f; }
+        .forfeit { background: #111; color: #888; border: 1px solid #333; border-radius: 6px; padding: 0 18px; font-size: 0.9rem; cursor: pointer; letter-spacing: 1px; }
+        .forfeit:hover, .forfeit.arm { color: #ff8a80; border-color: #ff8a80; }
+        .play-main { display: grid; grid-template-columns: 220px 1fr; gap: 16px; align-items: start; }
+        .visual { position: relative; background: #0a0a0a; border: 1px solid #222; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 10px; min-height: 300px; overflow: visible; }
+        .visual svg { width: 100%; max-width: 200px; height: auto; overflow: visible; }
+        .visual-caption { color: #888; font-size: 0.85rem; margin-top: 6px; font-variant-numeric: tabular-nums; }
+        .texts { display: grid; gap: 16px; grid-template-rows: auto auto; align-content: start; min-width: 0; }
+        .mono, .mono * { font-family: Menlo, Consolas, "Courier New", monospace; font-weight: normal; }
+        .mono .click-to-type, .mono .loading-msg { font-family: Arial, sans-serif; font-weight: bold; }
+        .reading { position: relative; font-size: 1.2rem; line-height: 2.1; color: #777; white-space: pre; overflow: hidden; min-width: 0; }
+        .reading .line { height: 2.1em; overflow: hidden; }
+        .reading .line.cur { color: #fff; }
+        .reading .line.cur .done { color: #4f7f4f; }
+        .reading.slide { animation: slideUp 0.18s ease-out; }
+        @keyframes slideUp { from { transform: translateY(0.6em); opacity: 0.6; } to { transform: none; opacity: 1; } }
+        #typingLine { white-space: pre; }
+        .typing { position: relative; font-size: 1.35rem; line-height: 2; overflow: hidden; cursor: text; min-width: 0; border-color: #333; }
+        .typing.focused { border-color: #FFF0AD; }
+        .typing .ok { color: #8fe08f; }
+        .typing .bad { color: #fff; background: #b3261e; border-radius: 2px; }
+        .typing .todo { color: #555; }
+        .typing .eol { color: #333; }
+        .caret { display: inline-block; width: 2px; height: 1.25em; background: #FFF0AD; vertical-align: -0.22em; margin-right: -2px; animation: blink 1s steps(1) infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        .click-to-type { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); color: #FFF0AD; font-family: Arial, sans-serif; font-weight: bold; font-size: 1rem; letter-spacing: 2px; }
+        .now-typing { color: #666; font-weight: normal; font-size: 0.9rem; margin-top: 12px; line-height: 1.5; }
+        .now-typing b { color: #aaa; }
+        .loading-msg { color: #FFF0AD; font-size: 1rem; }
+        .hidden-input { position: absolute; opacity: 0; left: 0; top: 0; width: 1px; height: 1px; border: 0; padding: 0; }
+
+        /* Results */
+        .result-head { text-align: center; margin-bottom: 22px; }
+        .result-word { font-size: clamp(2.2rem, 7vw, 3.6rem); margin: 0; letter-spacing: 2px; }
+        .result-word.popped { color: #FFF0AD; }
+        .result-word.forfeit { color: #ff8a80; }
+        .result-sub { color: #888; font-weight: normal; margin: 8px 0 0; }
+        .share-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+        .share-msg { color: #8fe08f; font-weight: normal; min-height: 1.2em; margin: 10px 0 0; }
+        .result-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 18px; }
+        .chart-wrap { background: #111; border-radius: 6px; padding: 14px; margin-bottom: 18px; }
+        .chart-wrap svg { width: 100%; height: auto; display: block; }
+        .legend { display: flex; gap: 18px; flex-wrap: wrap; color: #888; font-size: 0.8rem; font-weight: normal; margin-top: 8px; }
+        .legend i { display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 6px; }
+        .table-wrap { overflow-x: auto; margin-bottom: 22px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        th { text-align: left; color: #888; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; padding: 8px; border-bottom: 1px solid #222; }
+        td { padding: 10px 8px; border-bottom: 1px solid #1a1a1a; font-weight: normal; color: #ccc; vertical-align: top; }
+        td a { color: #FFF0AD; }
+        .result-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        .confetti { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
+
+        @media (max-width: 700px) {
+            .page { padding: 40px 16px; }
+            .play-main { grid-template-columns: 1fr; }
+            .visual { min-height: 0; flex-direction: row; justify-content: center; gap: 14px; }
+            .visual svg { max-width: 90px; }
+            .reading { font-size: 1rem; }
+            .typing { font-size: 1.1rem; }
+            .panel { padding: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="page-header">
+            <div class="brand-wrap">
+                <img src="/images/box-small.png" alt="boxyourbuddy logo" class="brand-logo">
+                <h1 class="brand-name"><span class="tint">B</span>OX<span class="tint">Y</span>OUR<span class="tint">B</span>UDDY</h1>
+            </div>
+            <nav class="nav">
+                <a href="/">HOME</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/writing/">WRITING</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/art/">ART</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/apps/">APPS</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="/games/" style="color: #FFF0AD;">GAMES</a>
+            </nav>
+        </header>
+
+        <main class="game">
+
+            <!-- SETUP -->
+            <section id="setup" class="setup">
+                <div>
+                    <h2 class="game-title">Typing for Speed</h2>
+                    <p class="game-sub">Pick a speed goal and type real books. The balloon fills as your average speed climbs.<br>Hit your goal and it pops. Mistakes must be fixed before you can go on, and capital letters count.</p>
+                </div>
+
+                <div class="panel">
+                    <span class="field-label">Speed goal (words per minute)</span>
+                    <div class="goal-row" id="goalRow">
+                        <button class="chip" data-goal="20">20</button>
+                        <button class="chip" data-goal="30">30</button>
+                        <button class="chip" data-goal="40">40</button>
+                        <button class="chip" data-goal="50">50</button>
+                        <button class="chip" data-goal="60">60</button>
+                        <button class="chip" data-goal="80">80</button>
+                        <button class="chip" data-goal="100">100</button>
+                        <input class="goal-input" id="goalInput" type="number" min="5" max="250" step="1" aria-label="Custom goal">
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <span class="field-label">What do you want to type?</span>
+                    <div class="cats" id="cats"></div>
+                </div>
+
+                <div class="panel mydoc hidden" id="mydoc">
+                    <span class="field-label">My document</span>
+                    <textarea id="mydocText" placeholder="Paste any text here, or load a .txt file below."></textarea>
+                    <div class="mydoc-row">
+                        <button class="chip" id="mydocLoadBtn">Load a .txt file</button>
+                        <input type="file" id="mydocFile" accept=".txt,text/plain" class="hidden">
+                        <span id="mydocInfo"></span>
+                    </div>
+                </div>
+
+                <div class="panel upnext" id="upnext">
+                    <div class="upnext-text" id="upnextText">Getting a book ready...</div>
+                    <button class="chip" id="otherBook">Different book</button>
+                </div>
+
+                <div class="start-row"><button class="btn" id="startBtn">Start</button></div>
+                <p class="note">Books from <a href="https://standardebooks.org/" target="_blank" rel="noopener">Standard Ebooks</a>, free public domain classics. The clock starts the moment you press Start.</p>
+            </section>
+
+            <!-- PLAY -->
+            <section id="play" class="hidden">
+                <div class="statbar">
+                    <div class="stat"><div class="stat-label">Time</div><div class="stat-value" id="sTime">0:00</div></div>
+                    <div class="stat"><div class="stat-label">Avg WPM</div><div class="stat-value" id="sWpm">0</div></div>
+                    <div class="stat"><div class="stat-label">Goal</div><div class="stat-value" id="sGoal">50</div></div>
+                    <div class="stat"><div class="stat-label">Accuracy</div><div class="stat-value" id="sAcc">100%</div></div>
+                    <button class="forfeit" id="forfeitBtn">Forfeit</button>
+                </div>
+                <div class="play-main">
+                    <div class="visual" id="visual"></div>
+                    <div class="texts">
+                        <div class="panel reading mono" id="reading"></div>
+                        <div class="panel typing mono" id="typing">
+                            <div id="typingLine"></div>
+                            <div class="click-to-type hidden" id="clickToType">CLICK HERE TO TYPE</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="now-typing" id="nowTyping"></div>
+                <textarea class="hidden-input" id="hiddenInput" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Typing input"></textarea>
+            </section>
+
+            <!-- RESULTS -->
+            <section id="results" class="hidden">
+                <div class="result-head">
+                    <p class="result-word" id="rWord">POPPED!</p>
+                    <p class="result-sub" id="rSub"></p>
+                    <div class="share-row">
+                        <button class="btn" id="shareBtn">Share picture</button>
+                        <button class="btn btn-ghost" id="saveBtn">Save picture</button>
+                    </div>
+                    <p class="share-msg" id="shareMsg"></p>
+                </div>
+                <div class="result-grid" id="rGrid"></div>
+                <div class="chart-wrap">
+                    <span class="field-label">Speed over time</span>
+                    <div id="rChart"></div>
+                    <div class="legend">
+                        <span><i style="background:#FFF0AD"></i>Average WPM</span>
+                        <span><i style="background:#5a8ad6"></i>Speed right then (last 10 seconds)</span>
+                        <span><i style="background:#8fe08f"></i>Goal</span>
+                    </div>
+                </div>
+                <span class="field-label">What you typed</span>
+                <div class="table-wrap"><table id="rTable"></table></div>
+                <div class="result-btns">
+                    <button class="btn" id="againBtn">Play again</button>
+                    <button class="btn btn-ghost" id="settingsBtn">Change settings</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+    (function () {
+        'use strict';
+
+        // ---------- Settings ----------
+        const MIN_CHARS_TO_POP = 30;     // a few fast letters at the start cannot pop the balloon
+        const PRELOAD_WHEN_LEFT = 4000;  // start getting the next text when this many characters are left
+        const ROLLING_SECONDS = 10;
+        const MAX_WRONG = 10;
+        const SE = 'https://standardebooks.org';
+
+        const BUILT_IN = [
+            { t: 'The Time Machine', a: 'H. G. Wells', text: 'The Time Traveller (for so it will be convenient to speak of him) was expounding a recondite matter to us. His grey eyes shone and twinkled, and his usually pale face was flushed and animated. The fire burned brightly, and the soft radiance of the incandescent lights in the lilies of silver caught the bubbles that flashed and passed in our glasses. Our chairs, being his patents, embraced and caressed us rather than submitted to be sat upon, and there was that luxurious after-dinner atmosphere when thought roams gracefully free of the trammels of precision.' },
+            { t: 'Pride and Prejudice', a: 'Jane Austen', text: 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife. However little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families, that he is considered the rightful property of some one or other of their daughters. "My dear Mr. Bennet," said his lady to him one day, "have you heard that Netherfield Park is let at last?" Mr. Bennet replied that he had not. "But it is," returned she; "for Mrs. Long has just been here, and she told me all about it." Mr. Bennet made no answer.' },
+            { t: 'Moby-Dick', a: 'Herman Melville', text: 'Call me Ishmael. Some years ago, never mind how long precisely, having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; then, I account it high time to get to sea as soon as I can.' },
+            { t: 'The Adventures of Sherlock Holmes', a: 'Arthur Conan Doyle', text: 'To Sherlock Holmes she is always the woman. I have seldom heard him mention her under any other name. In his eyes she eclipses and predominates the whole of her sex. It was not that he felt any emotion akin to love for Irene Adler. All emotions, and that one particularly, were abhorrent to his cold, precise but admirably balanced mind. He was, I take it, the most perfect reasoning and observing machine that the world has seen.' },
+            { t: 'Gettysburg Address', a: 'Abraham Lincoln', text: 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal. Now we are engaged in a great civil war, testing whether that nation, or any nation so conceived and so dedicated, can long endure. We are met on a great battle-field of that war. We have come to dedicate a portion of that field, as a final resting place for those who here gave their lives that that nation might live. It is altogether fitting and proper that we should do this.' },
+            { t: 'Alice\'s Adventures in Wonderland', a: 'Lewis Carroll', text: 'Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, "and what is the use of a book," thought Alice, "without pictures or conversations?" So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.' }
+        ];
+
+        // ---------- Helpers ----------
+        const $ = id => document.getElementById(id);
+        const store = {
+            get(k, d) { try { const v = localStorage.getItem('tfs_' + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+            set(k, v) { try { localStorage.setItem('tfs_' + k, JSON.stringify(v)); } catch (e) {} }
+        };
+        function track(name, params) { try { if (window.gtag) gtag('event', name, Object.assign({ event_category: 'typing_for_speed' }, params || {})); } catch (e) {} }
+        function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+        function fmtTime(ms) {
+            const s = Math.floor(ms / 1000), h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), r = s % 60;
+            return h ? `${h}:${String(m).padStart(2, '0')}:${String(r).padStart(2, '0')}` : `${m}:${String(r).padStart(2, '0')}`;
+        }
+        function wpmOf(chars, ms) { return ms > 0 ? (chars / 5) / (ms / 60000) : 0; }
+        function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+        // Turn book text into characters that are on a normal keyboard.
+        function clean(s) {
+            return s
+                .replace(/[ ​⁠﻿­]/g, '')
+                .replace(/[‘’‚‛′ʼ]/g, "'")
+                .replace(/[“”„‟″]/g, '"')
+                .replace(/\s*[—―⸺⸻]\s*/g, ' - ')
+                .replace(/[‐‑‒–−]/g, '-')
+                .replace(/…/g, '...')
+                .replace(/Æ/g, 'AE').replace(/æ/g, 'ae').replace(/Œ/g, 'OE').replace(/œ/g, 'oe').replace(/ß/g, 'ss')
+                .replace(/Ø/g, 'O').replace(/ø/g, 'o').replace(/£/g, 'L').replace(/×/g, 'x')
+                .normalize('NFD').replace(/[̀-ͯ]/g, '')
+                .replace(/[  -   　\t\r\n]/g, ' ')
+                .replace(/[^\x20-\x7E]/g, '')
+                .replace(/ {2,}/g, ' ')
+                .trim();
+        }
+
+        // ---------- Catalog and text sources ----------
+        let catalog = null;
+        let catalogTried = false;
+        const CAT_ORDER = ['fiction', 'adventure', 'mystery', 'science-fiction', 'fantasy', 'horror', 'comedy', 'satire', 'drama', 'shorts', 'childrens', 'poetry', 'nonfiction', 'biography', 'autobiography', 'memoir', 'philosophy', 'spirituality', 'travel'];
+
+        function categoryName(key) {
+            if (key === 'all') return 'All books';
+            if (key === 'builtin') return 'Quick classics';
+            if (key === 'mydoc') return 'My document';
+            return catalog && catalog.subjects[key] ? catalog.subjects[key].name : key;
+        }
+
+        function bookPool(key) {
+            if (!catalog) return [];
+            if (key === 'all') return catalog.books.map((b, i) => i);
+            return catalog.subjects[key] ? catalog.subjects[key].books : [];
+        }
+
+        async function fetchWithTimeout(url, ms) {
+            const ctl = new AbortController();
+            const timer = setTimeout(() => ctl.abort(), ms);
+            try { return await fetch(url, { signal: ctl.signal }); } finally { clearTimeout(timer); }
+        }
+
+        // Read a Standard Ebooks book and return its text, starting at a random chapter.
+        async function loadBook(book) {
+            const res = await fetchWithTimeout(SE + book.u + '/text/single-page', 20000);
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+            const root = doc.querySelector('main') || doc.body;
+            root.querySelectorAll('section, article').forEach(s => {
+                if (/frontmatter|backmatter/.test(s.getAttribute('epub:type') || '')) s.remove();
+            });
+            root.querySelectorAll('a').forEach(a => { if (/noteref/.test(a.getAttribute('epub:type') || '')) a.remove(); });
+            root.querySelectorAll('header, h1, h2, h3, h4, h5, h6, table, figure, img, nav, hgroup').forEach(e => e.remove());
+            const paras = [];
+            root.querySelectorAll('p').forEach(p => {
+                p.querySelectorAll('br').forEach(br => br.replaceWith(' '));
+                const t = clean(p.textContent);
+                if (t) paras.push({ t, sec: p.closest('section, article') });
+            });
+            if (!paras.length) throw new Error('no text');
+            const starts = [];
+            for (let i = 0; i < paras.length; i++) if (i === 0 || paras[i].sec !== paras[i - 1].sec) starts.push(i);
+            const usable = starts.filter(i => i < paras.length * 0.75);
+            const from = usable.length > 1 ? usable[Math.floor(Math.random() * usable.length)] : 0;
+            const text = paras.slice(from).map(p => p.t).join(' ');
+            if (text.length < 1500) throw new Error('too short');
+            return text;
+        }
+
+        // Each game keeps a source that hands out texts one after another.
+        function makeSource(key, myText) {
+            const used = new Set();
+            let builtinOrder = shuffle(BUILT_IN.slice()), builtinIdx = 0, docRound = 0;
+            function nextBuiltin() {
+                const b = builtinOrder[builtinIdx++ % builtinOrder.length];
+                return { text: clean(b.text), title: b.t, author: b.a, category: 'Quick classics', url: '' };
+            }
+            return {
+                key,
+                async next() {
+                    if (key === 'mydoc') {
+                        docRound++;
+                        return { text: myText, title: docRound > 1 ? `My document (round ${docRound})` : 'My document', author: '', category: 'My document', url: '' };
+                    }
+                    if (key === 'builtin') return nextBuiltin();
+                    const pool = bookPool(key).filter(i => !used.has(i));
+                    for (let tries = 0; tries < 3 && pool.length; tries++) {
+                        const idx = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
+                        used.add(idx);
+                        const b = catalog.books[idx];
+                        try {
+                            const text = await loadBook(b);
+                            return { text, title: b.t, author: b.a, category: categoryName(key), url: SE + b.u };
+                        } catch (e) { /* try another book */ }
+                    }
+                    return nextBuiltin();
+                },
+                fallback: nextBuiltin
+            };
+        }
+
+        // ---------- Visual (the balloon). More things to pop can be added later in the same shape. ----------
+        const Balloon = {
+            mount(el) {
+                el.innerHTML = `
+                    <svg viewBox="0 0 200 320" aria-hidden="true">
+                        <path id="bString" d="M100 222 C 92 250, 110 270, 98 300 S 104 316, 100 320" stroke="#666" stroke-width="2" fill="none"/>
+                        <g id="bBody">
+                            <ellipse cx="100" cy="120" rx="72" ry="88" fill="#e8463c"/>
+                            <ellipse cx="74" cy="82" rx="14" ry="24" fill="#fff" opacity="0.28" transform="rotate(-25 74 82)"/>
+                            <path d="M92 214 L108 214 L104 206 L96 206 Z" fill="#c23a31"/>
+                        </g>
+                        <g id="bShards"></g>
+                    </svg>
+                    <div class="visual-caption" id="bCaption">0%</div>`;
+                this.body = el.querySelector('#bBody');
+                this.shards = el.querySelector('#bShards');
+                this.string = el.querySelector('#bString');
+                this.caption = el.querySelector('#bCaption');
+                this.shown = 0;
+                this.update(0, 0, 0);
+            },
+            update(p, wpm, goal) {
+                this.shown += (p - this.shown) * 0.25;
+                const s = 0.22 + 0.78 * this.shown;
+                const wobble = this.shown > 0.85 ? Math.sin(Date.now() / 70) * 2 * (this.shown - 0.85) * 6 : 0;
+                this.body.setAttribute('transform', `translate(100 214) rotate(${wobble.toFixed(2)}) scale(${s.toFixed(4)}) translate(-100 -214)`);
+                this.caption.textContent = `${Math.round(p * 100)}% full`;
+            },
+            pop() {
+                this.body.style.display = 'none';
+                this.string.style.transition = 'transform 0.8s ease-in, opacity 0.8s';
+                this.string.style.transform = 'translateY(40px)';
+                this.string.style.opacity = '0';
+                let html = '';
+                for (let i = 0; i < 14; i++) {
+                    const a = (i / 14) * Math.PI * 2, d = 90 + Math.random() * 60;
+                    html += `<path d="M0 0 L12 4 L3 14 Z" fill="#e8463c" style="transform: translate(100px,120px); transition: transform 0.7s cubic-bezier(.1,.7,.3,1), opacity 0.9s; --x:${(100 + Math.cos(a) * d).toFixed(0)}px; --y:${(120 + Math.sin(a) * d).toFixed(0)}px; --r:${Math.round(Math.random() * 720)}deg"/>`;
+                }
+                this.shards.innerHTML = html;
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    this.shards.querySelectorAll('path').forEach(p => {
+                        p.style.transform = `translate(var(--x), var(--y)) rotate(var(--r))`;
+                        p.style.opacity = '0';
+                    });
+                }));
+                this.caption.textContent = 'POP!';
+            }
+        };
+
+        function confetti() {
+            const c = document.createElement('canvas');
+            c.className = 'confetti';
+            document.body.appendChild(c);
+            const ctx = c.getContext('2d');
+            const W = c.width = innerWidth, H = c.height = innerHeight;
+            const colors = ['#FFF0AD', '#e8463c', '#8fe08f', '#5a8ad6', '#ffffff', '#f2a65a'];
+            const bits = Array.from({ length: 160 }, () => ({
+                x: W / 2 + (Math.random() - 0.5) * 200, y: H * 0.45,
+                vx: (Math.random() - 0.5) * 16, vy: -Math.random() * 16 - 4,
+                s: 5 + Math.random() * 6, r: Math.random() * 6, vr: (Math.random() - 0.5) * 0.4,
+                c: colors[Math.floor(Math.random() * colors.length)]
+            }));
+            const t0 = performance.now();
+            (function frame(t) {
+                ctx.clearRect(0, 0, W, H);
+                bits.forEach(b => {
+                    b.vy += 0.35; b.vx *= 0.99; b.x += b.vx; b.y += b.vy; b.r += b.vr;
+                    ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.r);
+                    ctx.fillStyle = b.c; ctx.fillRect(-b.s / 2, -b.s / 4, b.s, b.s / 2);
+                    ctx.restore();
+                });
+                if (t - t0 < 3500) requestAnimationFrame(frame); else c.remove();
+            })(t0);
+        }
+
+        // ---------- Setup screen ----------
+        const settings = {
+            goal: store.get('goal', 50),
+            cat: store.get('cat', 'fiction')
+        };
+        let prepared = null;       // first text, loaded in the background before Start
+        let preparing = null;      // promise while loading
+        let prepareId = 0;
+        let setupSource = null;
+
+        function renderGoal() {
+            document.querySelectorAll('#goalRow .chip').forEach(b => b.classList.toggle('on', +b.dataset.goal === settings.goal));
+            $('goalInput').value = settings.goal;
+        }
+        $('goalRow').addEventListener('click', e => {
+            const b = e.target.closest('.chip'); if (!b) return;
+            settings.goal = +b.dataset.goal; store.set('goal', settings.goal); renderGoal();
+        });
+        $('goalInput').addEventListener('change', () => {
+            const v = Math.round(+$('goalInput').value);
+            if (v >= 5 && v <= 250) { settings.goal = v; store.set('goal', v); }
+            renderGoal();
+        });
+
+        function renderCats() {
+            const keys = [];
+            if (catalog) { keys.push('all'); CAT_ORDER.forEach(k => { if (catalog.subjects[k]) keys.push(k); }); }
+            keys.push('builtin', 'mydoc');
+            // Wait until the book list has loaded (or failed) before replacing a saved choice.
+            if (catalogTried && !keys.includes(settings.cat)) settings.cat = keys[0];
+            $('cats').innerHTML = keys.map(k => {
+                let count = '';
+                if (k === 'mydoc') count = 'Paste or load your own';
+                else if (k === 'builtin') count = 'Short famous openings';
+                else count = bookPool(k).length.toLocaleString() + ' books';
+                return `<button class="chip${k === settings.cat ? ' on' : ''}" data-cat="${k}">${esc(categoryName(k))}<span class="count">${count}</span></button>`;
+            }).join('');
+            $('mydoc').classList.toggle('hidden', settings.cat !== 'mydoc');
+            $('upnext').classList.toggle('hidden', settings.cat === 'mydoc');
+        }
+        $('cats').addEventListener('click', e => {
+            const b = e.target.closest('.chip'); if (!b) return;
+            if (settings.cat === b.dataset.cat) return;
+            settings.cat = b.dataset.cat; store.set('cat', settings.cat);
+            renderCats(); prepare();
+        });
+
+        function updateMydocInfo() {
+            const t = clean($('mydocText').value);
+            $('mydocInfo').textContent = t ? `${t.length.toLocaleString()} characters ready` : '';
+            updateStartBtn();
+        }
+        $('mydocText').addEventListener('input', updateMydocInfo);
+        $('mydocLoadBtn').addEventListener('click', () => $('mydocFile').click());
+        $('mydocFile').addEventListener('change', async () => {
+            const f = $('mydocFile').files[0]; if (!f) return;
+            let t = await f.text();
+            // Project Gutenberg files: keep only the book itself.
+            const s = t.search(/\*\*\* ?START OF (THE|THIS) PROJECT GUTENBERG[^*]*\*\*\*/i);
+            if (s >= 0) t = t.slice(t.indexOf('***', s + 3) + 3);
+            const e2 = t.search(/\*\*\* ?END OF (THE|THIS) PROJECT GUTENBERG/i);
+            if (e2 >= 0) t = t.slice(0, e2);
+            $('mydocText').value = t.trim();
+            $('mydocFile').value = '';
+            updateMydocInfo();
+        });
+
+        function updateStartBtn() {
+            if (settings.cat === 'mydoc') {
+                $('startBtn').disabled = clean($('mydocText').value).length < 20;
+            } else {
+                $('startBtn').disabled = !catalogTried;
+            }
+        }
+
+        function prepare() {
+            updateStartBtn();
+            if (settings.cat === 'mydoc') { prepared = null; preparing = null; return; }
+            const id = ++prepareId;
+            prepared = null;
+            setupSource = makeSource(settings.cat);
+            $('upnextText').textContent = 'Getting a book ready...';
+            $('otherBook').disabled = true;
+            preparing = setupSource.next().then(item => {
+                if (id !== prepareId) return;
+                prepared = item;
+                $('upnextText').innerHTML = `First up: <b>${esc(item.title)}</b>${item.author ? ' by ' + esc(item.author) : ''}`;
+                $('otherBook').disabled = false;
+            });
+        }
+        $('otherBook').addEventListener('click', prepare);
+
+        // ---------- Game ----------
+        let g = null;           // current game state
+        let tickTimer = null;
+        let source = null;
+
+        function newGame(firstItem, src) {
+            source = src;
+            g = {
+                text: '', segments: [], pos: 0, lineStart: 0, wrong: '',
+                goal: settings.goal, category: settings.cat,
+                startT: performance.now(), endT: 0,
+                strokes: 0, goodStrokes: 0, mistakes: 0,
+                samples: [{ t: 0, pos: 0 }], series: [], best: 0,
+                loadingNext: false, over: false, forfeitArmed: 0
+            };
+            appendItem(firstItem);
+            g.segments[0].enterT = 0;
+        }
+
+        function appendItem(item) {
+            if (g.text) g.text += ' ';
+            const start = g.text.length;
+            g.text += item.text;
+            g.segments.push(Object.assign({}, item, { text: undefined, start, end: g.text.length, enterT: null }));
+        }
+
+        function elapsed() { return (g.endT || performance.now()) - g.startT; }
+        function avgWpm() { return wpmOf(g.pos, elapsed()); }
+
+        // Make sure more text is on the way before the current one runs out.
+        function ensureMoreText() {
+            const left = g.text.length - g.pos;
+            if (left < PRELOAD_WHEN_LEFT && !g.loadingNext && !g.over) {
+                g.loadingNext = true;
+                const myGame = g;
+                source.next().then(item => {
+                    if (myGame !== g || g.over) return;
+                    appendItem(item); g.loadingNext = false; render(false);
+                });
+            }
+            // Never leave the player waiting: if the next text is slow, slip in a short passage.
+            if (left < 300 && g.loadingNext && !g.over) {
+                appendItem(source.fallback());
+                render(false);
+            }
+        }
+
+        // ---------- Line wrapping ----------
+        let cpl = 60; // characters per line, measured from the screen
+        function measure() {
+            const box = $('reading');
+            const probe = document.createElement('span');
+            probe.className = 'mono';
+            probe.style.cssText = 'visibility:hidden;position:absolute;white-space:pre;font-size:' + getComputedStyle(box).fontSize;
+            probe.textContent = 'M'.repeat(50);
+            box.appendChild(probe);
+            const cw = probe.getBoundingClientRect().width / 50;
+            probe.remove();
+            const tbox = $('typing');
+            const tprobe = probe.cloneNode(true);
+            tprobe.style.fontSize = getComputedStyle(tbox).fontSize;
+            tbox.appendChild(tprobe);
+            const tcw = tprobe.getBoundingClientRect().width / 50;
+            tprobe.remove();
+            const padR = parseFloat(getComputedStyle(box).paddingLeft) * 2;
+            const padT = parseFloat(getComputedStyle(tbox).paddingLeft) * 2;
+            const fit = Math.min((box.clientWidth - padR) / cw, (tbox.clientWidth - padT) / tcw);
+            cpl = Math.max(16, Math.floor(fit) - 1);
+        }
+        function lineAt(start) {
+            const t = g.text, len = t.length;
+            if (start >= len) return null;
+            if (start + cpl >= len) return { start, end: len };
+            let sp = t.lastIndexOf(' ', start + cpl - 1);
+            let end = sp >= start ? sp + 1 : start + cpl;
+            return { start, end };
+        }
+
+        // ---------- Drawing ----------
+        function render(slide) {
+            const lines = [];
+            let s = g.lineStart;
+            for (let i = 0; i < 4; i++) { const l = lineAt(s); if (!l) break; lines.push(l); s = l.end; }
+            const reading = $('reading');
+            reading.innerHTML = lines.map((l, i) => {
+                const txt = g.text.slice(l.start, l.end);
+                if (i === 0) {
+                    const k = g.pos - l.start;
+                    return `<div class="line cur"><span class="done">${esc(txt.slice(0, k))}</span>${esc(txt.slice(k))}</div>`;
+                }
+                return `<div class="line">${esc(txt)}</div>`;
+            }).join('') + (lines.length ? '' : '<div class="line loading-msg">Loading the next text...</div>');
+            if (slide) { reading.classList.remove('slide'); void reading.offsetWidth; reading.classList.add('slide'); }
+
+            const cur = lines[0];
+            let html = '';
+            if (cur) {
+                const txt = g.text.slice(cur.start, cur.end);
+                const k = g.pos - cur.start;
+                html += `<span class="ok">${esc(txt.slice(0, k))}</span>`;
+                html += g.wrong ? `<span class="bad">${esc(g.wrong.replace(/ /g, '_'))}</span>` : '';
+                html += '<span class="caret"></span>';
+                let rest = txt.slice(k + g.wrong.length);
+                const endsWithSpace = rest.endsWith(' ') && cur.end < g.text.length;
+                if (endsWithSpace) rest = rest.slice(0, -1);
+                html += `<span class="todo">${esc(rest)}</span>`;
+                if (endsWithSpace && k + g.wrong.length < txt.length) html += '<span class="eol">·</span>';
+            } else {
+                html = '<span class="loading-msg">Loading the next text...</span>';
+            }
+            $('typingLine').innerHTML = html;
+
+            const seg = currentSegment();
+            if (seg) $('nowTyping').innerHTML = `Now typing: <b>${esc(seg.title)}</b>${seg.author ? ' by ' + esc(seg.author) : ''} &middot; ${esc(seg.category)}`;
+        }
+
+        function currentSegment() {
+            let s = null;
+            for (const seg of g.segments) if (g.pos >= seg.start) s = seg;
+            return s || g.segments[0];
+        }
+
+        function updateStats() {
+            if (!g) return;
+            const ms = elapsed();
+            const wpm = avgWpm();
+            $('sTime').textContent = fmtTime(ms);
+            $('sWpm').textContent = Math.round(wpm);
+            $('sWpm').classList.toggle('good', wpm >= g.goal);
+            $('sGoal').textContent = g.goal;
+            $('sAcc').textContent = g.strokes ? Math.round(g.goodStrokes / g.strokes * 100) + '%' : '100%';
+            Balloon.update(Math.min(1, wpm / g.goal), wpm, g.goal);
+        }
+
+        function sample() {
+            const t = elapsed();
+            g.samples.push({ t, pos: g.pos });
+            let back = null;
+            for (let i = g.samples.length - 1; i >= 0; i--) { if (t - g.samples[i].t >= ROLLING_SECONDS * 1000) { back = g.samples[i]; break; } }
+            const rolling = back ? wpmOf(g.pos - back.pos, t - back.t) : null;
+            if (rolling !== null && rolling > g.best) g.best = rolling;
+            g.series.push({ t, avg: avgWpm(), roll: rolling });
+        }
+
+        function checkPop() {
+            if (g.over) return;
+            if (g.pos >= MIN_CHARS_TO_POP && avgWpm() >= g.goal) finish(true);
+        }
+
+        // ---------- Typing ----------
+        function typeChar(ch) {
+            if (!g || g.over) return;
+            const lineEnd = (lineAt(g.lineStart) || { end: g.lineStart }).end;
+            if (g.pos >= g.text.length) return; // waiting for text
+            g.strokes++;
+            if (!g.wrong && ch === g.text[g.pos]) {
+                g.goodStrokes++;
+                g.pos++;
+                for (const seg of g.segments) if (seg.enterT === null && g.pos > seg.start) seg.enterT = elapsed();
+                let slide = false;
+                if (g.pos >= lineEnd) { g.lineStart = lineEnd; slide = true; }
+                ensureMoreText();
+                render(slide);
+                checkPop();
+            } else {
+                g.mistakes++;
+                if (g.wrong.length < MAX_WRONG) g.wrong += ch;
+                render(false);
+            }
+            updateStats();
+        }
+        function backspace() {
+            if (!g || g.over || !g.wrong) return;
+            g.wrong = g.wrong.slice(0, -1);
+            render(false);
+        }
+
+        const input = $('hiddenInput');
+        input.addEventListener('keydown', e => {
+            if (!g || g.over) return;
+            if (e.ctrlKey || e.metaKey || e.altKey) return;
+            if (e.key === 'Backspace') { e.preventDefault(); backspace(); return; }
+            if (e.key === 'Tab' || e.key === 'Enter') { e.preventDefault(); return; }
+            if (e.key.length === 1) { e.preventDefault(); typeChar(e.key); }
+        });
+        // Phones and some keyboards do not report keys, so read what lands in the box instead.
+        input.addEventListener('input', e => {
+            if (!g || g.over) { input.value = ''; return; }
+            if (e.inputType === 'deleteContentBackward') backspace();
+            else if (e.data) for (const ch of e.data) typeChar(ch);
+            input.value = '';
+        });
+        function focusInput() { input.focus({ preventScroll: true }); }
+        input.addEventListener('focus', () => { $('typing').classList.add('focused'); $('clickToType').classList.add('hidden'); });
+        input.addEventListener('blur', () => {
+            $('typing').classList.remove('focused');
+            if (g && !g.over) $('clickToType').classList.remove('hidden');
+        });
+        $('play').addEventListener('mousedown', e => {
+            if (e.target.closest('button')) return;
+            e.preventDefault(); focusInput();
+        });
+
+        // ---------- Start / finish ----------
+        function show(id) {
+            ['setup', 'play', 'results'].forEach(s => $(s).classList.toggle('hidden', s !== id));
+            window.scrollTo({ top: Math.max(0, $('play').parentElement.offsetTop - 20) });
+        }
+
+        async function start() {
+            let first, src;
+            if (settings.cat === 'mydoc') {
+                const t = clean($('mydocText').value);
+                if (t.length < 20) return;
+                src = makeSource('mydoc', t);
+            } else {
+                src = setupSource;
+            }
+            $('startBtn').disabled = true;
+            if (settings.cat !== 'mydoc' && !prepared) {
+                $('upnextText').textContent = 'Almost ready...';
+                await Promise.race([preparing, new Promise(r => setTimeout(r, 15000))]);
+            }
+            first = settings.cat === 'mydoc' ? await src.next() : (prepared || src.fallback());
+            $('startBtn').disabled = false;
+
+            show('play');
+            Balloon.mount($('visual'));
+            newGame(first, src);
+            measure();
+            render(false);
+            updateStats();
+            focusInput();
+            clearInterval(tickTimer);
+            let n = 0;
+            tickTimer = setInterval(() => {
+                if (!g || g.over) return;
+                updateStats();
+                if (++n % 10 === 0) sample();
+                checkPop();
+            }, 100);
+            track('tfs_start', { goal: g.goal, category: categoryName(g.category) });
+        }
+
+        function finish(popped) {
+            if (g.over) return;
+            g.over = true;
+            g.endT = performance.now();
+            g.popped = popped;
+            sample();
+            clearInterval(tickTimer);
+            updateStats();
+            input.blur();
+            $('clickToType').classList.add('hidden');
+            const secs = Math.round(elapsed() / 1000);
+            if (popped) {
+                Balloon.pop();
+                confetti();
+                track('tfs_pop', { goal: g.goal, seconds: secs, wpm: Math.round(avgWpm()), category: categoryName(g.category) });
+                setTimeout(showResults, 1600);
+            } else {
+                track('tfs_forfeit', { goal: g.goal, seconds: secs, wpm: Math.round(avgWpm()), category: categoryName(g.category) });
+                showResults();
+            }
+            // Have the next first book ready by the time they press Play again.
+            prepare();
+        }
+
+        $('forfeitBtn').addEventListener('click', () => {
+            if (!g || g.over) return;
+            const b = $('forfeitBtn');
+            if (b.classList.contains('arm')) { finish(false); return; }
+            b.classList.add('arm'); b.textContent = 'Click again to forfeit';
+            clearTimeout(g.forfeitArmed);
+            g.forfeitArmed = setTimeout(() => { b.classList.remove('arm'); b.textContent = 'Forfeit'; focusInput(); }, 3000);
+        });
+
+        // ---------- Results ----------
+        function showResults() {
+            const b = $('forfeitBtn'); b.classList.remove('arm'); b.textContent = 'Forfeit';
+            $('shareMsg').textContent = '';
+            const ms = elapsed();
+            const typed = g.text.slice(0, g.pos);
+            const words = typed.trim() ? typed.trim().split(/\s+/).length : 0;
+            const acc = g.strokes ? (g.goodStrokes / g.strokes * 100) : 100;
+            const word = $('rWord');
+            word.textContent = g.popped ? 'POPPED!' : 'FORFEITED';
+            word.className = 'result-word ' + (g.popped ? 'popped' : 'forfeit');
+            $('rSub').textContent = g.popped
+                ? `You reached ${g.goal} WPM in ${fmtTime(ms)}.`
+                : `You typed for ${fmtTime(ms)} and got to ${Math.round(avgWpm())} of ${g.goal} WPM.`;
+
+            const tiles = [
+                ['Time', fmtTime(ms)],
+                ['Goal', g.goal + ' WPM'],
+                ['Final average', avgWpm().toFixed(1) + ' WPM'],
+                ['Best speed (10 sec)', g.best ? g.best.toFixed(1) + ' WPM' : 'n/a'],
+                ['Words typed', words.toLocaleString()],
+                ['Characters typed', g.pos.toLocaleString()],
+                ['Keys pressed', g.strokes.toLocaleString()],
+                ['Mistakes', g.mistakes.toLocaleString()],
+                ['Accuracy', acc.toFixed(1) + '%'],
+                ['Category', categoryName(g.category)],
+                ['Texts typed', String(g.segments.filter(s => s.enterT !== null).length)],
+                ['Result', g.popped ? 'Popped' : 'Forfeited']
+            ];
+            $('rGrid').innerHTML = tiles.map(([l, v]) => `<div class="stat"><div class="stat-label">${l}</div><div class="stat-value" style="font-size:1.2rem">${esc(v)}</div></div>`).join('');
+
+            $('rChart').innerHTML = chartSvg();
+
+            const used = g.segments.filter(s => s.enterT !== null);
+            const rows = used.map((s, i) => {
+                const next = used[i + 1];
+                const t = (next ? next.enterT : ms) - s.enterT;
+                const chars = Math.max(0, Math.min(g.pos, s.end) - s.start);
+                const title = s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>` : esc(s.title);
+                return `<tr><td>${title}</td><td>${esc(s.author || '-')}</td><td>${esc(s.category)}</td><td>${fmtTime(t)}</td><td>${chars.toLocaleString()}</td><td>${wpmOf(chars, t).toFixed(1)}</td></tr>`;
+            }).join('');
+            $('rTable').innerHTML = `<tr><th>Title</th><th>Author</th><th>Category</th><th>Time</th><th>Characters</th><th>WPM</th></tr>${rows}`;
+
+            show('results');
+        }
+
+        function chartSvg() {
+            const W = 800, H = 240, L = 40, R = 10, T = 10, B = 26;
+            const pts = g.series;
+            const maxT = Math.max(1000, elapsed());
+            const maxY = Math.max(g.goal * 1.25, ...pts.map(p => Math.max(p.avg, p.roll || 0))) || 10;
+            const x = t => L + (t / maxT) * (W - L - R);
+            const y = v => T + (1 - v / maxY) * (H - T - B);
+            const line = (get, color, w) => {
+                const d = pts.filter(p => get(p) !== null).map(p => `${x(p.t).toFixed(1)},${y(get(p)).toFixed(1)}`).join(' ');
+                return d ? `<polyline points="${d}" fill="none" stroke="${color}" stroke-width="${w}" stroke-linejoin="round"/>` : '';
+            };
+            let grid = '';
+            const step = maxY > 120 ? 40 : maxY > 60 ? 20 : 10;
+            for (let v = 0; v <= maxY; v += step) grid += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#222"/><text x="${L - 6}" y="${y(v) + 4}" fill="#666" font-size="11" text-anchor="end" font-weight="normal">${v}</text>`;
+            const ticks = 5;
+            for (let i = 0; i <= ticks; i++) { const t = maxT * i / ticks; grid += `<text x="${x(t)}" y="${H - 6}" fill="#666" font-size="11" text-anchor="middle" font-weight="normal">${fmtTime(t)}</text>`; }
+            return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Speed over time chart">${grid}
+                <line x1="${L}" x2="${W - R}" y1="${y(g.goal)}" y2="${y(g.goal)}" stroke="#8fe08f" stroke-dasharray="6 5"/>
+                ${line(p => p.roll, '#5a8ad6', 1.5)}${line(p => p.avg, '#FFF0AD', 2.5)}</svg>`;
+        }
+
+        // ---------- Share picture ----------
+        const GAME_URL = 'https://boxyourbuddy.com/games/typing-for-speed/';
+
+        function rrect(x, X, Y, W, H, r) {
+            x.beginPath();
+            x.moveTo(X + r, Y); x.arcTo(X + W, Y, X + W, Y + H, r); x.arcTo(X + W, Y + H, X, Y + H, r);
+            x.arcTo(X, Y + H, X, Y, r); x.arcTo(X, Y, X + W, Y, r); x.closePath();
+        }
+        function fitText(x, text, maxW) {
+            if (x.measureText(text).width <= maxW) return text;
+            while (text.length > 1 && x.measureText(text + '...').width > maxW) text = text.slice(0, -1);
+            return text.trimEnd() + '...';
+        }
+
+        function drawCard() {
+            const S = 1080, c = document.createElement('canvas');
+            c.width = c.height = S;
+            const x = c.getContext('2d');
+            const ms = elapsed(), avg = avgWpm();
+            const typed = g.text.slice(0, g.pos);
+            const words = typed.trim() ? typed.trim().split(/\s+/).length : 0;
+            const acc = g.strokes ? (g.goodStrokes / g.strokes * 100) : 100;
+            const gold = '#FFF0AD';
+
+            x.fillStyle = '#000'; x.fillRect(0, 0, S, S);
+            x.strokeStyle = '#222'; x.lineWidth = 2; rrect(x, 30, 30, S - 60, S - 60, 24); x.stroke();
+
+            // Header
+            x.textBaseline = 'alphabetic';
+            x.fillStyle = '#888'; x.font = 'bold 26px Arial, sans-serif';
+            x.letterSpacing = '6px';
+            x.fillText('TYPING FOR SPEED', 80, 112);
+            x.letterSpacing = '0px';
+            x.fillStyle = g.popped ? gold : '#ff8a80';
+            x.font = 'bold 112px Arial, sans-serif';
+            x.fillText(g.popped ? 'POPPED!' : 'FORFEITED', 74, 232);
+            x.fillStyle = '#ccc'; x.font = '34px Arial, sans-serif';
+            x.fillText(g.popped ? `${g.goal} WPM goal reached in ${fmtTime(ms)}` : `Reached ${Math.round(avg)} of ${g.goal} WPM in ${fmtTime(ms)}`, 80, 290);
+
+            // Balloon, top right
+            const bx = 900, by = 160;
+            if (g.popped) {
+                x.fillStyle = '#e8463c';
+                for (let i = 0; i < 12; i++) {
+                    const a = i / 12 * Math.PI * 2, d = 62 + (i % 3) * 14;
+                    x.save(); x.translate(bx + Math.cos(a) * d, by + Math.sin(a) * d); x.rotate(a * 2.3);
+                    x.beginPath(); x.moveTo(0, 0); x.lineTo(20, 6); x.lineTo(5, 22); x.closePath(); x.fill(); x.restore();
+                }
+                x.strokeStyle = '#666'; x.lineWidth = 3;
+                x.beginPath(); x.moveTo(bx, by + 60); x.bezierCurveTo(bx - 10, by + 85, bx + 12, by + 105, bx - 2, by + 135); x.stroke();
+            } else {
+                const s = 0.3 + 0.7 * Math.min(1, avg / g.goal);
+                x.strokeStyle = '#666'; x.lineWidth = 3;
+                x.beginPath(); x.moveTo(bx, by + 92 * s); x.bezierCurveTo(bx - 10, by + 110, bx + 12, by + 125, bx - 2, by + 145); x.stroke();
+                x.fillStyle = '#e8463c';
+                x.beginPath(); x.ellipse(bx, by, 72 * s, 88 * s, 0, 0, Math.PI * 2); x.fill();
+                x.fillStyle = 'rgba(255,255,255,0.28)';
+                x.beginPath(); x.ellipse(bx - 26 * s, by - 38 * s, 14 * s, 24 * s, -0.44, 0, Math.PI * 2); x.fill();
+            }
+
+            // Stat tiles
+            const tiles = [
+                ['TIME', fmtTime(ms)], ['FINAL AVG', avg.toFixed(1)], ['BEST SPEED', g.best ? g.best.toFixed(1) : '-'], ['GOAL', String(g.goal)],
+                ['WORDS', words.toLocaleString()], ['CHARACTERS', g.pos.toLocaleString()], ['MISTAKES', g.mistakes.toLocaleString()], ['ACCURACY', acc.toFixed(1) + '%']
+            ];
+            const tw = 215, th = 112, gap = 20, tx0 = 80, ty0 = 330;
+            tiles.forEach(([label, val], i) => {
+                const tx = tx0 + (i % 4) * (tw + gap), ty = ty0 + Math.floor(i / 4) * (th + gap);
+                x.fillStyle = '#111'; rrect(x, tx, ty, tw, th, 12); x.fill();
+                x.fillStyle = '#888'; x.font = 'bold 19px Arial, sans-serif';
+                x.letterSpacing = '3px'; x.fillText(label, tx + 20, ty + 38); x.letterSpacing = '0px';
+                x.fillStyle = '#fff'; x.font = 'bold 44px Arial, sans-serif';
+                x.fillText(fitText(x, val, tw - 40), tx + 20, ty + 92);
+            });
+
+            // Chart
+            const cx0 = 80, cy0 = 600, cw = 920, ch = 230;
+            x.fillStyle = '#111'; rrect(x, cx0, cy0, cw, ch, 12); x.fill();
+            x.fillStyle = '#888'; x.font = 'bold 19px Arial, sans-serif';
+            x.letterSpacing = '3px'; x.fillText('WPM OVER TIME', cx0 + 20, cy0 + 36); x.letterSpacing = '0px';
+            x.font = '18px Arial, sans-serif';
+            [['Average', gold], ['Last 10 sec', '#5a8ad6'], ['Goal', '#8fe08f']].reduce((lx, [label, color]) => {
+                x.fillStyle = color; x.fillRect(lx, cy0 + 26, 22, 4);
+                x.fillStyle = '#888'; x.fillText(label, lx + 30, cy0 + 34);
+                return lx + 30 + x.measureText(label).width + 28;
+            }, cx0 + 520);
+            const px0 = cx0 + 70, py0 = cy0 + 56, pw = cw - 100, ph = ch - 80;
+            const pts = g.series;
+            const maxT = Math.max(1000, ms);
+            const maxY = Math.max(g.goal * 1.25, ...pts.map(p => Math.max(p.avg, p.roll || 0))) || 10;
+            const X = t => px0 + (t / maxT) * pw, Y = v => py0 + (1 - v / maxY) * ph;
+            const step = maxY > 120 ? 40 : maxY > 60 ? 20 : 10;
+            x.font = '18px Arial, sans-serif'; x.textAlign = 'right';
+            for (let v = 0; v <= maxY; v += step) {
+                x.strokeStyle = '#222'; x.lineWidth = 1;
+                x.beginPath(); x.moveTo(px0, Y(v)); x.lineTo(px0 + pw, Y(v)); x.stroke();
+                x.fillStyle = '#666'; x.fillText(String(v), px0 - 12, Y(v) + 6);
+            }
+            x.textAlign = 'left';
+            x.strokeStyle = '#8fe08f'; x.lineWidth = 2; x.setLineDash([10, 8]);
+            x.beginPath(); x.moveTo(px0, Y(g.goal)); x.lineTo(px0 + pw, Y(g.goal)); x.stroke(); x.setLineDash([]);
+            const plot = (get, color, w) => {
+                const list = pts.filter(p => get(p) !== null);
+                if (list.length < 2) return;
+                x.strokeStyle = color; x.lineWidth = w; x.lineJoin = 'round';
+                x.beginPath(); list.forEach((p, i) => i ? x.lineTo(X(p.t), Y(get(p))) : x.moveTo(X(p.t), Y(get(p)))); x.stroke();
+            };
+            plot(p => p.roll, '#5a8ad6', 3);
+            plot(p => p.avg, gold, 5);
+
+            // Category and books
+            const used = g.segments.filter(s => s.enterT !== null);
+            x.fillStyle = '#888'; x.font = 'bold 19px Arial, sans-serif';
+            x.letterSpacing = '3px'; x.fillText('TYPED FROM ' + categoryName(g.category).toUpperCase(), 80, 880); x.letterSpacing = '0px';
+            x.font = '28px Arial, sans-serif';
+            let books = used.slice(0, 3).map(s => s.title + (s.author ? ' by ' + s.author : '')).join('   |   ');
+            if (used.length > 3) books += `   + ${used.length - 3} more`;
+            x.fillStyle = '#ccc'; x.fillText(fitText(x, books, 920), 80, 922);
+
+            // Footer
+            x.fillStyle = gold; x.font = 'bold 32px Arial, sans-serif';
+            x.fillText('boxyourbuddy.com/games/typing-for-speed', 80, 1000);
+            return c;
+        }
+
+        function shareText() {
+            return g.popped
+                ? `I hit ${g.goal} WPM in ${fmtTime(elapsed())} on Typing for Speed. Can you beat it? ${GAME_URL}`
+                : `I reached ${Math.round(avgWpm())} of ${g.goal} WPM on Typing for Speed. Can you beat it? ${GAME_URL}`;
+        }
+
+        function cardFile() {
+            return new Promise(res => drawCard().toBlob(b => res(new File([b], `typing-for-speed-${g.goal}wpm.png`, { type: 'image/png' })), 'image/png'));
+        }
+
+        function savePicture(file) {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(file);
+            a.download = file.name;
+            document.body.appendChild(a); a.click(); a.remove();
+            setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+        }
+
+        $('shareBtn').addEventListener('click', async () => {
+            if (!g) return;
+            const file = await cardFile();
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                    await navigator.share({ files: [file], text: shareText() });
+                    track('tfs_share', { method: 'share_sheet' });
+                } catch (e) {
+                    // Closing the share menu is fine. Anything else: save the picture instead.
+                    if (e.name !== 'AbortError') {
+                        savePicture(file);
+                        $('shareMsg').textContent = 'Picture saved. Upload it to your post.';
+                        track('tfs_share', { method: 'download' });
+                    }
+                }
+            } else {
+                savePicture(file);
+                $('shareMsg').textContent = 'Picture saved. Upload it to your post.';
+                track('tfs_share', { method: 'download' });
+            }
+        });
+        $('saveBtn').addEventListener('click', async () => {
+            if (!g) return;
+            savePicture(await cardFile());
+            $('shareMsg').textContent = 'Picture saved.';
+            track('tfs_share', { method: 'save' });
+        });
+
+        $('startBtn').addEventListener('click', start);
+        $('againBtn').addEventListener('click', start);
+        $('settingsBtn').addEventListener('click', () => { g = null; show('setup'); });
+        addEventListener('resize', () => { if (g && !g.over && !$('play').classList.contains('hidden')) { measure(); render(false); } });
+
+        // ---------- Boot ----------
+        renderGoal();
+        renderCats();
+        updateStartBtn();
+        fetch('catalog.json').then(r => r.ok ? r.json() : null).catch(() => null).then(c => {
+            catalog = c;
+            catalogTried = true;
+            renderCats();
+            prepare();
+        });
+    })();
+    </script>
+</body>
+</html>
