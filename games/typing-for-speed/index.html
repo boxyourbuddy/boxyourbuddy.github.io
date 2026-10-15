@@ -47,7 +47,6 @@
         /* Setup */
         .setup { display: grid; gap: 22px; }
         .field-label { display: block; font-size: 0.8rem; letter-spacing: 3px; color: #888; text-transform: uppercase; margin-bottom: 10px; }
-        .goal-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
         .chip { background: #111; color: #fff; border: 1px solid #333; border-radius: 6px; padding: 10px 14px; font-size: 1rem; cursor: pointer; }
         .chip:hover { border-color: #FFF0AD; }
         .chip.on { background: #FFF0AD; color: #000; border-color: #FFF0AD; }
@@ -164,21 +163,12 @@
             <section id="setup" class="setup">
                 <div>
                     <h2 class="game-title">Typing for Speed</h2>
-                    <p class="game-sub">Pick a speed goal and type real books. The balloon fills as your average speed climbs.<br>Hit your goal and it pops. Mistakes must be fixed before you can go on, and capital letters count.</p>
+                    <p class="game-sub">Pick a speed goal and type real books. The balloon fills as your average speed climbs.<br>Hit your goal and it pops. Mistakes must be fixed before you can go on, case sensitive.<br>Balloon will not pop in the first 10 seconds.</p>
                 </div>
 
                 <div class="panel">
                     <span class="field-label">Speed goal (words per minute)</span>
-                    <div class="goal-row" id="goalRow">
-                        <button class="chip" data-goal="20">20</button>
-                        <button class="chip" data-goal="30">30</button>
-                        <button class="chip" data-goal="40">40</button>
-                        <button class="chip" data-goal="50">50</button>
-                        <button class="chip" data-goal="60">60</button>
-                        <button class="chip" data-goal="80">80</button>
-                        <button class="chip" data-goal="100">100</button>
-                        <input class="goal-input" id="goalInput" type="number" min="5" max="250" step="1" aria-label="Custom goal">
-                    </div>
+                    <input class="goal-input" id="goalInput" type="number" min="5" max="250" step="1" aria-label="Speed goal in words per minute">
                 </div>
 
                 <div class="panel">
@@ -265,6 +255,7 @@
 
         // ---------- Settings ----------
         const MIN_CHARS_TO_POP = 30;     // a few fast letters at the start cannot pop the balloon
+        const MIN_SECONDS_TO_POP = 10;   // nor can a lucky first few seconds
         const PRELOAD_WHEN_LEFT = 4000;  // start getting the next text when this many characters are left
         const ROLLING_SECONDS = 10;
         const MAX_WRONG = 10;
@@ -486,13 +477,8 @@
         let setupSource = null;
 
         function renderGoal() {
-            document.querySelectorAll('#goalRow .chip').forEach(b => b.classList.toggle('on', +b.dataset.goal === settings.goal));
             $('goalInput').value = settings.goal;
         }
-        $('goalRow').addEventListener('click', e => {
-            const b = e.target.closest('.chip'); if (!b) return;
-            settings.goal = +b.dataset.goal; store.set('goal', settings.goal); renderGoal();
-        });
         $('goalInput').addEventListener('change', () => {
             const v = Math.round(+$('goalInput').value);
             if (v >= 5 && v <= 250) { settings.goal = v; store.set('goal', v); }
@@ -715,7 +701,7 @@
 
         function checkPop() {
             if (g.over) return;
-            if (g.pos >= MIN_CHARS_TO_POP && avgWpm() >= g.goal) finish(true);
+            if (g.pos >= MIN_CHARS_TO_POP && elapsed() >= MIN_SECONDS_TO_POP * 1000 && avgWpm() >= g.goal) finish(true);
         }
 
         // ---------- Typing ----------
