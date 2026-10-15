@@ -398,13 +398,17 @@
         // ---------- Visual (the balloon). More things to pop can be added later in the same shape. ----------
         const Balloon = {
             mount(el) {
+                // A new random color every game.
+                const hue = Math.floor(Math.random() * 360);
+                this.color = `hsl(${hue}, 72%, 56%)`;
+                this.knot = `hsl(${hue}, 65%, 44%)`;
                 el.innerHTML = `
                     <svg viewBox="0 0 200 320" aria-hidden="true">
                         <path id="bString" d="M100 222 C 92 250, 110 270, 98 300 S 104 316, 100 320" stroke="#666" stroke-width="2" fill="none"/>
                         <g id="bBody">
-                            <ellipse cx="100" cy="120" rx="72" ry="88" fill="#e8463c"/>
+                            <ellipse cx="100" cy="120" rx="72" ry="88" fill="${this.color}"/>
                             <ellipse cx="74" cy="82" rx="14" ry="24" fill="#fff" opacity="0.28" transform="rotate(-25 74 82)"/>
-                            <path d="M92 214 L108 214 L104 206 L96 206 Z" fill="#c23a31"/>
+                            <path d="M92 214 L108 214 L104 206 L96 206 Z" fill="${this.knot}"/>
                         </g>
                         <g id="bShards"></g>
                     </svg>
@@ -431,7 +435,7 @@
                 let html = '';
                 for (let i = 0; i < 14; i++) {
                     const a = (i / 14) * Math.PI * 2, d = 90 + Math.random() * 60;
-                    html += `<path d="M0 0 L12 4 L3 14 Z" fill="#e8463c" style="transform: translate(100px,120px); transition: transform 0.7s cubic-bezier(.1,.7,.3,1), opacity 0.9s; --x:${(100 + Math.cos(a) * d).toFixed(0)}px; --y:${(120 + Math.sin(a) * d).toFixed(0)}px; --r:${Math.round(Math.random() * 720)}deg"/>`;
+                    html += `<path d="M0 0 L12 4 L3 14 Z" fill="${this.color}" style="transform: translate(100px,120px); transition: transform 0.7s cubic-bezier(.1,.7,.3,1), opacity 0.9s; --x:${(100 + Math.cos(a) * d).toFixed(0)}px; --y:${(120 + Math.sin(a) * d).toFixed(0)}px; --r:${Math.round(Math.random() * 720)}deg"/>`;
                 }
                 this.shards.innerHTML = html;
                 requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -662,7 +666,9 @@
                 const txt = g.text.slice(cur.start, cur.end);
                 const k = g.pos - cur.start;
                 html += `<span class="ok">${esc(txt.slice(0, k))}</span>`;
-                html += g.wrong ? `<span class="bad">${esc(g.wrong.replace(/ /g, '_'))}</span>` : '';
+                // Mark the book's own letters red, not the keys pressed, so this line always matches the top one.
+                const under = txt.slice(k, k + g.wrong.length).padEnd(g.wrong.length, ' ');
+                html += g.wrong ? `<span class="bad">${esc(under)}</span>` : '';
                 html += '<span class="caret"></span>';
                 let rest = txt.slice(k + g.wrong.length);
                 const endsWithSpace = rest.endsWith(' ') && cur.end < g.text.length;
@@ -948,7 +954,7 @@
             // Balloon, top right
             const bx = 900, by = 160;
             if (g.popped) {
-                x.fillStyle = '#e8463c';
+                x.fillStyle = Balloon.color;
                 for (let i = 0; i < 12; i++) {
                     const a = i / 12 * Math.PI * 2, d = 62 + (i % 3) * 14;
                     x.save(); x.translate(bx + Math.cos(a) * d, by + Math.sin(a) * d); x.rotate(a * 2.3);
@@ -960,7 +966,7 @@
                 const s = 0.3 + 0.7 * Math.min(1, avg / g.goal);
                 x.strokeStyle = '#666'; x.lineWidth = 3;
                 x.beginPath(); x.moveTo(bx, by + 92 * s); x.bezierCurveTo(bx - 10, by + 110, bx + 12, by + 125, bx - 2, by + 145); x.stroke();
-                x.fillStyle = '#e8463c';
+                x.fillStyle = Balloon.color;
                 x.beginPath(); x.ellipse(bx, by, 72 * s, 88 * s, 0, 0, Math.PI * 2); x.fill();
                 x.fillStyle = 'rgba(255,255,255,0.28)';
                 x.beginPath(); x.ellipse(bx - 26 * s, by - 38 * s, 14 * s, 24 * s, -0.44, 0, Math.PI * 2); x.fill();
