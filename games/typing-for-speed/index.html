@@ -115,6 +115,7 @@
         .result-head { text-align: center; margin-bottom: 22px; }
         .pic-pop { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
         .pic-box { background: #111; border: 1px solid #333; border-radius: 8px; padding: 16px; max-width: 760px; text-align: center; }
+        .pic-pick { display: flex; gap: 10px; justify-content: center; margin-bottom: 14px; }
         .pic-box img { max-width: 100%; max-height: calc(100vh - 140px); width: auto; height: auto; display: block; margin: 0 auto 16px; border-radius: 4px; }
         .result-word { font-size: clamp(2.2rem, 7vw, 3.6rem); margin: 0; letter-spacing: 2px; }
         .result-word.popped { color: #FFF0AD; }
@@ -251,6 +252,7 @@
 
             <!-- RESULTS -->
             <section id="results" class="hidden">
+                <div id="rCard">
                 <div class="result-head">
                     <p class="result-word" id="rWord">POPPED!</p>
                     <p class="result-sub" id="rSub"></p>
@@ -270,6 +272,7 @@
                     </div>
                     <div class="result-grid" id="rGrid"></div>
                 </div>
+                </div>
                 <span class="field-label">What you typed</span>
                 <div class="table-wrap"><table id="rTable"></table></div>
                 <div class="result-btns">
@@ -279,6 +282,10 @@
             </section>
             <div class="pic-pop hidden" id="picPop">
                 <div class="pic-box">
+                    <div class="pic-pick">
+                        <button class="chip on" id="picGame">Game card</button>
+                        <button class="chip" id="picSquare">Square card</button>
+                    </div>
                     <img id="picImg" alt="Your Typing for Speed results">
                     <div class="share-row" style="margin-top:0">
                         <button class="btn" id="picDownload">Download picture</button>
@@ -1067,8 +1074,51 @@
                 : `I reached ${Math.round(avgWpm())} of ${g.goal} WPM on Typing for Speed. Can you beat it? ${GAME_URL}`;
         }
 
-        function cardFile() {
-            return new Promise(res => drawCard().toBlob(b => res(new File([b], `typing-for-speed-${g.goal}wpm.png`, { type: 'image/png' })), 'image/png'));
+        function toFile(c, kind) {
+            return new Promise(res => c.toBlob(b => res(new File([b], `typing-for-speed-${g.goal}wpm-${kind}.png`, { type: 'image/png' })), 'image/png'));
+        }
+
+        // The game card is a picture of the end card as it shows on the page, made with html2canvas.
+        let h2c = null;
+        function loadH2c() {
+            if (window.html2canvas) return Promise.resolve();
+            if (!h2c) h2c = new Promise((res, rej) => {
+                const sc = document.createElement('script');
+                sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                sc.onload = res; sc.onerror = () => { h2c = null; rej(); };
+                document.head.appendChild(sc);
+            });
+            return h2c;
+        }
+        async function gameCanvas() {
+            await loadH2c();
+            const shot = await html2canvas($('rCard'), {
+                backgroundColor: '#000', scale: 2, logging: false,
+                ignoreElements: el => el.classList.contains('share-row') || el.id === 'shareMsg',
+                onclone: doc => {
+                    // html2canvas needs the chart's real size or it cuts it off
+                    const live = $('rChart').querySelector('svg'), copy = doc.getElementById('rChart').querySelector('svg');
+                    if (live && copy) {
+                        const r = live.getBoundingClientRect(), img = doc.createElement('img');
+                        const svg = live.outerHTML.replace('<svg', `<svg xmlns="http://www.w3.org/2000/svg" width="${live.viewBox.baseVal.width}" height="${live.viewBox.baseVal.height}" font-family="Arial, sans-serif" font-weight="bold"`);
+                        img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+                        img.style.cssText = `display:block;width:${r.width}px;height:${r.height}px`;
+                        copy.replaceWith(img);
+                    }
+                }
+            });
+            // A black border around it
+            const pad = 48, c = document.createElement('canvas');
+            c.width = shot.width + pad * 2; c.height = shot.height + pad * 2;
+            const x = c.getContext('2d');
+            x.fillStyle = '#000'; x.fillRect(0, 0, c.width, c.height);
+            x.drawImage(shot, pad, pad);
+            return c;
+        }
+        const picFiles = {};
+        async function cardFile(kind) {
+            if (!picFiles[kind]) picFiles[kind] = await toFile(kind === 'game' ? await gameCanvas() : drawCard(), kind);
+            return picFiles[kind];
         }
 
         function savePicture(file) {
@@ -1099,30 +1149,45 @@
             } catch (e) { $('shareMsg').textContent = text; }
         });
 
-        let picFile = null;
+        // The popup lets them pick the game card (first) or the square card, then share or download it.
+        let picFile = null, picKind = 'game';
         function closePic() {
             $('picPop').classList.add('hidden');
             if ($('picImg').src) URL.revokeObjectURL($('picImg').src);
             $('picImg').removeAttribute('src');
         }
+        async function showPic(kind) {
+            picKind = kind;
+            $('picGame').classList.toggle('on', kind === 'game');
+            $('picSquare').classList.toggle('on', kind === 'square');
+            try { picFile = await cardFile(kind); }
+            catch (e) { if (kind === 'game') return showPic('square'); return; }
+            if (picKind !== kind) return;
+            if ($('picImg').src) URL.revokeObjectURL($('picImg').src);
+            $('picImg').src = URL.createObjectURL(picFile);
+        }
         $('shareBtn').addEventListener('click', async () => {
             if (!g) return;
-            picFile = await cardFile();
+            delete picFiles.game; delete picFiles.square;
+            $('picDownload').textContent = isPhone() ? 'Share picture' : 'Download picture';
+            await showPic('game');
+            $('picPop').classList.remove('hidden');
+        });
+        $('picGame').addEventListener('click', () => showPic('game'));
+        $('picSquare').addEventListener('click', () => showPic('square'));
+        $('picDownload').addEventListener('click', async () => {
+            if (!picFile) return;
             if (isPhone() && navigator.canShare && navigator.canShare({ files: [picFile] })) {
                 try {
                     await navigator.share({ files: [picFile], text: shareText() });
-                    track('tfs_share', { method: 'share_sheet' });
+                    track('tfs_share', { method: 'share_sheet', card: picKind });
+                    closePic();
                     return;
                 } catch (e) { if (e.name === 'AbortError') return; }
             }
-            $('picImg').src = URL.createObjectURL(picFile);
-            $('picPop').classList.remove('hidden');
-        });
-        $('picDownload').addEventListener('click', () => {
-            if (!picFile) return;
             savePicture(picFile);
             $('shareMsg').textContent = 'Picture saved.';
-            track('tfs_share', { method: 'download' });
+            track('tfs_share', { method: 'download', card: picKind });
             closePic();
         });
         $('picClose').addEventListener('click', closePic);
