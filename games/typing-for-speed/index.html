@@ -106,6 +106,9 @@
 
         /* Results */
         .result-head { text-align: center; margin-bottom: 22px; }
+        .pic-pop { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
+        .pic-box { background: #111; border: 1px solid #333; border-radius: 8px; padding: 16px; max-width: 760px; text-align: center; }
+        .pic-box img { max-width: 100%; max-height: calc(100vh - 140px); width: auto; height: auto; display: block; margin: 0 auto 16px; border-radius: 4px; }
         .result-word { font-size: clamp(2.2rem, 7vw, 3.6rem); margin: 0; letter-spacing: 2px; }
         .result-word.popped { color: #FFF0AD; }
         .result-word.forfeit { color: #ff8a80; }
@@ -229,8 +232,8 @@
                     <p class="result-word" id="rWord">POPPED!</p>
                     <p class="result-sub" id="rSub"></p>
                     <div class="share-row">
-                        <button class="btn" id="shareBtn">Share picture</button>
-                        <button class="btn btn-ghost" id="saveBtn">Save picture</button>
+                        <button class="btn" id="linkBtn">Share game link</button>
+                        <button class="btn btn-ghost" id="shareBtn">Share picture</button>
                     </div>
                     <p class="share-msg" id="shareMsg"></p>
                 </div>
@@ -251,6 +254,15 @@
                     <button class="btn btn-ghost" id="settingsBtn">Change settings</button>
                 </div>
             </section>
+            <div class="pic-pop hidden" id="picPop">
+                <div class="pic-box">
+                    <img id="picImg" alt="Your Typing for Speed results">
+                    <div class="share-row" style="margin-top:0">
+                        <button class="btn" id="picDownload">Download picture</button>
+                        <button class="btn btn-ghost" id="picClose">Close</button>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
@@ -1050,33 +1062,55 @@
             setTimeout(() => URL.revokeObjectURL(a.href), 5000);
         }
 
+        // Phones get the share menu. Computers copy the link or show the picture in a popup.
+        const isPhone = () => !!navigator.share && matchMedia('(pointer: coarse)').matches;
+
+        $('linkBtn').addEventListener('click', async () => {
+            if (!g) return;
+            const text = shareText();
+            if (isPhone()) {
+                try {
+                    await navigator.share({ text });
+                    track('tfs_share', { method: 'link_share_sheet' });
+                    return;
+                } catch (e) { if (e.name === 'AbortError') return; }
+            }
+            try {
+                await navigator.clipboard.writeText(text);
+                $('shareMsg').textContent = 'Link copied.';
+                track('tfs_share', { method: 'link_copy' });
+            } catch (e) { $('shareMsg').textContent = text; }
+        });
+
+        let picFile = null;
+        function closePic() {
+            $('picPop').classList.add('hidden');
+            if ($('picImg').src) URL.revokeObjectURL($('picImg').src);
+            $('picImg').removeAttribute('src');
+        }
         $('shareBtn').addEventListener('click', async () => {
             if (!g) return;
-            const file = await cardFile();
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            picFile = await cardFile();
+            if (isPhone() && navigator.canShare && navigator.canShare({ files: [picFile] })) {
                 try {
-                    await navigator.share({ files: [file], text: shareText() });
+                    await navigator.share({ files: [picFile], text: shareText() });
                     track('tfs_share', { method: 'share_sheet' });
-                } catch (e) {
-                    // Closing the share menu is fine. Anything else: save the picture instead.
-                    if (e.name !== 'AbortError') {
-                        savePicture(file);
-                        $('shareMsg').textContent = 'Picture saved. Upload it to your post.';
-                        track('tfs_share', { method: 'download' });
-                    }
-                }
-            } else {
-                savePicture(file);
-                $('shareMsg').textContent = 'Picture saved. Upload it to your post.';
-                track('tfs_share', { method: 'download' });
+                    return;
+                } catch (e) { if (e.name === 'AbortError') return; }
             }
+            $('picImg').src = URL.createObjectURL(picFile);
+            $('picPop').classList.remove('hidden');
         });
-        $('saveBtn').addEventListener('click', async () => {
-            if (!g) return;
-            savePicture(await cardFile());
+        $('picDownload').addEventListener('click', () => {
+            if (!picFile) return;
+            savePicture(picFile);
             $('shareMsg').textContent = 'Picture saved.';
-            track('tfs_share', { method: 'save' });
+            track('tfs_share', { method: 'download' });
+            closePic();
         });
+        $('picClose').addEventListener('click', closePic);
+        $('picPop').addEventListener('click', e => { if (e.target === $('picPop')) closePic(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('picPop').classList.contains('hidden')) closePic(); });
 
         $('startBtn').addEventListener('click', start);
         $('againBtn').addEventListener('click', start);
