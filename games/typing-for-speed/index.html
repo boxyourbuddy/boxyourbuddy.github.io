@@ -65,6 +65,20 @@
         .upnext { display: flex; flex-direction: column; gap: 12px; align-items: center; text-align: center; width: 100%; }
         .upnext-text { color: #ccc; font-weight: normal; line-height: 1.5; }
         .upnext-text b { color: #fff; }
+        /* Wide screens: the category list is as tall as the balloon and scrolls inside, with an arrow instead of a scroll bar */
+        .cat-more { display: none; }
+        @media (min-width: 701px) {
+            .setup-main { align-items: center; }
+            .setup-balloon { width: 200px; padding-top: 0; }
+            .setup-balloon svg { margin: 0 auto; }
+            .setup-go { padding-top: 0; }
+            .setup-go.panel { padding: 22px; }
+            .setup-go .upnext { border: 0; padding: 0; background: none; }
+            .cat-panel .cats { overflow-y: auto; scrollbar-width: none; }
+            .cat-panel .cats::-webkit-scrollbar { display: none; }
+            .cat-more { display: block; margin: 6px auto 0; background: none; border: 0; color: #FFF0AD; cursor: pointer; padding: 0; line-height: 0; }
+            .cat-more.gone { visibility: hidden; }
+        }
         .mydoc textarea { width: 100%; min-height: 140px; background: #111; color: #fff; border: 1px solid #333; border-radius: 6px; padding: 12px; font-weight: normal; font-size: 0.95rem; line-height: 1.5; resize: vertical; }
         .mydoc-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 10px; color: #888; font-weight: normal; }
         .btn { background: #FFF0AD; color: #000; border: none; border-radius: 6px; padding: 14px 28px; font-size: 1.1rem; cursor: pointer; letter-spacing: 1px; }
@@ -154,6 +168,7 @@
             .setup-main > .cat-panel { width: 100%; order: 3; }
             .setup-balloon { width: 110px; padding-top: 0; }
             .setup-go { padding-top: 0; }
+            .setup-go.panel { background: none; border: 0; padding: 0; }
         }
     </style>
 </head>
@@ -195,16 +210,17 @@
                     <div class="panel cat-panel">
                         <span class="field-label">What do you want to type?</span>
                         <div class="cats" id="cats"></div>
+                        <button class="cat-more" id="catMore" aria-label="More categories"><svg width="28" height="16" viewBox="0 0 28 16"><path d="M3 3 L14 13 L25 3" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                     </div>
                     <div class="setup-balloon">
-                        <svg viewBox="0 0 200 320" aria-hidden="true">
-                            <path d="M100 222 C 92 250, 110 270, 98 300 S 104 316, 100 320" stroke="#666" stroke-width="2" fill="none"/>
+                        <svg viewBox="0 32 200 368" aria-hidden="true">
+                            <path d="M100 222 C 90 260, 112 290, 98 330 S 106 380, 100 400" stroke="#666" stroke-width="2" fill="none"/>
                             <ellipse cx="100" cy="120" rx="72" ry="88" fill="#d91919"/>
                             <ellipse cx="74" cy="82" rx="14" ry="24" fill="#fff" opacity="0.28" transform="rotate(-25 74 82)"/>
                             <path d="M92 214 L108 214 L104 206 L96 206 Z" fill="#a51212"/>
                         </svg>
                     </div>
-                    <div class="setup-go">
+                    <div class="setup-go panel">
                         <div class="panel upnext" id="upnext">
                             <div class="upnext-text" id="upnextText">Getting a book ready...</div>
                             <button class="chip" id="otherBook">Different book</button>
@@ -803,6 +819,7 @@
         // ---------- Start / finish ----------
         function show(id) {
             ['setup', 'play', 'results'].forEach(s => $(s).classList.toggle('hidden', s !== id));
+            if (id === 'setup') fitCats();
             window.scrollTo({ top: Math.max(0, $('play').parentElement.offsetTop - 20) });
         }
 
@@ -1221,6 +1238,31 @@
         }
 
         addEventListener('resize', () => { if (g && !g.over && !$('play').classList.contains('hidden')) { measure(); render(false); } });
+
+        // ---------- Category list height ----------
+        // On wide screens the list is as tall as the balloon; the arrow scrolls it and hides at the bottom.
+        const catPanel = document.querySelector('.cat-panel'), cats = $('cats');
+        const catArrow = () => $('catMore').classList.toggle('gone', cats.scrollTop + cats.clientHeight >= cats.scrollHeight - 2);
+        function fitCats() {
+            const balloon = document.querySelector('.setup-balloon svg');
+            balloon.style.height = ''; balloon.style.width = '';
+            const h = balloon.getBoundingClientRect().height;
+            if (innerWidth > 700 && !h) return;  // setup is hidden right now
+            cats.style.height = '';
+            const row = cats.firstElementChild;
+            if (innerWidth > 700 && row) {
+                // Fit as many whole rows as the balloon's height allows, so no row is cut in half
+                const rest = catPanel.offsetHeight - cats.offsetHeight;
+                cats.style.height = Math.max(1, Math.floor((h - rest) / row.offsetHeight)) * row.offsetHeight + 'px';
+                // Then size the balloon to the card: balloon top at the card's top, string end at its bottom
+                balloon.style.height = catPanel.offsetHeight + 'px'; balloon.style.width = 'auto';
+            }
+            catArrow();
+        }
+        $('catMore').addEventListener('click', () => cats.scrollBy({ top: cats.clientHeight * 0.8, behavior: 'smooth' }));
+        cats.addEventListener('scroll', catArrow);
+        new MutationObserver(fitCats).observe(cats, { childList: true });
+        addEventListener('resize', fitCats);
 
         // ---------- Boot ----------
         renderGoal();
