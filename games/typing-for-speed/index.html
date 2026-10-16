@@ -112,7 +112,12 @@
         .result-sub { color: #888; font-weight: normal; margin: 8px 0 0; }
         .share-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
         .share-msg { color: #8fe08f; font-weight: normal; min-height: 1.2em; margin: 10px 0 0; }
-        .result-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 18px; }
+        .result-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 32px; margin-top: 18px; padding-top: 16px; border-top: 1px solid #222; }
+        .result-grid .stat-label { margin-bottom: 6px; }
+        .result-row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; font-weight: normal; font-variant-numeric: tabular-nums; }
+        .result-row span:first-child { color: #888; }
+        .result-row .hi { color: #FFF0AD; }
+        @media (max-width: 700px) { .result-grid { grid-template-columns: 1fr; } }
         .chart-wrap { background: #111; border-radius: 6px; padding: 14px; margin-bottom: 18px; }
         .chart-wrap svg { width: 100%; height: auto; display: block; }
         .legend { display: flex; gap: 18px; flex-wrap: wrap; color: #888; font-size: 0.8rem; font-weight: normal; margin-top: 8px; }
@@ -154,8 +159,6 @@
                 <a href="/apps/">APPS</a>
                 <img src="/favicon.png" class="dot" alt="">
                 <a href="/games/" style="color: #FFF0AD;">GAMES</a>
-                <img src="/favicon.png" class="dot" alt="">
-                <a href="#" id="contact-link">CONTACT</a>
             </nav>
         </header>
 
@@ -231,7 +234,6 @@
                     </div>
                     <p class="share-msg" id="shareMsg"></p>
                 </div>
-                <div class="result-grid" id="rGrid"></div>
                 <div class="chart-wrap">
                     <span class="field-label">Speed over time</span>
                     <div id="rChart"></div>
@@ -240,6 +242,7 @@
                         <span><i style="background:#5a8ad6"></i>Speed right then (last 10 seconds)</span>
                         <span><i style="background:#8fe08f"></i>Goal</span>
                     </div>
+                    <div class="result-grid" id="rGrid"></div>
                 </div>
                 <span class="field-label">What you typed</span>
                 <div class="table-wrap"><table id="rTable"></table></div>
@@ -261,10 +264,17 @@
         const PRELOAD_WHEN_LEFT = 4000;  // start getting the next text when this many characters are left
         const ROLLING_SECONDS = 10;
         const MAX_WRONG = 10;
-        const MIN_BOOK_CHARS = 50000;    // a book must have at least this much text left after its starting point
         const MIN_START_PARA = 80;       // a book starts on a paragraph at least this long
         const SE = 'https://standardebooks.org';
-        const NO_BOOK_MSG = "Couldn't load a book. Check your connection and try again.";
+
+        const BUILT_IN = [
+            { t: 'The Time Machine', a: 'H. G. Wells', text: 'The Time Traveller (for so it will be convenient to speak of him) was expounding a recondite matter to us. His grey eyes shone and twinkled, and his usually pale face was flushed and animated. The fire burned brightly, and the soft radiance of the incandescent lights in the lilies of silver caught the bubbles that flashed and passed in our glasses. Our chairs, being his patents, embraced and caressed us rather than submitted to be sat upon, and there was that luxurious after-dinner atmosphere when thought roams gracefully free of the trammels of precision.' },
+            { t: 'Pride and Prejudice', a: 'Jane Austen', text: 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife. However little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families, that he is considered the rightful property of some one or other of their daughters. "My dear Mr. Bennet," said his lady to him one day, "have you heard that Netherfield Park is let at last?" Mr. Bennet replied that he had not. "But it is," returned she; "for Mrs. Long has just been here, and she told me all about it." Mr. Bennet made no answer.' },
+            { t: 'Moby-Dick', a: 'Herman Melville', text: 'Call me Ishmael. Some years ago, never mind how long precisely, having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; then, I account it high time to get to sea as soon as I can.' },
+            { t: 'The Adventures of Sherlock Holmes', a: 'Arthur Conan Doyle', text: 'To Sherlock Holmes she is always the woman. I have seldom heard him mention her under any other name. In his eyes she eclipses and predominates the whole of her sex. It was not that he felt any emotion akin to love for Irene Adler. All emotions, and that one particularly, were abhorrent to his cold, precise but admirably balanced mind. He was, I take it, the most perfect reasoning and observing machine that the world has seen.' },
+            { t: 'Gettysburg Address', a: 'Abraham Lincoln', text: 'Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal. Now we are engaged in a great civil war, testing whether that nation, or any nation so conceived and so dedicated, can long endure. We are met on a great battle-field of that war. We have come to dedicate a portion of that field, as a final resting place for those who here gave their lives that that nation might live. It is altogether fitting and proper that we should do this.' },
+            { t: 'Alice\'s Adventures in Wonderland', a: 'Lewis Carroll', text: 'Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, "and what is the use of a book," thought Alice, "without pictures or conversations?" So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.' }
+        ];
 
         // ---------- Helpers ----------
         const $ = id => document.getElementById(id);
@@ -302,10 +312,11 @@
         // ---------- Catalog and text sources ----------
         let catalog = null;
         let catalogTried = false;
-        const CAT_ORDER = ['fiction', 'adventure', 'mystery', 'science-fiction', 'fantasy', 'horror', 'comedy', 'satire', 'drama', 'childrens', 'nonfiction', 'biography', 'autobiography', 'memoir', 'philosophy', 'spirituality', 'travel'];
+        const CAT_ORDER = ['fiction', 'adventure', 'mystery', 'science-fiction', 'fantasy', 'horror', 'comedy', 'satire', 'drama', 'shorts', 'childrens', 'poetry', 'nonfiction', 'biography', 'autobiography', 'memoir', 'philosophy', 'spirituality', 'travel'];
 
         function categoryName(key) {
             if (key === 'all') return 'All books';
+            if (key === 'builtin') return 'Quick classics';
             if (key === 'mydoc') return 'My document';
             return catalog && catalog.subjects[key] ? catalog.subjects[key].name : key;
         }
@@ -345,14 +356,18 @@
             for (let i = 0; i < paras.length * 0.75; i++) if (paras[i].t.length >= MIN_START_PARA) usable.push(i);
             const from = usable.length ? usable[Math.floor(Math.random() * usable.length)] : 0;
             const text = paras.slice(from).map(p => p.t).join(' ');
-            if (text.length < MIN_BOOK_CHARS) throw new Error('too short');
+            if (text.length < 1500) throw new Error('too short');
             return text;
         }
 
         // Each game keeps a source that hands out texts one after another.
         function makeSource(key, myText) {
             const used = new Set();
-            let docRound = 0;
+            let builtinOrder = shuffle(BUILT_IN.slice()), builtinIdx = 0, docRound = 0;
+            function nextBuiltin() {
+                const b = builtinOrder[builtinIdx++ % builtinOrder.length];
+                return { text: clean(b.text), title: b.t, author: b.a, category: 'Quick classics', url: '' };
+            }
             return {
                 key,
                 async next() {
@@ -360,6 +375,7 @@
                         docRound++;
                         return { text: myText, title: docRound > 1 ? `My document (round ${docRound})` : 'My document', author: '', category: 'My document', url: '' };
                     }
+                    if (key === 'builtin') return nextBuiltin();
                     const pool = bookPool(key).filter(i => !used.has(i));
                     for (let tries = 0; tries < 3 && pool.length; tries++) {
                         const idx = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
@@ -370,8 +386,9 @@
                             return { text, title: b.t, author: b.a, category: categoryName(key), url: SE + b.u };
                         } catch (e) { /* try another book */ }
                     }
-                    return null; // nothing could be loaded
-                }
+                    return nextBuiltin();
+                },
+                fallback: nextBuiltin
             };
         }
 
@@ -476,12 +493,13 @@
         function renderCats() {
             const keys = [];
             if (catalog) { keys.push('all'); CAT_ORDER.forEach(k => { if (catalog.subjects[k]) keys.push(k); }); }
-            keys.push('mydoc');
+            keys.push('builtin', 'mydoc');
             // Wait until the book list has loaded (or failed) before replacing a saved choice.
             if (catalogTried && !keys.includes(settings.cat)) settings.cat = keys[0];
             $('cats').innerHTML = keys.map(k => {
                 let count = '';
                 if (k === 'mydoc') count = 'Paste or load your own';
+                else if (k === 'builtin') count = 'Short famous openings';
                 else count = bookPool(k).length.toLocaleString() + ' books';
                 return `<button class="chip${k === settings.cat ? ' on' : ''}" data-cat="${k}">${esc(categoryName(k))}<span class="count">${count}</span></button>`;
             }).join('');
@@ -533,12 +551,6 @@
             $('otherBook').disabled = true;
             preparing = setupSource.next().then(item => {
                 if (id !== prepareId) return;
-                if (!item) {
-                    prepared = null;
-                    $('upnextText').textContent = NO_BOOK_MSG;
-                    $('otherBook').disabled = false;
-                    return;
-                }
                 prepared = item;
                 $('upnextText').innerHTML = `First up: <b>${esc(item.title)}</b>${item.author ? ' by ' + esc(item.author) : ''}`;
                 $('otherBook').disabled = false;
@@ -559,11 +571,10 @@
                 startT: null, endT: 0,   // the clock starts on the first key typed
                 strokes: 0, goodStrokes: 0, mistakes: 0,
                 samples: [{ t: 0, pos: 0 }], series: [], best: 0,
-                queued: null, queuing: false, over: false
+                loadingNext: false, over: false
             };
             appendItem(firstItem);
             g.segments[0].enterT = 0;
-            queueNext(); // start loading the second text right away, in the background
         }
 
         function appendItem(item) {
@@ -576,22 +587,22 @@
         function elapsed() { return g.startT === null ? 0 : (g.endT || performance.now()) - g.startT; }
         function avgWpm() { return wpmOf(g.pos, elapsed()); }
 
-        // Load the next text in the background so it is ready before the current one runs out.
-        function queueNext() {
-            const myGame = g;
-            g.queuing = true;
-            source.next().then(item => {
-                if (myGame !== g) return;
-                g.queuing = false;
-                if (item) g.queued = item;
-            });
-        }
-
-        // Add the waiting text once the current one is nearly used up, then start loading another.
+        // Make sure more text is on the way before the current one runs out.
         function ensureMoreText() {
-            if (g.over || g.text.length - g.pos >= PRELOAD_WHEN_LEFT) return;
-            if (g.queued) { appendItem(g.queued); g.queued = null; render(false); }
-            if (!g.queued && !g.queuing) queueNext();
+            const left = g.text.length - g.pos;
+            if (left < PRELOAD_WHEN_LEFT && !g.loadingNext && !g.over) {
+                g.loadingNext = true;
+                const myGame = g;
+                source.next().then(item => {
+                    if (myGame !== g || g.over) return;
+                    appendItem(item); g.loadingNext = false; render(false);
+                });
+            }
+            // Never leave the player waiting: if the next text is slow, slip in a short passage.
+            if (left < 300 && g.loadingNext && !g.over) {
+                appendItem(source.fallback());
+                render(false);
+            }
         }
 
         // ---------- Line wrapping ----------
@@ -774,9 +785,8 @@
                 $('upnextText').textContent = 'Almost ready...';
                 await Promise.race([preparing, new Promise(r => setTimeout(r, 15000))]);
             }
-            first = settings.cat === 'mydoc' ? await src.next() : prepared;
+            first = settings.cat === 'mydoc' ? await src.next() : (prepared || src.fallback());
             $('startBtn').disabled = false;
-            if (!first) { $('upnextText').textContent = NO_BOOK_MSG; $('otherBook').disabled = false; return; }
 
             show('play');
             Balloon.mount($('visual'));
@@ -839,21 +849,27 @@
                 ? `You reached ${g.goal} WPM in ${fmtTime(ms)}.`
                 : `You typed for ${fmtTime(ms)} and got to ${Math.round(avgWpm())} of ${g.goal} WPM.`;
 
-            const tiles = [
-                ['Time', fmtTime(ms)],
-                ['Goal', g.goal + ' WPM'],
-                ['Final average', avgWpm().toFixed(1) + ' WPM'],
-                ['Best speed (10 sec)', g.best ? g.best.toFixed(1) + ' WPM' : 'n/a'],
-                ['Words typed', words.toLocaleString()],
-                ['Characters typed', g.pos.toLocaleString()],
-                ['Keys pressed', g.strokes.toLocaleString()],
-                ['Mistakes', g.mistakes.toLocaleString()],
-                ['Accuracy', acc.toFixed(1) + '%'],
-                ['Category', categoryName(g.category)],
-                ['Texts typed', String(g.segments.filter(s => s.enterT !== null).length)],
-                ['Result', g.popped ? 'Popped' : 'Quit']
+            const groups = [
+                ['Typing', [
+                    ['Words typed', words.toLocaleString()],
+                    ['Characters typed', g.pos.toLocaleString()],
+                    ['Keys pressed', g.strokes.toLocaleString()],
+                    ['Mistakes', g.mistakes.toLocaleString()],
+                    ['Accuracy', acc.toFixed(1) + '%']
+                ]],
+                ['Speed', [
+                    ['Final average', avgWpm().toFixed(1) + ' WPM', true],
+                    ['Goal', g.goal + ' WPM'],
+                    ['Best speed (10 sec)', g.best ? g.best.toFixed(1) + ' WPM' : 'n/a']
+                ]],
+                ['Game', [
+                    ['Time', fmtTime(ms)],
+                    ['Result', g.popped ? 'Popped' : 'Quit'],
+                    ['Category', categoryName(g.category)],
+                    ['Texts typed', String(g.segments.filter(s => s.enterT !== null).length)]
+                ]]
             ];
-            $('rGrid').innerHTML = tiles.map(([l, v]) => `<div class="stat"><div class="stat-label">${l}</div><div class="stat-value" style="font-size:1.2rem">${esc(v)}</div></div>`).join('');
+            $('rGrid').innerHTML = groups.map(([head, rows]) => `<div><div class="stat-label">${head}</div>${rows.map(([l, v, hi]) => `<div class="result-row"><span>${l}</span><span${hi ? ' class="hi"' : ''}>${esc(v)}</span></div>`).join('')}</div>`).join('');
 
             $('rChart').innerHTML = chartSvg();
 
@@ -1079,24 +1095,5 @@
         });
     })();
     </script>
-<script>
-// CONTACT copies the email address; it is put together only when clicked so it never sits in the page
-(function () {
-    const link = document.getElementById('contact-link');
-    if (!link) return;
-    let timer = 0;
-    link.addEventListener('click', e => {
-        e.preventDefault();
-        const addr = ['danstout.4', 'gmail.com'].join('@');
-        const done = ok => {
-            link.textContent = ok ? 'COPIED' : 'COULD NOT COPY';
-            clearTimeout(timer);
-            timer = setTimeout(() => { link.textContent = 'CONTACT'; }, 1800);
-        };
-        if (navigator.clipboard) navigator.clipboard.writeText(addr).then(() => done(true), () => done(false));
-        else done(false);
-    });
-})();
-</script>
 </body>
 </html>
