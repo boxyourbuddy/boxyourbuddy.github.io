@@ -51,11 +51,18 @@
         .chip:hover { border-color: #FFF0AD; }
         .chip.on { background: #FFF0AD; color: #000; border-color: #FFF0AD; }
         .goal-input { width: 90px; background: #111; color: #fff; border: 1px solid #333; border-radius: 6px; padding: 10px; font-size: 1rem; }
-        .cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
-        .cats .chip { text-align: left; }
-        .chip .count { display: block; font-size: 0.75rem; color: #888; font-weight: normal; margin-top: 3px; }
-        .chip.on .count { color: #444; }
-        .upnext { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+        .goal-panel { justify-self: center; text-align: center; }
+        .goal-panel .goal-input { text-align: center; }
+        .setup-main { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 32px; align-items: start; }
+        .cat-row { display: flex; justify-content: space-between; gap: 12px; width: 100%; background: none; border: 0; border-bottom: 1px solid #1c1c1c; padding: 6px 0; color: #ccc; font-size: 0.95rem; font-weight: normal; text-align: left; cursor: pointer; }
+        .cat-row .count { color: #888; font-variant-numeric: tabular-nums; }
+        .cat-row:hover { color: #fff; }
+        .cat-row.on, .cat-row.on .count { color: #FFF0AD; }
+        .setup-balloon { width: 160px; padding-top: 10px; }
+        .setup-balloon svg { width: 100%; height: auto; display: block; }
+        .setup-go { display: flex; flex-direction: column; align-items: center; gap: 14px; padding-top: 30px; }
+        .esc-note { color: #FFF0AD; letter-spacing: 2px; margin: 0; }
+        .upnext { display: flex; flex-direction: column; gap: 12px; align-items: center; text-align: center; width: 100%; }
         .upnext-text { color: #ccc; font-weight: normal; line-height: 1.5; }
         .upnext-text b { color: #fff; }
         .mydoc textarea { width: 100%; min-height: 140px; background: #111; color: #fff; border: 1px solid #333; border-radius: 6px; padding: 12px; font-weight: normal; font-size: 0.95rem; line-height: 1.5; resize: vertical; }
@@ -142,6 +149,10 @@
             .reading { font-size: 1rem; }
             .typing { font-size: 1.1rem; }
             .panel { padding: 14px; }
+            .setup-main { grid-template-columns: 1fr; justify-items: center; gap: 20px; }
+            .setup-main > .cat-panel { width: 100%; order: 3; }
+            .setup-balloon { width: 110px; padding-top: 0; }
+            .setup-go { padding-top: 0; }
         }
     </style>
 </head>
@@ -174,14 +185,32 @@
                     <p class="game-sub">Pick a speed goal and type real books. The balloon fills as your average speed climbs.<br>Hit your goal and it pops. Mistakes must be fixed before you can go on, case sensitive.<br>The clock starts when you type the first letter. Balloon will not pop in the first 15 seconds.</p>
                 </div>
 
-                <div class="panel">
+                <div class="panel goal-panel">
                     <span class="field-label">Speed goal (words per minute)</span>
                     <input class="goal-input" id="goalInput" type="number" min="5" max="250" step="1" aria-label="Speed goal in words per minute">
                 </div>
 
-                <div class="panel">
-                    <span class="field-label">What do you want to type?</span>
-                    <div class="cats" id="cats"></div>
+                <div class="setup-main">
+                    <div class="panel cat-panel">
+                        <span class="field-label">What do you want to type?</span>
+                        <div class="cats" id="cats"></div>
+                    </div>
+                    <div class="setup-balloon">
+                        <svg viewBox="0 0 200 320" aria-hidden="true">
+                            <path d="M100 222 C 92 250, 110 270, 98 300 S 104 316, 100 320" stroke="#666" stroke-width="2" fill="none"/>
+                            <ellipse cx="100" cy="120" rx="72" ry="88" fill="#d91919"/>
+                            <ellipse cx="74" cy="82" rx="14" ry="24" fill="#fff" opacity="0.28" transform="rotate(-25 74 82)"/>
+                            <path d="M92 214 L108 214 L104 206 L96 206 Z" fill="#a51212"/>
+                        </svg>
+                    </div>
+                    <div class="setup-go">
+                        <button class="btn" id="startBtn">Start</button>
+                        <p class="esc-note">ESCAPE to QUIT</p>
+                        <div class="panel upnext" id="upnext">
+                            <div class="upnext-text" id="upnextText">Getting a book ready...</div>
+                            <button class="chip" id="otherBook">Different book</button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="panel mydoc hidden" id="mydoc">
@@ -194,12 +223,6 @@
                     </div>
                 </div>
 
-                <div class="panel upnext" id="upnext">
-                    <div class="upnext-text" id="upnextText">Getting a book ready...</div>
-                    <button class="chip" id="otherBook">Different book</button>
-                </div>
-
-                <div class="start-row"><button class="btn" id="startBtn">Start</button></div>
                 <p class="note">Books from <a href="https://standardebooks.org/" target="_blank" rel="noopener">Standard Ebooks</a>, free public domain classics.</p>
             </section>
 
@@ -292,7 +315,8 @@
         const $ = id => document.getElementById(id);
         const store = {
             get(k, d) { try { const v = localStorage.getItem('tfs_' + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
-            set(k, v) { try { localStorage.setItem('tfs_' + k, JSON.stringify(v)); } catch (e) {} }
+            set(k, v) { try { localStorage.setItem('tfs_' + k, JSON.stringify(v)); } catch (e) {} },
+            remove(k) { try { localStorage.removeItem('tfs_' + k); } catch (e) {} }
         };
         function track(name, params) { try { if (window.gtag) gtag('event', name, Object.assign({ event_category: 'typing_for_speed' }, params || {})); } catch (e) {} }
         function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
@@ -512,14 +536,14 @@
                 let count = '';
                 if (k === 'mydoc') count = 'Paste or load your own';
                 else if (k === 'builtin') count = 'Short famous openings';
-                else count = bookPool(k).length.toLocaleString() + ' books';
-                return `<button class="chip${k === settings.cat ? ' on' : ''}" data-cat="${k}">${esc(categoryName(k))}<span class="count">${count}</span></button>`;
+                else count = bookPool(k).length.toLocaleString();
+                return `<button class="cat-row${k === settings.cat ? ' on' : ''}" data-cat="${k}"><span>${esc(categoryName(k))}</span><span class="count">${count}</span></button>`;
             }).join('');
             $('mydoc').classList.toggle('hidden', settings.cat !== 'mydoc');
             $('upnext').classList.toggle('hidden', settings.cat === 'mydoc');
         }
         $('cats').addEventListener('click', e => {
-            const b = e.target.closest('.chip'); if (!b) return;
+            const b = e.target.closest('.cat-row'); if (!b) return;
             if (settings.cat === b.dataset.cat) return;
             settings.cat = b.dataset.cat; store.set('cat', settings.cat);
             renderCats(); prepare();
@@ -1115,6 +1139,29 @@
         $('startBtn').addEventListener('click', start);
         $('againBtn').addEventListener('click', start);
         $('settingsBtn').addEventListener('click', () => { g = null; show('setup'); });
+        // Leaving in the middle of a game: the browser asks first, and if they leave anyway
+        // the game is remembered so its end card shows the next time they open the page.
+        const playing = () => g && !g.over && g.startT !== null;
+        addEventListener('beforeunload', e => { if (playing()) { e.preventDefault(); e.returnValue = ''; } });
+        addEventListener('pagehide', () => {
+            if (!playing()) return;
+            sample();
+            store.set('left', {
+                text: g.text.slice(0, g.pos), pos: g.pos, goal: g.goal, category: g.category,
+                segments: g.segments, strokes: g.strokes, goodStrokes: g.goodStrokes, mistakes: g.mistakes,
+                series: g.series, best: g.best, ms: elapsed(), color: Balloon.color
+            });
+        });
+        addEventListener('pageshow', e => { if (e.persisted) store.remove('left'); });
+        function showLeftGame() {
+            const left = store.get('left', null);
+            if (!left) return;
+            store.remove('left');
+            Balloon.color = left.color;
+            g = Object.assign({}, left, { samples: [], startT: 0, endT: Math.max(1, left.ms), popped: false, over: true });
+            showResults();
+        }
+
         addEventListener('resize', () => { if (g && !g.over && !$('play').classList.contains('hidden')) { measure(); render(false); } });
 
         // ---------- Boot ----------
@@ -1126,6 +1173,7 @@
             catalogTried = true;
             renderCats();
             prepare();
+            showLeftGame();
         });
     })();
     </script>
