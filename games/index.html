@@ -64,6 +64,8 @@
                 <a href="/apps/">APPS</a>
                 <img src="/favicon.png" class="dot" alt="">
                 <a href="/games/" style="color: #FFF0AD;">GAMES</a>
+                <img src="/favicon.png" class="dot" alt="">
+                <a href="#" id="contact-link">CONTACT</a>
             </nav>
         </header>
 
@@ -82,5 +84,24 @@
             </a>
         </div>
     </div>
+<script>
+// CONTACT copies the email address; it is put together only when clicked so it never sits in the page
+(function () {
+    const link = document.getElementById('contact-link');
+    if (!link) return;
+    let timer = 0;
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        const addr = ['danstout.4', 'gmail.com'].join('@');
+        const done = ok => {
+            link.textContent = ok ? 'COPIED' : 'COULD NOT COPY';
+            clearTimeout(timer);
+            timer = setTimeout(() => { link.textContent = 'CONTACT'; }, 1800);
+        };
+        if (navigator.clipboard) navigator.clipboard.writeText(addr).then(() => done(true), () => done(false));
+        else done(false);
+    });
+})();
+</script>
 </body>
 </html>
