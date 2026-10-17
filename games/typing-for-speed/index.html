@@ -73,6 +73,8 @@
             .setup-balloon svg { margin: 0 auto; }
             .setup-go { padding-top: 0; }
             .setup-go.panel { padding: 22px; }
+            /* Speed goal card on top of the Start card: goal top at the list's top, Start card bottom at the list's bottom */
+            .setup-right { align-self: stretch; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; }
             .setup-go .upnext { border: 0; padding: 0; background: none; }
             .cat-panel .cats { overflow-y: auto; scrollbar-width: none; }
             .cat-panel .cats::-webkit-scrollbar { display: none; }
@@ -173,6 +175,8 @@
             .setup-balloon { width: 110px; padding-top: 0; }
             .setup-go { padding-top: 0; }
             .setup-go.panel { background: none; border: 0; padding: 0; }
+            .setup-right { display: contents; }
+            .setup-main > .setup-right > .goal-panel { order: -1; }
         }
     </style>
 </head>
@@ -205,11 +209,6 @@
                     <p class="game-sub">Pick a speed goal and type real books. The balloon fills as your average speed climbs.<br>Hit your goal and it pops. Mistakes must be fixed before you can go on, case sensitive.<br>The clock starts when you type the first letter. Balloon will not pop in the first 15 seconds.</p>
                 </div>
 
-                <div class="panel goal-panel">
-                    <span class="field-label">Speed goal (words per minute)</span>
-                    <input class="goal-input" id="goalInput" type="number" min="5" max="250" step="1" aria-label="Speed goal in words per minute">
-                </div>
-
                 <div class="setup-main">
                     <div class="panel cat-panel">
                         <span class="field-label">What do you want to type?</span>
@@ -224,13 +223,19 @@
                             <path d="M92 214 L108 214 L104 206 L96 206 Z" fill="#a51212"/>
                         </svg>
                     </div>
-                    <div class="setup-go panel">
-                        <div class="panel upnext" id="upnext">
-                            <div class="upnext-text" id="upnextText">Getting a book ready...</div>
-                            <button class="chip" id="otherBook">Different book</button>
+                    <div class="setup-right">
+                        <div class="panel goal-panel">
+                            <span class="field-label">Speed goal (words per minute)</span>
+                            <input class="goal-input" id="goalInput" type="number" min="5" max="250" step="1" aria-label="Speed goal in words per minute">
                         </div>
-                        <button class="btn" id="startBtn">Start</button>
-                        <p class="esc-note">ESCAPE to QUIT</p>
+                        <div class="setup-go panel">
+                            <div class="panel upnext" id="upnext">
+                                <div class="upnext-text" id="upnextText">Getting a book ready...</div>
+                                <button class="chip" id="otherBook">Different book</button>
+                            </div>
+                            <button class="btn" id="startBtn">Start</button>
+                            <p class="esc-note">ESCAPE to QUIT</p>
+                        </div>
                     </div>
                 </div>
 
