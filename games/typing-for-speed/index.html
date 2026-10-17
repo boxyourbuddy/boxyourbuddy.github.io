@@ -58,21 +58,28 @@
         .cat-row .count { color: #888; font-variant-numeric: tabular-nums; }
         .cat-row:hover { color: #fff; }
         .cat-row.on, .cat-row.on .count { color: #FFF0AD; }
-        .setup-balloon { width: 160px; padding-top: 10px; }
-        .setup-balloon svg { width: 100%; height: auto; display: block; }
+        .setup-mode { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .setup-mode .field-label { margin: 0; text-align: center; }
+        .mode-stage { position: relative; }
+        .mode-demo { height: 360px; }
+        .mode-demo svg { height: 100%; width: auto; display: block; overflow: visible; }
+        .mode-demo .visual-caption { display: none; }
+        .mode-next { position: absolute; top: 50%; right: -36px; transform: translateY(-50%); background: none; border: 0; color: #FFF0AD; cursor: pointer; padding: 6px; line-height: 0; }
+        .mode-name { color: #FFF0AD; letter-spacing: 2px; }
         .setup-go { display: flex; flex-direction: column; align-items: center; gap: 14px; padding-top: 30px; }
         .esc-note { color: #FFF0AD; letter-spacing: 2px; margin: 0; }
         .upnext { display: flex; flex-direction: column; gap: 12px; align-items: center; text-align: center; width: 100%; }
         .upnext-text { color: #ccc; font-weight: normal; line-height: 1.5; }
         .upnext-text b { color: #fff; }
-        /* Wide screens: the category list is as tall as the balloon and scrolls inside, with an arrow instead of a scroll bar */
+        /* Wide screens: the category list is as tall as the game mode column and scrolls inside, with an arrow instead of a scroll bar */
         .cat-more { display: none; }
         @media (min-width: 701px) {
             .setup-main { align-items: center; }
-            .setup-balloon { width: 200px; padding-top: 0; }
-            .setup-balloon svg { margin: 0 auto; }
             .setup-go { padding-top: 0; }
             .setup-go.panel { padding: 22px; }
+            /* Room on both sides of the game mode column, so the arrow sits between the demo and the cards */
+            .setup-mode { padding: 0 28px; }
+            .mode-next { right: -42px; }
             /* Speed goal card on top of the Start card: goal top at the list's top, Start card bottom at the list's bottom */
             .setup-right { align-self: stretch; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; }
             .setup-go .upnext { border: 0; padding: 0; background: none; }
@@ -173,7 +180,7 @@
             .panel { padding: 14px; }
             .setup-main { grid-template-columns: 1fr; justify-items: center; gap: 20px; }
             .setup-main > .cat-panel { width: 100%; order: 3; }
-            .setup-balloon { width: 110px; padding-top: 0; }
+            .mode-demo { height: 220px; }
             .setup-go { padding-top: 0; }
             .setup-go.panel { background: none; border: 0; padding: 0; }
             .setup-right { display: contents; }
@@ -207,7 +214,7 @@
             <section id="setup" class="setup">
                 <div>
                     <h2 class="game-title">Typing for Speed</h2>
-                    <p class="game-sub">Pick a speed goal and type real books. The balloon fills as your average speed climbs.<br>Hit your goal and it pops. Mistakes must be fixed before you can go on, case sensitive.<br>The clock starts when you type the first letter. Balloon will not pop in the first 15 seconds.</p>
+                    <p class="game-sub" id="gameSub">Pick a speed goal and type real books. The balloon fills as your average speed climbs.<br>Hit your goal and it pops. Mistakes must be fixed before you can go on, case sensitive.<br>The clock starts when you type the first letter. Balloon will not pop in the first 20 seconds.</p>
                 </div>
 
                 <div class="setup-main">
@@ -216,13 +223,13 @@
                         <div class="cats" id="cats"></div>
                         <button class="cat-more" id="catMore" aria-label="More categories"><svg width="28" height="16" viewBox="0 0 28 16"><path d="M3 3 L14 13 L25 3" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                     </div>
-                    <div class="setup-balloon">
-                        <svg viewBox="0 32 200 368" aria-hidden="true">
-                            <path d="M100 222 C 90 260, 112 290, 98 330 S 106 380, 100 400" stroke="#666" stroke-width="2" fill="none"/>
-                            <ellipse cx="100" cy="120" rx="72" ry="88" fill="#d91919"/>
-                            <ellipse cx="74" cy="82" rx="14" ry="24" fill="#fff" opacity="0.28" transform="rotate(-25 74 82)"/>
-                            <path d="M92 214 L108 214 L104 206 L96 206 Z" fill="#a51212"/>
-                        </svg>
+                    <div class="setup-mode">
+                        <span class="field-label">Game mode</span>
+                        <div class="mode-stage">
+                            <div class="mode-demo" id="modeDemo"></div>
+                            <button class="mode-next" id="modeNext" aria-label="Next game mode"><svg width="16" height="28" viewBox="0 0 16 28"><path d="M3 3 L13 14 L3 25" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                        </div>
+                        <div class="mode-name" id="modeName">Balloon</div>
                     </div>
                     <div class="setup-right">
                         <div class="panel goal-panel">
@@ -327,7 +334,7 @@
 
         // ---------- Settings ----------
         const MIN_CHARS_TO_POP = 30;     // a few fast letters at the start cannot pop the balloon
-        const MIN_SECONDS_TO_POP = 15;   // nor can a lucky first few seconds
+        const MIN_SECONDS_TO_POP = 20;   // nor can a lucky first few seconds
         const PRELOAD_WHEN_LEFT = 4000;  // start getting the next text when this many characters are left
         const ROLLING_SECONDS = 10;
         const MAX_WRONG = 10;
@@ -381,10 +388,15 @@
             return catalog && catalog.subjects[key] ? catalog.subjects[key].name : key;
         }
 
+        // Keep the n-word out of the game: books with it in the title are left out, and a book with it
+        // anywhere in the part that would be typed is skipped for another (niggard and niggle are fine).
+        const BLOCKED_WORD = /\bnigg(?!ard|l)/i;
+
         function bookPool(key) {
             if (!catalog) return [];
-            if (key === 'all') return catalog.books.map((b, i) => i);
-            return catalog.subjects[key] ? catalog.subjects[key].books : [];
+            const ok = i => !BLOCKED_WORD.test(catalog.books[i].t);
+            if (key === 'all') return catalog.books.map((b, i) => i).filter(ok);
+            return catalog.subjects[key] ? catalog.subjects[key].books.filter(ok) : [];
         }
 
         async function fetchWithTimeout(url, ms) {
@@ -424,10 +436,12 @@
             const from = usable.length ? usable[Math.floor(Math.random() * usable.length)] : 0;
             const text = paras.slice(from).map(p => p.t).join(' ');
             if (text.length < MIN_BOOK_CHARS) throw new Error('too short');
+            if (BLOCKED_WORD.test(text)) throw new Error('blocked word');
             // Where each story starts in the text, for books that are collections of stories
             const parts = [];
             let at = 0;
             for (const p of paras.slice(from)) {
+                if (p.story && BLOCKED_WORD.test(p.story)) throw new Error('blocked word');
                 if (p.story && (!parts.length || parts[parts.length - 1].story !== p.story)) parts.push({ at, story: p.story });
                 at += p.t.length + 1;
             }
@@ -446,7 +460,7 @@
                         return { text: myText, title: docRound > 1 ? `My document (round ${docRound})` : 'My document', author: '', category: 'My document', url: '' };
                     }
                     const pool = bookPool(key).filter(i => !used.has(i));
-                    for (let tries = 0; tries < 3 && pool.length; tries++) {
+                    for (let tries = 0; tries < 6 && pool.length; tries++) {
                         const idx = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
                         used.add(idx);
                         const b = catalog.books[idx];
@@ -467,8 +481,12 @@
             };
         }
 
-        // ---------- Visual (the balloon). More things to pop can be added later in the same shape. ----------
-        const Balloon = {
+        // ---------- Visuals. Each game mode has a maker with the same shape: mount, update, pop, stop. ----------
+        let Visual = null;   // the one in the current game
+
+        // Balloon mode: the balloon fills with the average speed and pops at the goal.
+        function makeBalloon() { return {
+            bubble() {}, trend() {}, stop() {},
             mount(el) {
                 // A new random color every game.
                 const hue = Math.floor(Math.random() * 360);
@@ -518,7 +536,226 @@
                 }));
                 this.caption.textContent = 'POP!';
             }
+        }; }
+
+
+        // Bubbles mode: every letter sends up bubbles, and the logo rises with your speed until it surfaces.
+        const SURFACE = 44;   // middle height of the water's surface
+        const FLOOR = 310;    // bottom of the tank
+        const KELP = [        // x on the floor, height, sway timing, color (hue: amber to olive)
+            { x: 22, h: 120, ph: 0.0, hue: 44 }, { x: 46, h: 78, ph: 1.7, hue: 34 }, { x: 78, h: 140, ph: 3.1, hue: 55 },
+            { x: 124, h: 96, ph: 4.4, hue: 38 }, { x: 156, h: 150, ph: 2.2, hue: 50 }, { x: 180, h: 84, ph: 5.3, hue: 30 },
+            { x: 62, h: 104, ph: 0.9, hue: 47 }, { x: 101, h: 86, ph: 3.8, hue: 40 }, { x: 140, h: 118, ph: 5.9, hue: 53 }
+        ];
+        const KELP_SEGS = 8;
+        function makeKelp(k) {
+            const r = () => Math.random();
+            const blades = [];
+            const at = [1, 2, 3, 4, 5, 6, 7];
+            if (k.h >= 140) at.push(5);
+            at.push(6, 7, 8);   // extra blades near the top, on the other side
+            at.forEach((i, n) => {
+                blades.push({ i, side: (i + (n >= 7 ? 1 : 0)) % 2 ? 1 : -1, open: 30 + r() * 25, curl: 40 + r() * 50, len: 42 + r() * 30, wid: 2.6 + r() * 1.2,
+                    wind: 18 + r() * 14, color: `hsl(${k.hue + (r() - 0.5) * 10}, ${50 + r() * 15}%, ${28 + r() * 14}%)`, ph: r() * 6 });
+            });
+            // The top of the plant: a long blade trailing up and over
+            blades.push({ i: KELP_SEGS, side: r() < 0.5 ? 1 : -1, open: 6, curl: 30, len: 50 + r() * 15, wid: 3,
+                wind: 16, color: `hsl(${k.hue}, 60%, 40%)`, ph: r() * 6 });
+            return Object.assign({ kick: 0, blades, stem: `hsl(${k.hue - 4}, 40%, 22%)` }, k);
+        }
+        // A long kelp blade as a winding ribbon: it leaves the stem, droops outward, and a slow wave runs down it.
+        function bladeShape(bl, px, py, stalk, t, kick) {
+            const N = 16, step = bl.len / N, mid = [];
+            let x = px, y = py;
+            for (let j = 0; j <= N; j++) {
+                const f = j / N;
+                const wave = Math.sin(f * 3 * Math.PI - t / 520 + bl.ph) * bl.wind * f + Math.sin(t / 150 + bl.ph) * kick * 2 * f;
+                const h = (stalk + bl.side * (bl.open + bl.curl * f + wave)) * Math.PI / 180;
+                mid.push([x, y, h]);
+                x += Math.sin(h) * step; y -= Math.cos(h) * step;
+            }
+            const left = [], right = [];
+            mid.forEach(([mx, my, h], j) => {
+                const f = j / N;
+                const w = bl.wid * Math.pow(Math.sin(Math.PI * Math.min(1, 0.08 + f * 0.98)), 0.6) + Math.sin(f * 26 + bl.ph) * 0.5 * f;
+                const nx = Math.cos(h), ny = Math.sin(h);
+                right.push(`${(mx + nx * w).toFixed(1)} ${(my + ny * w).toFixed(1)}`);
+                left.push(`${(mx - nx * w).toFixed(1)} ${(my - ny * w).toFixed(1)}`);
+            });
+            const rib = mid.slice(1, -2).map(([mx, my], j) => `${j ? 'L' : 'M'}${mx.toFixed(1)} ${my.toFixed(1)}`).join(' ');
+            return `<path d="M${right.join(' L')} L${left.reverse().join(' L')} Z" fill="${bl.color}" fill-opacity="0.9"/>`
+                + `<path d="${rib}" stroke="#fff3c4" stroke-opacity="0.15" stroke-width="0.6" fill="none"/>`;
+        }
+        // The boxyourbuddy logo, drawn in a 1000 wide space (taken from box-small.png). Its mouth changes as it rises.
+        const LOGO_W = 60, LOGO_SCALE = LOGO_W / 800, LOGO_H = 700 * LOGO_SCALE;   // box is about 800 by 700
+        const LOGO_MOUTHS = {
+            frown: 'M360 572 L668 566 L818 700 L812 712 L208 718 L202 706 Z',   // the smile flipped: deep down
+            grin:  'M215 578 L812 584 L806 628 L222 622 Z',                     // wide and flat: halfway
+            smirk: 'M262 612 L598 616 L808 518 L828 538 L622 664 L268 648 Z',   // one corner up: close
+            smile: 'M187 492 L828 497 L834 510 L680 673 L355 690 L350 686 Z'    // the normal logo: free
         };
+        // Deep down it frowns. Above that, it smirks while the last-10-seconds speed is climbing and grins while it is dropping.
+        function mouthFor(level, free, rising) { return free ? 'smile' : level < 0.4 ? 'frown' : rising ? 'smirk' : 'grin'; }
+        const LOGO_SVG = `
+            <rect x="113" y="145" width="777" height="683" rx="10" fill="#c8c8c8" stroke="#000" stroke-width="24"/>
+            <rect x="295" y="260" width="138" height="98" rx="6" fill="#d91919" stroke="#000" stroke-width="22"/>
+            <rect x="562" y="296" width="142" height="114" rx="6" fill="#d91919" stroke="#000" stroke-width="22"/>
+            <path id="tMouth" d="${LOGO_MOUTHS.frown}" fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round"/>`;
+
+        let tankCount = 0;   // each tank gets its own ids, so the setup demo and the game never mix up their water
+        function makeTank() { return {
+            mount(el) {
+                this.color = '#d91919';
+                const uid = 'tank' + (++tankCount);
+                el.innerHTML = `
+                    <svg viewBox="0 0 200 320" aria-hidden="true">
+                        <defs><linearGradient id="${uid}g" gradientUnits="userSpaceOnUse" x1="0" y1="${SURFACE - 6}" x2="0" y2="${FLOOR}"><stop offset="0" stop-color="#3f86bd"/><stop offset="0.22" stop-color="#1b4c77"/><stop offset="0.6" stop-color="#0c2a48"/><stop offset="1" stop-color="#061a2e"/></linearGradient><clipPath id="${uid}c"><rect x="10" y="10" width="180" height="300" rx="4"/></clipPath></defs>
+                        <rect x="8" y="8" width="184" height="304" rx="6" fill="#06121c" stroke="#2a3a48" stroke-width="3"/>
+                        <g clip-path="url(#${uid}c)">
+                            <path id="tWater" fill="url(#${uid}g)"/>
+                            <g id="tKelp"></g>
+                            <g id="tBubbles"></g>
+                            <g id="tBar"><g transform="translate(${-113 * LOGO_SCALE} ${-145 * LOGO_SCALE}) scale(${LOGO_SCALE})">${LOGO_SVG}</g></g>
+                            <path id="tShine" fill="none" stroke="#aee0ff" stroke-opacity="0.45" stroke-width="1.5"/>
+                        </g>
+                        <g id="tSplash"></g>
+                    </svg>
+                    <div class="visual-caption" id="bCaption">0% up</div>`;
+                this.bar = el.querySelector('#tBar');
+                this.mouth = el.querySelector('#tMouth'); this.face = 'frown'; this.lift = 0;
+                this.recent = []; this.rising = false;
+                this.water = el.querySelector('#tWater');
+                this.shine = el.querySelector('#tShine');
+                this.kelpEl = el.querySelector('#tKelp');
+                this.layer = el.querySelector('#tBubbles');
+                this.splash = el.querySelector('#tSplash');
+                this.caption = el.querySelector('#bCaption');
+                this.level = 0; this.shown = 0;
+                this.bubbles = [];
+                this.kelp = KELP.map(makeKelp);
+                this.done = false;
+                this.last = performance.now();
+                cancelAnimationFrame(this.raf);
+                const frame = t => {
+                    const dt = Math.min(0.1, (t - this.last) / 1000);
+                    this.last = t;
+                    this.step(dt, t);
+                    if (!this.stopped) this.raf = requestAnimationFrame(frame);
+                };
+                this.stopped = false;
+                this.raf = requestAnimationFrame(frame);
+                this.draw(performance.now());
+            },
+            // Logo top runs from near the bottom (level 0) to just under the surface (level 1).
+            barY(level) { return (FLOOR - LOGO_H - 8) - level * ((FLOOR - LOGO_H - 8) - (SURFACE + 4)); },
+            waveY(x, t) { return SURFACE + Math.sin(x / 16 + t / 420) * 3 + Math.sin(x / 7 - t / 610) * 1.4; },
+            // Each correct letter sends a little burst of 3 to 5 bubbles; a mistake sends one.
+            bubble(good) {
+                if (this.done) return;
+                const n = good ? 3 + Math.floor(Math.random() * 3) : 1;
+                for (let i = 0; i < n; i++) this.spawn(good, i * (8 + Math.random() * 14));
+            },
+            spawn(good, below) {
+                const r = good ? 1 + Math.random() * 6 : 2.5 + Math.random() * 2;
+                const x = 16 + Math.random() * 168;
+                const el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                el.setAttribute('r', r.toFixed(1));
+                el.setAttribute('fill', good ? 'rgba(170,220,255,0.25)' : 'rgba(255,138,128,0.2)');
+                el.setAttribute('stroke', good ? '#aee0ff' : '#ff8a80');
+                el.setAttribute('stroke-width', Math.min(1.5, r * 0.45).toFixed(2));   // thinner outline on tiny bubbles
+                el.setAttribute('cx', x.toFixed(1));
+                el.setAttribute('cy', FLOOR + r + below);
+                this.layer.appendChild(el);
+                this.bubbles.push({ el, x, y: FLOOR + r + below, r, good, speed: 200 + Math.random() * 90, ph: Math.random() * 6,
+                    popAt: good ? null : 150 + Math.random() * 140 });
+            },
+            step(dt, t) {
+                const barY = this.barY(this.shown);
+                this.kelp.forEach(k => { k.kick *= Math.exp(-dt * 1.8); });
+                this.bubbles = this.bubbles.filter(b => {
+                    b.y -= b.speed * dt;
+                    const wob = b.good ? Math.sin(t / 120 + b.ph) * 2 : Math.sin(t / 60 + b.ph) * 5;
+                    const cx = b.x + wob;
+                    // A bubble passing through kelp gives it a little push.
+                    this.kelp.forEach(k => {
+                        if (Math.abs(cx - k.x) < 9 && b.y > FLOOR - k.h && b.y < FLOOR) k.kick = Math.min(7, k.kick + 22 * dt);
+                    });
+                    const hitsBar = b.y - b.r <= barY + LOGO_H && b.y > barY && cx > 100 - LOGO_W / 2 && cx < 100 + LOGO_W / 2 && !this.done;
+                    if ((!b.good && b.y <= b.popAt) || hitsBar || b.y <= this.waveY(cx, t)) { b.el.remove(); return false; }
+                    b.el.setAttribute('cx', cx.toFixed(1));
+                    b.el.setAttribute('cy', b.y.toFixed(1));
+                    return true;
+                });
+                this.shown += (this.level - this.shown) * Math.min(1, dt * 10);
+                this.draw(t);
+            },
+            draw(t) {
+                // Water with a moving wave on top and a thin shine on its edge.
+                let top = '';
+                for (let x = 10; x <= 190; x += 5) top += `${x === 10 ? 'M' : 'L'}${x} ${this.waveY(x, t).toFixed(1)} `;
+                this.water.setAttribute('d', top + `L190 ${FLOOR} L10 ${FLOOR} Z`);
+                this.shine.setAttribute('d', top);
+
+                // Kelp: holdfast, a thin stem that sways more toward the tip, and blades with a float at each base.
+                let kelp = '';
+                this.kelp.forEach(k => {
+                    const n = KELP_SEGS, pts = [];
+                    for (let i = 0; i <= n; i++) {
+                        const f = i / n;
+                        const sway = Math.sin(t / 1100 + k.ph + f * 1.5) * 4 + Math.sin(t / 160 + k.ph) * k.kick;
+                        pts.push([k.x + sway * Math.pow(f, 1.4), FLOOR + 8 - f * (k.h + 14)]);   // stems start below the bottom edge
+                    }
+                    let d = `M${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+                    for (let i = 1; i < pts.length - 1; i++) {
+                        const mx = (pts[i][0] + pts[i + 1][0]) / 2, my = (pts[i][1] + pts[i + 1][1]) / 2;
+                        d += ` Q${pts[i][0].toFixed(1)} ${pts[i][1].toFixed(1)} ${mx.toFixed(1)} ${my.toFixed(1)}`;
+                    }
+                    d += ` L${pts[n][0].toFixed(1)} ${pts[n][1].toFixed(1)}`;
+                    kelp += `<path d="${d}" stroke="${k.stem}" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
+                    k.blades.forEach(bl => {
+                        const [px, py] = pts[bl.i];
+                        const prev = pts[bl.i - 1];
+                        const stalk = Math.atan2(px - prev[0], prev[1] - py) * 180 / Math.PI;   // stem direction, 0 = straight up
+                        kelp += bladeShape(bl, px, py, stalk, t, k.kick);
+                    });
+                });
+                this.kelpEl.innerHTML = kelp;
+
+                // Once free, the logo rises half out of the water and bobs.
+                if (this.done) this.lift += (LOGO_H * 0.6 - this.lift) * 0.12;
+                const y = this.barY(this.shown) - this.lift + (this.done ? Math.sin(t / 300) * 1.5 : 0);
+                const tilt = Math.sin(t / 400) * 2;
+                this.bar.setAttribute('transform', `translate(${100 - LOGO_W / 2} ${y.toFixed(1)}) rotate(${tilt.toFixed(2)} ${LOGO_W / 2} ${(LOGO_H / 2).toFixed(1)})`);
+                const face = mouthFor(this.shown, this.done, this.rising);
+                if (face !== this.face) { this.face = face; this.mouth.setAttribute('d', LOGO_MOUTHS[face]); }
+                this.caption.textContent = `${Math.round(this.level * 100)}% up`;
+            },
+            // The logo stays just under the surface until the average speed actually reaches the goal.
+            update(p) { if (!this.done) this.level = Math.min(0.97, p); },
+            // Compare the last-10-seconds speed with 2 seconds ago. A small dead zone stops the face flickering.
+            trend(wpm, t) {
+                this.recent.push({ t, wpm });
+                while (this.recent.length > 2 && t - this.recent[1].t >= 2000) this.recent.shift();
+                const old = this.recent[0];
+                if (t - old.t < 2000) return;
+                if (wpm - old.wpm > 1) this.rising = true;
+                else if (wpm - old.wpm < -1) this.rising = false;
+            },
+            pop() {
+                this.done = true; this.level = 1;
+                let html = '';
+                for (let i = 0; i < 16; i++) {
+                    const x = 50 + Math.random() * 100, h = 30 + Math.random() * 50;
+                    html += `<circle r="${(2 + Math.random() * 3).toFixed(1)}" fill="#aee0ff" style="transform: translate(${x.toFixed(0)}px,${SURFACE}px); transition: transform 0.7s cubic-bezier(.1,.7,.3,1), opacity 0.9s; --x:${(x + (Math.random() - 0.5) * 80).toFixed(0)}px; --y:${(SURFACE - h).toFixed(0)}px"/>`;
+                }
+                this.splash.innerHTML = html;
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    this.splash.querySelectorAll('circle').forEach(c => { c.style.transform = 'translate(var(--x), var(--y))'; c.style.opacity = '0'; });
+                }));
+                this.caption.textContent = 'SURFACED!';
+            },
+            stop() { this.stopped = true; cancelAnimationFrame(this.raf); }
+        }; }
 
         function confetti() {
             const c = document.createElement('canvas');
@@ -546,11 +783,59 @@
             })(t0);
         }
 
+        // ---------- Game mode demo: plays over and over on the setup screen ----------
+        const Demo = {
+            start() {
+                this.stop();
+                const el = $('modeDemo'), mode = settings.mode;
+                const run = () => {
+                    if (this.v) this.v.stop();
+                    const v = this.v = mode === 'bubbles' ? makeTank() : makeBalloon();
+                    v.mount(el);
+                    const t0 = performance.now();
+                    let popT = 0;
+                    clearInterval(this.timer);
+                    this.timer = setInterval(() => {
+                        const t = performance.now() - t0;
+                        if (popT) { if (t - popT > (mode === 'bubbles' ? 2600 : 1500)) run(); return; }
+                        if (mode === 'bubbles') {
+                            const p = Math.min(0.97, t / 6500);
+                            v.update(p); v.rising = p > 0.72; v.bubble(true);
+                            if (t > 7000) { v.pop(); popT = t; }
+                        } else {
+                            v.update(Math.min(1, t / 3500));
+                            if (t > 4300) { v.pop(); popT = t; }
+                        }
+                    }, 100);
+                };
+                run();
+            },
+            stop() { clearInterval(this.timer); if (this.v) this.v.stop(); this.v = null; }
+        };
+
         // ---------- Setup screen ----------
+        const MODES = {
+            bubbles: { name: 'Bubbles', sub: 'Pick a speed goal and type real books. Every letter sends up bubbles, and boxyourbuddy rises as your average speed climbs.<br>Hit your goal and it reaches the surface. Mistakes must be fixed before you can go on, case sensitive.<br>The clock starts when you type the first letter. boxyourbuddy will not surface in the first 20 seconds.' },
+            balloon: { name: 'Balloon', sub: 'Pick a speed goal and type real books. The balloon fills as your average speed climbs.<br>Hit your goal and it pops. Mistakes must be fixed before you can go on, case sensitive.<br>The clock starts when you type the first letter. Balloon will not pop in the first 20 seconds.' }
+        };
         const settings = {
             goal: store.get('goal', 50),
-            cat: store.get('cat', 'fiction')
+            cat: store.get('cat', 'fiction'),
+            mode: store.get('mode', 'bubbles')
         };
+        if (!MODES[settings.mode]) settings.mode = 'bubbles';
+
+        function renderMode() {
+            $('modeName').textContent = MODES[settings.mode].name;
+            $('gameSub').innerHTML = MODES[settings.mode].sub;
+        }
+        $('modeNext').addEventListener('click', () => {
+            const keys = Object.keys(MODES);
+            settings.mode = keys[(keys.indexOf(settings.mode) + 1) % keys.length];
+            store.set('mode', settings.mode);
+            renderMode();
+            Demo.start();
+        });
         let prepared = null;       // first text, loaded in the background before Start
         let preparing = null;      // promise while loading
         let prepareId = 0;
@@ -647,7 +932,7 @@
             source = src;
             g = {
                 text: '', segments: [], pos: 0, lineStart: 0, wrong: '',
-                goal: settings.goal, category: settings.cat,
+                goal: settings.goal, category: settings.cat, mode: settings.mode,
                 startT: null, endT: 0,   // the clock starts on the first key typed
                 strokes: 0, goodStrokes: 0, mistakes: 0,
                 missKeys: {}, missWords: {},   // first wrong key at each spot, and the word it was in
@@ -778,7 +1063,19 @@
             $('sWpm').classList.toggle('good', wpm >= g.goal);
             $('sGoal').textContent = g.goal;
             $('sAcc').textContent = g.strokes ? Math.round(g.goodStrokes / g.strokes * 100) + '%' : '100%';
-            Balloon.update(Math.min(1, wpm / g.goal), wpm, g.goal);
+            // Bubbles: the logo follows the average, pulled partly toward the last 10 seconds so it moves up and down.
+            Visual.update(g.mode === 'bubbles' ? Math.max(0, barWpm(ms, wpm)) / g.goal : Math.min(1, wpm / g.goal), wpm, g.goal);
+        }
+
+        const BAR_RECENT_SHARE = 0.4;
+        function barWpm(t, avg) {
+            if (g.startT === null || t < ROLLING_SECONDS * 1000) return avg;
+            let back = null;
+            for (let i = g.samples.length - 1; i >= 0; i--) { if (t - g.samples[i].t >= ROLLING_SECONDS * 1000) { back = g.samples[i]; break; } }
+            if (!back) return avg;
+            const recent = wpmOf(g.pos - back.pos, t - back.t);
+            Visual.trend(recent, t);
+            return avg + (recent - avg) * BAR_RECENT_SHARE;
         }
 
         function sample() {
@@ -812,6 +1109,7 @@
                 if (g.pos >= lineEnd) { g.lineStart = lineEnd; slide = true; }
                 ensureMoreText();
                 render(slide);
+                Visual.bubble(true);
                 checkPop();
             } else {
                 if (!g.wrong) noteMiss(g.text[g.pos], ch);
@@ -819,6 +1117,7 @@
                 g.mistakes++;
                 if (g.wrong.length < MAX_WRONG) g.wrong += ch;
                 render(false);
+                Visual.bubble(false);
             }
             updateStats();
         }
@@ -903,7 +1202,7 @@
         // ---------- Start / finish ----------
         function show(id) {
             ['setup', 'play', 'results'].forEach(s => $(s).classList.toggle('hidden', s !== id));
-            if (id === 'setup') fitCats();
+            if (id === 'setup') { fitCats(); Demo.start(); } else Demo.stop();
             window.scrollTo({ top: Math.max(0, $('play').parentElement.offsetTop - 20) });
         }
 
@@ -926,7 +1225,8 @@
             if (!first) { $('upnextText').textContent = NO_BOOK_MSG; $('otherBook').disabled = false; return; }
 
             show('play');
-            Balloon.mount($('visual'));
+            Visual = settings.mode === 'bubbles' ? makeTank() : makeBalloon();
+            Visual.mount($('visual'));
             newGame(first, src);
             measure();
             render(false);
@@ -940,7 +1240,7 @@
                 if (g.startT !== null && ++n % 10 === 0) sample();
                 checkPop();
             }, 100);
-            track('tfs_start', { goal: g.goal, category: categoryName(g.category) });
+            track('tfs_start', { goal: g.goal, category: categoryName(g.category), mode: g.mode });
         }
 
         function finish(popped) {
@@ -953,14 +1253,16 @@
             updateStats();
             input.blur();
             $('clickToType').classList.add('hidden');
+            const v = Visual;
+            if (popped) setTimeout(() => v.stop(), 1600); else v.stop();
             const secs = Math.round(elapsed() / 1000);
             if (popped) {
-                Balloon.pop();
+                Visual.pop();
                 confetti();
-                track('tfs_pop', { goal: g.goal, seconds: secs, wpm: Math.round(avgWpm()), category: categoryName(g.category) });
+                track('tfs_pop', { goal: g.goal, seconds: secs, wpm: Math.round(avgWpm()), category: categoryName(g.category), mode: g.mode });
                 setTimeout(showResults, 1600);
             } else {
-                track('tfs_forfeit', { goal: g.goal, seconds: secs, wpm: Math.round(avgWpm()), category: categoryName(g.category) });
+                track('tfs_forfeit', { goal: g.goal, seconds: secs, wpm: Math.round(avgWpm()), category: categoryName(g.category), mode: g.mode });
                 showResults();
             }
             // Have the next first book ready by the time they press Play again.
@@ -980,9 +1282,10 @@
             const words = typed.trim() ? typed.trim().split(/\s+/).length : 0;
             const acc = g.strokes ? (g.goodStrokes / g.strokes * 100) : 100;
             const word = $('rWord');
-            word.textContent = g.popped ? 'POPPED!' : 'QUIT';
+            const bubbles = g.mode === 'bubbles';
+            word.textContent = g.popped ? (bubbles ? 'SURFACED!' : 'POPPED!') : 'QUIT';
             word.className = 'result-word ' + (g.popped ? 'popped' : 'forfeit');
-            $('rSub').textContent = `You typed for ${fmtTime(ms)} and ${g.popped ? 'popped the balloon!' : 'quit.'}`;
+            $('rSub').textContent = `You typed for ${fmtTime(ms)} and ${g.popped ? (bubbles ? 'brought boxyourbuddy to the surface!' : 'popped the balloon!') : 'quit.'}`;
 
             const groups = [
                 ['Typing', [
@@ -1082,14 +1385,34 @@
             x.letterSpacing = '0px';
             x.fillStyle = g.popped ? gold : '#d91919';
             x.font = 'bold 112px Arial, sans-serif';
-            x.fillText(g.popped ? 'POPPED!' : 'QUIT', 74, 232);
+            x.fillText(g.popped ? (g.mode === 'bubbles' ? 'SURFACED!' : 'POPPED!') : 'QUIT', 74, 232);
             x.fillStyle = '#ccc'; x.font = '34px Arial, sans-serif';
             x.fillText(g.popped ? `${g.goal} WPM goal reached in ${fmtTime(ms)}` : `Reached ${Math.round(avg)} of ${g.goal} WPM in ${fmtTime(ms)}`, 80, 290);
 
-            // Balloon, top right
+            // Balloon or tank, top right
             const bx = 900, by = 160;
-            if (g.popped) {
-                x.fillStyle = Balloon.color;
+            if (g.mode === 'bubbles') {
+                // Water with the logo: half out and smiling if it surfaced, under water otherwise
+                const top = g.popped ? by + 10 : by - 110, p = Math.min(1, avg / g.goal);
+                const grad = x.createLinearGradient(0, top, 0, by + 130);
+                grad.addColorStop(0, '#3f86bd'); grad.addColorStop(0.4, '#1b4c77'); grad.addColorStop(1, '#061a2e');
+                x.fillStyle = grad;
+                x.beginPath(); x.moveTo(790, top);
+                for (let i = 0; i <= 22; i++) x.lineTo(790 + i * 10, top + Math.sin(i * 0.9) * 4);
+                x.lineTo(1010, by + 130); x.lineTo(790, by + 130); x.closePath(); x.fill();
+                const sc = 130 / 777, ly = g.popped ? by - 70 : by - 40;
+                x.save(); x.translate(bx - 501 * sc, ly - 145 * sc); x.scale(sc, sc);
+                x.lineJoin = 'round';
+                x.fillStyle = '#c8c8c8'; x.strokeStyle = '#000'; x.lineWidth = 24;
+                rrect(x, 113, 145, 777, 683, 10); x.fill(); x.stroke();
+                x.fillStyle = '#d91919'; x.lineWidth = 22;
+                rrect(x, 295, 260, 138, 98, 6); x.fill(); x.stroke();
+                rrect(x, 562, 296, 142, 114, 6); x.fill(); x.stroke();
+                const mouth = new Path2D(LOGO_MOUTHS[g.popped ? 'smile' : p < 0.4 ? 'frown' : 'grin']);
+                x.fillStyle = '#000'; x.lineWidth = 10; x.fill(mouth); x.stroke(mouth);
+                x.restore();
+            } else if (g.popped) {
+                x.fillStyle = Visual.color;
                 for (let i = 0; i < 12; i++) {
                     const a = i / 12 * Math.PI * 2, d = 62 + (i % 3) * 14;
                     x.save(); x.translate(bx + Math.cos(a) * d, by + Math.sin(a) * d); x.rotate(a * 2.3);
@@ -1101,7 +1424,7 @@
                 const s = 0.3 + 0.7 * Math.min(1, avg / g.goal);
                 x.strokeStyle = '#666'; x.lineWidth = 3;
                 x.beginPath(); x.moveTo(bx, by + 92 * s); x.bezierCurveTo(bx - 10, by + 110, bx + 12, by + 125, bx - 2, by + 145); x.stroke();
-                x.fillStyle = Balloon.color;
+                x.fillStyle = Visual.color;
                 x.beginPath(); x.ellipse(bx, by, 72 * s, 88 * s, 0, 0, Math.PI * 2); x.fill();
                 x.fillStyle = 'rgba(255,255,255,0.28)';
                 x.beginPath(); x.ellipse(bx - 26 * s, by - 38 * s, 14 * s, 24 * s, -0.44, 0, Math.PI * 2); x.fill();
@@ -1313,7 +1636,7 @@
                 text: g.text.slice(0, g.pos), pos: g.pos, goal: g.goal, category: g.category,
                 segments: g.segments, strokes: g.strokes, goodStrokes: g.goodStrokes, mistakes: g.mistakes,
                 missKeys: g.missKeys, missWords: g.missWords, pairs: g.pairs, tris: g.tris,
-                series: g.series, best: g.best, ms: elapsed(), color: Balloon.color
+                series: g.series, best: g.best, ms: elapsed(), color: Visual.color, mode: g.mode
             });
         });
         addEventListener('pageshow', e => { if (e.persisted) store.remove('left'); });
@@ -1321,30 +1644,30 @@
             const left = store.get('left', null);
             if (!left) return;
             store.remove('left');
-            Balloon.color = left.color;
-            g = Object.assign({}, left, { samples: [], startT: 0, endT: Math.max(1, left.ms), popped: false, over: true });
+            Visual = { color: left.color };
+            g = Object.assign({ mode: 'balloon' }, left, { samples: [], startT: 0, endT: Math.max(1, left.ms), popped: false, over: true });
             showResults();
         }
 
         addEventListener('resize', () => { if (g && !g.over && !$('play').classList.contains('hidden')) { measure(); render(false); } });
 
         // ---------- Category list height ----------
-        // On wide screens the list is as tall as the balloon; the arrow scrolls it and hides at the bottom.
+        // On wide screens the list is as tall as the game mode column; the arrow scrolls it and hides at the bottom.
         const catPanel = document.querySelector('.cat-panel'), cats = $('cats');
         const catArrow = () => $('catMore').classList.toggle('gone', cats.scrollTop + cats.clientHeight >= cats.scrollHeight - 2);
         function fitCats() {
-            const balloon = document.querySelector('.setup-balloon svg');
-            balloon.style.height = ''; balloon.style.width = '';
-            const h = balloon.getBoundingClientRect().height;
+            const demo = $('modeDemo'), mid = document.querySelector('.setup-mode');
+            demo.style.height = '';
+            const h = mid.getBoundingClientRect().height;
             if (innerWidth > 700 && !h) return;  // setup is hidden right now
             cats.style.height = '';
             const row = cats.firstElementChild;
             if (innerWidth > 700 && row) {
-                // Fit as many whole rows as the balloon's height allows, so no row is cut in half
+                // Fit as many whole rows as the column's height allows, so no row is cut in half
                 const rest = catPanel.offsetHeight - cats.offsetHeight;
                 cats.style.height = Math.max(1, Math.floor((h - rest) / row.offsetHeight)) * row.offsetHeight + 'px';
-                // Then size the balloon to the card: balloon top at the card's top, string end at its bottom
-                balloon.style.height = catPanel.offsetHeight + 'px'; balloon.style.width = 'auto';
+                // Then size the demo so the column is exactly as tall as the card
+                demo.style.height = (demo.offsetHeight + catPanel.offsetHeight - mid.offsetHeight) + 'px';
             }
             catArrow();
         }
@@ -1354,6 +1677,8 @@
         addEventListener('resize', fitCats);
 
         // ---------- Boot ----------
+        renderMode();
+        Demo.start();
         renderGoal();
         renderCats();
         updateStartBtn();
