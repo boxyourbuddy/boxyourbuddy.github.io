@@ -134,7 +134,7 @@
         .result-word { font-size: clamp(2.2rem, 7vw, 3.6rem); margin: 0; letter-spacing: 2px; }
         .result-word.popped { color: #FFF0AD; }
         .result-word.forfeit { color: #d91919; }
-        .result-sub { color: #888; font-weight: normal; margin: 0 0 10px; }
+        .result-sub { color: #888; font-weight: normal; margin: 0 0 10px; text-align: center; }
         .share-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
         .share-msg { color: #8fe08f; font-weight: normal; min-height: 1.2em; margin: 10px 0 0; text-align: center; }
         .result-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 32px; margin-top: 18px; padding-top: 16px; border-top: 1px solid #222; }
@@ -142,7 +142,10 @@
         .result-row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; font-weight: normal; font-variant-numeric: tabular-nums; }
         .result-row span:first-child { color: #888; }
         .result-row .hi { color: #FFF0AD; }
-        @media (max-width: 700px) { .result-grid { grid-template-columns: 1fr; } }
+        .typed-label { text-align: center; }
+        #rTable th, #rTable td { text-align: center; }
+        #rGrid, #rMiss { grid-template-columns: repeat(2, minmax(0, 300px)); justify-content: center; }
+        @media (max-width: 700px) { .result-grid, #rGrid, #rMiss { grid-template-columns: 1fr; } }
         .chart-wrap { background: #111; border-radius: 6px; padding: 14px; margin-bottom: 18px; }
         .chart-wrap svg { width: 100%; height: auto; display: block; }
         .legend { display: flex; gap: 18px; flex-wrap: wrap; color: #888; font-size: 0.8rem; font-weight: normal; margin-top: 8px; }
@@ -285,7 +288,7 @@
                     <div class="result-grid" id="rMiss"></div>
                 </div>
                 </div>
-                <span class="field-label">What you typed</span>
+                <span class="field-label typed-label">What you typed</span>
                 <div class="table-wrap"><table id="rTable"></table></div>
                 <div class="result-btns">
                     <button class="btn" id="againBtn">Play again</button>
@@ -950,14 +953,11 @@
             $('rChart').innerHTML = chartSvg();
 
             const used = g.segments.filter(s => s.enterT !== null);
-            const rows = used.map((s, i) => {
-                const next = used[i + 1];
-                const t = (next ? next.enterT : ms) - s.enterT;
-                const chars = Math.max(0, Math.min(g.pos, s.end) - s.start);
+            const rows = used.map(s => {
                 const title = s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>` : esc(s.title);
-                return `<tr><td>${title}</td><td>${esc(s.author || '-')}</td><td>${esc(s.category)}</td><td>${fmtTime(t)}</td><td>${chars.toLocaleString()}</td><td>${wpmOf(chars, t).toFixed(1)}</td></tr>`;
+                return `<tr><td>${esc(s.author || '-')}</td><td>${title}</td><td>${esc(s.category)}</td></tr>`;
             }).join('');
-            $('rTable').innerHTML = `<tr><th>Title</th><th>Author</th><th>Category</th><th>Time</th><th>Characters</th><th>WPM</th></tr>${rows}`;
+            $('rTable').innerHTML = `<tr><th>Author</th><th>Title</th><th>Category</th></tr>${rows}`;
 
             show('results');
         }
