@@ -142,6 +142,7 @@
         .pic-box img { max-width: 100%; max-height: calc(100vh - 140px); width: auto; height: auto; display: block; margin: 0 auto 16px; border-radius: 4px; }
         .result-word { font-size: clamp(2.2rem, 7vw, 3.6rem); margin: 0; letter-spacing: 2px; }
         .result-word.popped { color: #FFF0AD; }
+        .result-logo { height: 0.9em; width: auto; vertical-align: -0.08em; margin-right: 0.3em; }
         .result-word.forfeit { color: #d91919; }
         .result-sub { color: #888; font-weight: normal; margin: 0 0 10px; text-align: center; }
         .share-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
@@ -1283,7 +1284,8 @@
             const acc = g.strokes ? (g.goodStrokes / g.strokes * 100) : 100;
             const word = $('rWord');
             const bubbles = g.mode === 'bubbles';
-            word.textContent = g.popped ? (bubbles ? 'SURFACED!' : 'POPPED!') : 'QUIT';
+            word.textContent = g.popped ? (bubbles ? 'WAS SURFACED!' : 'POPPED!') : 'QUIT';
+            if (g.popped && bubbles) word.insertAdjacentHTML('afterbegin', '<img src="/images/box-small.png" alt="boxyourbuddy" class="result-logo">');
             word.className = 'result-word ' + (g.popped ? 'popped' : 'forfeit');
             $('rSub').textContent = `You typed for ${fmtTime(ms)} and ${g.popped ? (bubbles ? 'brought boxyourbuddy to the surface!' : 'popped the balloon!') : 'quit.'}`;
 
