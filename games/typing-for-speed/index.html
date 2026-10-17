@@ -956,7 +956,7 @@
             const word = $('rWord');
             word.textContent = g.popped ? 'POPPED!' : 'QUIT';
             word.className = 'result-word ' + (g.popped ? 'popped' : 'forfeit');
-            $('rSub').textContent = `You typed for ${fmtTime(ms)} and ${g.popped ? 'popped' : 'quit'}.`;
+            $('rSub').textContent = `You typed for ${fmtTime(ms)} and ${g.popped ? 'popped the balloon!' : 'quit.'}`;
 
             const groups = [
                 ['Typing', [
