@@ -401,12 +401,19 @@
                 if (/frontmatter|backmatter/.test(s.getAttribute('epub:type') || '')) s.remove();
             });
             root.querySelectorAll('a').forEach(a => { if (/noteref/.test(a.getAttribute('epub:type') || '')) a.remove(); });
+            // In a collection each story is its own article; note its name before the headings go.
+            const stories = new Map();
+            root.querySelectorAll('article').forEach(art => {
+                const h = art.querySelector('[epub\\:type~="title"]') || art.querySelector('h2, h3, h4');
+                const name = h ? clean(h.textContent) : '';
+                if (name) stories.set(art, name);
+            });
             root.querySelectorAll('header, h1, h2, h3, h4, h5, h6, table, figure, img, nav, hgroup').forEach(e => e.remove());
             const paras = [];
             root.querySelectorAll('p').forEach(p => {
                 p.querySelectorAll('br').forEach(br => br.replaceWith(' '));
                 const t = clean(p.textContent);
-                if (t) paras.push({ t });
+                if (t) paras.push({ t, story: stories.get(p.closest('article')) || '' });
             });
             if (!paras.length) throw new Error('no text');
             // Start on a random real paragraph (not a short line like "* * *") in the first three quarters.
@@ -415,7 +422,14 @@
             const from = usable.length ? usable[Math.floor(Math.random() * usable.length)] : 0;
             const text = paras.slice(from).map(p => p.t).join(' ');
             if (text.length < MIN_BOOK_CHARS) throw new Error('too short');
-            return text;
+            // Where each story starts in the text, for books that are collections of stories
+            const parts = [];
+            let at = 0;
+            for (const p of paras.slice(from)) {
+                if (p.story && (!parts.length || parts[parts.length - 1].story !== p.story)) parts.push({ at, story: p.story });
+                at += p.t.length + 1;
+            }
+            return { text, parts };
         }
 
         // Each game keeps a source that hands out texts one after another.
@@ -435,8 +449,15 @@
                         used.add(idx);
                         const b = catalog.books[idx];
                         try {
-                            const text = await loadBook(b);
-                            return { text, title: b.t, author: b.a, category: categoryName(key), url: SE + b.u };
+                            const { text, parts } = await loadBook(b);
+                            const item = { text, title: b.t, author: b.a, category: categoryName(key), url: SE + b.u };
+                            // A book named "Short Fiction" is a collection: show each story's name as the title instead.
+                            if (b.t === 'Short Fiction' && parts.length) {
+                                parts[0].at = 0;
+                                item.parts = parts;
+                                item.title = parts[0].story;
+                            }
+                            return item;
                         } catch (e) { /* try another book */ }
                     }
                     return null; // nothing could be loaded
@@ -640,7 +661,11 @@
             if (g.text) g.text += ' ';
             const start = g.text.length;
             g.text += item.text;
-            g.segments.push(Object.assign({}, item, { text: undefined, start, end: g.text.length, enterT: null }));
+            const parts = item.parts || [{ at: 0, story: item.title }];
+            parts.forEach((p, i) => {
+                const end = i + 1 < parts.length ? start + parts[i + 1].at : g.text.length;
+                g.segments.push(Object.assign({}, item, { text: undefined, parts: undefined, title: p.story, start: start + p.at, end, enterT: null }));
+            });
         }
 
         function elapsed() { return g.startT === null ? 0 : (g.endT || performance.now()) - g.startT; }
