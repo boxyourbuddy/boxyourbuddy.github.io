@@ -146,8 +146,9 @@
         .result-row .hi { color: #FFF0AD; }
         .typed-label { text-align: center; }
         #rTable th, #rTable td { text-align: center; }
-        #rGrid, #rMiss { grid-template-columns: repeat(2, minmax(0, 300px)); justify-content: center; }
-        @media (max-width: 700px) { .result-grid, #rGrid, #rMiss { grid-template-columns: 1fr; } }
+        #rCombo { row-gap: 22px; }
+        #rGrid, #rMiss, #rCombo { grid-template-columns: repeat(2, minmax(0, 300px)); justify-content: center; }
+        @media (max-width: 700px) { .result-grid, #rGrid, #rMiss, #rCombo { grid-template-columns: 1fr; } }
         .chart-wrap { background: #111; border-radius: 6px; padding: 14px; margin-bottom: 18px; }
         .chart-wrap svg { width: 100%; height: auto; display: block; }
         .legend { display: flex; gap: 18px; flex-wrap: wrap; color: #888; font-size: 0.8rem; font-weight: normal; margin-top: 8px; }
@@ -291,6 +292,7 @@
                     </div>
                     <div class="result-grid" id="rGrid"></div>
                     <div class="result-grid" id="rMiss"></div>
+                    <div class="result-grid" id="rCombo"></div>
                 </div>
                 </div>
                 <span class="field-label typed-label">What you typed</span>
@@ -649,6 +651,7 @@
                 startT: null, endT: 0,   // the clock starts on the first key typed
                 strokes: 0, goodStrokes: 0, mistakes: 0,
                 missKeys: {}, missWords: {},   // first wrong key at each spot, and the word it was in
+                pairs: {}, tris: {}, run: 0, t1: 0, t2: 0,   // timing for 2 and 3 key combos
                 samples: [{ t: 0, pos: 0 }], series: [], best: 0,
                 queued: null, queuing: false, over: false
             };
@@ -802,6 +805,7 @@
             g.strokes++;
             if (!g.wrong && ch === g.text[g.pos]) {
                 g.goodStrokes++;
+                noteCombo();
                 g.pos++;
                 for (const seg of g.segments) if (seg.enterT === null && g.pos > seg.start) seg.enterT = elapsed();
                 let slide = false;
@@ -811,6 +815,7 @@
                 checkPop();
             } else {
                 if (!g.wrong) noteMiss(g.text[g.pos], ch);
+                g.run = 0; // a mistake breaks the run, so combos around it are not timed
                 g.mistakes++;
                 if (g.wrong.length < MAX_WRONG) g.wrong += ch;
                 render(false);
@@ -828,6 +833,27 @@
             while (b < g.text.length && !/\s/.test(g.text[b])) b++;
             const word = g.text.slice(a, b).replace(/^[^\w']+|[^\w']+$/g, '').replace(/^'+|'+$/g, '');
             if (word) g.missWords[word] = (g.missWords[word] || 0) + 1;
+        }
+        // Time 2 and 3 key combos from the first key to the last. Only clean runs count,
+        // nothing with a space in it, and long pauses are skipped.
+        const COMBO_MIN = 5, PAIR_MAX_MS = 2000, TRI_MAX_MS = 3000;
+        function noteCombo() {
+            const now = performance.now(), i = g.pos;
+            const add = (bag, key, ms, max) => {
+                if (/\s/.test(key) || ms > max) return;
+                const c = bag[key] || (bag[key] = { n: 0, ms: 0 });
+                c.n++; c.ms += ms;
+            };
+            if (g.run >= 1) add(g.pairs, g.text.slice(i - 1, i + 1), now - g.t1, PAIR_MAX_MS);
+            if (g.run >= 2) add(g.tris, g.text.slice(i - 2, i + 1), now - g.t2, TRI_MAX_MS);
+            g.t2 = g.t1; g.t1 = now; g.run++;
+        }
+        function comboLists(bag) {
+            const all = Object.entries(bag || {}).filter(([, c]) => c.n >= COMBO_MIN)
+                .map(([k, c]) => [k, c.ms / c.n]).sort((a, b) => a[1] - b[1]);
+            const k = Math.min(5, Math.floor(all.length / 2));
+            const fmt = ([key, ms]) => [key, (ms / 1000).toFixed(2) + 's'];
+            return { fast: all.slice(0, k).map(fmt), slow: all.slice(all.length - k).reverse().map(fmt) };
         }
         const KEY_NAMES = { ' ': 'space', ',': 'comma', '.': 'period', "'": 'apostrophe', '"': 'quote', ';': 'semicolon', ':': 'colon', '-': 'hyphen', '?': 'question mark', '!': 'exclamation mark', '(': 'left bracket', ')': 'right bracket' };
         function keyName(c) { return KEY_NAMES[c] || c; }
@@ -979,6 +1005,13 @@
                 ? list.map(([l, n]) => `<div class="result-row"><span>${esc(l)}</span><span>${n.toLocaleString()}</span></div>`).join('')
                 : '<div class="result-row"><span>None</span></div>'}</div>`;
             $('rMiss').innerHTML = missCol('Missed keys', miss.keys) + missCol('Missed words', miss.words);
+
+            const comboCol = (head, list) => `<div><div class="stat-label">${head}</div>${list.length
+                ? list.map(([l, v]) => `<div class="result-row"><span>${esc(l)}</span><span>${v}</span></div>`).join('')
+                : '<div class="result-row"><span>Type longer to see these.</span></div>'}</div>`;
+            const pairs = comboLists(g.pairs), tris = comboLists(g.tris);
+            $('rCombo').innerHTML = comboCol('Fastest pairs', pairs.fast) + comboCol('Slowest pairs', pairs.slow)
+                + comboCol('Fastest 3 key combos', tris.fast) + comboCol('Slowest 3 key combos', tris.slow);
 
             $('rChart').innerHTML = chartSvg();
 
@@ -1277,7 +1310,7 @@
             store.set('left', {
                 text: g.text.slice(0, g.pos), pos: g.pos, goal: g.goal, category: g.category,
                 segments: g.segments, strokes: g.strokes, goodStrokes: g.goodStrokes, mistakes: g.mistakes,
-                missKeys: g.missKeys, missWords: g.missWords,
+                missKeys: g.missKeys, missWords: g.missWords, pairs: g.pairs, tris: g.tris,
                 series: g.series, best: g.best, ms: elapsed(), color: Balloon.color
             });
         });
