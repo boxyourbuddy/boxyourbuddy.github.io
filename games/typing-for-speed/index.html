@@ -81,7 +81,7 @@
         }
         .mydoc textarea { width: 100%; min-height: 140px; background: #111; color: #fff; border: 1px solid #333; border-radius: 6px; padding: 12px; font-weight: normal; font-size: 0.95rem; line-height: 1.5; resize: vertical; }
         .mydoc-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 10px; color: #888; font-weight: normal; }
-        .btn { background: #FFF0AD; color: #000; border: none; border-radius: 6px; padding: 14px 28px; font-size: 1.1rem; cursor: pointer; letter-spacing: 1px; }
+        .btn { background: #FFF0AD; color: #000; border: none; border-radius: 4px; padding: 7px 14px; font-size: 0.85rem; cursor: pointer; letter-spacing: 1px; }
         .btn:hover { filter: brightness(1.08); }
         .btn:disabled { opacity: 0.5; cursor: default; }
         .btn-ghost { background: transparent; color: #FFF0AD; border: 1px solid #FFF0AD; }
@@ -134,9 +134,9 @@
         .result-word { font-size: clamp(2.2rem, 7vw, 3.6rem); margin: 0; letter-spacing: 2px; }
         .result-word.popped { color: #FFF0AD; }
         .result-word.forfeit { color: #d91919; }
-        .result-sub { color: #888; font-weight: normal; margin: 8px 0 0; }
+        .result-sub { color: #888; font-weight: normal; margin: 0 0 10px; }
         .share-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
-        .share-msg { color: #8fe08f; font-weight: normal; min-height: 1.2em; margin: 10px 0 0; }
+        .share-msg { color: #8fe08f; font-weight: normal; min-height: 1.2em; margin: 10px 0 0; text-align: center; }
         .result-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 32px; margin-top: 18px; padding-top: 16px; border-top: 1px solid #222; }
         .result-grid .stat-label { margin-bottom: 6px; }
         .result-row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; font-weight: normal; font-variant-numeric: tabular-nums; }
@@ -152,7 +152,8 @@
         th { text-align: left; color: #888; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; padding: 8px; border-bottom: 1px solid #222; }
         td { padding: 10px 8px; border-bottom: 1px solid #1a1a1a; font-weight: normal; color: #ccc; vertical-align: top; }
         td a { color: #FFF0AD; }
-        .result-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .result-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        #otherBook, .pic-pick .chip { padding: 7px 14px; font-size: 0.85rem; border-radius: 4px; }
 
         .confetti { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
 
@@ -271,15 +272,9 @@
                 <div id="rCard">
                 <div class="result-head">
                     <p class="result-word" id="rWord">POPPED!</p>
-                    <p class="result-sub" id="rSub"></p>
-                    <div class="share-row">
-                        <button class="btn" id="linkBtn">Share game link</button>
-                        <button class="btn btn-ghost" id="shareBtn">Share picture</button>
-                    </div>
-                    <p class="share-msg" id="shareMsg"></p>
                 </div>
                 <div class="chart-wrap">
-                    <span class="field-label">Speed over time</span>
+                    <p class="result-sub" id="rSub"></p>
                     <div id="rChart"></div>
                     <div class="legend">
                         <span><i style="background:#FFF0AD"></i>Average WPM</span>
@@ -295,7 +290,10 @@
                 <div class="result-btns">
                     <button class="btn" id="againBtn">Play again</button>
                     <button class="btn btn-ghost" id="settingsBtn">Change settings</button>
+                    <button class="btn" id="linkBtn">Share game link</button>
+                    <button class="btn btn-ghost" id="shareBtn">Share picture</button>
                 </div>
+                <p class="share-msg" id="shareMsg"></p>
             </section>
             <div class="pic-pop hidden" id="picPop">
                 <div class="pic-box">
@@ -925,9 +923,7 @@
             const word = $('rWord');
             word.textContent = g.popped ? 'POPPED!' : 'QUIT';
             word.className = 'result-word ' + (g.popped ? 'popped' : 'forfeit');
-            $('rSub').textContent = g.popped
-                ? `You reached ${g.goal} WPM in ${fmtTime(ms)}.`
-                : `You typed for ${fmtTime(ms)} and got to ${Math.round(avgWpm())} of ${g.goal} WPM.`;
+            $('rSub').textContent = `You typed for ${fmtTime(ms)} and ${g.popped ? 'popped' : 'quit'}.`;
 
             const groups = [
                 ['Typing', [
@@ -941,12 +937,6 @@
                     ['Final average', avgWpm().toFixed(1) + ' WPM', true],
                     ['Goal', g.goal + ' WPM'],
                     ['Best speed (10 sec)', g.best ? g.best.toFixed(1) + ' WPM' : 'n/a']
-                ]],
-                ['Game', [
-                    ['Time', fmtTime(ms)],
-                    ['Result', g.popped ? 'Popped' : 'Quit'],
-                    ['Category', categoryName(g.category)],
-                    ['Texts typed', String(g.segments.filter(s => s.enterT !== null).length)]
                 ]]
             ];
             $('rGrid').innerHTML = groups.map(([head, rows]) => `<div><div class="stat-label">${head}</div>${rows.map(([l, v, hi]) => `<div class="result-row"><span>${l}</span><span${hi ? ' class="hi"' : ''}>${esc(v)}</span></div>`).join('')}</div>`).join('');
