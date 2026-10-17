@@ -287,6 +287,7 @@
                         <span><i style="background:#8fe08f"></i>Goal</span>
                     </div>
                     <div class="result-grid" id="rGrid"></div>
+                    <div class="result-grid" id="rMiss"></div>
                 </div>
                 </div>
                 <span class="field-label">What you typed</span>
@@ -620,6 +621,7 @@
                 goal: settings.goal, category: settings.cat,
                 startT: null, endT: 0,   // the clock starts on the first key typed
                 strokes: 0, goodStrokes: 0, mistakes: 0,
+                missKeys: {}, missWords: {},   // first wrong key at each spot, and the word it was in
                 samples: [{ t: 0, pos: 0 }], series: [], best: 0,
                 queued: null, queuing: false, over: false
             };
@@ -777,12 +779,37 @@
                 render(slide);
                 checkPop();
             } else {
+                if (!g.wrong) noteMiss(g.text[g.pos], ch);
                 g.mistakes++;
                 if (g.wrong.length < MAX_WRONG) g.wrong += ch;
                 render(false);
             }
             updateStats();
         }
+        // Only the first wrong key at a spot is noted; keys typed after it are just catching up.
+        function noteMiss(want, got) {
+            const k = g.missKeys[want] || (g.missKeys[want] = { n: 0, got: {} });
+            k.n++;
+            k.got[got] = (k.got[got] || 0) + 1;
+            if (/\s/.test(want)) return;
+            let a = g.pos, b = g.pos;
+            while (a > 0 && !/\s/.test(g.text[a - 1])) a--;
+            while (b < g.text.length && !/\s/.test(g.text[b])) b++;
+            const word = g.text.slice(a, b).replace(/^[^\w']+|[^\w']+$/g, '').replace(/^'+|'+$/g, '');
+            if (word) g.missWords[word] = (g.missWords[word] || 0) + 1;
+        }
+        const KEY_NAMES = { ' ': 'space', ',': 'comma', '.': 'period', "'": 'apostrophe', '"': 'quote', ';': 'semicolon', ':': 'colon', '-': 'hyphen', '?': 'question mark', '!': 'exclamation mark', '(': 'left bracket', ')': 'right bracket' };
+        function keyName(c) { return KEY_NAMES[c] || c; }
+        function missLists() {
+            const top = (obj, n) => Object.entries(obj).sort((a, b) => (b[1].n ?? b[1]) - (a[1].n ?? a[1])).slice(0, n);
+            const keys = top(g.missKeys || {}, 5).map(([want, k]) => {
+                const got = Object.entries(k.got).sort((a, b) => b[1] - a[1])[0][0];
+                return [`${keyName(want)} (typed ${keyName(got)})`, k.n];
+            });
+            const words = top(g.missWords || {}, 5);
+            return { keys, words };
+        }
+
         function backspace() {
             if (!g || g.over || !g.wrong) return;
             g.wrong = g.wrong.slice(0, -1);
@@ -923,6 +950,12 @@
                 ]]
             ];
             $('rGrid').innerHTML = groups.map(([head, rows]) => `<div><div class="stat-label">${head}</div>${rows.map(([l, v, hi]) => `<div class="result-row"><span>${l}</span><span${hi ? ' class="hi"' : ''}>${esc(v)}</span></div>`).join('')}</div>`).join('');
+
+            const miss = missLists();
+            const missCol = (head, list) => `<div><div class="stat-label">${head}</div>${list.length
+                ? list.map(([l, n]) => `<div class="result-row"><span>${esc(l)}</span><span>${n.toLocaleString()}</span></div>`).join('')
+                : '<div class="result-row"><span>None</span></div>'}</div>`;
+            $('rMiss').innerHTML = missCol('Missed keys', miss.keys) + missCol('Missed words', miss.words);
 
             $('rChart').innerHTML = chartSvg();
 
@@ -1224,6 +1257,7 @@
             store.set('left', {
                 text: g.text.slice(0, g.pos), pos: g.pos, goal: g.goal, category: g.category,
                 segments: g.segments, strokes: g.strokes, goodStrokes: g.goodStrokes, mistakes: g.mistakes,
+                missKeys: g.missKeys, missWords: g.missWords,
                 series: g.series, best: g.best, ms: elapsed(), color: Balloon.color
             });
         });
