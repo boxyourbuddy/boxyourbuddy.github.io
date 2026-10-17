@@ -1029,7 +1029,9 @@
             const W = 800, H = 240, L = 40, R = 10, T = 10, B = 26;
             const pts = g.series;
             const maxT = Math.max(1000, elapsed());
-            const maxY = Math.max(g.goal * 1.25, ...pts.map(p => Math.max(p.avg, p.roll || 0))) || 10;
+            const topY = Math.max(g.goal * 1.25, ...pts.map(p => Math.max(p.avg, p.roll || 0))) || 10;
+            const step = topY > 120 ? 40 : topY > 60 ? 20 : 10;
+            const maxY = Math.ceil(topY / step) * step;   // the top of the graph is always a labeled line
             const x = t => L + (t / maxT) * (W - L - R);
             const y = v => T + (1 - v / maxY) * (H - T - B);
             const line = (get, color, w) => {
@@ -1037,7 +1039,6 @@
                 return d ? `<polyline points="${d}" fill="none" stroke="${color}" stroke-width="${w}" stroke-linejoin="round"/>` : '';
             };
             let grid = '';
-            const step = maxY > 120 ? 40 : maxY > 60 ? 20 : 10;
             for (let v = 0; v <= maxY; v += step) grid += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#222"/><text x="${L - 6}" y="${y(v) + 4}" fill="#666" font-size="11" text-anchor="end" font-weight="normal">${v}</text>`;
             const ticks = 5;
             for (let i = 0; i <= ticks; i++) { const t = maxT * i / ticks; grid += `<text x="${x(t)}" y="${H - 6}" fill="#666" font-size="11" text-anchor="middle" font-weight="normal">${fmtTime(t)}</text>`; }
@@ -1135,9 +1136,10 @@
             const px0 = cx0 + 70, py0 = cy0 + 56, pw = cw - 100, ph = ch - 80;
             const pts = g.series;
             const maxT = Math.max(1000, ms);
-            const maxY = Math.max(g.goal * 1.25, ...pts.map(p => Math.max(p.avg, p.roll || 0))) || 10;
+            const topY = Math.max(g.goal * 1.25, ...pts.map(p => Math.max(p.avg, p.roll || 0))) || 10;
+            const step = topY > 120 ? 40 : topY > 60 ? 20 : 10;
+            const maxY = Math.ceil(topY / step) * step;   // the top of the graph is always a labeled line
             const X = t => px0 + (t / maxT) * pw, Y = v => py0 + (1 - v / maxY) * ph;
-            const step = maxY > 120 ? 40 : maxY > 60 ? 20 : 10;
             x.font = '18px Arial, sans-serif'; x.textAlign = 'right';
             for (let v = 0; v <= maxY; v += step) {
                 x.strokeStyle = '#222'; x.lineWidth = 1;
