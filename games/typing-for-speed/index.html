@@ -504,7 +504,7 @@
 
         // ---------- Sound: typewriter keys and soft bubbles. Switched on by the Start click (browsers need a click or key first). ----------
         const Sound = (() => {
-            let ac = null, keyBus, bubBus, airBus, noise, dry, conv, lastK = -1, lastS = -1;
+            let ac = null, keyBus, bubBus, airBus, popBus, noise, white, dry, conv, lastK = -1, lastS = -1;
             const keys = [], spaces = [];
             const st = { on: store.get('sound', true), keys: store.get('vol_keys', 35), bubbles: store.get('vol_bubbles', 100), air: store.get('vol_air', 100) };
             function levels() {
@@ -512,6 +512,7 @@
                 keyBus.gain.value = st.on ? st.keys / 100 : 0;
                 bubBus.gain.value = st.on ? st.bubbles / 100 : 0;
                 airBus.gain.value = st.on ? st.air / 100 * 1.4 : 0;
+                popBus.gain.value = st.on ? st.air / 100 * 1.6 : 0;   // the pop follows the Air slider
             }
             function unlock() {
                 if (!ac) {
@@ -523,6 +524,14 @@
                     noise = ac.createBuffer(1, 2 * ac.sampleRate, ac.sampleRate);
                     const nd = noise.getChannelData(0);
                     for (let i = 0, p = 0; i < nd.length; i++) { p = p * 0.35 + (Math.random() * 2 - 1) * 0.65; nd[i] = p; }
+                    white = ac.createBuffer(1, ac.sampleRate, ac.sampleRate);
+                    const wd = white.getChannelData(0);
+                    for (let i = 0; i < wd.length; i++) wd[i] = Math.random() * 2 - 1;
+                    // The pop goes through a soft clip, so a loud pop rounds off instead of crackling.
+                    popBus = ac.createGain();
+                    const clip = ac.createWaveShaper(), cv = new Float32Array(1024);
+                    for (let i = 0; i < cv.length; i++) { const v = i / 511.5 - 1; cv[i] = Math.tanh(v * 1.2) / Math.tanh(1.2); }
+                    clip.curve = cv; popBus.connect(clip); clip.connect(ac.destination);
                     // Bubble reverb: a soft 1.6 second tail, 19% wet, with its top end rolled off
                     const len = 1.6, sr = ac.sampleRate, imp = ac.createBuffer(2, Math.floor(sr * len), sr);
                     for (let c = 0; c < 2; c++) {
@@ -622,7 +631,36 @@
                 store.set(what === 'on' ? 'sound' : 'vol_' + what, v);
                 levels();
             }
-            return { st, unlock, key, bubble, surfaced, blow, blowStop, set };
+            // The balloon pop, matched to a real recorded pop: a 2 ms rise, a short loud burst with its weight
+            // low, a drop, then a long room tail gone by about half a second. Plus a short pressure crack at the start.
+            const POP_SHAPE = [[0, 0], [0.002, 0.35], [0.005, 1], [0.028, 1.08], [0.047, 0.9], [0.087, 0.58],
+                               [0.187, 0.53], [0.287, 0.3], [0.387, 0.21], [0.497, 0]];
+            function pop() {
+                if (!ac || !st.on || !st.air) return;
+                const sr = ac.sampleRate, t = ac.currentTime + 0.01, total = 0.497, n = 600, curve = new Float32Array(n);
+                for (let i = 0; i < n; i++) {
+                    const tt = i / (n - 1) * total;
+                    let k = 1; while (k < POP_SHAPE.length - 1 && POP_SHAPE[k][0] < tt) k++;
+                    const [t0, v0] = POP_SHAPE[k - 1], [t1, v1] = POP_SHAPE[k];
+                    curve[i] = Math.max(0, v0 + (v1 - v0) * Math.min(1, Math.max(0, (tt - t0) / (t1 - t0))));
+                }
+                const src = ac.createBufferSource(); src.buffer = white; src.loop = true;
+                const f = (type, freq, q, gain) => { const b = ac.createBiquadFilter(); b.type = type; b.frequency.value = freq; b.Q.value = q; if (gain !== undefined) b.gain.value = gain; return b; };
+                const chain = [f('highpass', 170, 0.7), f('highpass', 170, 0.7), f('peaking', 380, 0.6, 1.8), f('highshelf', 1100, 0.7, -13), f('lowpass', 10800, 0.5)];
+                const env = ac.createGain(); env.gain.value = 0; env.gain.setValueCurveAtTime(curve, t, total);
+                const lvl = ac.createGain(); lvl.gain.value = 0.9;
+                let node = src; chain.forEach(c => { node.connect(c); node = c; });
+                node.connect(env); env.connect(lvl); lvl.connect(popBus);
+                src.start(t, Math.random() * 0.5); src.stop(t + total + 0.05);
+                // The crack: one pressure swing of about 3 ms.
+                const L = Math.round(sr * 0.003), buf = ac.createBuffer(1, L + Math.round(sr * 0.006), sr), x = buf.getChannelData(0);
+                for (let i = 0; i < L; i++) { const u = i / L; x[i] = u < 0.3 ? u : 0.3 - 1.3 * (u - 0.3) / 0.7; }
+                for (let i = L; i < x.length; i++) x[i] = -Math.exp(-(i - L) / (sr * 0.0012));
+                const c = ac.createBufferSource(); c.buffer = buf;
+                const cg = ac.createGain(); cg.gain.value = 0.33;
+                c.connect(cg); cg.connect(popBus); c.start(t);
+            }
+            return { st, unlock, key, bubble, surfaced, blow, blowStop, pop, set };
         })();
 
         // Balloon mode: the balloon fills with the average speed and pops at the goal.
@@ -661,7 +699,7 @@
                 this.caption.textContent = `${Math.round(p * 100)}% full`;
             },
             pop() {
-                if (this === Visual) Sound.blowStop();
+                if (this === Visual) { Sound.blowStop(); Sound.pop(); }
                 this.body.style.display = 'none';
                 this.string.style.transition = 'transform 0.8s ease-in, opacity 0.8s';
                 this.string.style.transform = 'translateY(40px)';
